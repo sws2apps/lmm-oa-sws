@@ -13,13 +13,13 @@ jobs:
     env:
       GENERATE_SOURCEMAP: false
     steps:
-      - name: get-npm-version
+      - name: Get package version
         id: package-version
-        uses: martinbeentjes/npm-get-version-action@master
+        uses: koj-co/package-version-action@v1.0.1
       - uses: actions/checkout@v2
       - run: npm i && npm run build
         env:
-          REACT_APP_VERSION: ${{ steps.package-version.outputs.current-version}}
+          REACT_APP_VERSION: ${{ steps.package-version.outputs.package-version }}
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
