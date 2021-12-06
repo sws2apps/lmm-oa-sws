@@ -1,0 +1,1 @@
+node -pe "require('./package.json')['version']";

@@ -13,8 +13,14 @@ jobs:
     env:
       GENERATE_SOURCEMAP: false
     steps:
+      - uses: nyaa8/package-version@v1
+        with:
+          path: 'uwu/package.json' # Optional
+          follow-symlinks: 'false' # Optional
       - uses: actions/checkout@v2
       - run: npm i && npm run build
+        env:
+          REACT_APP_VERSION: ${{ env.PACKAGE_VERSION }}
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
