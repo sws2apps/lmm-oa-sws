@@ -18,7 +18,7 @@ jobs:
         uses: trendoid/version-for-publishing@0.1.6
         with:
           branch: feat/version-for-publishing
-          filePath: ./package.json
+          filePath: ../package.json
       - uses: actions/checkout@v2
       - run: npm i && npm run build
         env:
