@@ -13,16 +13,15 @@ jobs:
     env:
       GENERATE_SOURCEMAP: false
     steps:
-      - name: Get package version
+      - name: get-npm-version
         id: package-version
-        uses: trendoid/version-for-publishing@0.1.6
+        uses: martinbeentjes/npm-get-version-action@master
         with:
-          branch: feat/version-for-publishing
-          filePath: ../package.json
+          path: packages/lmm-oa-sws
       - uses: actions/checkout@v2
       - run: npm i && npm run build
         env:
-          REACT_APP_VERSION: ${{ steps.package-version.outputs.version }}
+          REACT_APP_VERSION: ${{ steps.package-version.outputs.current-version}}
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
