@@ -16,8 +16,6 @@ jobs:
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
-        with:
-          path: ./
       - uses: actions/checkout@v2
       - run: npm i && npm run build
         env:
