@@ -181,6 +181,7 @@ const Home = () => {
     }
 
     useEffect(() => {
+        console.log(process.env.REACT_APP_VERSION);
         const loadCurrentWeekData = async () => {
             var dateFormat = require("dateformat");
 
