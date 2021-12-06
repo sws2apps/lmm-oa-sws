@@ -1,46 +1,31 @@
-import { useEffect, useState } from "react";
+import { useRecoilState } from 'recoil';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import { congNameState, congNumberState, isErrorCongNameState, isErrorCongNumberState } from '../../appStates/appCongregation';
 
-const StepperCongregation = (props) => {
-    const [congName, setCongName] = useState("");
-    const [congNumber, setCongNumber] = useState("");
-    const [isErrorCongName, setIsErrorCongName] = useState(false);
-    const [isErrorCongNumber, setIsErrorCongNumber] = useState(false);
+const StepperCongregation = () => {
+    const [congName, setCongName] = useRecoilState(congNameState);
+    const [congNumber, setCongNumber] = useRecoilState(congNumberState);
+    const [isErrorCongName, setIsErrorCongName] = useRecoilState(isErrorCongNameState);
+    const [isErrorCongNumber, setIsErrorCongNumber] = useRecoilState(isErrorCongNumberState);
 
     const handleCongNameChange = (value) => {
         if (value) {
-            props.setIsErrorCongName(false);
+            setIsErrorCongName(false);
         } else {
-            props.setIsErrorCongName(true);
+            setIsErrorCongName(true);
         }
-        props.setCongName(value);
+        setCongName(value);
     }
 
     const handleCongNumberChange = (value) => {
         if (value) {
-            props.setIsErrorCongNumber(false);
+            setIsErrorCongNumber(false);
         } else {
-            props.setIsErrorCongNumber(true);
+            setIsErrorCongNumber(true);
         }
-        props.setCongNumber(value);
+        setCongNumber(value);
     }
-
-    useEffect(() => {
-        setCongName(props.congName);
-    }, [props.congName])
-
-    useEffect(() => {
-        setCongNumber(props.congNumber);
-    }, [props.congNumber])
-
-    useEffect(() => {
-        setIsErrorCongName(props.isErrorCongName);
-    }, [props.isErrorCongName])
-
-    useEffect(() => {
-        setIsErrorCongNumber(props.isErrorCongNumber);
-    }, [props.isErrorCongNumber])
 
     return ( 
         <div>
@@ -71,7 +56,7 @@ const StepperCongregation = (props) => {
                 autoComplete='off'
                 required
                 error={isErrorCongNumber ? true : false}
-                helperText={isErrorCongName ? "Mila fenoina" : null}
+                helperText={isErrorCongNumber ? "Mila fenoina" : null}
                 sx={{width: '120px'}}
                 value={congNumber}
                 onChange={(e) => handleCongNumberChange(e.target.value)}

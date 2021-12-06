@@ -1,14 +1,10 @@
-import { db, firebaseApp } from "../index";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useState } from "react";
 import { styled, alpha } from '@mui/material/styles';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import ArchiveIcon from '@mui/icons-material/Archive';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import CircularProgress from '@mui/material/CircularProgress';
-import Container from '@mui/material/Container';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -23,8 +19,10 @@ import ShareIcon from '@mui/icons-material/Share';
 import StudentCard from "../components/students/StudentCard";
 import StudentDetails from "../components/students/StudentDetails";
 import TextField from '@mui/material/TextField';
-import { dbGetAppSettings } from "../indexedDb/dbAppSettings";
-import { dbDeleteStudent, dbGetStudents } from "../indexedDb/dbPersons";
+import { dbDeleteStudent } from "../indexedDb/dbPersons";
+import { appMessageState, appSeverityState, appSnackOpenState } from "../appStates/appNotification";
+import { allStudentsState, filteredStudentsState } from "../appStates/appStudents";
+import { currentStudentState, isStudentAddState, isStudentDeleteState, isStudentDetailsOpenState } from "../appStates/appStudent";
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -66,31 +64,25 @@ const Search = styled('div')(({ theme }) => ({
     },
   }));
 
-const Students = (props) => {
-    const [dbStudents, setDbStudents] = useState([]);
-    const [students, setStudents] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [currentStudent, setCurrentStudent] = useState({});
-    const [open, setOpen] = useState(false);
-    const [isAdd, setIsAdd] = useState(false);
+const Students = () => {
     const [genderValue, setGenderValue] = useState("genderAll");
     const [toSearch, setToSearch] = useState("");
     const [assignment, setAssignment] = useState(5);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [congID, setCongID] = useState("");
-    const [congPIN, setCongPIN] = useState("");
 
-    const auth = getAuth(firebaseApp);
-    onAuthStateChanged(auth, user => {
-        if (user) {
-            setIsLoggedIn(true);
-        } else {
-            setIsLoggedIn(false);
-        }
-    });
+    const [dbStudents, setDbStudents] = useRecoilState(allStudentsState);
+    const [students, setStudents] = useRecoilState(filteredStudentsState);
+    const [isStudentDelete, setIsStudentDelete] = useRecoilState(isStudentDeleteState);
+
+    const setAppSnackOpen = useSetRecoilState(appSnackOpenState);
+    const setAppSeverity = useSetRecoilState(appSeverityState);
+    const setAppMessage = useSetRecoilState(appMessageState);
+    const setIsStudentAdd = useSetRecoilState(isStudentAddState);
+
+    const currentStudent = useRecoilValue(currentStudentState);
+    const isStudentDetailsOpen = useRecoilValue(isStudentDetailsOpenState);
 
     const handleClose = () => {
-        setOpen(false);
+        setIsStudentDelete(false);
     };
 
     const handleFilterStudents = async (toSearch, genderValue, assignment) => {
@@ -199,18 +191,13 @@ const Students = (props) => {
         await dbDeleteStudent(varID);
         let newPersons = students.filter(student => student.id !== varID);
         let dbNewPersons = dbStudents.filter(student => student.id !== varID);
-        setOpen(false);
+        setIsStudentDelete(false);
         setStudents(newPersons);
         setDbStudents(dbNewPersons);
-        props.setAppSnackOpen(true);
-        props.setAppSeverity("success");
-        props.setAppMessage("Voafafa soa aman-tsara ny mpianatra");
-    }
 
-    const getStudents = async () => {
-        const data = await dbGetStudents();
-        setDbStudents(data);
-        setStudents(data);
+        setAppSnackOpen(true);
+        setAppSeverity("success");
+        setAppMessage("Voafafa soa aman-tsara ny mpianatra");
     }
 
     const handleChangeGender = async (e) => {
@@ -224,45 +211,7 @@ const Students = (props) => {
     }
 
     const handleExportListForApps = async () => {
-        const myKey = congID + "&lmm-oa_" + congPIN;
-        const Cryptr = require('cryptr');
-        const cryptr = new Cryptr(myKey);
-
-        let personsList = [];
-
-        const congRef = doc(db, 'congregation_private_data', congID.toString());
-        const docSnap = await getDoc(congRef);
-
-        if (docSnap.exists() && docSnap.data().personsList) {
-            const decryptedData = cryptr.decrypt(docSnap.data().personsList);
-            personsList = JSON.parse(decryptedData)
-        }
-
-        let newPersons = personsList.filter(person => person.source !== "lmm_oa");
-        newPersons.push(...dbStudents);
-
-        const encryptedData = cryptr.encrypt(JSON.stringify(newPersons));
-
-        const congDoc = doc(db, 'congregation_private_data', congID.toString());
-        setDoc(
-            congDoc,
-            { 
-                personsList: encryptedData,
-            },
-            { merge: true }
-        )
-        .then(() => {
-            props.setAppSnackOpen(true);
-            props.setAppSeverity("success");
-            props.setAppMessage("Voatahiry mba ho ampiasain’ny programa hafa ny lisitra ny mpianatra");
-        })
-        .catch((error) => {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            props.setAppSnackOpen(true);
-            props.setAppSeverity("error");
-            props.setAppMessage(`(${errorCode}) ${errorMessage}`);
-        });
+        
     }
 
     const exportList = async () => {
@@ -339,55 +288,33 @@ const Students = (props) => {
         xlsx(data, settings)
     }
 
-    useEffect(() => {
-        const getAllStudents = async () => {
-            const data = await dbGetStudents();
-            setDbStudents(data);
-            setStudents(data);
-            setIsLoading(false);
-        }
-        getAllStudents();
-    }, [])
-
-    useEffect(() => {
-        const getCongInfo = async () => {
-            const appSettings = await dbGetAppSettings();
-            if (appSettings.cong_ID !== undefined) {
-                setCongID(appSettings.cong_ID);
-            }
-            if (appSettings.cong_PIN !== undefined) {
-                setCongPIN(appSettings.cong_PIN);
-            }
-        };
-
-        getCongInfo();
-    }, [])
-
     return ( 
         <>
-            <Dialog
-                open={open}
-                onClose={handleClose}
-            >
-                <DialogTitle>
-                    <Box sx={{lineHeight: 1.2}}>
-                        Hamafa an’i: {currentStudent.name}?
-                    </Box>
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        Tianao hofafana ao amin’ny rakitra fitehirizana ve io mpianatra io?
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleDelete} color="primary">
-                        Hamafa
-                    </Button>
-                    <Button onClick={handleClose} color="primary" autoFocus>
-                        Aoka ihany
-                    </Button>
-                </DialogActions>
-            </Dialog>
+            {isStudentDelete && (
+                <Dialog
+                    open={isStudentDelete}
+                    onClose={handleClose}
+                >
+                    <DialogTitle>
+                        <Box sx={{lineHeight: 1.2}}>
+                            Hamafa an’i: {currentStudent.name}?
+                        </Box>
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            Tianao hofafana ao amin’ny rakitra fitehirizana ve io mpianatra io?
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleDelete} color="primary">
+                            Hamafa
+                        </Button>
+                        <Button onClick={handleClose} color="primary" autoFocus>
+                            Aoka ihany
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            )}
             <Box
                 sx={{
                     display: 'flex',
@@ -412,15 +339,13 @@ const Students = (props) => {
                         justifyContent: 'flex-end',
                     }}
                 >
-                    {(isLoggedIn && congPIN !== "") && (
-                        <IconButton sx={{padding: '2px'}} onClick={handleExportListForApps}>
-                            <ShareIcon sx={{fontSize: '40px'}} />
-                        </IconButton>
-                    )}
+                    <IconButton sx={{padding: '2px'}} onClick={handleExportListForApps}>
+                        <ShareIcon sx={{fontSize: '40px'}} />
+                    </IconButton>
                     <IconButton sx={{padding: '2px'}} onClick={exportList}>
                         <ArchiveIcon sx={{fontSize: '40px'}} />
                     </IconButton>
-                    <IconButton sx={{padding: '2px'}} onClick={() => setIsAdd(true)}>
+                    <IconButton sx={{padding: '2px'}} onClick={() => setIsStudentAdd(true)}>
                         <AddCircleIcon sx={{fontSize: '40px'}} />
                     </IconButton>
                 </Box>
@@ -466,51 +391,21 @@ const Students = (props) => {
                     <MenuItem value={4}>Lahateny</MenuItem>
                 </TextField>
             </Box>
-            {isLoading && (
-                <Container 
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        height: '50vh',
-                    }}
-                >
-                    <CircularProgress color="secondary" size={70} disableShrink={true} />
-                </Container>                
+            {isStudentDetailsOpen && (
+                <StudentDetails />
             )}
-            {!isLoading && (
-                <>
-                    {isAdd && (
-                        <StudentDetails
-                            open={isAdd}
-                            setOpen={(value) => setIsAdd(value)}
-                            student={{}}
-                            getStudents={getStudents}
-                            setAppSnackOpen={(value) => props.setAppSnackOpen(value)}
-                            setAppSeverity={(value) => props.setAppSeverity(value)}
-                            setAppMessage={(value) => props.setAppMessage(value)}
-                        />
-                    )}
-                    <Box sx={{marginBottom: '10px'}}>
-                        {students.length > 0 && (
-                            <Grid container>
-                                {students.map(student => (
-                                    <StudentCard
-                                        key={student.id}
-                                        student={student}
-                                        setOpen={(value) => setOpen(value)}
-                                        setCurrentStudent={(value) => setCurrentStudent(value)}
-                                        setAppSnackOpen={(value) => props.setAppSnackOpen(value)}
-                                        setAppSeverity={(value) => props.setAppSeverity(value)}
-                                        setAppMessage={(value) => props.setAppMessage(value)}
-                                    />
-                                ))}
-                            </Grid>
-                        )}
-                    </Box>
-                </>
-            )}
+            <Box sx={{marginBottom: '10px'}}>
+                {students.length > 0 && (
+                    <Grid container>
+                        {students.map(student => (
+                            <StudentCard
+                                key={student.id}
+                                student={student}
+                            />
+                        ))}
+                    </Grid>
+                )}
+            </Box>
         </>
      );
 }

@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { db, firebaseApp } from "../index";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -14,12 +11,11 @@ import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import SendIcon from '@mui/icons-material/Send';
 import TextField from '@mui/material/TextField';
 import { dbGetScheduleListByYear, dbGetSourceMaterial, dbGetWeekListBySched, dbGetYearList } from "../indexedDb/dbSourceMaterial";
-import { dbBuildScheduleForShare, dbGetScheduleData, dbGetScheduleName } from "../indexedDb/dbSchedule";
+import { dbGetScheduleData } from "../indexedDb/dbSchedule";
 import ScheduleDetails from "../components/schedule/ScheduleDetails";
 import DialogAutoFill from "../components/schedule/DialogAutoFill";
 import ScheduleActions from "../components/schedule/ScheduleActions";
 import DialogAssignmentDelete from "../components/schedule/DialogAssignmentDelete";
-import { dbGetAppSettings } from "../indexedDb/dbAppSettings";
 
 const sharedStyles = {
     btnSchedule: {
@@ -43,9 +39,6 @@ const Schedule = (props) => {
     const [isAutoFill, setIsAutoFill] = useState(false);
     const [isS89, setIsS89] = useState(false);
     const [isDelete, setIsDelete] = useState(false);
-    const [congID, setCongID] = useState("");
-    const [congPIN, setCongPIN] = useState("");
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
 
     let isMenuOpen = Boolean(anchorEl);
@@ -57,15 +50,6 @@ const Schedule = (props) => {
     const handleClose = () => {
         setAnchorEl(null);
     };
-
-    const auth = getAuth(firebaseApp);
-    onAuthStateChanged(auth, user => {
-        if (user) {
-            setIsLoggedIn(true);
-        } else {
-            setIsLoggedIn(false);
-        }
-    });
 
     const handleAutoFill = () => {
         setDlgAutoFillOpen(true);
@@ -131,95 +115,11 @@ const Schedule = (props) => {
     }
 
     const handleSendScheduleToMSC = async () => {
-        handleClose();
-        const data = await dbBuildScheduleForShare(currentSchedule);
-        let toMSC = [];
 
-        const congRef = doc(db, 'congregation_private_data', congID.toString());
-        const docSnap = await getDoc(congRef);
-
-        if (docSnap.exists() && docSnap.data().toMSC) {
-            toMSC = docSnap.data().toMSC;
-        }
-
-        const schedName = dbGetScheduleName(currentSchedule);
-        const dataID = `schedule-${currentSchedule}`;
-        let newToMSC = toMSC.filter(dataMSC => dataMSC.id !== dataID);
-
-        var obj = {};
-        obj.id = dataID;
-        obj.title = "Fandaharana " + schedName;
-        obj.data = data;
-        obj.dateSent = Date.now();
-
-        newToMSC.push(obj);
-
-        const congDoc = doc(db, 'congregation_private_data', congID.toString());
-        setDoc(
-            congDoc,
-            { 
-                toMSC: newToMSC,
-            },
-            { merge: true }
-        )
-        .then(() => {
-            props.setAppSnackOpen(true);
-            props.setAppSeverity("success");
-            props.setAppMessage("Lasa MSC ny fandaharana " + schedName);
-        })
-        .catch((error) => {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            props.setAppSnackOpen(true);
-            props.setAppSeverity("error");
-            props.setAppMessage(`(${errorCode}) ${errorMessage}`);
-        });
     }
 
     const handleShareSchedule = async () => {
-        handleClose();
-        const data = await dbBuildScheduleForShare(currentSchedule);
-        let schedLMMOA = [];
-
-        const congRef = doc(db, 'congregation_public_data', congID.toString());
-        const docSnap = await getDoc(congRef);
-
-        if (docSnap.exists() && docSnap.data().schedLMMOA) {
-            schedLMMOA = docSnap.data().schedLMMOA;
-        }
-
-        const schedName = dbGetScheduleName(currentSchedule);
-        const dataID = `schedule-${currentSchedule}`;
-        let newSchedLMMOA = schedLMMOA.filter(dataLMMOA => dataLMMOA.id !== dataID);
-
-        var obj = {};
-        obj.id = dataID;
-        obj.title = "Fandaharana " + schedName;
-        obj.data = data;
-        obj.dateSent = Date.now();
-
-        newSchedLMMOA.push(obj);
-
-        const congDoc = doc(db, 'congregation_public_data', congID.toString());
-        setDoc(
-            congDoc,
-            { 
-                schedLMMOA: newSchedLMMOA,
-            },
-            { merge: true }
-        )
-        .then(() => {
-            props.setAppSnackOpen(true);
-            props.setAppSeverity("success");
-            props.setAppMessage("Afaka mijery ny fandaharana " + schedName + " izao ny mpianatra rehetra");
-        })
-        .catch((error) => {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            props.setAppSnackOpen(true);
-            props.setAppSeverity("error");
-            props.setAppMessage(`(${errorCode}) ${errorMessage}`);
-        });
+        
     }
 
     useEffect(() => {
@@ -242,19 +142,8 @@ const Schedule = (props) => {
             setCurrentWeek(weekData[0].value);
         };
 
-        const getCongInfo = async () => {
-            const appSettings = await dbGetAppSettings();
-            if (appSettings.cong_ID !== undefined) {
-                setCongID(appSettings.cong_ID);
-            }
-            if (appSettings.cong_PIN !== undefined) {
-                setCongPIN(appSettings.cong_PIN);
-            }
-        };
-
         if (mounted === true) {
             getSchedules();
-            getCongInfo();
         }
 
         return (() => {
@@ -376,39 +265,35 @@ const Schedule = (props) => {
                             >
                                 PDF
                             </Button>
-                            {(isLoggedIn && congPIN !== "") && (
-                                <>
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        sx={sharedStyles.btnSchedule}
-                                        startIcon={<SendIcon />}
-                                        onClick={handleClick}
-                                        aria-controls="basic-menu"
-                                        aria-haspopup="true"
-                                        aria-expanded={isMenuOpen ? 'true' : undefined}
-                                    >
-                                        Hizara
-                                    </Button>
-                                    <Menu
-                                        id="basic-menu"
-                                        disableScrollLock={true}
-                                        anchorEl={anchorEl}
-                                        open={isMenuOpen}
-                                        onClose={handleClose}
-                                        MenuListProps={{
-                                            'aria-labelledby': 'basic-button',
-                                        }}
-                                    >
-                                        <MenuItem onClick={handleSendScheduleToMSC}>
-                                            Alefa MSC
-                                        </MenuItem>
-                                        <MenuItem onClick={handleShareSchedule}>
-                                            Mpianatra rehetra
-                                        </MenuItem>
-                                    </Menu>
-                                </>
-                            )}
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                sx={sharedStyles.btnSchedule}
+                                startIcon={<SendIcon />}
+                                onClick={handleClick}
+                                aria-controls="basic-menu"
+                                aria-haspopup="true"
+                                aria-expanded={isMenuOpen ? 'true' : undefined}
+                            >
+                                Hizara
+                            </Button>
+                            <Menu
+                                id="basic-menu"
+                                disableScrollLock={true}
+                                anchorEl={anchorEl}
+                                open={isMenuOpen}
+                                onClose={handleClose}
+                                MenuListProps={{
+                                    'aria-labelledby': 'basic-button',
+                                }}
+                            >
+                                <MenuItem onClick={handleSendScheduleToMSC}>
+                                    Alefa MSC
+                                </MenuItem>
+                                <MenuItem onClick={handleShareSchedule}>
+                                    Mpianatra rehetra
+                                </MenuItem>
+                            </Menu>
                             <Button
                                 variant="contained"
                                 color="primary"

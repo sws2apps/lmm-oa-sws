@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -7,24 +8,36 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import StepContent from '@mui/material/StepContent';
 import Typography from '@mui/material/Typography';
-import { dbSavePersoCode, initAppDb, initUserDb, isDbExist } from '../indexedDb/dbUtility';
+import { dbGetUserKey, dbSavePersoCode, initAppDb, initUserDb, isDbExist } from '../indexedDb/dbUtility';
 import StepperWelcome from '../components/startup/StepperWelcome';
 import StepperCongregation from '../components/startup/StepperCongregation';
 import StepperMeetingDetails from '../components/startup/StepperMeetingDetails';
 import StepperAboutMe from '../components/startup/StepperAboutMe';
 import { checkSrcUpdate } from '../indexedDb/dbSourceMaterial';
-import { dbUpdateAppSettings } from '../indexedDb/dbAppSettings';
+import { dbGetAppSettings, dbUpdateAppSettings } from '../indexedDb/dbAppSettings';
+import { classCountState, congIDState, congNameState, congNumberState, congPINState, isErrorCongNameState, isErrorCongNumberState, meetingDayState } from '../appStates/appCongregation';
+import { isErrorPersoCodeState, userPersoCodeState } from '../appStates/appMe';
+import { isAppLoadState } from '../appStates/appSettings';
+import { allStudentsState, filteredStudentsState } from '../appStates/appStudents';
+import { dbGetStudents } from '../indexedDb/dbPersons';
 
-const Startup = (props) => {
+const Startup = () => {
     const [isSetup, setIsSetup] = useState(false);
-    const [persoCode, setPersoCode] = useState("");
-    const [isErrorPersoCode, setIsErrorPersoCode] = useState(false);
-    const [congName, setCongName] = useState("");
-    const [congNumber, setCongNumber] = useState("");
-    const [isErrorCongName, setIsErrorCongName] = useState(false);
-    const [isErrorCongNumber, setIsErrorCongNumber] = useState(false);
-    const [meetingDay, setMeetingDay] = useState(3);
-    const [classCount, setClassCount] = useState(1);
+
+    const [persoCode, setPersoCode] = useRecoilState(userPersoCodeState);
+    const [isErrorPersoCode, setIsErrorPersoCode] = useRecoilState(isErrorPersoCodeState);
+    const [congName, setCongName] = useRecoilState(congNameState);
+    const [congNumber, setCongNumber] = useRecoilState(congNumberState);
+    const [isErrorCongName, setIsErrorCongName] = useRecoilState(isErrorCongNameState);
+    const [isErrorCongNumber, setIsErrorCongNumber] = useRecoilState(isErrorCongNumberState);
+    const [meetingDay, setMeetingDay] = useRecoilState(meetingDayState);
+    const [classCount, setClassCount] = useRecoilState(classCountState);
+
+    const setCongID = useSetRecoilState(congIDState);
+    const setCongPIN = useSetRecoilState(congPINState);
+    const setIsAppLoad = useSetRecoilState(isAppLoadState);
+    const setDbStudents = useSetRecoilState(allStudentsState);
+    const setStudents = useSetRecoilState(filteredStudentsState);
 
     const [activeStep, setActiveStep] = useState(0);
     const steps = [
@@ -39,30 +52,11 @@ const Startup = (props) => {
         if (step === 0) {
             return <StepperWelcome />
         } else if (step === 1) {
-            return <StepperAboutMe
-                        persoCode={persoCode}
-                        setPersoCode={(value) => setPersoCode(value)}
-                        isErrorPersoCode={isErrorPersoCode}
-                        setIsErrorPersoCode={(value) => setIsErrorPersoCode(value)}
-                    />
+            return <StepperAboutMe />
         } else if (step === 2) {
-            return <StepperCongregation
-                congName={congName}
-                setCongName={(value) => setCongName(value)}
-                congNumber={congNumber}
-                setCongNumber={(value) => setCongNumber(value)}
-                isErrorCongName={isErrorCongName}
-                setIsErrorCongName={(value) => setIsErrorCongName(value)}
-                isErrorCongNumber={isErrorCongNumber}
-                setIsErrorCongNumber={(value) => setIsErrorCongNumber(value)}
-            />
+            return <StepperCongregation />
         } else if (step === 3) {
-            return <StepperMeetingDetails
-                        meetingDay={meetingDay}
-                        setMeetingDay={(value) => setMeetingDay(value)}
-                        classCount={classCount}
-                        setClassCount={(value) => setClassCount(value)}
-                    />
+            return <StepperMeetingDetails />
         } else if (step === 4) {
             return (
                 <Typography variant="body2">Vita ny fanamboarana voalohany ilain’ny LMM-OA. Mbola azonao ovana izy ireo rehefa mampiasa ny LMM-OA ianao.</Typography>
@@ -119,7 +113,7 @@ const Startup = (props) => {
         await dbUpdateAppSettings(obj);
         await checkSrcUpdate();
         setTimeout(() => {
-            props.setIsAppLoad(false);
+            setIsAppLoad(false);
         }, 1000);
     }
     
@@ -134,8 +128,24 @@ const Startup = (props) => {
                 setIsSetup(false);
                 await initAppDb();
                 await checkSrcUpdate();
+                
+                const {cong_number, cong_name, class_count, meeting_day, cong_ID, cong_PIN} = await dbGetAppSettings();
+                setCongNumber(cong_number);
+                setCongName(cong_name);
+                setClassCount(class_count);
+                setMeetingDay(meeting_day);
+                setCongID(cong_ID);
+                setCongPIN(cong_PIN);
+
+                const userCode = await dbGetUserKey();
+                setPersoCode(userCode);
+                
+                const data = await dbGetStudents();
+                setDbStudents(data);
+                setStudents(data);
+                
                 setTimeout(() => {
-                    props.setIsAppLoad(false);
+                    setIsAppLoad(false);
                 }, 1000);
             } else {
                 setIsSetup(true);
@@ -147,7 +157,7 @@ const Startup = (props) => {
         return () => {
             //clean up
         }
-    }, [props])
+    }, [setIsAppLoad, setClassCount, setCongID, setCongName, setCongNumber, setCongPIN, setMeetingDay, setPersoCode, setDbStudents, setStudents])
 
 
     if (isSetup) {

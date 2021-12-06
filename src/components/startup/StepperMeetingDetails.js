@@ -1,28 +1,21 @@
-import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import { classCountState, meetingDayState } from "../../appStates/appCongregation";
 
-const StepperMeetingDetails = (props) => {
-    const [meetingDay, setMeetingDay] = useState(3);
-    const [classCount, setClassCount] = useState(1);
+const StepperMeetingDetails = () => {
+    const [meetingDay, setMeetingDay] = useRecoilState(meetingDayState);
+    const [classCount, setClassCount] = useRecoilState(classCountState);
 
     const handleMeetingDayChange = (e) => {
-        props.setMeetingDay(e.target.value)
+        setMeetingDay(e.target.value)
     }
 
     const handleClassChange = (e) => {
-        props.setClassCount(e.target.value)
+        setClassCount(e.target.value)
     }
-
-    useEffect(() => {
-        setMeetingDay(props.meetingDay)
-    }, [props.meetingDay])
-
-    useEffect(() => {
-        setClassCount(props.classCount)
-    }, [props.classCount])
 
     return ( 
         <Box

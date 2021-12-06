@@ -1,12 +1,14 @@
+import { useRecoilState } from 'recoil';
 import Box from '@mui/material/Box';
 import FlashAutoIcon from '@mui/icons-material/FlashAuto';
 import IconButton from '@mui/material/IconButton';
 import Input from '@mui/material/Input';
 import Typography from '@mui/material/Typography';
+import { isErrorPersoCodeState, userPersoCodeState } from '../../appStates/appMe';
 
-const StepperAboutMe = (props) => {
-    const {persoCode, setPersoCode} = props;
-    const {isErrorPersoCode, setIsErrorPersoCode} = props;
+const StepperAboutMe = () => {
+    const [persoCode, setPersoCode] = useRecoilState(userPersoCodeState);
+    const [isErrorPersoCode, setIsErrorPersoCode] = useRecoilState(isErrorPersoCodeState);
 
     const handleGeneratePersoCode = () => {
         var min = 1000000000;

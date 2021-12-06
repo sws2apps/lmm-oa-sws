@@ -1,20 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import Typography from '@mui/material/Typography';
+import { appVersionState, isAboutOpenState } from '../../appStates/appSettings';
 
-const About = (props) => {
-    const { isAboutOpen } = props;
-    const [isOpen, setIsOpen] = useState(false);
+const About = () => {
+    const [isOpen, setIsOpen] = useRecoilState(isAboutOpenState);
+
+    const appVersion = useRecoilValue(appVersionState);
 
     const handleClose = () => {
-        props.openAbout(false);
+        setIsOpen(false);
     }
-
-    useEffect(() => {
-        setIsOpen(isAboutOpen);
-    }, [isAboutOpen])
 
     return ( 
         <Dialog
@@ -39,7 +37,7 @@ const About = (props) => {
                     >
                         LMM-OA
                     </Typography>
-                    <Typography variant="body1">{process.env.REACT_APP_VERSION}</Typography>
+                    <Typography variant="body1">{appVersion}</Typography>
                 </Box>
                 <Box>
                     <Typography

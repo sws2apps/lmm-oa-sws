@@ -1,35 +1,25 @@
-import { useState } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import { useEffect } from 'react';
+import { appMessageState, appSeverityState, appSnackOpenState } from '../../appStates/appNotification';
 
-const AppNotification = (props) => {
-    const [open, setOpen] = useState(false);
-    const [appSeverity, setAppSeverity] = useState("success");
-    const [appMessage, setAppMessage] = useState("");
+const AppNotification = () => {
+    const [appSnackOpen, setAppSnackOpen] = useRecoilState(appSnackOpenState)
+    const appSeverity = useRecoilValue(appSeverityState);
+    const appMessage = useRecoilValue(appMessageState);
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
           return;
         }
-        props.setOpen(false);
-        setOpen(false);
+        setAppSnackOpen(false);
     };
-
-    useEffect(() => {
-        setAppSeverity(props.appSeverity);
-        setAppMessage(props.appMessage);
-        setOpen(props.appSnackOpen);
-        return (() => {
-            //clean
-        })
-    }, [props])
 
     return ( 
         <>
             {appMessage && (
                 <Snackbar
-                    open={open}
+                    open={appSnackOpen}
                     autoHideDuration={6000}
                     onClose={handleClose}
                     anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}

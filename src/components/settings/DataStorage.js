@@ -1,11 +1,5 @@
 import { useEffect, useState } from "react";
 import { fileDialog } from 'file-select-dialog';
-import UAParser from "ua-parser-js";
-import { db, firebaseApp } from "../../index";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
-import { logEvent } from "firebase/analytics";
-import { analytics } from "../../index";
 import BackupIcon from '@mui/icons-material/Backup';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -23,25 +17,12 @@ import MenuItem from '@mui/material/MenuItem';
 import SaveIcon from '@mui/icons-material/Save';
 import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore';
 import Typography from '@mui/material/Typography';
-import DialogDbDeletion from "./DialogDbDeletion";
-import { dbExportDb, dbExportJsonDb, dbGetUserKey, dbSavePersoCode } from "../../indexedDb/dbUtility";
-import DialogDbBackup from "./DialogDbBackup";
+import { dbExportDb, dbGetUserKey, dbSavePersoCode } from "../../indexedDb/dbUtility";
 
 const DataStorage = (props) => {
-    const auth = getAuth(firebaseApp);
-    const [open, setOpen] = useState(false);
-    const [openDbBackup, setOpenDbBackup] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [persoCode, setPersoCode] = useState("");
     const [isErrorPersoCode, setIsErrorPersoCode] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
-    const [userID, setUserID] = useState("");
-    const [hasBackup, setHasBackup] = useState(false);
-    const [backupType, setBackupType] = useState("");
-    const [isLoadingBackup, setIsLoadingBackup] = useState(false);
-    const [backupDate, setBackupDate] = useState("");
-    const [backupDevice, setBackupDevice] = useState("");
-    const [backupNewDevice, setBackupNewDevice] = useState("");
 
     let isMenuOpen = Boolean(anchorEl);
 
@@ -82,79 +63,8 @@ const DataStorage = (props) => {
         await dbExportDb();
     };
 
-    const getDeviceInfo = () => {
-        let obj = {};
-        
-        var parser = new UAParser();
-        const result = parser.getResult();
-        let deviceName = "";
-        let browserVersion = "";
-        deviceName = result.os.name;
-        if (result.os.version !== "") {
-            deviceName = deviceName + " " + result.os.version + "";
-        }
-        browserVersion = result.browser.name + " " + result.browser.version;
-        
-        obj.deviceName = deviceName;
-        obj.browserVersion = browserVersion;
-        return obj;
-    }
-
     const prepBackupDbOnline = async () => {
-        handleClose();
 
-        // Display the Dialog
-        setIsLoadingBackup(true);
-        setOpenDbBackup(true);
-
-        // Get current online backup
-        setHasBackup(false);
-        const userDocRef = doc(db, 'user_backup', userID);
-        const docSnap = await getDoc(userDocRef);
-
-        if (docSnap.exists() && docSnap.data().lmmoa) {
-            const backup = docSnap.data().lmmoa;
-            setBackupDate(backup.backup_date);
-            setBackupDevice(backup.backup_device);
-            setHasBackup(true);
-        }
-
-        // Get current device
-        const userDevice = getDeviceInfo();
-        setBackupNewDevice(userDevice.deviceName + "|" + userDevice.browserVersion)
-
-        setBackupType("backup");
-        setIsLoadingBackup(false);
-    }
-
-    const backupDbOnline = async () => {
-        const backJSON = await dbExportJsonDb();
-        const userDoc = doc(db, 'user_backup', userID);
-        setDoc(
-            userDoc,
-            { 
-                lmmoa: {
-                    backup_date: Date.now(),
-                    backup_data: backJSON,
-                    backup_device: backupNewDevice,
-                },
-            },
-            { merge: true }
-        )
-        .then(() => {
-            props.setAppSnackOpen(true);
-            props.setAppSeverity("success");
-            props.setAppMessage("Voatahiry soa aman-tsara ny rakitra fiandry.");
-
-            logEvent(analytics, 'user_backup_backup');
-        })
-        .catch(error => {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            props.setAppSnackOpen(true);
-            props.setAppSeverity("error");
-            props.setAppMessage(`(${errorCode}) ${errorMessage}`);
-        })
     }
 
     const restoreDb = async () => {
@@ -202,79 +112,12 @@ const DataStorage = (props) => {
     };
 
     const prepRestoreDbOnline = async () => {
-        handleClose();
 
-        // Display the Dialog
-        setIsLoadingBackup(true);
-        setOpenDbBackup(true);
-
-        // Get current online backup
-        const userDocRef = doc(db, 'user_backup', userID);
-        const docSnap = await getDoc(userDocRef);
-
-        if (docSnap.exists() && docSnap.data().lmmoa) {          
-            const backup = docSnap.data().lmmoa;
-            setBackupDate(backup.backup_date);
-            setBackupDevice(backup.backup_device);
-
-            setBackupType("restore");
-            setIsLoadingBackup(false);
-        } else {
-            setOpenDbBackup(false);
-            props.setAppSnackOpen(true);
-            props.setAppSeverity("warning");
-            props.setAppMessage("Tsy misy rakitra fiandry any amin’ny internet");
-        }
     }
-
-    const restoreDbOnline = async () => {
-        const userDocRef = doc(db, 'user_backup', userID);
-        const docSnap = await getDoc(userDocRef);
-
-        if (docSnap.exists() && docSnap.data().lmmoa) {
-            try {
-                const backupData = docSnap.data().lmmoa.backup_data;
-                const myKey = await dbGetUserKey();
-                const Cryptr = require('cryptr');
-                const cryptr = new Cryptr(myKey);
-                const decryptedData =  cryptr.decrypt(backupData);
-                fetch(decryptedData)
-                .then(res => res.blob())
-                .then(blob => {
-                    props.setJsonFile(blob);
-                    props.setIsRedirect(true);
-
-                    logEvent(analytics, 'user_backup_restore');
-                })
-            } catch (error) {
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                if (error.message === "Unsupported state or unable to authenticate data") {
-                    props.setAppSnackOpen(true);
-                    props.setAppSeverity("error");
-                    props.setAppMessage("Tsy afaka mamerina io rakitra fiandry io ny kaody manokana ampiasainao izao.");
-                } else {
-                    props.setAppSnackOpen(true);
-                    props.setAppSeverity("error");
-                    props.setAppMessage(`(${errorCode}) ${errorMessage}`);
-                }
-            }
-        }
-    };
 
     const handleDelete = () => {
-        setOpen(true);
+        
     }
-
-    onAuthStateChanged(auth, user => {
-        if (user) {
-            setIsLoggedIn(true);
-            setUserID(user.uid);
-        } else {
-            setIsLoggedIn(false);
-            setUserID("")
-        }
-    });
 
     useEffect(() => {
         const getPersoCode = async () => {
@@ -290,22 +133,6 @@ const DataStorage = (props) => {
 
     return ( 
         <>
-            <DialogDbDeletion
-                open={open}
-                setOpen={(value) => setOpen(value)}
-            />
-            <DialogDbBackup 
-                open={openDbBackup}
-                setOpen={(value) => setOpenDbBackup(value)}
-                backupNewDevice={backupNewDevice}
-                hasBackup={hasBackup}
-                isLoadingBackup={isLoadingBackup}
-                backupDevice={backupDevice}
-                backupDate={backupDate}
-                backupType={backupType}
-                backupDbOnline={backupDbOnline}
-                restoreDbOnline={restoreDbOnline}
-            />
             <Typography variant="h6" color="primary" className={"settingHeader"}>FITEHIRIZANA</Typography>
             <div className={"settingSubItem"}>
                 <Box>
@@ -373,14 +200,12 @@ const DataStorage = (props) => {
                                 </ListItemIcon>
                                 <ListItemText>Hamorona</ListItemText>
                             </MenuItem>
-                            {isLoggedIn && (
-                                <MenuItem onClick={prepBackupDbOnline} disabled={isErrorPersoCode}>
-                                    <ListItemIcon>
-                                        <BackupIcon fontSize="small" />
-                                    </ListItemIcon>
-                                    <ListItemText>Hamorona (Internet)</ListItemText>
-                                </MenuItem>
-                            )}
+                            <MenuItem onClick={prepBackupDbOnline} disabled={isErrorPersoCode}>
+                                <ListItemIcon>
+                                    <BackupIcon fontSize="small" />
+                                </ListItemIcon>
+                                <ListItemText>Hamorona (Internet)</ListItemText>
+                            </MenuItem>
                             <Divider />                            
                             <MenuItem onClick={restoreDb} disabled={isErrorPersoCode}>
                                 <ListItemIcon>
@@ -388,14 +213,12 @@ const DataStorage = (props) => {
                                 </ListItemIcon>
                                 <ListItemText>Hampiditra</ListItemText>
                             </MenuItem>
-                            {isLoggedIn && (
-                                <MenuItem onClick={prepRestoreDbOnline} disabled={isErrorPersoCode}>
-                                    <ListItemIcon>
-                                        <CloudDownloadIcon fontSize="small" />
-                                    </ListItemIcon>
-                                    <ListItemText>Hampiditra (Internet)</ListItemText>
-                                </MenuItem>
-                            )}
+                            <MenuItem onClick={prepRestoreDbOnline} disabled={isErrorPersoCode}>
+                                <ListItemIcon>
+                                    <CloudDownloadIcon fontSize="small" />
+                                </ListItemIcon>
+                                <ListItemText>Hampiditra (Internet)</ListItemText>
+                            </MenuItem>
                         </Menu>
                     </Box>
                 </Box>

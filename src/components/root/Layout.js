@@ -1,28 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import Box from '@mui/material/Box';
 import About from './About';
 import AppMenus from './AppMenus';
+import { isAboutOpenState } from '../../appStates/appSettings';
 
 const Layout = (props) => {
-    const [appBarTitle, setAppBarTitle] = useState("LMM-OA");
-    const [openAbout, setOpenAbout] = useState(false);
     const { enabledInstall, isLoading, installPwa } = props;
 
-    useEffect(() => {
-       setAppBarTitle(props.appBarTitle);
-    }, [props.appBarTitle])
+    const isOpenAbout = useRecoilValue(isAboutOpenState);
 
     return ( 
         <Box sx={{display: 'flex'}}>
-            {openAbout && (
-                <About
-                    isAboutOpen={openAbout}
-                    openAbout={(value) => setOpenAbout(value)}
-                />
+            {isOpenAbout && (
+                <About />
             )}
             <AppMenus 
-                appBarTitle={appBarTitle}
-                openAbout={(value) => setOpenAbout(value)}
                 enabledInstall={enabledInstall}
                 isLoading={isLoading}
                 installPwa={installPwa}

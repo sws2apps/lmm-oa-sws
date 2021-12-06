@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
+import { useSetRecoilState } from 'recoil';
 import { useLocation } from "react-router-dom";
-import { logEvent } from "firebase/analytics";
-import { analytics } from "../../index";
 import styled from "@emotion/styled";
 import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '@mui/material/AppBar';
@@ -15,6 +14,7 @@ import IconButton from '@mui/material/IconButton';
 import GetApp from '@mui/icons-material/GetApp';
 import AppDrawer from "./AppDrawer";
 import * as serviceWorkerRegistration from '../../serviceWorkerRegistration';
+import { isAboutOpenState } from '../../appStates/appSettings';
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 const drawerWidth = 240;
@@ -24,6 +24,8 @@ const AppMenus = (props) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [appBarTitle, setAppBarTitle] = useState("Fandraisana");
   const { enabledInstall, isLoading, installPwa } = props;
+
+  const setIsAboutOpen = useSetRecoilState(isAboutOpenState);
 
   useEffect(() => {
     if (location.pathname === "/") {
@@ -39,12 +41,14 @@ const AppMenus = (props) => {
     } else if (location.pathname === "/Help") {
       setAppBarTitle("Fanampiana");
     };
-    serviceWorkerRegistration.update();
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+    } else {
+      serviceWorkerRegistration.update();
+    }
   }, [location.pathname])
 
   const handleInstallPwa = () => {
     installPwa();
-    logEvent(analytics, 'pwa_install_lmm_oa');
   }
 
   const handleDrawerToggle = () => {
@@ -52,7 +56,7 @@ const AppMenus = (props) => {
   }
 
   const handleAbout = () => {
-    props.openAbout(true);
+    setIsAboutOpen(true);
   }
 
   return (
