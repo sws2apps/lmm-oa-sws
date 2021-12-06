@@ -15,11 +15,14 @@ jobs:
     steps:
       - name: Get package version
         id: package-version
-        uses: koj-co/package-version-action@v1.0.1
+        uses: trendoid/version-for-publishing@0.1.6
+        with:
+          branch: feat/version-for-publishing
+          filePath: ./package.json
       - uses: actions/checkout@v2
       - run: npm i && npm run build
         env:
-          REACT_APP_VERSION: ${{ steps.package-version.outputs.package-version }}
+          REACT_APP_VERSION: ${{ steps.package-version.outputs.version }}
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
