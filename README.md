@@ -4,7 +4,7 @@ LMM-OA is a web application that will allow you to schedule students assignment 
 
 ## Who should use LMM-OA?
 
-LMM-OA is designed for use by the Life and Ministry Meeting Overseers.
+LMM-OA is designed for use by the Life and Ministry Meeting Overseer.
 
 ## What are the device requirements to open LMM-OA?
 
