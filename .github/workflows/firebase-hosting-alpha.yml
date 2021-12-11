@@ -32,6 +32,7 @@ jobs:
         uses: andstor/file-existence-action@v1
         with:
           files: "build"
+      - run: echo ${{ steps.check_files.outputs.files.exists }}
       - name: Deploy to LMM-OA to alpha environment
         if: ${{ steps.check_files.outputs.files.exists == 'true' }}
         uses: FirebaseExtended/action-hosting-deploy@v0
