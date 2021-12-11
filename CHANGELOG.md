@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.3...v1.0.4) (2021-12-11)
+
+
+### Bug Fixes
+
+* **deploy:** check build if exists ([431d025](https://github.com/sws2apps/lmm-oa-sws/commit/431d025cb05b69e9d9d7aa07cacae2985b5edeea))
+
 ## [1.0.3](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.2...v1.0.3) (2021-12-11)
 
 
