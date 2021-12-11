@@ -21,7 +21,8 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm ci
+      - name: Prepare environment for ReactApp
+        run: npm ci
       - name: Run Semantic Release to version and build App
         run: npx semantic-release
         env:
