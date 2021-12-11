@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.2...v1.0.3) (2021-12-11)
+
+
+### Bug Fixes
+
+* **workflow:** check build output ([eac06a2](https://github.com/sws2apps/lmm-oa-sws/commit/eac06a217d2c194b95c602c296d4ba9b36fb19f6))
+
 ## [1.0.2](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.1...v1.0.2) (2021-12-11)
 
 
