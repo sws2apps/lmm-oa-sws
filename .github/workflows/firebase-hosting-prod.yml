@@ -29,9 +29,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Check if new version has been generated
         id: check_files
-        run: test -f build && echo'::set-output name=BUILD_GEN::true'
+        uses: andstor/file-existence-action@v1
+        with:
+          files: "build"
       - name: Deploy to LMM-OA to production
-        if: steps.check_files.outputs.BUILD_GEN == 'true'
+        if: ${{ steps.check_files.outputs.files.exists }} == 'true'
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
