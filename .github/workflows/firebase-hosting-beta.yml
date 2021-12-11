@@ -39,4 +39,4 @@ jobs:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_LMM_OA_SWS }}'
           channelId: beta
-          projectId: sws-pocket
+          projectId: lmm-oa-sws

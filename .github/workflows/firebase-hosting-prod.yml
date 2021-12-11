@@ -20,6 +20,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
+          cache: 'npm'
       - run: npm ci
       - name: Run Semantic Release to version and build App
         run: npx semantic-release
@@ -38,4 +39,4 @@ jobs:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_LMM_OA_SWS }}'
           channelId: live
-          projectId: sws-pocket
+          projectId: lmm-oa-sws
