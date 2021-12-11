@@ -28,12 +28,12 @@ jobs:
           REACT_APP_ENCRYPTION_KEY: ${{ secrets.REACT_APP_ENCRYPTION_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Check if new version has been generated
-        id: check_build
+        id: check_files
         uses: andstor/file-existence-action@v1
         with:
-          files: "build"
+          files: "build, build/service-worker.js"
       - name: Deploy to LMM-OA to production
-        if: steps.check_build.outputs.files.exists == true
+        if: steps.check_files.outputs.files.exists == 'true'
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
