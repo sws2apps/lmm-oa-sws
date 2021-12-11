@@ -1,3 +1,11 @@
+## [1.0.1](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0...v1.0.1) (2021-12-11)
+
+
+### Bug Fixes
+
+* **firebase-actions:** fix deployment settings ([a6696de](https://github.com/sws2apps/lmm-oa-sws/commit/a6696ded620d81b409c1a89216e686a48442afaa))
+* **firebase-actions:** remove npm cache until further notie ([38ed50a](https://github.com/sws2apps/lmm-oa-sws/commit/38ed50add78e47adb7f42aab56ad0933739d895c))
+
 # 1.0.0 (2021-12-11)
 
 
