@@ -1,3 +1,10 @@
+## [1.0.8](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.7...v1.0.8) (2021-12-11)
+
+
+### Bug Fixes
+
+* **core:** change app deployment process ([e31d395](https://github.com/sws2apps/lmm-oa-sws/commit/e31d395c3b803a5e811d5ae7b04fe025c9198977))
+
 ## [1.0.7](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.6...v1.0.7) (2021-12-11)
 
 
