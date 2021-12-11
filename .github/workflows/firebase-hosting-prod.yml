@@ -33,6 +33,7 @@ jobs:
         with:
           files: "build"
       - name: Deploy to LMM-OA to production
+        if: steps.check_build.outputs.files.exists == true
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
