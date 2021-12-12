@@ -5,7 +5,7 @@ name: LMM-OA Publish on alpha to Firebase Hosting
 'on':
   push:
     branches:
-      - beta
+      - alpha
 jobs:
   build_and_deploy_beta:
     runs-on: ubuntu-latest
