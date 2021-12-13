@@ -1,3 +1,10 @@
+# 1.0.0-alpha.1 (2021-12-13)
+
+
+### Features
+
+* **app:** new alpha release ([c10e0c8](https://github.com/sws2apps/lmm-oa-sws/commit/c10e0c8e7645e035706e9ca6d423afe7139d2e30))
+
 # [1.1.0-beta.1](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.8...v1.1.0-beta.1) (2021-12-12)
 
 
