@@ -80,7 +80,7 @@ jobs:
           projectId: lmm-oa-sws
 
   build_and_deploy_toSTAGING:
-    name: Build ReactApp and Deploy to Firebase Hosting
+    name: Build and Deploy (STAGING)
     if: ${{ github.repository == 'sws2apps/lmm-oa-sws' && github.ref == 'refs/heads/beta' }}
     environment:
       name: Staging
@@ -127,7 +127,7 @@ jobs:
           projectId: lmm-oa-sws
 
   build_and_deploy_toPROD:
-    name: Build ReactApp and Deploy to Firebase Hosting
+    name: Build and Deploy (PRODUCTION)
     if: ${{ github.repository == 'sws2apps/lmm-oa-sws' && github.ref == 'refs/heads/main' }}
     environment:
       name: Production
