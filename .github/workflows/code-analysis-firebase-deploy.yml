@@ -1,0 +1,175 @@
+name: LMM-OA Code Analysis and Firebase Hosting
+
+on:
+  push:
+    branches: [ main, beta, alpha ]
+  pull_request:
+    branches: [ main, beta, alpha ]
+    
+jobs:
+  analyze:
+    name: Code QL
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'javascript' ]
+
+    steps:
+    - name: Checkout repository for code analysis
+      uses: actions/checkout@v2
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v1
+      with:
+        languages: ${{ matrix.language }}
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v1
+      
+  build_and_deploy_toDEV:
+    name: Build and Deploy (DEV)
+    if: ${{ github.repository == 'sws2apps/lmm-oa-sws' && github.ref == 'refs/heads/alpha' }}
+    environment:
+      name: Development
+      url: ${{ steps.firebase_deploy.outputs.url }}
+    runs-on: ubuntu-latest
+    needs: [analyze]
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+    
+    steps:
+      - name: Checkout for release preparation
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install package dependencies
+        run: npm ci
+
+      - name: Run Semantic Release to version and build App
+        run: npx semantic-release
+        env:
+          REACT_APP_ENCRYPTION_KEY: ${{ secrets.REACT_APP_ENCRYPTION_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Check if new version has been generated
+        id: check_build
+        uses: andstor/file-existence-action@v1
+        with:
+          files: "build"
+      
+      - name: Deploy to LMM-OA to Alpha Prerelease
+        if: ${{ steps.check_build.outputs.files_exists == 'true' && github.ref == 'refs/heads/alpha' }}
+        id: firebase_deploy
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_LMM_OA_SWS }}'
+          channelId: alpha
+          projectId: lmm-oa-sws
+
+  build_and_deploy_toSTAGING:
+    name: Build ReactApp and Deploy to Firebase Hosting
+    if: ${{ github.repository == 'sws2apps/lmm-oa-sws' && github.ref == 'refs/heads/beta' }}
+    environment:
+      name: Staging
+      url: ${{ steps.firebase_deploy.outputs.url }}
+    runs-on: ubuntu-latest
+    needs: [analyze]
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+    
+    steps:
+      - name: Checkout for release preparation
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install package dependencies
+        run: npm ci
+
+      - name: Run Semantic Release to version and build App
+        run: npx semantic-release
+        env:
+          REACT_APP_ENCRYPTION_KEY: ${{ secrets.REACT_APP_ENCRYPTION_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Check if new version has been generated
+        id: check_build
+        uses: andstor/file-existence-action@v1
+        with:
+          files: "build"
+      
+      - name: Deploy to LMM-OA to Beta Prerelease
+        if: ${{ steps.check_build.outputs.files_exists == 'true' && github.ref == 'refs/heads/beta' }}
+        id: firebase_deploy
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_LMM_OA_SWS }}'
+          channelId: beta
+          projectId: lmm-oa-sws
+
+  build_and_deploy_toPROD:
+    name: Build ReactApp and Deploy to Firebase Hosting
+    if: ${{ github.repository == 'sws2apps/lmm-oa-sws' && github.ref == 'refs/heads/main' }}
+    environment:
+      name: Production
+      url: ${{ steps.firebase_deploy.outputs.url }}
+    runs-on: ubuntu-latest
+    needs: [analyze]
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+    
+    steps:
+      - name: Checkout for release preparation
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install package dependencies
+        run: npm ci
+
+      - name: Run Semantic Release to version and build App
+        run: npx semantic-release
+        env:
+          REACT_APP_ENCRYPTION_KEY: ${{ secrets.REACT_APP_ENCRYPTION_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Check if new version has been generated
+        id: check_build
+        uses: andstor/file-existence-action@v1
+        with:
+          files: "build"
+      
+      - name: Deploy to LMM-OA to Production
+        if: ${{ steps.check_build.outputs.files_exists == 'true' && github.ref == 'refs/heads/main' }}
+        id: firebase_deploy
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_LMM_OA_SWS }}'
+          channelId: live
+          projectId: lmm-oa-sws
+
