@@ -10,33 +10,36 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
+import { useTranslation } from 'react-i18next';
+
 const AppDrawer = () => {
+    const { t } = useTranslation()
     return ( 
         <div>
             <List>
                 <ListItem button component={Link} to="/">
                     <ListItemIcon><HomeIcon /></ListItemIcon>
-                    <ListItemText primary={"Fandraisana"} />
+                    <ListItemText primary={t("nav.home")} />
                 </ListItem>
                 <ListItem button component={Link} to="/Students">
                     <ListItemIcon><PeopleIcon /></ListItemIcon>
-                    <ListItemText primary={"Mpianatra"} />
+                    <ListItemText primary={t("nav.students")} />
                 </ListItem>
                 <ListItem button component={Link} to="/Schedule">
                     <ListItemIcon><ScheduleIcon /></ListItemIcon>
-                    <ListItemText primary={"Fandaharana"} />
+                    <ListItemText primary={t("nav.schedule")} />
                 </ListItem>
                 <ListItem button component={Link} to="/SourceMaterial">
                     <ListItemIcon><LibraryBooksIcon /></ListItemIcon>
-                    <ListItemText primary={"Loharanon-kevitra"} />
+                    <ListItemText primary={t("nav.sourceMaterial")} />
                 </ListItem>
                 <ListItem button component={Link} to="/Settings">
                     <ListItemIcon><SettingsIcon /></ListItemIcon>
-                    <ListItemText primary={"Fanamboarana"} />
+                    <ListItemText primary={t("nav.settings")} />
                 </ListItem>
                 <ListItem button component={Link} to="/Help">
                     <ListItemIcon><HelpIcon /></ListItemIcon>
-                    <ListItemText primary={"Fanampiana"} />
+                    <ListItemText primary={t("nav.help")} />
                 </ListItem>
             </List>
         </div>
