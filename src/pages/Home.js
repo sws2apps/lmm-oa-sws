@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { styled } from '@mui/styles';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -107,6 +108,8 @@ const TypoStudentPart = styled(Typography)(() => ({
 }));
 
 const Home = () => {
+    const { t } = useTranslation();
+
     const [classCount, setClassCount]= useState(1);
     const [bibleReadingSrc, setBibleReadingSrc] = useState("");
     const [ass1Type, setAss1Type] = useState("");
@@ -201,7 +204,7 @@ const Home = () => {
             setClassCount(appSettings.class_count);
 
             const weekValue = dateFormat(currentWeek, "mm/dd/yyyy");
-            const weekValueFormatted = dateFormat(currentWeek, "dd/mm/yyyy");
+            const weekValueFormatted = dateFormat(currentWeek, t("global.shortDateFormat"));
             setFCurrentWeek(weekValueFormatted);
 
             const scheduleData = await dbGetScheduleData(weekValue);
@@ -270,7 +273,7 @@ const Home = () => {
         if (currentWeek !== "") {
             loadCurrentWeekData();
         }
-    }, [currentWeek])
+    }, [t, currentWeek])
 
     useEffect( () => {
         var today = new Date();
@@ -309,7 +312,7 @@ const Home = () => {
             </Box>
 
             <Typography variant="h6" align="center" sx={{lineHeight: 1.3}}>
-                FANDAHARAM-PIVORIANA—{fCurrentWeek}
+                {t("home.currentSchedule", {currentWeek: fCurrentWeek})}
             </Typography>
             
             {isLoading && (
@@ -345,13 +348,13 @@ const Home = () => {
                         <>
                             <BoxMeetingPart className={"tgwPart"}>
                                 <Typography variant="h6" sx={sharedStyles.typoLineHeight}>
-                                    HARENA AVY AO AMIN’NY TENIN’ANDRIAMANITRA
+                                    {t("global.treasuresPart")}
                                 </Typography>
                             </BoxMeetingPart>
                             <BoxPartContainer>
                                 <Grid item sx={classCount === 1 ? sharedStyles.studentPartWrapper1 : sharedStyles.studentPartWrapper2}>
                                     <TypoStudentPart variant="body1">
-                                        Famakiana Baiboly (4 min.)
+                                        {t("global.bibleReadingText")}
                                     </TypoStudentPart>
                                     <Typography variant="body1">
                                         {bibleReadingSrc}
@@ -374,7 +377,7 @@ const Home = () => {
                             </BoxPartContainer>
                             <BoxMeetingPart className={"ayfPart"}>
                                 <Typography variant="h6" sx={sharedStyles.typoLineHeight}>
-                                    FAMPIOFANANA AMIN’NY FANOMPOANA
+                                    {t("global.applyFieldMinistryPart")}
                                 </Typography>
                             </BoxMeetingPart>
                             {ass1Src && (

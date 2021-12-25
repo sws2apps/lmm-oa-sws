@@ -1,9 +1,12 @@
 import { useRecoilState } from 'recoil';
+import { useTranslation } from 'react-i18next';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { congNameState, congNumberState, isErrorCongNameState, isErrorCongNumberState } from '../../appStates/appCongregation';
 
 const StepperCongregation = () => {
+    const { t } = useTranslation();
+
     const [congName, setCongName] = useRecoilState(congNameState);
     const [congNumber, setCongNumber] = useRecoilState(congNumberState);
     const [isErrorCongName, setIsErrorCongName] = useRecoilState(isErrorCongNameState);
@@ -29,16 +32,15 @@ const StepperCongregation = () => {
 
     return ( 
         <div>
-            <Typography variant="body2" paragraph>Ampidiro eto ambany ny anaran’ny fiangonana sy nomerao</Typography>
+            <Typography variant="body2" paragraph>{t("startup.congInfoDescription")}</Typography>
             <TextField
-                id="outlined-basic"
-                label="Fiangonana"
+                id="outlined-cong-name"
+                label={t("global.congregation")}
                 variant="outlined"
                 size="small"
                 autoComplete='off'
                 required
                 error={isErrorCongName ? true : false}
-                helperText={isErrorCongName ? "Mila fenoina" : null}
                 sx={{
                     width: '320px',
                     marginRight: '5px',
@@ -48,15 +50,14 @@ const StepperCongregation = () => {
                 onChange={(e) => handleCongNameChange(e.target.value)}
             />
             <TextField
-                id="outlined-basic"
+                id="outlined-cong-number"
                 type="number"
-                label="Nomerao"
+                label={t("global.number")}
                 variant="outlined"
                 size="small"
                 autoComplete='off'
                 required
                 error={isErrorCongNumber ? true : false}
-                helperText={isErrorCongNumber ? "Mila fenoina" : null}
                 sx={{width: '120px'}}
                 value={congNumber}
                 onChange={(e) => handleCongNumberChange(e.target.value)}

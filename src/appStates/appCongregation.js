@@ -15,8 +15,8 @@ export const congIDState = atom({
     default: '',
 })
 
-export const congPINState = atom({
-    key: 'congPIN',
+export const congPasswordState = atom({
+    key: 'congPassword',
     default: '',
 })
 
