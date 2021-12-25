@@ -19,6 +19,7 @@ const Settings = lazy(() => import('./pages/Settings'));
 const SourceMaterial = lazy(() => import('./pages/SourceMaterial'));
 const Students = lazy(() => import('./pages/Students'));
 const ScheduleTemplate = lazy(() => import('./template/ScheduleTemplate'));
+const Administration = lazy(() => import('./pages/Administration'));
 
 const theme = createTheme({
     breakpoints: {
@@ -54,7 +55,7 @@ const App = () => {
             if ('serviceWorker' in navigator) {}
             else {
                 return (
-                    <div className="browser-not-supported">Tsy afaka mampiasa ny LMM-OA ianao amin’ity programa fijerenao internet ity. Hamarino raha mila fanavaozana ilay izy, na andramo amin’ny programa fijerena internet hafa.</div>
+                    <div className="browser-not-supported">You seem to use an unsupported browser to use LMM-OA. Make sure that you browser is up to date, or try to use another browser.</div>
                 )
             }
         }
@@ -99,6 +100,9 @@ const App = () => {
                             </Route>
                             <Route path="/Settings">
                                 <Settings />
+                            </Route>
+                            <Route path="/Administration">
+                                <Administration />
                             </Route>
                             <Route path="/DBRestore">
                                 <DBRestore />

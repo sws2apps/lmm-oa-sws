@@ -5,7 +5,7 @@ import translationEN from './locales/en.json';
 import translationMG from './locales/mg.json';
 
 const resources = {
-    en: {
+    e: {
         translation: translationEN,
     },
     mg: {
@@ -17,7 +17,8 @@ i18n
     .use(initReactI18next)
     .init({
         resources,
-        lng: 'en',
+        lng: 'e',
+        fallbackLng: 'e',
 
         keySeparator: true,
 

@@ -2,15 +2,10 @@ import Dexie from "dexie";
 import { exportDB, importDB } from "dexie-export-import";
 import download from "downloadjs";
 import appDb from './mainDb';
-import userDb from './userPrefDb';
 
 export const initAppDb = async () => {
     await appDb.open();
 };
-
-export const initUserDb = async () => {
-    await userDb.open();
-}
 
 export const deleteDb = async () => {
     const databases = await Dexie.getDatabaseNames();
@@ -72,7 +67,7 @@ export const dbExportDb = async () => {
     };
 
     const data = await convertBase64();
-    const myKey = await dbGetUserKey();
+    const myKey = '';
     const Cryptr = require('cryptr');
     const cryptr = new Cryptr(myKey);
     const encryptedData = cryptr.encrypt(data);
@@ -94,19 +89,9 @@ export const dbExportJsonDb = async () => {
     }
     
     const data = await convertBase64();
-    const myKey = await dbGetUserKey();
+    const myKey = '';
     const Cryptr = require('cryptr');
     const cryptr = new Cryptr(myKey);
     const encryptedData = cryptr.encrypt(data);
     return encryptedData;
-};
-
-export const dbSavePersoCode = async (value) => {
-    const data = value + "_@lmm-oa";
-    await userDb.table("preferences").update(1, {perso_code: data});
-}
-
-export const dbGetUserKey = async () => {
-    const userData = await userDb.table("preferences").get({"id_pref": 1});
-    return userData.perso_code;
 };

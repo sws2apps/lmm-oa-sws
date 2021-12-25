@@ -1,20 +1,25 @@
 import { useEffect, useState } from "react";
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { useLocation } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 import styled from "@emotion/styled";
 import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+import GetApp from '@mui/icons-material/GetApp';
+import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
+import LoginIcon from '@mui/icons-material/Login';
+import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
+import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
-import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
-import GetApp from '@mui/icons-material/GetApp';
 import AppDrawer from "./AppDrawer";
+import AppLanguage from "./AppLanguage";
 import * as serviceWorkerRegistration from '../../serviceWorkerRegistration';
-import { isAboutOpenState } from '../../appStates/appSettings';
+import { isAboutOpenState, isLoginOpenState, uidUserState } from '../../appStates/appSettings';
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 const drawerWidth = 240;
@@ -22,30 +27,15 @@ const drawerWidth = 240;
 const AppMenus = (props) => {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [appBarTitle, setAppBarTitle] = useState("Fandraisana");
+  const [appBarTitle, setAppBarTitle] = useState('');
   const { enabledInstall, isLoading, installPwa } = props;
 
-  const setIsAboutOpen = useSetRecoilState(isAboutOpenState);
+  const [uidUser, setUidUser] = useRecoilState(uidUserState);
 
-  useEffect(() => {
-    if (location.pathname === "/") {
-      setAppBarTitle("Fandraisana");
-    } else if (location.pathname === "/Students") {
-      setAppBarTitle("Mpianatra");
-    } else if (location.pathname === "/Schedule") {
-      setAppBarTitle("Fandaharana");
-    } else if (location.pathname === "/SourceMaterial") {
-      setAppBarTitle("Loharanon-kevitra");
-    } else if (location.pathname === "/Settings") {
-      setAppBarTitle("Fanamboarana");
-    } else if (location.pathname === "/Help") {
-      setAppBarTitle("Fanampiana");
-    };
-    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-    } else {
-      serviceWorkerRegistration.update();
-    }
-  }, [location.pathname])
+  const setIsAboutOpen = useSetRecoilState(isAboutOpenState);
+  const setIsLoginOpen = useSetRecoilState(isLoginOpenState);
+
+  const { t } = useTranslation();
 
   const handleInstallPwa = () => {
     installPwa();
@@ -58,6 +48,36 @@ const AppMenus = (props) => {
   const handleAbout = () => {
     setIsAboutOpen(true);
   }
+
+  const handleLogin = () => {
+    setIsLoginOpen(true);
+  }
+
+  const handleLogout = () => {
+    setUidUser('');
+  }
+
+  useEffect(() => {
+    if (location.pathname === "/") {
+      setAppBarTitle(t("global.home"));
+    } else if (location.pathname === "/Students") {
+      setAppBarTitle(t("global.students"));
+    } else if (location.pathname === "/Schedule") {
+      setAppBarTitle(t("global.schedule"));
+    } else if (location.pathname === "/SourceMaterial") {
+      setAppBarTitle(t("global.sourceMaterial"));
+    } else if (location.pathname === "/Settings") {
+      setAppBarTitle(t("global.settings"));
+    } else if (location.pathname === "/Administration") {
+      setAppBarTitle(t("global.administration"));
+    } else if (location.pathname === "/Help") {
+      setAppBarTitle(t("global.help"));
+    };
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+    } else {
+      serviceWorkerRegistration.update();
+    }
+  }, [t, location.pathname])
 
   return (
     <Box sx={{display: 'flex'}}>
@@ -117,7 +137,12 @@ const AppMenus = (props) => {
             </Box>
           </Typography>
         </Toolbar>
-        <div>
+        <Box
+          sx={{
+            minWidth: '30px',
+            flex: 'none'
+          }}
+        >
           {(!isLoading && enabledInstall) && (
             <IconButton
               color="inherit"
@@ -128,6 +153,35 @@ const AppMenus = (props) => {
               <GetApp />
             </IconButton>
           )}
+          <AppLanguage />
+          {navigator.onLine && (
+            <>
+              {uidUser.length === 0 && (
+                <Tooltip title={t("global.login")}>
+                  <IconButton
+                    color="inherit"
+                    edge="start"
+                    sx={{marginRight: '8px'}}
+                    onClick={handleLogin}
+                  >
+                    <LoginIcon />
+                  </IconButton>
+                </Tooltip>
+              )}
+              {uidUser.length > 0 && (
+                <Tooltip title={t("global.logout")}>
+                  <IconButton
+                    color="inherit"
+                    edge="start"
+                    sx={{marginRight: '8px'}}
+                    onClick={handleLogout}
+                  >
+                    <LogoutIcon />
+                  </IconButton>
+                </Tooltip>
+              )}
+            </>
+          )}
           <IconButton
             color="inherit"
             edge="start"
@@ -135,7 +189,7 @@ const AppMenus = (props) => {
           >
             <InfoIcon />
           </IconButton>
-        </div>
+        </Box>
       </AppBar>
       
       <Box

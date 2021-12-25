@@ -1,4 +1,5 @@
 import { useRecoilState } from "recoil";
+import { useTranslation } from "react-i18next";
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
@@ -6,6 +7,8 @@ import Typography from '@mui/material/Typography';
 import { classCountState, meetingDayState } from "../../appStates/appCongregation";
 
 const StepperMeetingDetails = () => {
+    const { t } = useTranslation();
+
     const [meetingDay, setMeetingDay] = useRecoilState(meetingDayState);
     const [classCount, setClassCount] = useRecoilState(classCountState);
 
@@ -25,11 +28,11 @@ const StepperMeetingDetails = () => {
                 flexWrap: "wrap",
             }}
         >
-            <Typography variant="body2" paragraph>Ampidiro eto ambany ny andro hanaovana ny fivoriana andavanandro, sy ny isan’ny kilasy misy anjaran’ny mpianatra</Typography>
+            <Typography variant="body2" paragraph>{t("startup.meetingInfoDescription")}</Typography>
             <TextField
                 id="outlined-select-day"
                 select
-                label="Andro hivoriana"
+                label={t("startup.meetingDay")}
                 value={meetingDay}
                 defaultValue={3}
                 onChange={handleMeetingDayChange}
@@ -40,17 +43,17 @@ const StepperMeetingDetails = () => {
                     marginBottom: '10px',
                 }}
             >
-                <MenuItem value={1}>Alatsinainy</MenuItem>
-                <MenuItem value={2}>Talata</MenuItem>
-                <MenuItem value={3}>Alarobia</MenuItem>
-                <MenuItem value={4}>Alakamisy</MenuItem>
-                <MenuItem value={5}>Zoma</MenuItem>
-                <MenuItem value={6}>Asabotsy</MenuItem>
+                <MenuItem value={1}>{t("global.monday")}</MenuItem>
+                <MenuItem value={2}>{t("global.tuesday")}</MenuItem>
+                <MenuItem value={3}>{t("global.wednesday")}</MenuItem>
+                <MenuItem value={4}>{t("global.thursday")}</MenuItem>
+                <MenuItem value={5}>{t("global.friday")}</MenuItem>
+                <MenuItem value={6}>{t("global.saturday")}</MenuItem>
             </TextField>
             <TextField
                 id="outlined-select-class"
                 select
-                label="Isan’ny kilasy"
+                label={t("startup.classCount")}
                 value={classCount}
                 defaultValue={1}
                 onChange={handleClassChange}
@@ -61,8 +64,8 @@ const StepperMeetingDetails = () => {
                     marginBottom: '10px',
                 }}
             >
-                <MenuItem value={1}>Kilasy 1</MenuItem>
-                <MenuItem value={2}>Kilasy 2</MenuItem>
+                <MenuItem value={1}>{t("global.oneClass")}</MenuItem>
+                <MenuItem value={2}>{t("global.twoClass")}</MenuItem>
             </TextField>
         </Box>
      );
