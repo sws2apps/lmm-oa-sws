@@ -11,7 +11,7 @@
     "@mui/material": "^5.0.3",
     "@mui/styles": "^5.0.1",
     "cryptr": "^6.0.2",
-    "dateformat": "^4.5.1",
+    "dateformat": "^5.0.2",
     "dexie": "^3.0.3",
     "dexie-export-import": "^1.0.3",
     "downloadjs": "^1.4.7",
