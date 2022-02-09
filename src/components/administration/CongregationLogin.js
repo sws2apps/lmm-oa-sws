@@ -195,7 +195,6 @@ const CongregationLogin = () => {
 				body: JSON.stringify(reqPayload),
 			})
 				.then(async (res) => {
-					const data = await res.json();
 					if (res.status === 200) {
 						await dbUpdateAppSettings({
 							cong_id: congTempID,
@@ -211,14 +210,14 @@ const CongregationLogin = () => {
 						setAppSeverity('success');
 						setAppSnackOpen(true);
 						handleClose();
+					} else if (res.status === 500) {
+						setAppMessage(t('global.errorTryAgain'));
+						setAppSeverity('error');
+						setAppSnackOpen(true);
+						setIsProcessing(false);
+						setIsDisabled(false);
 					} else {
-						let warnMsg;
-						if (data.message === 'FORBIDDEN') {
-							warnMsg = t('administration.incorrectLogin');
-						} else {
-							warnMsg = t('global.errorTryAgain');
-						}
-						setAppMessage(warnMsg);
+						setAppMessage(t('administration.incorrectLogin'));
 						setAppSeverity('warning');
 						setAppSnackOpen(true);
 						setIsProcessing(false);
