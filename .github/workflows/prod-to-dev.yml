@@ -21,9 +21,9 @@ jobs:
 
       - name: Do git rebase
         run: |
-          git config --global url."https://api:$GH_TOKEN@github.com/".insteadOf "https://github.com/"
-          git config --global url."https://ssh:$GH_TOKEN@github.com/".insteadOf "ssh://git@github.com/"
-          git config --global url."https://git:$GH_TOKEN@github.com/".insteadOf "git@github.com:"
+          git config --global user.email "sws2apps@gmail.com"
+          git config --global user.name "sws2apps-admin"
+          git config --global user.password ${{ secrets.GH_TOKEN }}
           
           git fetch origin
 
