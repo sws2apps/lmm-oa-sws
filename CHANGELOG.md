@@ -1,3 +1,16 @@
+# [1.0.0-alpha.12](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.11...v1.0.0-alpha.12) (2022-02-10)
+
+
+### Bug Fixes
+
+* **administration:** fix notification warning message on account not found ([7435bab](https://github.com/sws2apps/lmm-oa-sws/commit/7435babbb0454c1200eb646f740ae61dbc187304))
+* **app:** code updated to work with react-router-dom v6 ([1fce8c0](https://github.com/sws2apps/lmm-oa-sws/commit/1fce8c07351701a62b0387821f66dc085e63de1f))
+
+
+### Features
+
+* **deps:** bump react-router-dom from 5.3.0 to 6.2.1 ([e6d9dd5](https://github.com/sws2apps/lmm-oa-sws/commit/e6d9dd5fe82fb30b77caaaeed70598cfccd7ce51))
+
 # [1.0.0-alpha.11](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.10...v1.0.0-alpha.11) (2022-02-09)
 
 
