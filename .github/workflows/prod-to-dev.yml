@@ -17,14 +17,10 @@ jobs:
         uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
         with:
           fetch-depth: 0
-          persist-credentials: false
+          token: ${{ secrets.GH_TOKEN }}
 
       - name: Do git rebase
-        run: |
-          git config --global user.email "sws2apps@gmail.com"
-          git config --global user.name "sws2apps-admin"
-          git config --global user.password ${{ secrets.GH_TOKEN }}
-          
+        run: |       
           git fetch origin
 
           git checkout alpha
