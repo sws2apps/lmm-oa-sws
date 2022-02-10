@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
@@ -34,7 +34,7 @@ const ImportEPUB = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [isComplete, setIsComplete] = useState(false);
 	const [isValid, setIsValid] = useState(true);
-	let history = useHistory();
+	let navigate = useNavigate();
 
 	const fileEPUB = useRecoilValue(epubFileState);
 	const monthNames = useRecoilValue(monthNamesState);
@@ -50,7 +50,7 @@ const ImportEPUB = () => {
 			} else {
 				setIsComplete(true);
 				setTimeout(() => {
-					history.push('/SourceMaterial');
+					navigate('/SourceMaterial');
 				}, 2000);
 			}
 		};
@@ -58,13 +58,13 @@ const ImportEPUB = () => {
 		if (fileEPUB !== '') {
 			loadEPUB();
 		} else {
-			history.push('/SourceMaterial');
+			navigate('/SourceMaterial');
 		}
 
 		return () => {
 			//clean
 		};
-	}, [fileEPUB, history, assTypeList, monthNames, appLang]);
+	}, [navigate, fileEPUB, assTypeList, monthNames, appLang]);
 
 	return (
 		<Box>

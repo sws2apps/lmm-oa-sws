@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import { Markup } from 'interweave';
@@ -24,7 +24,7 @@ const sharedStyles = {
 };
 
 const S89Template = () => {
-	let history = useHistory();
+	let navigate = useNavigate();
 	const { t } = useTranslation();
 
 	const appLang = useRecoilValue(appLangState);
@@ -44,11 +44,9 @@ const S89Template = () => {
 
 	useEffect(() => {
 		if (s89Data.length === 0) {
-			history.push({
-				pathname: '/Schedule',
-			});
+			navigate('/Schedule');
 		}
-	}, [history, s89Data]);
+	}, [navigate, s89Data]);
 
 	return (
 		<Box>

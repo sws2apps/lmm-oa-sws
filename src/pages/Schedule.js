@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import dateFormat from 'dateformat';
@@ -43,7 +43,7 @@ const sharedStyles = {
 };
 
 const Schedule = () => {
-	let history = useHistory();
+	let navigate = useNavigate();
 	const { t } = useTranslation();
 
 	const [currentYear, setCurrentYear] = useState('');
@@ -107,10 +107,7 @@ const Schedule = () => {
 	};
 
 	const handlePreviewSchedule = () => {
-		history.push({
-			pathname: '/ScheduleTemplate',
-			state: { currentSchedule },
-		});
+		navigate('/ScheduleTemplate', { state: { currentSchedule } });
 	};
 
 	const handleSendScheduleToMSC = async () => {};

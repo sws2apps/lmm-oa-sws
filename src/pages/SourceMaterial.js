@@ -1,4 +1,4 @@
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { fileDialog } from 'file-select-dialog';
@@ -72,13 +72,7 @@ const SourceMaterial = () => {
 	};
 
 	if (isImport === true) {
-		return (
-			<Redirect
-				to={{
-					pathname: '/ImportEPUB',
-				}}
-			/>
-		);
+		return <Navigate to='/ImportEPUB' />;
 	}
 
 	return (
