@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import UAParser from 'ua-parser-js';
@@ -33,7 +33,7 @@ import {
 import { dbExportDb, dbExportJsonDb } from '../../indexedDb/dbUtility';
 
 const DialogDbBackup = () => {
-	let history = useHistory();
+	let navigate = useNavigate();
 	const { t } = useTranslation();
 
 	let abortCont = useMemo(() => new AbortController(), []);
@@ -168,7 +168,7 @@ const DialogDbBackup = () => {
 				.then((res) => res.blob())
 				.then((blob) => {
 					setJsonData(blob);
-					history.push('/DBRestore');
+					navigate('/DBRestore');
 					handleClose();
 				});
 		} catch (error) {
@@ -199,7 +199,7 @@ const DialogDbBackup = () => {
 				.then((res) => res.blob())
 				.then((blob) => {
 					setJsonData(blob);
-					history.push('/DBRestore');
+					navigate('/DBRestore');
 					handleClose();
 				});
 		} catch (error) {

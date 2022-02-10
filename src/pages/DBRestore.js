@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -25,6 +25,7 @@ const sharedStyles = {
 
 const DBRestore = () => {
 	const { t } = useTranslation();
+
 	const [isValid, setIsValid] = useState(false);
 	const [isComplete, setIsComplete] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
@@ -65,13 +66,7 @@ const DBRestore = () => {
 	}, [fileJSON, isValid, setFileJSON]);
 
 	if (fileJSON === undefined) {
-		return (
-			<Redirect
-				to={{
-					pathname: '/Settings',
-				}}
-			/>
-		);
+		return <Navigate to='/Settings' />;
 	}
 
 	return (

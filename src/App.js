@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { Route, HashRouter } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 import usePwa2 from 'use-pwa2/dist/index.js';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AppNotification from './components/root/AppNotification';
@@ -102,39 +102,22 @@ const App = () => {
 							isLoading={isLoading}
 							installPwa={installPwa}
 						>
-							<Route exact path='/'>
-								<Home />
-							</Route>
-							<Route path='/Students'>
-								<Students />
-							</Route>
-							<Route path='/Schedule'>
-								<Schedule />
-							</Route>
-							<Route path='/ScheduleTemplate'>
-								<ScheduleTemplate />
-							</Route>
-							<Route path='/S89Template'>
-								<S89Template />
-							</Route>
-							<Route path='/SourceMaterial'>
-								<SourceMaterial />
-							</Route>
-							<Route path='/ImportEPUB'>
-								<ImportEPUB />
-							</Route>
-							<Route path='/Settings'>
-								<Settings />
-							</Route>
-							<Route path='/Administration'>
-								<Administration />
-							</Route>
-							<Route path='/DBRestore'>
-								<DBRestore />
-							</Route>
-							<Route path='/Help'>
-								<Help />
-							</Route>
+							<Routes>
+								<Route path='/' element={<Home />} />
+								<Route path='/Students' element={<Students />} />
+								<Route path='/Schedule' element={<Schedule />} />
+								<Route
+									path='/ScheduleTemplate'
+									element={<ScheduleTemplate />}
+								/>
+								<Route path='/S89Template' element={<S89Template />} />
+								<Route path='/SourceMaterial' element={<SourceMaterial />} />
+								<Route path='/ImportEPUB' element={<ImportEPUB />} />
+								<Route path='/Settings' element={<Settings />} />
+								<Route path='/Administration' element={<Administration />} />
+								<Route path='/DBRestore' element={<DBRestore />} />
+								<Route path='/Help' element={<Help />} />
+							</Routes>
 						</Layout>
 					</HashRouter>
 				</Suspense>

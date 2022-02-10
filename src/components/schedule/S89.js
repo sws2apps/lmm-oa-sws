@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
@@ -21,7 +21,7 @@ import {
 
 const S89 = () => {
 	const { t } = useTranslation();
-	let history = useHistory();
+	let navigate = useNavigate();
 
 	const [data, setData] = useState({});
 	const [selected, setSelected] = useState([]);
@@ -66,9 +66,7 @@ const S89 = () => {
 
 		setS89Data(s89Data);
 
-		history.push({
-			pathname: '/S89Template',
-		});
+		navigate('/S89Template');
 	};
 
 	useEffect(() => {

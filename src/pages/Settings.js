@@ -1,5 +1,3 @@
-import { useState } from 'react';
-import { Redirect } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import BasicSettings from '../components/settings/BasicSettings';
 import DataStorage from '../components/settings/DataStorage';
@@ -13,21 +11,7 @@ const sharedStyles = {
 	},
 };
 
-const Settings = (props) => {
-	const [isRedirect, setIsRedirect] = useState(false);
-	const [jsonFile, setJsonFile] = useState('');
-
-	if (isRedirect === true) {
-		return (
-			<Redirect
-				to={{
-					pathname: '/DBRestore',
-					state: { jsonFile: jsonFile },
-				}}
-			/>
-		);
-	}
-
+const Settings = () => {
 	return (
 		<Box
 			sx={{
@@ -40,10 +24,7 @@ const Settings = (props) => {
 				<BasicSettings />
 			</Box>
 			<Box sx={sharedStyles.settingItem}>
-				<DataStorage
-					setIsRedirect={(value) => setIsRedirect(value)}
-					setJsonFile={(value) => setJsonFile(value)}
-				/>
+				<DataStorage />
 			</Box>
 		</Box>
 	);

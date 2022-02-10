@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
@@ -16,7 +16,7 @@ import { currentScheduleState } from '../appStates/appSchedule';
 import { monthNamesState } from '../appStates/appSettings';
 
 const ScheduleTemplate = () => {
-	let history = useHistory();
+	let navigate = useNavigate();
 	const { t } = useTranslation();
 
 	const [data, setData] = useState([]);
@@ -54,13 +54,11 @@ const ScheduleTemplate = () => {
 		};
 
 		if (currentSchedule === '') {
-			history.push({
-				pathname: '/Schedule',
-			});
+			navigate('/Schedule');
 		} else {
 			getData();
 		}
-	}, [history, currentSchedule, monthNames]);
+	}, [navigate, currentSchedule, monthNames]);
 
 	return (
 		<>
