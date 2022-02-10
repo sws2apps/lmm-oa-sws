@@ -1,0 +1,40 @@
+name: staging-to-production
+
+on:
+  workflow_dispatch:
+
+permissions: read-all
+
+jobs:
+  build_deploy:
+    name: Rebase from staging to production
+    environment:
+      name: Production
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      - name: Checkout for rebase preparation
+        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: Do git rebase
+        run: |
+          git config --local user.email "sws2apps@gmail.com"
+          git config --local user.name "sws2apps-admin"
+
+          git remote add origin https://github.com/sws2apps/lmm-oa-sws.git
+          
+          git fetch origin
+          
+          git checkout main
+          
+          git rebase origin/beta
+          
+          git push --f origin main
