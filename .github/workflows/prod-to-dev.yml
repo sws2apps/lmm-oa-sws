@@ -22,9 +22,6 @@ jobs:
 
       - name: Do git rebase
         run: |
-          git config --local user.email "sws2apps@gmail.com"
-          git config --local user.name "sws2apps-admin"
-
           git fetch origin
 
           git checkout alpha
