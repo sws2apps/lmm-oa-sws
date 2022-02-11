@@ -4,6 +4,9 @@
 [![CI](https://github.com/sws2apps/lmm-oa-sws/actions/workflows/CI.yml/badge.svg)](https://github.com/sws2apps/lmm-oa-sws/actions/workflows/CI.yml)
 [![development](https://github.com/sws2apps/lmm-oa-sws/actions/workflows/deploy-dev.yml/badge.svg)](https://github.com/sws2apps/lmm-oa-sws/actions/workflows/deploy-dev.yml)
 
+| :point_up:    | Under development |
+|---------------|:------------------------|
+
 LMM-OA is a web application that will allow you to schedule students assignment for Midweek Meeting for Jehovah’s Witnesses.
 
 ## Who should use LMM-OA?
