@@ -1,3 +1,11 @@
+# [1.0.0-alpha.15](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.14...v1.0.0-alpha.15) (2022-02-16)
+
+
+### Bug Fixes
+
+* **startup:** convert congregation from string to number on startup ([53b9848](https://github.com/sws2apps/lmm-oa-sws/commit/53b9848e513cfd8308f77ab5728824a850fa7280))
+* **startup:** fix int casting for congregation id ([5b49775](https://github.com/sws2apps/lmm-oa-sws/commit/5b4977569503799fbaac48552fc3dfe3c51b610f))
+
 # [1.0.0-alpha.14](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.13...v1.0.0-alpha.14) (2022-02-16)
 
 
