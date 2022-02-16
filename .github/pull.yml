@@ -1,0 +1,8 @@
+version: "1"
+rules:
+  - base: alpha
+    upstream: sws2apps:alpha
+    mergeMethod: rebase
+  - base: main
+    upstream: sws2apps:main
+    mergeMethod: rebase
