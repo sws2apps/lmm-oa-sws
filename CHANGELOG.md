@@ -1,3 +1,13 @@
+# [1.0.0-alpha.14](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.13...v1.0.0-alpha.14) (2022-02-16)
+
+
+### Features
+
+* **deps:** bump @mui/icons-material from 5.4.1 to 5.4.2 ([7585756](https://github.com/sws2apps/lmm-oa-sws/commit/7585756bf5e10a9de6fbec00011af0867cfaee1f))
+* **deps:** bump @mui/lab from 5.0.0-alpha.68 to 5.0.0-alpha.69 ([61c07c8](https://github.com/sws2apps/lmm-oa-sws/commit/61c07c80a6cddab8b481671916e930b228e401c7))
+* **deps:** bump @mui/material from 5.4.1 to 5.4.2 ([c5869b3](https://github.com/sws2apps/lmm-oa-sws/commit/c5869b3a1a60c097aeb696ef73ad18df3527f9a8))
+* **deps:** bump @mui/styles from 5.4.1 to 5.4.2 ([1c12eee](https://github.com/sws2apps/lmm-oa-sws/commit/1c12eee615e3cccb25fc4f3be6df68f30b3a358e))
+
 # [1.0.0-alpha.13](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.12...v1.0.0-alpha.13) (2022-02-15)
 
 
