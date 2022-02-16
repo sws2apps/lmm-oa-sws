@@ -362,3 +362,9 @@ export const dbHistoryAssistant = async (mainStuID) => {
 	}
 	return dbHistory;
 };
+
+export const dbSavePerson = async (id, data) => {
+	await appDb.table('persons').update(id, {
+		...data,
+	});
+};
