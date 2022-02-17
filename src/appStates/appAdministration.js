@@ -7,7 +7,7 @@ export const isPocketAddState = atom({
 
 export const userPocketPINState = atom({
 	key: 'userPocketPIN',
-	default: undefined,
+	default: '',
 });
 
 export const parentPocketUserState = atom({

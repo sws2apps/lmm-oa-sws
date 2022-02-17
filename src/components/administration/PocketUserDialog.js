@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useEffect, useMemo, useState } from 'react';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -16,26 +16,49 @@ import PocketUserDetail from './PocketUserDetail';
 import {
 	childPocketUsersState,
 	isPocketAddState,
-	isSavingPocketUserState,
 	parentPocketUserState,
 	pocketUsersState,
 	userPocketPINState,
 } from '../../appStates/appAdministration';
-// import { dbSavePerson } from '../../indexedDb/dbPersons';
+import {
+	congIDState,
+	congNameState,
+	congNumberState,
+	congPasswordState,
+} from '../../appStates/appCongregation';
+import {
+	appMessageState,
+	appSeverityState,
+	appSnackOpenState,
+} from '../../appStates/appNotification';
+import { apiHostState, uidUserState } from '../../appStates/appSettings';
+import { dbSavePerson } from '../../indexedDb/dbPersons';
 
 const PocketUserDialog = () => {
 	const { t } = useTranslation();
 
+	let abortCont = useMemo(() => new AbortController(), []);
+
 	const [open, setOpen] = useRecoilState(isPocketAddState);
 
+	const setAppSnackOpen = useSetRecoilState(appSnackOpenState);
+	const setAppSeverity = useSetRecoilState(appSeverityState);
+	const setAppMessage = useSetRecoilState(appMessageState);
+
+	const uidUser = useRecoilValue(uidUserState);
 	const parentPocketUser = useRecoilValue(parentPocketUserState);
 	const childPocketUsers = useRecoilValue(childPocketUsersState);
-	const isProcessing = useRecoilValue(isSavingPocketUserState);
 	const pocketPIN = useRecoilValue(userPocketPINState);
+	const apiHost = useRecoilValue(apiHostState);
+	const congID = useRecoilValue(congIDState);
+	const congPassword = useRecoilValue(congPasswordState);
+	const congName = useRecoilValue(congNameState);
+	const congNumber = useRecoilValue(congNumberState);
 
 	const [pocketUsers, setPocketUsers] = useRecoilState(pocketUsersState);
 
 	const [btnDisabled, setBtnDisabled] = useState(true);
+	const [isProcessing, setIsProcessing] = useState(false);
 
 	const handleClose = (event, reason) => {
 		if (reason === 'backdropClick' || reason === 'escapeKeyDown') {
@@ -44,30 +67,81 @@ const PocketUserDialog = () => {
 		setOpen(false);
 	};
 
-	const handlePocketUserAdd = async () => {
+	const handlePocketUser = async () => {
+		setIsProcessing(true);
+		setBtnDisabled(true);
+
 		let childUsers = [];
 		for (let i = 0; i < childPocketUsers.length; i++) {
 			childUsers.push(childPocketUsers[i].id);
 		}
 
-		let obj = {};
-		obj.parentUser = parentPocketUser;
-		obj.PIN = pocketPIN;
-		obj.childUsers = childUsers;
+		const reqPayload = {
+			cong_id: congID,
+			cong_password: congPassword,
+			cong_name: congName,
+			cong_number: congNumber,
+			user_pin: pocketPIN,
+			user_members: childUsers,
+			app_client: 'lmmoa',
+		};
 
-		let newPocket = pocketUsers;
-		newPocket.push(obj);
+		if (apiHost !== '') {
+			fetch(`${apiHost}api/congregation/pocket-add-user`, {
+				signal: abortCont.signal,
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					uid: uidUser,
+				},
+				body: JSON.stringify(reqPayload),
+			})
+				.then(async (res) => {
+					if (res.status === 200) {
+						let obj = {};
+						obj.parentUser = parentPocketUser;
+						obj.PIN = pocketPIN;
+						obj.childUsers = childUsers;
 
-		setPocketUsers(newPocket);
+						await dbSavePerson(parentPocketUser, {
+							student_PIN: pocketPIN,
+							viewStudent_Part: childUsers,
+						});
+
+						let newPocket = [...pocketUsers];
+						newPocket.push(obj);
+
+						setPocketUsers(newPocket);
+						handleClose();
+					} else {
+						setAppMessage(t('global.errorTryAgain'));
+						setAppSeverity('error');
+						setAppSnackOpen(true);
+						setIsProcessing(false);
+						setBtnDisabled(false);
+					}
+				})
+				.catch((err) => {
+					setAppMessage(err.message);
+					setAppSeverity('error');
+					setAppSnackOpen(true);
+					setIsProcessing(false);
+					setBtnDisabled(false);
+				});
+		}
 	};
 
 	useEffect(() => {
-		if (pocketPIN) {
+		if (+pocketPIN > 0 && +parentPocketUser > -1) {
 			setBtnDisabled(false);
 		} else {
 			setBtnDisabled(true);
 		}
-	}, [pocketPIN]);
+	}, [pocketPIN, parentPocketUser]);
+
+	useEffect(() => {
+		return () => abortCont.abort();
+	}, [abortCont]);
 
 	return (
 		<Box>
@@ -76,6 +150,9 @@ const PocketUserDialog = () => {
 				onClose={handleClose}
 				aria-labelledby='alert-dialog-add-pocket-title'
 				aria-describedby='alert-dialog-add-pocket-description'
+				sx={{
+					overflowY: 'visible',
+				}}
 			>
 				<DialogTitle
 					id='alert-dialog-add-pocket-title'
@@ -94,7 +171,11 @@ const PocketUserDialog = () => {
 						<CloseIcon />
 					</IconButton>
 				</DialogTitle>
-				<DialogContent>
+				<DialogContent
+					sx={{
+						overflowY: 'visible',
+					}}
+				>
 					<>
 						<Typography
 							sx={{
@@ -130,7 +211,7 @@ const PocketUserDialog = () => {
 						color='primary'
 						autoFocus
 						disabled={btnDisabled}
-						onClick={handlePocketUserAdd}
+						onClick={handlePocketUser}
 					>
 						{t('global.add')}
 					</Button>

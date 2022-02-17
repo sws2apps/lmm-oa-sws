@@ -18,6 +18,7 @@ import { allStudentsState } from '../../appStates/appStudents';
 import {
 	childPocketUsersState,
 	parentPocketUserState,
+	userPocketPINState,
 } from '../../appStates/appAdministration';
 import {
 	appMessageState,
@@ -49,9 +50,9 @@ const PocketUserDetail = () => {
 	const [childStudents, setChildStudents] = useRecoilState(
 		childPocketUsersState
 	);
+	const [tempPIN, setTempPIN] = useRecoilState(userPocketPINState);
 
 	const [filterStudents, setFilterStudents] = useState([]);
-	const [tempPIN, setTempPIN] = useState(undefined);
 	const [isGenerate, setIsGenerate] = useState(false);
 
 	const handleOnParentChange = (selected) => {
@@ -94,6 +95,8 @@ const PocketUserDetail = () => {
 						let warnMsg;
 						if (data.message === 'FORBIDDEN') {
 							warnMsg = t('administration.warnForbidden');
+						} else if (data.message === 'WAIT_FOR_REQUEST') {
+							warnMsg = t('global.waitForRequest');
 						} else {
 							warnMsg = t('global.errorTryAgain');
 						}
@@ -123,10 +126,13 @@ const PocketUserDetail = () => {
 		}
 	}, [dbStudents, parentStudent]);
 
+	useEffect(() => {
+		return () => abortCont.abort();
+	}, [abortCont]);
+
 	return (
 		<Box>
 			<Autocomplete
-				disablePortal
 				id='combo-box-select-pocket'
 				options={dbStudents}
 				getOptionLabel={(option) => option.person_name}
