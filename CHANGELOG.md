@@ -1,3 +1,10 @@
+# [1.0.0-alpha.17](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.16...v1.0.0-alpha.17) (2022-02-19)
+
+
+### Features
+
+* **deps:** bump url-parse from 1.5.4 to 1.5.8 ([1a0bc57](https://github.com/sws2apps/lmm-oa-sws/commit/1a0bc5786b89333d5dc6fd42d907d7767a57b110))
+
 # [1.0.0-alpha.16](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.15...v1.0.0-alpha.16) (2022-02-19)
 
 
