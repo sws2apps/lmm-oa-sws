@@ -1,3 +1,16 @@
+# [1.0.0-alpha.16](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.15...v1.0.0-alpha.16) (2022-02-19)
+
+
+### Bug Fixes
+
+* **react:** fix process is not defined during development ([7a7a1a1](https://github.com/sws2apps/lmm-oa-sws/commit/7a7a1a17133682886f66c3883a9546431938ebec))
+
+
+### Features
+
+* **deps:** bump dexie from 3.2.0 to 3.2.1 ([c2b8231](https://github.com/sws2apps/lmm-oa-sws/commit/c2b823136b0d77f4b99f95811e8ad160dd3bcfa3))
+* **deps:** bump url-parse from 1.5.4 to 1.5.7 ([4b319d4](https://github.com/sws2apps/lmm-oa-sws/commit/4b319d4402c2ceecc42d1320014e85d8aed6ac00))
+
 # [1.0.0-alpha.15](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.14...v1.0.0-alpha.15) (2022-02-16)
 
 
