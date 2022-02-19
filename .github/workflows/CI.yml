@@ -31,9 +31,33 @@ jobs:
         uses: github/codeql-action/init@d39d5d5c9707b926d517b1b292905ef4c03aa777
         with:
           languages: ${{ matrix.language }}
+          queries: security-extended
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@d39d5d5c9707b926d517b1b292905ef4c03aa777
+
+  nodejsscan:
+    name: NodeJS Scan
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
+
+      - name: nodejsscan scan
+        id: njsscan
+        uses: ajinabraham/njsscan-action@7237412fdd36af517e2745077cedbf9d6900d711
+        with:
+          args: '. --sarif --output results.sarif || true'
+
+      - name: Upload njsscan report
+        uses: github/codeql-action/upload-sarif@d39d5d5c9707b926d517b1b292905ef4c03aa777
+        with:
+          sarif_file: results.sarif
 
   scorecards:
     name: Scorecards Analysis
