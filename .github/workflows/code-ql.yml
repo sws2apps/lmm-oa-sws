@@ -19,9 +19,6 @@ jobs:
       contents: read
       security-events: write
 
-    strategy:
-      fail-fast: false
-
     steps:
       - name: Checkout repository for code analysis
         uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
