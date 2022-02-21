@@ -67,7 +67,7 @@
     "@semantic-release/git": "^10.0.1",
     "cz-conventional-changelog": "^3.3.0",
     "semantic-release": "^19.0.2",
-    "react-error-overlay": "6.0.9"
+    "react-error-overlay": "6.0.10"
   },
   "config": {
     "commitizen": {
