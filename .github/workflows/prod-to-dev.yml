@@ -21,6 +21,6 @@ jobs:
       - name: Do git rebase
         run: |
           git fetch --all
-          git checkout release-alpha
-          git rebase --onto origin/main release-alpha
-          git push -f origin release-alpha
+          git checkout alpha
+          git rebase --onto origin/main alpha
+          git push -f origin alpha
