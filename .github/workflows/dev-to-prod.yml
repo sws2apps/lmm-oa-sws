@@ -2,6 +2,8 @@ name: DEV-to-PROD
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
 
 permissions: read-all
 
