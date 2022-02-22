@@ -4,6 +4,8 @@ on:
   push:
     branches: [main, beta, alpha]
 
+permissions: read-all
+
 jobs:
   sonarcloud:
     name: SonarCloud
