@@ -1,3 +1,10 @@
+# [1.0.0-alpha.20](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.19...v1.0.0-alpha.20) (2022-02-23)
+
+
+### Bug Fixes
+
+* **about:** update github typo ([9ceb5f4](https://github.com/sws2apps/lmm-oa-sws/commit/9ceb5f4e5ada3d31235be18e276f7d920dc71c67))
+
 # [1.0.0-alpha.19](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.18...v1.0.0-alpha.19) (2022-02-23)
 
 
