@@ -1,3 +1,10 @@
+# [1.0.0-alpha.19](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.18...v1.0.0-alpha.19) (2022-02-23)
+
+
+### Features
+
+* **deps:** bump react-i18next from 11.15.4 to 11.15.5 ([45cf33b](https://github.com/sws2apps/lmm-oa-sws/commit/45cf33b9c42255b4d338c559e9d84a9515e9c3ae))
+
 # [1.0.0-alpha.18](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.17...v1.0.0-alpha.18) (2022-02-22)
 
 
