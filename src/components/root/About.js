@@ -83,7 +83,7 @@ const About = () => {
 								marginLeft: '10px',
 							}}
 						>
-							Check this project on GitHuB if you want to help us improve it.
+							Check this project on GitHub if you want to help us improve it.
 						</Typography>
 					</Box>
 					<Typography variant='body2' sx={{ marginTop: '15px' }}>
