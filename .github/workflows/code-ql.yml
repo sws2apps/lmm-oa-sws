@@ -1,11 +1,12 @@
-name: code-quality-check
+name: CodeQL
 
 on:
-  workflow_dispatch:
   push:
-    branches: [beta, alpha]
+    branches: [main, beta, alpha]
   pull_request:
-    branches: [beta, alpha]
+    branches: [main, beta, alpha]
+  schedule:
+    - cron: '0 12 * * 4'
 
 permissions: read-all
 
@@ -18,19 +19,15 @@ jobs:
       contents: read
       security-events: write
 
-    strategy:
-      fail-fast: false
-      matrix:
-        language: ['javascript']
-
     steps:
       - name: Checkout repository for code analysis
         uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@474bbf07f9247ffe1856c6a0f94aeeb10e7afee6
+        uses: github/codeql-action/init@75f07e7ab2ee63cba88752d8c696324e4df67466
         with:
-          languages: ${{ matrix.language }}
+          languages: javascript
+          queries: security-extended
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@474bbf07f9247ffe1856c6a0f94aeeb10e7afee6
+        uses: github/codeql-action/analyze@75f07e7ab2ee63cba88752d8c696324e4df67466

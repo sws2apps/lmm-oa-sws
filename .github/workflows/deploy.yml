@@ -1,4 +1,4 @@
-name: redeploy-dev
+name: CD
 
 on:
   workflow_dispatch:
@@ -6,8 +6,9 @@ on:
 permissions: read-all
 
 jobs:
-  rebuild_deploy:
-    name: Rebuild and Deploy to Development
+  dev_deploy:
+    name: Build and Deploy to Development
+    if: ${{ github.repository == 'sws2apps/lmm-oa-sws' && github.ref == 'refs/heads/alpha' }}
     environment:
       name: Development
       url: https://dev-lmm-oa-sws.web.app
@@ -32,10 +33,10 @@ jobs:
       - name: Install package dependencies
         run: npm ci
 
-      - name: Rebuild App
-        run: npm run build
+      - name: Run Semantic Release to version and build App
+        run: npx semantic-release
         env:
-          APP_FLAG: ${{ secrets.APP_FLAG }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Check if new version has been generated
         id: check_build
