@@ -96,6 +96,9 @@
     "global.allWeeks": "Herinandro rehetra",
     "global.preview": "Hijery mialoha",
     "global.continue": "Hanohy",
+    "global.add": "Hanampy",
+    "global.noOptions": "Tsy misy",
+    "global.waitForRequest": "Efa misy fangatahana nalefanao nefa tsy mbola vita. Andramo indray rehefa kelikely",
 
     "startup.welcomeTitle": "Tongasoa eto amin’ny LMM-OA",
     "startup.welcomeDescription": "Programa natao ho ampiasain’ny Mpiandraikitra ny Fivoriana Momba ny Fiainantsika sy ny Fanompoana ny LMM-OA (na Life and Ministry Meeting Overseer Assistant).",
@@ -150,6 +153,11 @@
     "administration.congregationOldPassphrase": "Teny miafina taloha",
     "administration.congregationNewPassphrase": "Teny miafina vaovao",
     "administration.congregationPwdChanged": "Vita ny fanovana ny teny miafina ampiasain’ny fiangonana",
+    "administration.pocketLoginFirst": "Mila miditra amin’ny kaontin’ny fiangonana ianao vao afaka mandrindra ny fampiasana ny SWS Pocket",
+    "administration.pocketUserAccess": "Anjaran’ny mpianatra azony jerena:",
+    "administration.pocketUserAdd": "Hanampy mpianatra | SWS Pocket",
+    "administration.userPIN": "PIN",
+    "administration.generateUserPIN": "Hamorona kaody PIN",
 
     "home.currentSchedule": "FANDAHARAM-PIVORIANA—{{currentWeek}}",
 

@@ -1,11 +1,17 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import CongregationLogin from '../components/administration/CongregationLogin';
+import PocketUserDialog from '../components/administration/PocketUserDialog';
+import {
+	isPocketAddState,
+	pocketUsersState,
+} from '../appStates/appAdministration';
 import { congIDState, congPasswordState } from '../appStates/appCongregation';
 import {
 	isCongConnectedState,
@@ -15,20 +21,25 @@ import {
 	isCongUpdateAccountState,
 	isUserLoggedState,
 } from '../appStates/appSettings';
+import PocketUserDetail from '../components/administration/PocketUserDetail';
 
 const Administration = () => {
 	const { t } = useTranslation();
 
 	const [isLoginOpen, setIsLoginOpen] = useRecoilState(isCongLoginOpenState);
 	const [isConnected, setIsConnected] = useRecoilState(isCongConnectedState);
+	const [isPocketAdd, setIsPocketAdd] = useRecoilState(isPocketAddState);
 
 	const isUserLogged = useRecoilValue(isUserLoggedState);
 	const congID = useRecoilValue(congIDState);
 	const congPassword = useRecoilValue(congPasswordState);
+	const pocketUsers = useRecoilValue(pocketUsersState);
 
 	const setIsCongCreateAccount = useSetRecoilState(isCongCreateAccountState);
 	const setIsCongSignIn = useSetRecoilState(isCongSignInState);
 	const setIsCongUpdateAccount = useSetRecoilState(isCongUpdateAccountState);
+
+	const [pocketUsersFormatted, setPocketUsersFormatted] = useState([]);
 
 	const handleCreateCongAccount = () => {
 		setIsCongCreateAccount(true);
@@ -51,11 +62,17 @@ const Administration = () => {
 		setIsLoginOpen(true);
 	};
 
+	const handlePocketUserAdd = () => {
+		setIsPocketAdd(true);
+	};
+
 	useEffect(() => {
 		if (!isUserLogged) {
 			setIsConnected(false);
 		}
 	}, [isUserLogged, setIsConnected]);
+
+	useEffect(() => {}, [pocketUsers]);
 
 	return (
 		<>
@@ -155,6 +172,52 @@ const Administration = () => {
 					{!isUserLogged && (
 						<Typography>{t('administration.userLogin')}</Typography>
 					)}
+				</Box>
+			</Box>
+			<Box
+				sx={{
+					marginTop: '15px',
+				}}
+			>
+				<Typography
+					sx={{
+						fontWeight: 'bold',
+						lineHeight: '1.2',
+						marginBottom: '10px',
+					}}
+				>
+					{t('administration.swsPocketAccess')}
+				</Typography>
+				<Box
+					sx={{
+						display: 'flex',
+						flexDirection: 'row',
+						justifyContent: 'flex-start',
+					}}
+				>
+					<>
+						{!isConnected && (
+							<Typography>{t('administration.pocketLoginFirst')}</Typography>
+						)}
+						{isConnected && (
+							<>
+								{isPocketAdd && <PocketUserDialog />}
+								<Button
+									variant='contained'
+									color='success'
+									onClick={handlePocketUserAdd}
+									endIcon={<AddCircleIcon />}
+								>
+									{t('global.add')}
+								</Button>
+								{pocketUsersFormatted.map((pocketUser) => (
+									<Box>
+										<PocketUserDetail />
+									</Box>
+								))}
+							</>
+						)}
+					</>
 				</Box>
 			</Box>
 		</>
