@@ -1,3 +1,11 @@
+# [1.0.0-alpha.21](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.20...v1.0.0-alpha.21) (2022-02-24)
+
+
+### Features
+
+* **deps:** bump i18next from 21.6.11 to 21.6.12 ([94096d1](https://github.com/sws2apps/lmm-oa-sws/commit/94096d1e085aa9d2692439b8560b371ad80be90f))
+* **deps:** bump workbox-cli from 6.4.2 to 6.5.0 ([bd47c93](https://github.com/sws2apps/lmm-oa-sws/commit/bd47c93dfbee0f236a6d813dd0be649c113fc01e))
+
 # [1.0.0-alpha.20](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.19...v1.0.0-alpha.20) (2022-02-23)
 
 
