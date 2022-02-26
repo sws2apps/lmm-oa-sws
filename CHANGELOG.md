@@ -1,3 +1,10 @@
+# [1.0.0-alpha.22](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.21...v1.0.0-alpha.22) (2022-02-26)
+
+
+### Features
+
+* **administration:** manage sws pocket users ([cc39ef3](https://github.com/sws2apps/lmm-oa-sws/commit/cc39ef3c08c7aaea5883caac5f9a0b00f481c57e))
+
 # [1.0.0-alpha.21](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.20...v1.0.0-alpha.21) (2022-02-24)
 
 ### Features
