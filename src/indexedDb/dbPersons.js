@@ -368,3 +368,30 @@ export const dbSavePerson = async (id, data) => {
 		...data,
 	});
 };
+
+export const dbBuildPocketUsers = async () => {
+	const students = await dbGetStudents();
+	const pocketUsers = students.filter((student) => student.student_PIN > 0);
+
+	const data = [];
+	for (let i = 0; i < pocketUsers.length; i++) {
+		let dispPart = [];
+		let allPart = [];
+		const viewPart = pocketUsers[i].viewStudent_Part;
+		for (let a = 0; a < viewPart.length; a++) {
+			const child = await dbGetStudentDetails(viewPart[a]);
+			dispPart.push(child.person_displayName);
+			allPart.push(child);
+		}
+
+		const obj = {
+			...pocketUsers[i],
+			viewPartName: dispPart,
+			viewPartFull: allPart,
+		};
+
+		data.push(obj);
+	}
+
+	return data;
+};

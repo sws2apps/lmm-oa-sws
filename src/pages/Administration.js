@@ -4,12 +4,17 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
+import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import CongregationLogin from '../components/administration/CongregationLogin';
 import PocketUserDialog from '../components/administration/PocketUserDialog';
+import PocketUserRead from '../components/administration/PocketUserRead';
 import {
 	isPocketAddState,
+	isPocketDeleteState,
+	isPocketEditState,
 	pocketUsersState,
 } from '../appStates/appAdministration';
 import { congIDState, congPasswordState } from '../appStates/appCongregation';
@@ -21,7 +26,8 @@ import {
 	isCongUpdateAccountState,
 	isUserLoggedState,
 } from '../appStates/appSettings';
-import PocketUserDetail from '../components/administration/PocketUserDetail';
+import { dbBuildPocketUsers } from '../indexedDb/dbPersons';
+import PocketDelete from '../components/administration/PocketDelete';
 
 const Administration = () => {
 	const { t } = useTranslation();
@@ -29,17 +35,19 @@ const Administration = () => {
 	const [isLoginOpen, setIsLoginOpen] = useRecoilState(isCongLoginOpenState);
 	const [isConnected, setIsConnected] = useRecoilState(isCongConnectedState);
 	const [isPocketAdd, setIsPocketAdd] = useRecoilState(isPocketAddState);
+	const [pocketUsers, setPocketUsers] = useRecoilState(pocketUsersState);
 
 	const isUserLogged = useRecoilValue(isUserLoggedState);
 	const congID = useRecoilValue(congIDState);
 	const congPassword = useRecoilValue(congPasswordState);
-	const pocketUsers = useRecoilValue(pocketUsersState);
+	const isPocketEdit = useRecoilValue(isPocketEditState);
+	const isPocketDelete = useRecoilValue(isPocketDeleteState);
 
 	const setIsCongCreateAccount = useSetRecoilState(isCongCreateAccountState);
 	const setIsCongSignIn = useSetRecoilState(isCongSignInState);
 	const setIsCongUpdateAccount = useSetRecoilState(isCongUpdateAccountState);
 
-	const [pocketUsersFormatted, setPocketUsersFormatted] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
 
 	const handleCreateCongAccount = () => {
 		setIsCongCreateAccount(true);
@@ -72,11 +80,21 @@ const Administration = () => {
 		}
 	}, [isUserLogged, setIsConnected]);
 
-	useEffect(() => {}, [pocketUsers]);
+	useEffect(() => {
+		const loadPocketUsers = async () => {
+			setIsLoading(true);
+			const pocketUsers = await dbBuildPocketUsers();
+			setPocketUsers(pocketUsers);
+			setIsLoading(false);
+		};
+
+		loadPocketUsers();
+	}, [isConnected, setPocketUsers]);
 
 	return (
 		<>
 			{isLoginOpen && <CongregationLogin />}
+			{isPocketDelete && <PocketDelete />}
 			<Box>
 				<Typography
 					sx={{
@@ -200,22 +218,49 @@ const Administration = () => {
 							<Typography>{t('administration.pocketLoginFirst')}</Typography>
 						)}
 						{isConnected && (
-							<>
-								{isPocketAdd && <PocketUserDialog />}
-								<Button
-									variant='contained'
-									color='success'
-									onClick={handlePocketUserAdd}
-									endIcon={<AddCircleIcon />}
-								>
-									{t('global.add')}
-								</Button>
-								{pocketUsersFormatted.map((pocketUser) => (
-									<Box>
-										<PocketUserDetail />
+							<Box
+								sx={{
+									display: 'flex',
+									flexDirection: 'column',
+									width: '100%',
+								}}
+							>
+								{(isPocketAdd || isPocketEdit) && <PocketUserDialog />}
+								<Box>
+									<Button
+										variant='contained'
+										color='success'
+										onClick={handlePocketUserAdd}
+										endIcon={<AddCircleIcon />}
+									>
+										{t('global.add')}
+									</Button>
+								</Box>
+								{isLoading && (
+									<CircularProgress
+										color='secondary'
+										size={60}
+										disableShrink={true}
+										sx={{
+											display: 'flex',
+											margin: '10px auto',
+											marginTop: '20px',
+										}}
+									/>
+								)}
+								{!isLoading && (
+									<Box sx={{ marginTop: '10px', marginBottom: '10px' }}>
+										<Grid container>
+											{pocketUsers.map((pocketUser) => (
+												<PocketUserRead
+													key={pocketUser.id}
+													pocketUser={pocketUser}
+												/>
+											))}
+										</Grid>
 									</Box>
-								))}
-							</>
+								)}
+							</Box>
 						)}
 					</>
 				</Box>

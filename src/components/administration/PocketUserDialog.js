@@ -17,6 +17,8 @@ import {
 	childPocketUsersState,
 	isPocketAddState,
 	parentPocketUserState,
+	isPocketEditState,
+	pocketEditTypeState,
 	pocketUsersState,
 	userPocketPINState,
 } from '../../appStates/appAdministration';
@@ -32,7 +34,7 @@ import {
 	appSnackOpenState,
 } from '../../appStates/appNotification';
 import { apiHostState, uidUserState } from '../../appStates/appSettings';
-import { dbSavePerson } from '../../indexedDb/dbPersons';
+import { dbGetStudentDetails, dbSavePerson } from '../../indexedDb/dbPersons';
 
 const PocketUserDialog = () => {
 	const { t } = useTranslation();
@@ -46,25 +48,36 @@ const PocketUserDialog = () => {
 	const setAppMessage = useSetRecoilState(appMessageState);
 
 	const uidUser = useRecoilValue(uidUserState);
-	const parentPocketUser = useRecoilValue(parentPocketUserState);
-	const childPocketUsers = useRecoilValue(childPocketUsersState);
-	const pocketPIN = useRecoilValue(userPocketPINState);
 	const apiHost = useRecoilValue(apiHostState);
 	const congID = useRecoilValue(congIDState);
 	const congPassword = useRecoilValue(congPasswordState);
 	const congName = useRecoilValue(congNameState);
 	const congNumber = useRecoilValue(congNumberState);
+	const pocketEditType = useRecoilValue(pocketEditTypeState);
 
+	const [parentPocketUser, setparentPocketUser] = useRecoilState(
+		parentPocketUserState
+	);
 	const [pocketUsers, setPocketUsers] = useRecoilState(pocketUsersState);
+	const [childPocketUsers, setChildPocketUsers] = useRecoilState(
+		childPocketUsersState
+	);
+	const [pocketPIN, setPocketPIN] = useRecoilState(userPocketPINState);
+	const [isPocketEdit, setIsPocketEdit] = useRecoilState(isPocketEditState);
 
 	const [btnDisabled, setBtnDisabled] = useState(true);
 	const [isProcessing, setIsProcessing] = useState(false);
+	const [previousPIN] = useState(pocketPIN);
 
 	const handleClose = (event, reason) => {
 		if (reason === 'backdropClick' || reason === 'escapeKeyDown') {
 			return;
 		}
+
 		setOpen(false);
+		setIsPocketEdit(false);
+		setChildPocketUsers([]);
+		setPocketPIN('');
 	};
 
 	const handlePocketUser = async () => {
@@ -84,10 +97,12 @@ const PocketUserDialog = () => {
 			user_pin: pocketPIN,
 			user_members: childUsers,
 			app_client: 'lmmoa',
+			user_pinPrev: `${pocketPIN === previousPIN ? '' : previousPIN}`,
+			pocket_type: pocketEditType,
 		};
 
 		if (apiHost !== '') {
-			fetch(`${apiHost}api/congregation/pocket-add-user`, {
+			fetch(`${apiHost}api/congregation/pocket-edit-user`, {
 				signal: abortCont.signal,
 				method: 'POST',
 				headers: {
@@ -98,20 +113,43 @@ const PocketUserDialog = () => {
 			})
 				.then(async (res) => {
 					if (res.status === 200) {
-						let obj = {};
-						obj.parentUser = parentPocketUser;
-						obj.PIN = pocketPIN;
-						obj.childUsers = childUsers;
-
-						await dbSavePerson(parentPocketUser, {
+						await dbSavePerson(parentPocketUser.id, {
 							student_PIN: pocketPIN,
 							viewStudent_Part: childUsers,
 						});
 
+						const student = await dbGetStudentDetails(parentPocketUser.id);
+
+						let dispPart = [];
+						let allPart = [];
+						for (let a = 0; a < childUsers.length; a++) {
+							const child = await dbGetStudentDetails(childUsers[a]);
+							dispPart.push(child.person_displayName);
+							allPart.push(child);
+						}
+
+						const obj = {
+							...student,
+							viewPartName: dispPart,
+							viewPartFull: allPart,
+						};
+
 						let newPocket = [...pocketUsers];
+
+						const index = newPocket.findIndex((pocket) => pocket.id === obj.id);
+						if (index > -1) {
+							newPocket.splice(index, 1);
+						}
+
 						newPocket.push(obj);
 
+						newPocket.sort((a, b) => {
+							return a.person_name > b.person_name ? 1 : -1;
+						});
+
 						setPocketUsers(newPocket);
+						setChildPocketUsers([]);
+						setPocketPIN('');
 						handleClose();
 					} else {
 						setAppMessage(t('global.errorTryAgain'));
@@ -132,7 +170,7 @@ const PocketUserDialog = () => {
 	};
 
 	useEffect(() => {
-		if (+pocketPIN > 0 && +parentPocketUser > -1) {
+		if (+pocketPIN > 0 && parentPocketUser) {
 			setBtnDisabled(false);
 		} else {
 			setBtnDisabled(true);
@@ -142,6 +180,12 @@ const PocketUserDialog = () => {
 	useEffect(() => {
 		return () => abortCont.abort();
 	}, [abortCont]);
+
+	useEffect(() => {
+		if (open && !isPocketEdit) {
+			setparentPocketUser(null);
+		}
+	}, [open, isPocketEdit, setparentPocketUser]);
 
 	return (
 		<Box>
@@ -181,10 +225,12 @@ const PocketUserDialog = () => {
 							sx={{
 								fontWeight: 'bold',
 								marginTop: '10px',
-								marginBottom: '15px',
+								marginBottom: '25px',
 							}}
 						>
-							{t('administration.pocketUserAdd')}
+							{isPocketEdit
+								? t('administration.pocketUserEdit')
+								: t('administration.pocketUserAdd')}
 						</Typography>
 						<PocketUserDetail />
 						{isProcessing && (
@@ -213,7 +259,7 @@ const PocketUserDialog = () => {
 						disabled={btnDisabled}
 						onClick={handlePocketUser}
 					>
-						{t('global.add')}
+						{isPocketEdit ? t('global.save') : t('global.add')}
 					</Button>
 				</DialogActions>
 			</Dialog>

@@ -5,6 +5,11 @@ export const isPocketAddState = atom({
 	default: false,
 });
 
+export const isPocketEditState = atom({
+	key: ' isPocketEdit',
+	default: false,
+});
+
 export const userPocketPINState = atom({
 	key: 'userPocketPIN',
 	default: '',
@@ -28,4 +33,19 @@ export const pocketUsersState = atom({
 export const isSavingPocketUserState = atom({
 	key: 'isSavingPocketUser',
 	default: false,
+});
+
+export const isPocketDeleteState = atom({
+	key: 'isPocketDelete',
+	default: false,
+});
+
+export const currentPocketState = atom({
+	key: 'currentPocket',
+	default: {},
+});
+
+export const pocketEditTypeState = atom({
+	key: 'pocketEditTypeState',
+	default: 'update',
 });

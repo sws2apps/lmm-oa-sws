@@ -158,6 +158,9 @@
     "administration.pocketUserAdd": "Hanampy mpianatra | SWS Pocket",
     "administration.userPIN": "PIN",
     "administration.generateUserPIN": "Hamorona kaody PIN",
+    "administration.pocketUserEdit": "Hanao fanovana | SWS Pocket",
+    "administration.pocketUserRemove": "Hamafa mpianatra | SWS Pocket",
+    "administration.pocketUserRemoveDesc": "Tsy ho afaka hijery ny anjaran’ny mpianatra ao amin’ny programa SWS Pocket intsony i {{ student }}. Hanohy?",
 
     "home.currentSchedule": "FANDAHARAM-PIVORIANA—{{currentWeek}}",
 

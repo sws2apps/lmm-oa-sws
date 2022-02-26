@@ -17,7 +17,9 @@ import {
 import { allStudentsState } from '../../appStates/appStudents';
 import {
 	childPocketUsersState,
+	isPocketEditState,
 	parentPocketUserState,
+	pocketEditTypeState,
 	userPocketPINState,
 } from '../../appStates/appAdministration';
 import {
@@ -27,8 +29,9 @@ import {
 } from '../../appStates/appNotification';
 import { apiHostState, uidUserState } from '../../appStates/appSettings';
 
-const PocketUserDetail = () => {
+const PocketUserDetail = (props) => {
 	const { t } = useTranslation();
+	const pocketId = props.id || 0;
 
 	let abortCont = useMemo(() => new AbortController(), []);
 
@@ -39,10 +42,12 @@ const PocketUserDetail = () => {
 	const congNumber = useRecoilValue(congNumberState);
 	const congID = useRecoilValue(congIDState);
 	const congPassword = useRecoilValue(congPasswordState);
+	const isPocketEdit = useRecoilValue(isPocketEditState);
 
 	const setAppSnackOpen = useSetRecoilState(appSnackOpenState);
 	const setAppSeverity = useSetRecoilState(appSeverityState);
 	const setAppMessage = useSetRecoilState(appMessageState);
+	const setPocketEditType = useSetRecoilState(pocketEditTypeState);
 
 	const [parentStudent, setParentStudent] = useRecoilState(
 		parentPocketUserState
@@ -54,13 +59,26 @@ const PocketUserDetail = () => {
 
 	const [filterStudents, setFilterStudents] = useState([]);
 	const [isGenerate, setIsGenerate] = useState(false);
+	const [pocketPicker, setPocketPicker] = useState([]);
+	const [autoPIN, setAutoPIN] = useState('');
 
 	const handleOnParentChange = (selected) => {
-		if (selected?.id) {
-			setParentStudent(selected.id);
+		if (selected) {
+			setParentStudent(selected);
 		} else {
-			setParentStudent(undefined);
+			setParentStudent(null);
 			setChildStudents([]);
+		}
+	};
+
+	const handleManualPIN = (value) => {
+		setTempPIN(value);
+		if (value === autoPIN) {
+			if (!isPocketEdit) {
+				setPocketEditType('new');
+			}
+		} else {
+			setPocketEditType('link');
 		}
 	};
 
@@ -91,6 +109,12 @@ const PocketUserDetail = () => {
 					const data = await res.json();
 					if (res.status === 200) {
 						setTempPIN(data.message);
+						setAutoPIN(data.message);
+						if (isPocketEdit) {
+							setPocketEditType('update-pin');
+						} else {
+							setPocketEditType('new');
+						}
 					} else {
 						let warnMsg;
 						if (data.message === 'FORBIDDEN') {
@@ -118,7 +142,7 @@ const PocketUserDetail = () => {
 	useEffect(() => {
 		if (parentStudent) {
 			const newArray = dbStudents.filter(
-				(student) => student.id !== parentStudent
+				(student) => student.id !== parentStudent.id
 			);
 			setFilterStudents(newArray);
 		} else {
@@ -127,15 +151,36 @@ const PocketUserDetail = () => {
 	}, [dbStudents, parentStudent]);
 
 	useEffect(() => {
+		if (isPocketEdit) {
+			setPocketPicker(dbStudents);
+		} else {
+			const existUsers = dbStudents.filter(
+				(student) => student.student_PIN === ''
+			);
+			setPocketPicker(existUsers);
+		}
+	}, [dbStudents, isPocketEdit]);
+
+	useEffect(() => {
+		if (isPocketEdit) {
+			setPocketEditType('update');
+		} else {
+			setPocketEditType('new');
+		}
+	}, [isPocketEdit, setPocketEditType]);
+
+	useEffect(() => {
 		return () => abortCont.abort();
 	}, [abortCont]);
 
 	return (
 		<Box>
 			<Autocomplete
-				id='combo-box-select-pocket'
-				options={dbStudents}
+				id={`combo-box-select-pocket${pocketId}`}
+				options={pocketPicker}
 				getOptionLabel={(option) => option.person_name}
+				value={parentStudent}
+				isOptionEqualToValue={(option, value) => option.id === value.id}
 				sx={{
 					width: 300,
 					marginBottom: '15px',
@@ -147,10 +192,11 @@ const PocketUserDetail = () => {
 				renderInput={(params) => (
 					<TextField {...params} label={t('global.student')} />
 				)}
+				readOnly={isPocketEdit}
 			/>
 			<Autocomplete
 				multiple
-				id='pocket-user-access'
+				id={`pocket-user-access${pocketId}`}
 				options={filterStudents}
 				getOptionLabel={(option) => option.person_name}
 				sx={{
@@ -161,6 +207,7 @@ const PocketUserDetail = () => {
 				noOptionsText={t('global.noOptions')}
 				value={childStudents}
 				onChange={(e, value) => handleOnChildChange(value)}
+				isOptionEqualToValue={(option, value) => option.id === value.id}
 				renderInput={(params) => (
 					<TextField
 						{...params}
@@ -180,7 +227,7 @@ const PocketUserDetail = () => {
 					marginBottom: '10px',
 				}}
 				value={tempPIN}
-				onChange={(e) => setTempPIN(e.target.value)}
+				onChange={(e) => handleManualPIN(e.target.value)}
 			/>
 			{isGenerate && (
 				<CircularProgress

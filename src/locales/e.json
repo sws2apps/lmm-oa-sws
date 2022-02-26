@@ -158,6 +158,9 @@
     "administration.pocketUserAdd": "Add SWS Pocket user",
     "administration.userPIN": "User PIN",
     "administration.generateUserPIN": "Generate user PIN",
+    "administration.pocketUserEdit": "Edit SWS Pocket user",
+    "administration.pocketUserRemove": "Remove SWS Pocket user",
+    "administration.pocketUserRemoveDesc": "Are you sure to remove access for {{ student }} to view students assignment on SWS Pocket app?",
 
     "home.currentSchedule": "MEETING SCHEDULE—{{currentWeek}}",
 
