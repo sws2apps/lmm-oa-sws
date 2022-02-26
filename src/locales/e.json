@@ -96,6 +96,9 @@
     "global.allWeeks": "All weeks",
     "global.preview": "Preview",
     "global.continue": "Continue",
+    "global.add": "Add",
+    "global.noOptions": "No options",
+    "global.waitForRequest": "An existing connection is already sent to the server. Please try again later",
 
     "startup.welcomeTitle": "Welcome to LMM-OA",
     "startup.welcomeDescription": "LMM-OA (or Life and Ministry Meeting Overseer Assistant) is an application designed for the Life and Ministry Meeting Overseer.",
@@ -150,6 +153,14 @@
     "administration.congregationOldPassphrase": "Old passphrase",
     "administration.congregationNewPassphrase": "New passphrase",
     "administration.congregationPwdChanged": "Your congregation passphrase has been changed",
+    "administration.pocketLoginFirst": "Please login into your congregation account before managing access to SWS Pocket",
+    "administration.pocketUserAccess": "View assignments for:",
+    "administration.pocketUserAdd": "Add SWS Pocket user",
+    "administration.userPIN": "User PIN",
+    "administration.generateUserPIN": "Generate user PIN",
+    "administration.pocketUserEdit": "Edit SWS Pocket user",
+    "administration.pocketUserRemove": "Remove SWS Pocket user",
+    "administration.pocketUserRemoveDesc": "Are you sure to remove access for {{ student }} to view students assignment on SWS Pocket app?",
 
     "home.currentSchedule": "MEETING SCHEDULE—{{currentWeek}}",
 

@@ -28,12 +28,19 @@ import {
 	congIDState,
 	congNameState,
 	congNumberState,
+	congPasswordState,
 	isErrorCongNameState,
 	isErrorCongNumberState,
 	liveClassState,
 	meetingDayState,
 } from '../appStates/appCongregation';
-import { appLangState, isAppLoadState } from '../appStates/appSettings';
+import {
+	appLangState,
+	isAppLoadState,
+	isCongConnectedState,
+	isUserLoggedState,
+	uidUserState,
+} from '../appStates/appSettings';
 import {
 	assTypeListState,
 	weekTypeListState,
@@ -70,6 +77,10 @@ const Startup = () => {
 	const setAssTypeList = useSetRecoilState(assTypeListState);
 	const setWeekTypeList = useSetRecoilState(weekTypeListState);
 	const setLiveClass = useSetRecoilState(liveClassState);
+	const setIsConnected = useSetRecoilState(isCongConnectedState);
+	const setUidUser = useSetRecoilState(uidUserState);
+	const setIsUserLogged = useSetRecoilState(isUserLoggedState);
+	const setCongPassword = useSetRecoilState(congPasswordState);
 
 	const [activeStep, setActiveStep] = useState(0);
 	const steps = [
@@ -168,6 +179,13 @@ const Startup = () => {
 				setAppLang(app_lang || 'e');
 				setLiveClass(liveEventClass);
 
+				if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+					setIsUserLogged(true);
+					setIsConnected(true);
+					setUidUser(process.env.REACT_APP_TEST_UID_USER);
+					setCongPassword(process.env.REACT_APP_TEST_CONG_PASSWORD);
+				}
+
 				i18n.changeLanguage(app_lang);
 
 				const weekTypeList = await dbGetListWeekType();
@@ -211,6 +229,10 @@ const Startup = () => {
 		setYearsList,
 		setAssTypeList,
 		setWeekTypeList,
+		setIsConnected,
+		setUidUser,
+		setIsUserLogged,
+		setCongPassword,
 	]);
 
 	if (isSetup) {
