@@ -9,7 +9,7 @@
     "@mui/icons-material": "^5.4.2",
     "@mui/lab": "^5.0.0-alpha.70",
     "@mui/material": "^5.4.3",
-    "@mui/styles": "^5.4.2",
+    "@mui/styles": "^5.4.4",
     "cryptr": "^6.0.2",
     "dateformat": "^5.0.3",
     "dexie": "^3.2.1",
