@@ -1,3 +1,10 @@
+# [1.0.0-alpha.24](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.23...v1.0.0-alpha.24) (2022-03-04)
+
+
+### Bug Fixes
+
+* **source-material:** fix false path traversal error when importing epub ([ca4b1f8](https://github.com/sws2apps/lmm-oa-sws/commit/ca4b1f87ee600412471de6e3587d259c920063a1))
+
 # [1.0.0-alpha.23](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.22...v1.0.0-alpha.23) (2022-03-04)
 
 
