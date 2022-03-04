@@ -198,6 +198,7 @@
     "sourceMaterial.addWeekDesc": "Are you sure to add new week? It is recommended to add the source material from downloaded EPUB from JW.ORG. Click Yes to continue, or No to cancel.",
     "sourceMaterial.addWeekTitle": "Add new week",
     "sourceMaterial.invalidFilename": "The EPUB file selected could not be imported",
+    "sourceMaterial.importEPUBTitle": "Import Source Material from EPUB",
 
     "importEPUB.invalid": "The EPUB file selected is not a Meeting Workbook file. Please verify it again.",
     "importEPUB.inProgress": "EPUB import in progress. Please wait ...",

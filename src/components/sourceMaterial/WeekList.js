@@ -14,6 +14,7 @@ import {
 } from '../../appStates/appSettings';
 import {
 	currentWeekState,
+	isRerenderSourceState,
 	yearsListState,
 } from '../../appStates/appSourceMaterial';
 
@@ -30,6 +31,7 @@ const WeekList = () => {
 	const years = useRecoilValue(yearsListState);
 	const monthNames = useRecoilValue(monthNamesState);
 	const shortDateFormat = useRecoilValue(shortDateFormatState);
+	const isRerender = useRecoilValue(isRerenderSourceState);
 
 	const handleYearChange = async (e) => {
 		setCurrentSchedule('');
@@ -88,7 +90,7 @@ const WeekList = () => {
 		return () => {
 			mounted = false;
 		};
-	}, [years, currentYear]);
+	}, [isRerender, years, currentYear]);
 
 	useEffect(() => {
 		const getScheduleByYear = async () => {
@@ -109,7 +111,7 @@ const WeekList = () => {
 		if (currentYear !== '') {
 			getScheduleByYear();
 		}
-	}, [currentYear, monthNames]);
+	}, [isRerender, currentYear, monthNames]);
 
 	useEffect(() => {
 		const getWeekBySchedule = async () => {
@@ -136,7 +138,7 @@ const WeekList = () => {
 			setCurrentWeek('');
 			getWeekBySchedule();
 		}
-	}, [currentSchedule, shortDateFormat, setCurrentWeek]);
+	}, [isRerender, currentSchedule, shortDateFormat, setCurrentWeek]);
 
 	return (
 		<div>

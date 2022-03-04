@@ -17,7 +17,6 @@ import { appSnackOpenState } from './appStates/appNotification';
 const DBRestore = lazy(() => import('./pages/DBRestore'));
 const Help = lazy(() => import('./pages/Help'));
 const Home = lazy(() => import('./pages/Home'));
-const ImportEPUB = lazy(() => import('./pages/ImportEPUB'));
 const Schedule = lazy(() => import('./pages/Schedule'));
 const Settings = lazy(() => import('./pages/Settings'));
 const SourceMaterial = lazy(() => import('./pages/SourceMaterial'));
@@ -112,7 +111,6 @@ const App = () => {
 								/>
 								<Route path='/S89Template' element={<S89Template />} />
 								<Route path='/SourceMaterial' element={<SourceMaterial />} />
-								<Route path='/ImportEPUB' element={<ImportEPUB />} />
 								<Route path='/Settings' element={<Settings />} />
 								<Route path='/Administration' element={<Administration />} />
 								<Route path='/DBRestore' element={<DBRestore />} />

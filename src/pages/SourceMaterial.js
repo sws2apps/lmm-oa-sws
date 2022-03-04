@@ -1,39 +1,38 @@
-import { Navigate } from 'react-router-dom';
-import { useState } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { fileDialog } from 'file-select-dialog';
 import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
-import WeekList from '../components/sourceMaterial/WeekList';
+import ImportEPUB from '../components/sourceMaterial/ImportEPUB';
 import WeekDetails from '../components/sourceMaterial/WeekDetails';
-import {
-	dbAddManualSource,
-	dbSaveSrcData,
-} from '../indexedDb/dbSourceMaterial';
-import {
-	currentWeekState,
-	epubFileState,
-} from '../appStates/appSourceMaterial';
+import WeekList from '../components/sourceMaterial/WeekList';
 import {
 	appMessageState,
 	appSeverityState,
 	appSnackOpenState,
 } from '../appStates/appNotification';
 import { appLangState } from '../appStates/appSettings';
+import {
+	currentWeekState,
+	epubFileState,
+	isImportEPUBState,
+} from '../appStates/appSourceMaterial';
+import {
+	dbAddManualSource,
+	dbSaveSrcData,
+} from '../indexedDb/dbSourceMaterial';
 
 const SourceMaterial = () => {
 	const { t } = useTranslation();
 
-	const [isImport, setIsImport] = useState(false);
+	const [isImport, setIsImport] = useRecoilState(isImportEPUBState);
 
-	const setEpubFile = useSetRecoilState(epubFileState);
+	const currentWeek = useRecoilValue(currentWeekState);
+	const appLang = useRecoilValue(appLangState);
 
 	const setAppSnackOpen = useSetRecoilState(appSnackOpenState);
 	const setAppSeverity = useSetRecoilState(appSeverityState);
 	const setAppMessage = useSetRecoilState(appMessageState);
-
-	const currentWeek = useRecoilValue(currentWeekState);
-	const appLang = useRecoilValue(appLangState);
+	const setEpubFile = useSetRecoilState(epubFileState);
 
 	const handleWeekAdd = async () => {
 		await dbAddManualSource();
@@ -47,6 +46,7 @@ const SourceMaterial = () => {
 			accept: '.epub',
 			strict: true,
 		});
+		console.log(file);
 		const epubLang = file.name.split('_')[1];
 		if (epubLang && epubLang === appLang.toUpperCase()) {
 			setEpubFile(file);
@@ -71,27 +71,26 @@ const SourceMaterial = () => {
 		}
 	};
 
-	if (isImport === true) {
-		return <Navigate to='/ImportEPUB' />;
-	}
-
 	return (
-		<Box
-			sx={{
-				marginRight: '5px',
-				marginTop: '10px',
-			}}
-		>
-			<WeekList />
-			{currentWeek !== '' && (
-				<WeekDetails
-					currentWeek={currentWeek}
-					handleWeekAdd={handleWeekAdd}
-					handleImportEPUB={handleImportEPUB}
-					handleSaveSource={handleSaveSource}
-				/>
-			)}
-		</Box>
+		<>
+			{isImport && <ImportEPUB />}
+			<Box
+				sx={{
+					marginRight: '5px',
+					marginTop: '10px',
+				}}
+			>
+				<WeekList />
+				{currentWeek !== '' && (
+					<WeekDetails
+						currentWeek={currentWeek}
+						handleWeekAdd={handleWeekAdd}
+						handleImportEPUB={handleImportEPUB}
+						handleSaveSource={handleSaveSource}
+					/>
+				)}
+			</Box>
+		</>
 	);
 };
 
