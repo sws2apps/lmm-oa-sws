@@ -8,7 +8,6 @@ import { assTypeLocalState } from '../appStates/appSourceMaterial';
 export const addEpubDataToDb = async (fileEPUB) => {
 	try {
 		const data = await loadEPUB(fileEPUB);
-		console.log(data);
 		const monthNames = await promiseGetRecoil(monthNamesState);
 		const assTypeList = await promiseGetRecoil(assTypeLocalState);
 
@@ -190,7 +189,6 @@ export const addEpubDataToDb = async (fileEPUB) => {
 			await dbSaveSrcData(obj);
 		}
 	} catch (err) {
-		console.log(err);
 		return 'error';
 	}
 };
