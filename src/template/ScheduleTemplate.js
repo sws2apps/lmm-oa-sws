@@ -49,7 +49,6 @@ const ScheduleTemplate = () => {
 			setMonth(monthName);
 
 			const data = await dbGetScheduleForPrint(currentSchedule);
-			console.log(data);
 			setData(data);
 		};
 

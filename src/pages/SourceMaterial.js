@@ -46,7 +46,7 @@ const SourceMaterial = () => {
 			accept: '.epub',
 			strict: true,
 		});
-		console.log(file);
+
 		const epubLang = file.name.split('_')[1];
 		if (epubLang && epubLang === appLang.toUpperCase()) {
 			setEpubFile(file);

@@ -347,10 +347,10 @@ export const dbAddManualSource = async () => {
 			b.weekOf.split('/')[1];
 		return dateA > dateB ? 1 : -1;
 	});
-	console.log(appData);
+
 	var key = appData.length - 1;
 	const lastWeek = appData[key].weekOf;
-	console.log(lastWeek);
+
 	const day = lastWeek.split('/')[1];
 	const month = lastWeek.split('/')[0];
 	const year = lastWeek.split('/')[2];
