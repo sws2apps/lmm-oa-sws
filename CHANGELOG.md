@@ -1,3 +1,21 @@
+# [1.0.0-alpha.23](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.22...v1.0.0-alpha.23) (2022-03-04)
+
+
+### Bug Fixes
+
+* **source-material:** fix bug preventing epub import ([863dcb4](https://github.com/sws2apps/lmm-oa-sws/commit/863dcb4324a70e065e91b168258d13ca99a221dc))
+
+
+### Features
+
+* **deps:** bump @mui/icons-material from 5.4.2 to 5.4.4 ([c36edc7](https://github.com/sws2apps/lmm-oa-sws/commit/c36edc7d51a53fc54f47bce269bfffda3344e8e3))
+* **deps:** bump @mui/lab from 5.0.0-alpha.70 to 5.0.0-alpha.71 ([d9722b5](https://github.com/sws2apps/lmm-oa-sws/commit/d9722b5a9f733dd20040c2b1fed0b5a8909f882f))
+* **deps:** bump @mui/material from 5.4.3 to 5.4.4 ([3417339](https://github.com/sws2apps/lmm-oa-sws/commit/341733941548416b5f790fe8e74918e3d88f58fc))
+* **deps:** bump @mui/styles from 5.4.2 to 5.4.4 ([fbbc175](https://github.com/sws2apps/lmm-oa-sws/commit/fbbc1759570c19d3fe52ec0047feb58f4db1bb6a))
+* **deps:** bump i18next from 21.6.12 to 21.6.13 ([bbb63de](https://github.com/sws2apps/lmm-oa-sws/commit/bbb63dea456088571803d60a95a06b5cfa431b54))
+* **deps:** bump react-router-dom from 6.2.1 to 6.2.2 ([ee75717](https://github.com/sws2apps/lmm-oa-sws/commit/ee7571779ad94853b61ec2570555c7ff9d854fbb))
+* **deps:** bump workbox-cli from 6.5.0 to 6.5.1 ([44e7db1](https://github.com/sws2apps/lmm-oa-sws/commit/44e7db1125b977f68ae7037481d42ccbbe6ef2be))
+
 # [1.0.0-alpha.22](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.21...v1.0.0-alpha.22) (2022-02-26)
 
 
