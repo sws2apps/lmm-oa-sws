@@ -198,6 +198,7 @@
     "sourceMaterial.addWeekDesc": "Tianao ve ny hanampy herinandro vaovao ao amin’ny fitehirizana? Tsara kokoa anefa raha amin’ny alalan’ny rakitra EPUB nalaina avy tao amin’ny JW.ORG no hampidirina ny loharanon-kevitra. Tsindrio ny Eny raha hanohy, Tsia raha hanafoana.",
     "sourceMaterial.addWeekTitle": "Hanampy herinandro vaovao",
     "sourceMaterial.invalidFilename": "Tsy afaka ampidirina io rakitra EPUB nosafidinao io",
+    "sourceMaterial.importEPUBTitle": "Hampiditra loharanon-kevitra | EPUB",
 
     "importEPUB.invalid": "Tsy rakitra EPUB misy ny Tari-dalana ho An’ny Fivoriana io nosafidianao io, fa hamarino indray mandeha.",
     "importEPUB.inProgress": "Mampiditra ny rakitra EPUB. Miandrasa kely ...",
