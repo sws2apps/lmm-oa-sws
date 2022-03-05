@@ -87,8 +87,6 @@ const AppMenus = (props) => {
 			setAppBarTitle(t('global.settings'));
 		} else if (location.pathname === '/Administration') {
 			setAppBarTitle(t('global.administration'));
-		} else if (location.pathname === '/Help') {
-			setAppBarTitle(t('global.help'));
 		}
 		if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
 		} else {

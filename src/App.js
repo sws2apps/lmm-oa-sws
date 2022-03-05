@@ -4,6 +4,7 @@ import { HashRouter, Route, Routes } from 'react-router-dom';
 import usePwa2 from 'use-pwa2/dist/index.js';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AppNotification from './components/root/AppNotification';
+import DBRestore from './pages/DBRestore';
 import Layout from './components/root/Layout';
 import ServiceWorkerWrapper from './components/root/ServiceWorkerWrapper';
 import Startup from './pages/Startup';
@@ -14,8 +15,6 @@ import {
 } from './appStates/appSettings';
 import { appSnackOpenState } from './appStates/appNotification';
 
-const DBRestore = lazy(() => import('./pages/DBRestore'));
-const Help = lazy(() => import('./pages/Help'));
 const Home = lazy(() => import('./pages/Home'));
 const Schedule = lazy(() => import('./pages/Schedule'));
 const Settings = lazy(() => import('./pages/Settings'));
@@ -114,7 +113,6 @@ const App = () => {
 								<Route path='/Settings' element={<Settings />} />
 								<Route path='/Administration' element={<Administration />} />
 								<Route path='/DBRestore' element={<DBRestore />} />
-								<Route path='/Help' element={<Help />} />
 							</Routes>
 						</Layout>
 					</HashRouter>
