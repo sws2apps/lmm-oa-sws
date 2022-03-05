@@ -164,7 +164,7 @@ const Administration = () => {
 							)}
 							{!isConnected && (
 								<>
-									{congID.length === 10 && (
+									{congID.length < 10 && (
 										<Button
 											variant='contained'
 											color='primary'
