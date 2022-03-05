@@ -254,7 +254,7 @@ export const dbHistoryAssignment = async () => {
 					const stuDetails = await dbGetStudentDetails(person.studentID);
 					person.studentName = stuDetails.person_displayName;
 					person.assignmentID = assType;
-					if (assType === 1) {
+					if (assType === 1 || assType === 20) {
 						person.assignmentName = t('global.initialCall');
 					} else if (assType === 2) {
 						person.assignmentName = t('global.returnVisit');
@@ -332,7 +332,7 @@ export const dbHistoryAssistant = async (mainStuID) => {
 			var weekFld = 'ass' + cnAss[b].iAss + '_type';
 			const assType = weekData[weekFld];
 
-			if (assType === 1 || assType === 2 || assType === 3) {
+			if (assType === 1 || assType === 2 || assType === 3 || assType === 20) {
 				for (let a = 0; a < varClasses.length; a++) {
 					const fldName =
 						'ass' + cnAss[b].iAss + '_stu_' + varClasses[a].classLabel;

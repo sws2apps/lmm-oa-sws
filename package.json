@@ -20,7 +20,7 @@
     "i18next": "^21.6.13",
     "interweave": "^12.9.0",
     "json-as-xlsx": "^2.1.0",
-    "jw-epub-parser": "^1.4.1",
+    "jw-epub-parser": "^1.4.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-i18next": "^11.15.5",

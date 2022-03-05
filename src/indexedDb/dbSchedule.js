@@ -166,7 +166,7 @@ export const dbAutoFill = async (schedule) => {
 
 				//Assign AYF A
 				fldName = 'ass' + a + '_stu_A';
-				if (assType === 1) {
+				if (assType === 1 || assType === 20) {
 					students = await dbGetPersonsByAssType('isInitialCall');
 				} else if (assType === 2) {
 					students = await dbGetPersonsByAssType('isReturnVisit');
@@ -175,7 +175,13 @@ export const dbAutoFill = async (schedule) => {
 				} else if (assType === 4) {
 					students = await dbGetPersonsByAssType('isTalk');
 				}
-				if (assType === 1 || assType === 2 || assType === 3 || assType === 4) {
+				if (
+					assType === 1 ||
+					assType === 2 ||
+					assType === 3 ||
+					assType === 4 ||
+					assType === 20
+				) {
 					if (students.length > 0) {
 						const stuA = students[0].id;
 						await dbSaveAss(weekValue, stuA, fldName, assType);
@@ -183,7 +189,7 @@ export const dbAutoFill = async (schedule) => {
 				}
 
 				//Assign AYF A Assistant
-				if (assType === 1 || assType === 2 || assType === 3) {
+				if (assType === 1 || assType === 2 || assType === 3 || assType === 20) {
 					fldName = 'ass' + a + '_ass_A';
 					students = await dbGetPersonsByAssType('isAssistant');
 					if (students.length > 0) {
@@ -195,7 +201,7 @@ export const dbAutoFill = async (schedule) => {
 				//Assign AYF B
 				if (settings.class_count === 2 && scheduleData.week_type === 1) {
 					fldName = 'ass' + a + '_stu_B';
-					if (assType === 1) {
+					if (assType === 1 || assType === 20) {
 						students = await dbGetPersonsByAssType('isInitialCall');
 					} else if (assType === 2) {
 						students = await dbGetPersonsByAssType('isReturnVisit');
@@ -209,7 +215,8 @@ export const dbAutoFill = async (schedule) => {
 						assType === 1 ||
 						assType === 2 ||
 						assType === 3 ||
-						assType === 4
+						assType === 4 ||
+						assType === 20
 					) {
 						if (students.length > 0) {
 							const stuB = students[0].id;
@@ -218,7 +225,12 @@ export const dbAutoFill = async (schedule) => {
 					}
 
 					//Assign AYF B Assistant
-					if (assType === 1 || assType === 2 || assType === 3) {
+					if (
+						assType === 1 ||
+						assType === 2 ||
+						assType === 3 ||
+						assType === 20
+					) {
 						fldName = 'ass' + a + '_ass_B';
 						students = await dbGetPersonsByAssType('isAssistant');
 						if (students.length > 0) {

@@ -117,14 +117,14 @@ export const dbHistoryAssignment = async () => {
 					const stuDetails = await dbGetStudentDetails(person.studentID);
 					person.studentName = stuDetails.person_displayName;
 					person.assignmentID = assType;
-					if (assType === 1) {
-						person.assignmentName = 'Fitoriana';
+					if (assType === 1 || assType === 20) {
+						person.assignmentName = t('global.initialCall');
 					} else if (assType === 2) {
-						person.assignmentName = 'Fiverenana Mitsidika';
+						person.assignmentName = t('global.returnVisit');
 					} else if (assType === 3) {
-						person.assignmentName = 'Fampianarana Baiboly';
+						person.assignmentName = t('global.bibleStudy');
 					} else if (assType === 4) {
-						person.assignmentName = 'Lahateny';
+						person.assignmentName = t('global.talk');
 					}
 					person.class = varClasses[a].classLabel;
 					dbHistory.push(person);
@@ -454,7 +454,7 @@ export const dbGetS89ItemData = async (week, assName, classLabel) => {
 		assName === 'ass4'
 	) {
 		const assType = sourceData[assTypeFld];
-		if (assType === 1 || assType === 2 || assType === 3) {
+		if (assType === 1 || assType === 2 || assType === 3 || assType === 20) {
 			const assID = scheduleData[assFld];
 			if (typeof assID !== 'undefined' && assID !== '') {
 				const assInfo = await dbGetStudentDetails(assID);
@@ -468,7 +468,7 @@ export const dbGetS89ItemData = async (week, assName, classLabel) => {
 		const ass4Type = sourceData['ass4_type'];
 		const assTime = sourceData[assTimeFld];
 
-		if (assType === 1) {
+		if (assType === 1 || assType === 20) {
 			s89Data.isInitialCall = true;
 			if (assName === 'ass1') {
 				if (

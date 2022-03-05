@@ -99,6 +99,7 @@
     "global.add": "Add",
     "global.noOptions": "No options",
     "global.waitForRequest": "An existing connection is already sent to the server. Please try again later",
+    "global.memorialInvite": "Memorial Invitation",
 
     "startup.welcomeTitle": "Welcome to LMM-OA",
     "startup.welcomeDescription": "LMM-OA (or Life and Ministry Meeting Overseer Assistant) is an application designed for the Life and Ministry Meeting Overseer.",
