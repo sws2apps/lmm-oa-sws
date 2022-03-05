@@ -70,6 +70,7 @@ appDb.on('populate', function () {
 	let icVideoObj = {};
 	let rvVideoObj = {};
 	let otherObj = {};
+	let memorialObj = {};
 	let normWeekObj = {};
 	let coWeekObj = {};
 	let convWeekObj = {};
@@ -96,6 +97,9 @@ appDb.on('populate', function () {
 		rvVideoObj[lang.code.toUpperCase()] = getI18n().getDataByLanguage(
 			lang.code
 		).translation['global.returnVisitVideo'];
+		memorialObj[lang.code.toUpperCase()] = getI18n().getDataByLanguage(
+			lang.code
+		).translation['global.memorialInvite'];
 		normWeekObj[lang.code.toUpperCase()] = getI18n().getDataByLanguage(
 			lang.code
 		).translation['global.normalWeek'];
@@ -172,6 +176,26 @@ appDb.on('populate', function () {
 			},
 		},
 	]);
+});
+
+appDb.on('ready', async () => {
+	// adding memorial part
+	const memorialObj = await appDb.table('ass_type').get({ id_type: 20 });
+	if (!memorialObj) {
+		let obj = {};
+
+		langList.forEach((lang) => {
+			obj[lang.code.toUpperCase()] = getI18n().getDataByLanguage(
+				lang.code
+			).translation['global.memorialInvite'];
+		});
+
+		let data = {};
+		data.id_type = 20;
+		data.ass_type_name = obj;
+
+		await appDb.table('ass_type').add(data);
+	}
 });
 
 export default appDb;

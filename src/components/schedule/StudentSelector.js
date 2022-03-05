@@ -119,7 +119,7 @@ const StudentSelector = (props) => {
 				if (assType === 0) {
 					students = await dbGetPersonsByAssType('isBRead');
 				}
-				if (assType === 1) {
+				if (assType === 1 || assType === 20) {
 					students = await dbGetPersonsByAssType('isInitialCall');
 				}
 				if (assType === 2) {
