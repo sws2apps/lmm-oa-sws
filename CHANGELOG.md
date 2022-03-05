@@ -1,3 +1,10 @@
+# [1.0.0-alpha.28](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.27...v1.0.0-alpha.28) (2022-03-05)
+
+
+### Bug Fixes
+
+* **help:** help documentation are no longer bundled inside the app ([bb39edf](https://github.com/sws2apps/lmm-oa-sws/commit/bb39edf85ac5309a34d6fe1408a0c9685144e4b1))
+
 # [1.0.0-alpha.27](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.26...v1.0.0-alpha.27) (2022-03-05)
 
 
