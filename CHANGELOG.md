@@ -1,3 +1,10 @@
+# [1.0.0-alpha.27](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.26...v1.0.0-alpha.27) (2022-03-05)
+
+
+### Bug Fixes
+
+* **updater:** localize update notification ([92b524c](https://github.com/sws2apps/lmm-oa-sws/commit/92b524cd0ebfdec9fbebeea5c88542594a24c0b7))
+
 # [1.0.0-alpha.26](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.25...v1.0.0-alpha.26) (2022-03-05)
 
 
