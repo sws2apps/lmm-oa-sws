@@ -1,3 +1,10 @@
+# [1.0.0-alpha.25](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.24...v1.0.0-alpha.25) (2022-03-05)
+
+
+### Bug Fixes
+
+* **app:** handle new assignment type in mwb22.03 ([0e174b7](https://github.com/sws2apps/lmm-oa-sws/commit/0e174b7be3aa1037894aee11a796f13e99513f20))
+
 # [1.0.0-alpha.24](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.23...v1.0.0-alpha.24) (2022-03-04)
 
 
