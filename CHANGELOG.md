@@ -1,3 +1,10 @@
+# [1.0.0-alpha.26](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.25...v1.0.0-alpha.26) (2022-03-05)
+
+
+### Bug Fixes
+
+* **administration:** display button to create congregation account ([5d07a83](https://github.com/sws2apps/lmm-oa-sws/commit/5d07a83716159a7e81a84b254dd67c6306ef974b))
+
 # [1.0.0-alpha.25](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.24...v1.0.0-alpha.25) (2022-03-05)
 
 
