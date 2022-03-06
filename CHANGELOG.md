@@ -1,3 +1,10 @@
+# [1.0.0-alpha.30](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.29...v1.0.0-alpha.30) (2022-03-06)
+
+
+### Bug Fixes
+
+* **home:** skip navigation to memorial week ([9220ea9](https://github.com/sws2apps/lmm-oa-sws/commit/9220ea9e7f01c5078ac609e7cc8760d7dad1a4d7))
+
 # [1.0.0-alpha.29](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.28...v1.0.0-alpha.29) (2022-03-06)
 
 
