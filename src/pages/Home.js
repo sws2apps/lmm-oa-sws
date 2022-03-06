@@ -169,25 +169,40 @@ const Home = () => {
 		setCurrentWeek(monDay);
 	};
 
-	const getPreviousWeek = () => {
+	const getPreviousWeek = async () => {
 		var result = new Date(currentWeek);
 		result.setDate(currentWeek.getDate() - 7);
+
+		let previousWeek = dateFormat(result, 'mm/dd/yyyy');
+
+		let hasPrevious = await dbIsWeekExist(previousWeek);
+		if (!hasPrevious) {
+			result.setDate(result.getDate() - 7);
+		}
+
 		return result;
 	};
 
-	const getNextWeek = () => {
+	const getNextWeek = async () => {
 		var result = new Date(currentWeek);
 		result.setDate(currentWeek.getDate() + 7);
+
+		let nextWeek = dateFormat(result, 'mm/dd/yyyy');
+
+		let hasNext = await dbIsWeekExist(nextWeek);
+		if (!hasNext) {
+			result.setDate(result.getDate() + 7);
+		}
 		return result;
 	};
 
-	const handlePreviousWeek = () => {
-		var result = getPreviousWeek();
+	const handlePreviousWeek = async () => {
+		var result = await getPreviousWeek();
 		setCurrentWeek(result);
 	};
 
-	const handleNextWeek = () => {
-		var result = getNextWeek();
+	const handleNextWeek = async () => {
+		var result = await getNextWeek();
 		setCurrentWeek(result);
 	};
 
@@ -195,16 +210,27 @@ const Home = () => {
 		const loadCurrentWeekData = async () => {
 			var result = new Date(currentWeek);
 			result.setDate(currentWeek.getDate() - 7);
-			const previousWeek = dateFormat(result, 'mm/dd/yyyy');
+			let previousWeek = dateFormat(result, 'mm/dd/yyyy');
+
+			let hasPrevious = await dbIsWeekExist(previousWeek);
+			if (!hasPrevious) {
+				result.setDate(result.getDate() - 7);
+				previousWeek = dateFormat(result, 'mm/dd/yyyy');
+				hasPrevious = await dbIsWeekExist(previousWeek);
+				setDisablePrevious(!hasPrevious);
+			}
 
 			result = new Date(currentWeek);
 			result.setDate(currentWeek.getDate() + 7);
-			const nextWeek = dateFormat(result, 'mm/dd/yyyy');
+			let nextWeek = dateFormat(result, 'mm/dd/yyyy');
 
-			const hasPrevious = await dbIsWeekExist(previousWeek);
-			setDisablePrevious(!hasPrevious);
-			const hasNext = await dbIsWeekExist(nextWeek);
-			setDisableNext(!hasNext);
+			let hasNext = await dbIsWeekExist(nextWeek);
+			if (!hasNext) {
+				result.setDate(result.getDate() + 7);
+				nextWeek = dateFormat(result, 'mm/dd/yyyy');
+				hasNext = await dbIsWeekExist(nextWeek);
+				setDisableNext(!hasNext);
+			}
 
 			const weekValue = dateFormat(currentWeek, 'mm/dd/yyyy');
 			const weekValueFormatted = dateFormat(weekValue, shortDateFormat);
