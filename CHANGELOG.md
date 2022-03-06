@@ -1,3 +1,10 @@
+# [1.0.0-alpha.29](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.28...v1.0.0-alpha.29) (2022-03-06)
+
+
+### Bug Fixes
+
+* **locales:** adjust name of the 6th month in Malagasy ([07bf0fd](https://github.com/sws2apps/lmm-oa-sws/commit/07bf0fdb2e51662ec3ce32b048534cbd2376f64d))
+
 # [1.0.0-alpha.28](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.27...v1.0.0-alpha.28) (2022-03-05)
 
 
