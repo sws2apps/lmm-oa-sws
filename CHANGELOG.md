@@ -1,3 +1,15 @@
+# [1.0.0-alpha.31](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.30...v1.0.0-alpha.31) (2022-03-07)
+
+
+### Bug Fixes
+
+* **home:** improve to handle previous and next week navigation ([5014a5f](https://github.com/sws2apps/lmm-oa-sws/commit/5014a5f064196bc5d03fd0dda99940b7854314e3))
+
+
+### Features
+
+* **deps:** bump interweave from 12.9.0 to 13.0.0 ([5b7e620](https://github.com/sws2apps/lmm-oa-sws/commit/5b7e620f7937c95ead6812ff9470946a17b7658c))
+
 # [1.0.0-alpha.30](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.29...v1.0.0-alpha.30) (2022-03-06)
 
 
