@@ -155,6 +155,8 @@ const Home = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [currentWeek, setCurrentWeek] = useState('');
 	const [fCurrentWeek, setFCurrentWeek] = useState('');
+	const [previousWeek, setPreviousWeek] = useState('');
+	const [nextWeek, setNextWeek] = useState('');
 	const [disablePrevious, setDisablePrevious] = useState(false);
 	const [disableNext, setDisableNext] = useState(false);
 
@@ -169,41 +171,12 @@ const Home = () => {
 		setCurrentWeek(monDay);
 	};
 
-	const getPreviousWeek = async () => {
-		var result = new Date(currentWeek);
-		result.setDate(currentWeek.getDate() - 7);
-
-		let previousWeek = dateFormat(result, 'mm/dd/yyyy');
-
-		let hasPrevious = await dbIsWeekExist(previousWeek);
-		if (!hasPrevious) {
-			result.setDate(result.getDate() - 7);
-		}
-
-		return result;
+	const handlePreviousWeek = () => {
+		setCurrentWeek(previousWeek);
 	};
 
-	const getNextWeek = async () => {
-		var result = new Date(currentWeek);
-		result.setDate(currentWeek.getDate() + 7);
-
-		let nextWeek = dateFormat(result, 'mm/dd/yyyy');
-
-		let hasNext = await dbIsWeekExist(nextWeek);
-		if (!hasNext) {
-			result.setDate(result.getDate() + 7);
-		}
-		return result;
-	};
-
-	const handlePreviousWeek = async () => {
-		var result = await getPreviousWeek();
-		setCurrentWeek(result);
-	};
-
-	const handleNextWeek = async () => {
-		var result = await getNextWeek();
-		setCurrentWeek(result);
+	const handleNextWeek = () => {
+		setCurrentWeek(nextWeek);
 	};
 
 	useEffect(() => {
@@ -220,6 +193,8 @@ const Home = () => {
 				setDisablePrevious(!hasPrevious);
 			}
 
+			setPreviousWeek(result);
+
 			result = new Date(currentWeek);
 			result.setDate(currentWeek.getDate() + 7);
 			let nextWeek = dateFormat(result, 'mm/dd/yyyy');
@@ -231,6 +206,8 @@ const Home = () => {
 				hasNext = await dbIsWeekExist(nextWeek);
 				setDisableNext(!hasNext);
 			}
+
+			setNextWeek(result);
 
 			const weekValue = dateFormat(currentWeek, 'mm/dd/yyyy');
 			const weekValueFormatted = dateFormat(weekValue, shortDateFormat);
