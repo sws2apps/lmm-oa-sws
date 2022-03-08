@@ -1,3 +1,14 @@
+# [1.0.0-alpha.32](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.31...v1.0.0-alpha.32) (2022-03-08)
+
+
+### Features
+
+* **deps:** bump @mui/icons-material from 5.4.4 to 5.5.0 ([7fe704f](https://github.com/sws2apps/lmm-oa-sws/commit/7fe704ffb8fdbd468a7c19b8da22108c2802904e))
+* **deps:** bump @mui/lab from 5.0.0-alpha.71 to 5.0.0-alpha.72 ([bb8ce77](https://github.com/sws2apps/lmm-oa-sws/commit/bb8ce77ee81756af954af5fc00f7d520f1249556))
+* **deps:** bump @mui/material from 5.4.4 to 5.5.0 ([c3d6730](https://github.com/sws2apps/lmm-oa-sws/commit/c3d6730cf9769aa1a63cd4af11386eca612b83a6))
+* **deps:** bump @mui/styles from 5.4.4 to 5.5.0 ([07bdb1f](https://github.com/sws2apps/lmm-oa-sws/commit/07bdb1fd98f9c7572bec4d5bb2ff58bc4512e1c7))
+* **deps:** bump react-i18next from 11.15.5 to 11.15.6 ([dc9f6ea](https://github.com/sws2apps/lmm-oa-sws/commit/dc9f6eabaa9f935e6b33bece20b42829b4f01cef))
+
 # [1.0.0-alpha.31](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.30...v1.0.0-alpha.31) (2022-03-07)
 
 
