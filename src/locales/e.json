@@ -226,6 +226,9 @@
     "schedule.assistantHistory": "{{ currentStudent }} (Assistant History)",
     "schedule.s89NoData": "There is no assignment to be printed for this schedule",
     "schedule.assignmentPart": "Part {{ id }} ({{ time }}.)",
+    "schedule.publishPocket": "Publish schedule to SWS Pocket ...",
+    "schedule.publishMSC": "Publish schedule to MSC ...",
+    "schedule.publishSuccess": "Scheduled sucessfully published",
 
     "s89.title": "OUR CHRISTIAN LIFE AND MINISTRY<br />MEETING ASSIGNMENT",
     "s89.toBeGiven": "To be given in:",

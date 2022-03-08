@@ -179,6 +179,13 @@ const Startup = () => {
 				setAppLang(app_lang || 'e');
 				setLiveClass(liveEventClass);
 
+				if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+					setIsUserLogged(true);
+					setIsConnected(true);
+					setUidUser(process.env.REACT_APP_TEST_UID_USER);
+					setCongPassword(process.env.REACT_APP_TEST_CONG_PASSWORD);
+				}
+
 				i18n.changeLanguage(app_lang);
 
 				const weekTypeList = await dbGetListWeekType();

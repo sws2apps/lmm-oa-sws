@@ -88,6 +88,9 @@ export const addEpubDataToDb = async (fileEPUB) => {
 			obj.ass3_type = '';
 			obj.ass3_time = '';
 			obj.ass3_src = '';
+			obj.ass4_type = '';
+			obj.ass4_time = '';
+			obj.ass4_src = '';
 
 			if (cnAYF > 1) {
 				//AYF2 Assignment Type

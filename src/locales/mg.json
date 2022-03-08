@@ -227,6 +227,9 @@
     "schedule.assistantHistory": "{{ currentStudent }} (Mpanampy efa niaraka taminy)",
     "schedule.s89NoData": "Tsy misy anjara azo atao pirinty ao amin’io fandaharana io",
     "schedule.assignmentPart": "Anjara {{ id }} ({{ time }}.)",
+    "schedule.publishPocket": "Handefa fandaharana -> SWS Pocket ...",
+    "schedule.publishMSC": "Handefa fandaharana -> MSC ...",
+    "schedule.publishSuccess": "Lasa soa aman-tsara ny fandaharana",
 
     "s89.title": "ANJARA AMIN’NY FIVORIANA MOMBA<br />NY FIAINANTSIKA SY NY FANOMPOANA",
     "s89.toBeGiven": "Hatao ao amin’ny:",
