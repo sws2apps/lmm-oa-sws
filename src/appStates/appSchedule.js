@@ -69,3 +69,18 @@ export const s89DataState = atom({
 	key: 's89Data',
 	default: [],
 });
+
+export const isPublishOpenState = atom({
+	key: 'isPublishOpenState',
+	default: false,
+});
+
+export const publishSchedTypeState = atom({
+	key: 'publishSchedType',
+	default: 'sws-pocket',
+});
+
+export const scheduleToSentState = atom({
+	key: 'scheduleToSent',
+	default: '',
+});

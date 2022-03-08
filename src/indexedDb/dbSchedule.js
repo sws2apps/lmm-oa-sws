@@ -288,48 +288,5 @@ export const dbBuildScheduleForShare = async (scheduleIndex) => {
 		dataMSC.push({ ...schedData, ...sourceData });
 	}
 
-	const appSettings = await dbGetAppSettings();
-	const congID = appSettings.cong_ID;
-	const congPIN = appSettings.cong_PIN;
-
-	const myKey = congID + '&lmm-oa_' + congPIN;
-	const Cryptr = require('cryptr');
-	const cryptr = new Cryptr(myKey);
-
-	const encryptedData = cryptr.encrypt(JSON.stringify(dataMSC));
-	return encryptedData;
-};
-
-export const dbGetScheduleName = (scheduleIndex) => {
-	const month = scheduleIndex.split('/')[0];
-	const year = scheduleIndex.split('/')[1];
-	var monthName = '';
-	if (month === '01') {
-		monthName = 'Janoary';
-	} else if (month === '02') {
-		monthName = 'Febroary';
-	} else if (month === '03') {
-		monthName = 'Martsa';
-	} else if (month === '04') {
-		monthName = 'Aprily';
-	} else if (month === '05') {
-		monthName = 'Mey';
-	} else if (month === '06') {
-		monthName = 'Jona';
-	} else if (month === '07') {
-		monthName = 'Jolay';
-	} else if (month === '08') {
-		monthName = 'Aogositra';
-	} else if (month === '09') {
-		monthName = 'Septambra';
-	} else if (month === '10') {
-		monthName = 'Oktobra';
-	} else if (month === '11') {
-		monthName = 'Novambra';
-	} else if (month === '12') {
-		monthName = 'Desambra';
-	}
-	const str = monthName + ' ' + year;
-
-	return str;
+	return JSON.stringify(dataMSC);
 };

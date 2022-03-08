@@ -17,11 +17,13 @@ import ScheduleDetails from '../components/schedule/ScheduleDetails';
 import DialogAutoFill from '../components/schedule/DialogAutoFill';
 import ScheduleActions from '../components/schedule/ScheduleActions';
 import DialogAssignmentDelete from '../components/schedule/DialogAssignmentDelete';
+import SchedulePublish from '../components/schedule/SchedulePublish';
 import {
 	dbGetScheduleListByYear,
 	dbGetWeekListBySched,
 } from '../indexedDb/dbSourceMaterial';
 import {
+	isCongConnectedState,
 	monthNamesState,
 	shortDateFormatState,
 } from '../appStates/appSettings';
@@ -32,8 +34,10 @@ import {
 	dlgAutoFillOpenState,
 	dlgAssDeleteOpenState,
 	isDlgActionOpenState,
+	isPublishOpenState,
 	isS89OpenState,
 	weekListSchedState,
+	publishSchedTypeState,
 } from '../appStates/appSchedule';
 
 const sharedStyles = {
@@ -59,13 +63,16 @@ const Schedule = () => {
 	const [currentSchedule, setCurrentSchedule] =
 		useRecoilState(currentScheduleState);
 	const [weeks, setWeeks] = useRecoilState(weekListSchedState);
+	const [publishOpen, setPublishOpen] = useRecoilState(isPublishOpenState);
 
 	const setIsS89 = useSetRecoilState(isS89OpenState);
+	const setPublishType = useSetRecoilState(publishSchedTypeState);
 
 	const years = useRecoilValue(yearsListState);
 	const monthNames = useRecoilValue(monthNamesState);
 	const shortDateFormat = useRecoilValue(shortDateFormatState);
 	const isDlgActionOpen = useRecoilValue(isDlgActionOpenState);
+	const isCongConnected = useRecoilValue(isCongConnectedState);
 
 	let isMenuOpen = Boolean(anchorEl);
 
@@ -110,9 +117,11 @@ const Schedule = () => {
 		navigate('/ScheduleTemplate', { state: { currentSchedule } });
 	};
 
-	const handleSendScheduleToMSC = async () => {};
-
-	const handleShareSchedule = async () => {};
+	const handleShareSchedule = async () => {
+		setPublishType('sws-pocket');
+		setPublishOpen(true);
+		handleClose();
+	};
 
 	useEffect(() => {
 		let mounted = true;
@@ -212,6 +221,7 @@ const Schedule = () => {
 			{isDlgActionOpen && (
 				<ScheduleActions handleWeekChange={handleWeekChange} />
 			)}
+			{publishOpen && <SchedulePublish />}
 			{schedules.length > 0 && (
 				<>
 					<Box
@@ -292,35 +302,39 @@ const Schedule = () => {
 							>
 								PDF
 							</Button>
-							<Button
-								variant='contained'
-								color='primary'
-								sx={sharedStyles.btnSchedule}
-								startIcon={<SendIcon />}
-								onClick={handleClick}
-								aria-controls='basic-menu'
-								aria-haspopup='true'
-								aria-expanded={isMenuOpen ? 'true' : undefined}
-							>
-								{t('schedule.send')}
-							</Button>
-							<Menu
-								id='basic-menu'
-								disableScrollLock={true}
-								anchorEl={anchorEl}
-								open={isMenuOpen}
-								onClose={handleClose}
-								MenuListProps={{
-									'aria-labelledby': 'basic-button',
-								}}
-							>
-								<MenuItem onClick={handleSendScheduleToMSC}>
-									{t('schedule.sendToMSC')}
-								</MenuItem>
-								<MenuItem onClick={handleShareSchedule}>
-									{t('schedule.sendToStudents')}
-								</MenuItem>
-							</Menu>
+							{isCongConnected && (
+								<>
+									<Button
+										variant='contained'
+										color='primary'
+										sx={sharedStyles.btnSchedule}
+										startIcon={<SendIcon />}
+										onClick={handleClick}
+										aria-controls='basic-menu'
+										aria-haspopup='true'
+										aria-expanded={isMenuOpen ? 'true' : undefined}
+									>
+										{t('schedule.send')}
+									</Button>
+									<Menu
+										id='basic-menu'
+										disableScrollLock={true}
+										anchorEl={anchorEl}
+										open={isMenuOpen}
+										onClose={handleClose}
+										MenuListProps={{
+											'aria-labelledby': 'basic-button',
+										}}
+									>
+										{/* <MenuItem onClick={handleSendScheduleToMSC}>
+											{t('schedule.sendToMSC')}
+										</MenuItem> */}
+										<MenuItem onClick={handleShareSchedule}>
+											{t('schedule.sendToStudents')}
+										</MenuItem>
+									</Menu>
+								</>
+							)}
 							<Button
 								variant='contained'
 								color='primary'
