@@ -1,3 +1,13 @@
+# [1.0.0-alpha.33](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.32...v1.0.0-alpha.33) (2022-03-11)
+
+
+### Features
+
+* **deps:** bump @emotion/react from 11.8.1 to 11.8.2 ([7d85fd1](https://github.com/sws2apps/lmm-oa-sws/commit/7d85fd1dd48d36cacd0a0a5a0eaaef7b0722d5b2))
+* **deps:** bump i18next from 21.6.13 to 21.6.14 ([eea8421](https://github.com/sws2apps/lmm-oa-sws/commit/eea8421ae02e6edde34d17d2a169e0f72e97723d))
+* **schedule:** publish schedule to sws pocket users ([b8485f0](https://github.com/sws2apps/lmm-oa-sws/commit/b8485f0ee92ef8138321af0dea0a838608b06a1a))
+* **students:** use uid instead of the default id in indexedDb ([274c516](https://github.com/sws2apps/lmm-oa-sws/commit/274c5169ef68d22bd9c98a3638a38845a7a1be76))
+
 # [1.0.0-alpha.32](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.31...v1.0.0-alpha.32) (2022-03-08)
 
 
