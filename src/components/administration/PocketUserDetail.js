@@ -31,7 +31,7 @@ import { apiHostState, uidUserState } from '../../appStates/appSettings';
 
 const PocketUserDetail = (props) => {
 	const { t } = useTranslation();
-	const pocketId = props.id || 0;
+	const pocketUid = props.person_uid || 0;
 
 	let abortCont = useMemo(() => new AbortController(), []);
 
@@ -96,6 +96,8 @@ const PocketUserDetail = (props) => {
 				cong_number: congNumber,
 			};
 
+			console.log(reqPayload);
+
 			fetch(`${apiHost}api/congregation/pocket-generate-pin`, {
 				signal: abortCont.signal,
 				method: 'POST',
@@ -142,7 +144,7 @@ const PocketUserDetail = (props) => {
 	useEffect(() => {
 		if (parentStudent) {
 			const newArray = dbStudents.filter(
-				(student) => student.id !== parentStudent.id
+				(student) => student.person_uid !== parentStudent.person_uid
 			);
 			setFilterStudents(newArray);
 		} else {
@@ -176,11 +178,13 @@ const PocketUserDetail = (props) => {
 	return (
 		<Box>
 			<Autocomplete
-				id={`combo-box-select-pocket${pocketId}`}
+				id={`combo-box-select-pocket${pocketUid}`}
 				options={pocketPicker}
 				getOptionLabel={(option) => option.person_name}
 				value={parentStudent}
-				isOptionEqualToValue={(option, value) => option.id === value.id}
+				isOptionEqualToValue={(option, value) =>
+					option.person_uid === value.person_uid
+				}
 				sx={{
 					width: 300,
 					marginBottom: '15px',
@@ -196,7 +200,7 @@ const PocketUserDetail = (props) => {
 			/>
 			<Autocomplete
 				multiple
-				id={`pocket-user-access${pocketId}`}
+				id={`pocket-user-access${pocketUid}`}
 				options={filterStudents}
 				getOptionLabel={(option) => option.person_name}
 				sx={{
@@ -207,7 +211,9 @@ const PocketUserDetail = (props) => {
 				noOptionsText={t('global.noOptions')}
 				value={childStudents}
 				onChange={(e, value) => handleOnChildChange(value)}
-				isOptionEqualToValue={(option, value) => option.id === value.id}
+				isOptionEqualToValue={(option, value) =>
+					option.person_uid === value.person_uid
+				}
 				renderInput={(params) => (
 					<TextField
 						{...params}

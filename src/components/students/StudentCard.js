@@ -70,10 +70,10 @@ const StudentCard = ({ student }) => {
 		setIsStudentEdit(true);
 	};
 
-	const handleDelete = (id, name) => {
+	const handleDelete = (uid, name) => {
 		var obj = {};
 		obj.name = name;
-		obj.id = id;
+		obj.person_uid = uid;
 		setCurrentStudent(obj);
 		setIsStudentDelete(true);
 	};
@@ -117,7 +117,9 @@ const StudentCard = ({ student }) => {
 							</Tooltip>
 							<Tooltip title={t('global.delete')}>
 								<IconButton
-									onClick={() => handleDelete(student.id, student.person_name)}
+									onClick={() =>
+										handleDelete(student.person_uid, student.person_name)
+									}
 								>
 									<DeleteIcon />
 								</IconButton>

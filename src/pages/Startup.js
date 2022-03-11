@@ -184,6 +184,7 @@ const Startup = () => {
 					setIsConnected(true);
 					setUidUser(process.env.REACT_APP_TEST_UID_USER);
 					setCongPassword(process.env.REACT_APP_TEST_CONG_PASSWORD);
+					setCongID(process.env.REACT_APP_TEST_CONG_ID);
 				}
 
 				i18n.changeLanguage(app_lang);

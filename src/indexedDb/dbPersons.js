@@ -18,8 +18,7 @@ export const dbGetStudents = async () => {
 
 	for (let i = 0; i < appData.length; i++) {
 		var person = {};
-		person.source = 'lmm_oa';
-		person.id = appData[i].id;
+		person.person_uid = appData[i].person_uid;
 		person.person_name = appData[i].person_name;
 		person.person_displayName = appData[i].person_displayName;
 		person.isMale = appData[i].isMale;
@@ -55,34 +54,34 @@ export const dbIsStudentExist = async (varName) => {
 };
 
 export const dbSavePersonData = async (personData) => {
-	await appDb.table('persons').put(
-		{
-			id: personData.id,
-			person_name: personData.person_name,
-			person_displayName: personData.person_displayName,
-			isMale: personData.isMale,
-			isFemale: personData.isFemale,
-			isBRead: personData.isBRead,
-			isInitialCall: personData.isInitialCall,
-			isReturnVisit: personData.isReturnVisit,
-			isBibleStudy: personData.isBibleStudy,
-			isTalk: personData.isTalk,
-			isUnavailable: personData.isUnavailable,
-			forLivePart: personData.forLivePart,
-			viewOnlineSchedule: personData.viewOnlineSchedule,
-			student_PIN: personData.student_PIN,
-			viewStudent_Part: personData.viewStudent_Part,
-		},
-		personData.id
-	);
+	const person = await dbGetStudentDetails(personData.person_uid);
+
+	await appDb.table('persons').update(person.id, {
+		person_name: personData.person_name,
+		person_displayName: personData.person_displayName,
+		isMale: personData.isMale,
+		isFemale: personData.isFemale,
+		isBRead: personData.isBRead,
+		isInitialCall: personData.isInitialCall,
+		isReturnVisit: personData.isReturnVisit,
+		isBibleStudy: personData.isBibleStudy,
+		isTalk: personData.isTalk,
+		isUnavailable: personData.isUnavailable,
+		forLivePart: personData.forLivePart,
+		viewOnlineSchedule: personData.viewOnlineSchedule,
+		student_PIN: personData.student_PIN,
+		viewStudent_Part: personData.viewStudent_Part,
+	});
 };
 
-export const dbDeleteStudent = async (id) => {
-	await appDb.persons.delete(id);
+export const dbDeleteStudent = async (uid) => {
+	const appData = await appDb.table('persons').get({ person_uid: uid });
+	await appDb.persons.delete(appData.id);
 };
 
 export const dbAddPersonData = async (personData) => {
 	await appDb.persons.add({
+		person_uid: personData.person_uid,
 		person_name: personData.person_name,
 		person_displayName: personData.person_displayName,
 		isMale: personData.isMale,
@@ -97,12 +96,16 @@ export const dbAddPersonData = async (personData) => {
 	});
 };
 
-export const dbGetStudentDetails = async (id) => {
-	id = parseInt(id, 10);
+export const dbGetStudentUidById = async (id) => {
 	const appData = await appDb.table('persons').get({ id: id });
+	return appData.person_uid;
+};
+
+export const dbGetStudentDetails = async (uid) => {
+	const appData = await appDb.table('persons').get({ person_uid: uid });
 	var person = {};
-	person.source = 'lmm_oa';
 	person.id = appData.id;
+	person.person_uid = appData.person_uid;
 	person.person_name = appData.person_name;
 	person.person_displayName = appData.person_displayName;
 	person.isMale = appData.isMale;
@@ -169,7 +172,7 @@ export const dbGetPersonsByAssType = async (assType) => {
 
 	for (let i = 0; i < dbPersons.length; i++) {
 		var person = {};
-		person.id = dbPersons[i].id;
+		person.person_uid = dbPersons[i].person_uid;
 		person.lastAssignment = dbPersons[i].lastAssignment;
 		if (typeof dbPersons[i].lastAssignment === 'undefined') {
 			person.lastAssignmentFormat = '';
@@ -309,7 +312,7 @@ export const dbStudentID = async (varName) => {
 	const appData = await appDb
 		.table('persons')
 		.get({ person_displayName: varName });
-	return appData.id;
+	return appData.person_uid;
 };
 
 export const dbHistoryAssistant = async (mainStuID) => {
@@ -363,8 +366,9 @@ export const dbHistoryAssistant = async (mainStuID) => {
 	return dbHistory;
 };
 
-export const dbSavePerson = async (id, data) => {
-	await appDb.table('persons').update(id, {
+export const dbSavePerson = async (uid, data) => {
+	const person = await dbGetStudentDetails(uid);
+	await appDb.table('persons').update(person.id, {
 		...data,
 	});
 };

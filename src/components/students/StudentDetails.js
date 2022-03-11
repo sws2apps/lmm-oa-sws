@@ -79,7 +79,7 @@ const StudentDetails = (props) => {
 	const currentStudent = useRecoilValue(currentStudentState);
 	const isStudentDetailsOpen = useRecoilValue(isStudentDetailsOpenState);
 
-	const id = currentStudent.id;
+	const uid = currentStudent.person_uid;
 	const lastBRead = currentStudent.lastBRead;
 	const lastInitialCall = currentStudent.lastInitialCall;
 	const lastReturnVisit = currentStudent.lastReturnVisit;
@@ -153,13 +153,15 @@ const StudentDetails = (props) => {
 			person.isUnavailable = isUnavailable;
 			person.forLivePart = forLivePart;
 
-			if (id === undefined) {
+			if (uid === undefined) {
 				const isStuExist = await dbIsStudentExist(name);
 				if (isStuExist) {
 					setAppSnackOpen(true);
 					setAppSeverity('warning');
 					setAppMessage(t('students.existAlready'));
 				} else {
+					const uid = window.crypto.randomUUID();
+					person.person_uid = uid;
 					await dbAddPersonData(person);
 					const data = await dbGetStudents();
 					setDbStudents(data);
@@ -168,7 +170,7 @@ const StudentDetails = (props) => {
 					setAppMessage(t('students.addedSuccess'));
 				}
 			} else {
-				person.id = id;
+				person.person_uid = uid;
 				await dbSavePersonData(person);
 				const data = await dbGetStudents();
 				setDbStudents(data);

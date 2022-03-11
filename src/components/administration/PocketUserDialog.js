@@ -86,7 +86,7 @@ const PocketUserDialog = () => {
 
 		let childUsers = [];
 		for (let i = 0; i < childPocketUsers.length; i++) {
-			childUsers.push(childPocketUsers[i].id);
+			childUsers.push(childPocketUsers[i].person_uid);
 		}
 
 		const reqPayload = {
@@ -113,12 +113,14 @@ const PocketUserDialog = () => {
 			})
 				.then(async (res) => {
 					if (res.status === 200) {
-						await dbSavePerson(parentPocketUser.id, {
+						await dbSavePerson(parentPocketUser.person_uid, {
 							student_PIN: pocketPIN,
 							viewStudent_Part: childUsers,
 						});
 
-						const student = await dbGetStudentDetails(parentPocketUser.id);
+						const student = await dbGetStudentDetails(
+							parentPocketUser.person_uid
+						);
 
 						let dispPart = [];
 						let allPart = [];
@@ -136,7 +138,9 @@ const PocketUserDialog = () => {
 
 						let newPocket = [...pocketUsers];
 
-						const index = newPocket.findIndex((pocket) => pocket.id === obj.id);
+						const index = newPocket.findIndex(
+							(pocket) => pocket.person_uid === obj.person_uid
+						);
 						if (index > -1) {
 							newPocket.splice(index, 1);
 						}

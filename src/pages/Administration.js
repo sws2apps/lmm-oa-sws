@@ -253,7 +253,7 @@ const Administration = () => {
 										<Grid container>
 											{pocketUsers.map((pocketUser) => (
 												<PocketUserRead
-													key={pocketUser.id}
+													key={pocketUser.person_uid}
 													pocketUser={pocketUser}
 												/>
 											))}
