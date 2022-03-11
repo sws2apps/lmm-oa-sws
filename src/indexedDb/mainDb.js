@@ -1,6 +1,9 @@
 import Dexie from 'dexie';
 import { getI18n } from 'react-i18next';
 import { langList } from '../locales/langList';
+import { dbGetAppSettings, dbUpdateAppSettings } from './dbAppSettings';
+import { dbGetStudentUidById } from './dbPersons';
+import { dbSaveScheduleByAss } from './dbSchedule';
 
 var appDb = new Dexie('lmm_oa');
 appDb.version(1).stores({
@@ -51,6 +54,22 @@ appDb.version(10).stores({
 	src: '&weekOf, bibleReading_src, ass1_type, ass1_time, ass1_src, ass2_type, ass2_time, ass2_src, ass3_type, ass3_time, ass3_src, ass4_type, ass4_time, ass4_src',
 	ass_type: '&id_type, ass_type_name',
 	week_type: '&id_week_type, week_type_name',
+});
+appDb
+	.version(11)
+	.stores({
+		persons:
+			'++id, person_name, person_displayName, isMale, isFemale, isBRead, isInitialCall, isReturnVisit, isBibleStudy, isTalk, forLivePart, isUnavailable, lastBRead, lastInitialCall, lastReturnVisit, lastBibleStudy, lastTalk, lastAssistant, lastAssignment, viewOnlineSchedule, student_PIN, viewStudent_Part, person_uid',
+	})
+	.upgrade((trans) => {
+		return trans.persons.toCollection().modify((person) => {
+			const uid = window.crypto.randomUUID();
+			person.person_uid = uid;
+		});
+	});
+appDb.version(12).stores({
+	app_settings:
+		'++id, cong_number, cong_name, class_count, meeting_day, cong_ID, isScheduleConverted',
 });
 
 appDb.on('populate', function () {
@@ -195,6 +214,55 @@ appDb.on('ready', async () => {
 		data.ass_type_name = obj;
 
 		await appDb.table('ass_type').add(data);
+	}
+
+	// updating schedule assignment to use uid
+	const appSettings = await dbGetAppSettings();
+	if (!appSettings.isScheduleConverted) {
+		var scheduleData = await appDb.table('sched_MM').toArray();
+
+		for (let i = 0; i < scheduleData.length; i++) {
+			const schedule = scheduleData[i];
+			if (schedule.bRead_stu_A !== undefined) {
+				const uid = await dbGetStudentUidById(schedule.bRead_stu_A);
+
+				await dbSaveScheduleByAss('bRead_stu_A', uid, schedule.weekOf);
+			}
+			if (schedule.bRead_stu_B !== undefined) {
+				const uid = await dbGetStudentUidById(schedule.bRead_stu_B);
+				await dbSaveScheduleByAss('bRead_stu_B', uid, schedule.weekOf);
+			}
+			for (let i = 1; i <= 4; i++) {
+				const fldNameA = `ass${i}_stu_A`;
+				if (schedule[fldNameA] !== undefined) {
+					const uid = await dbGetStudentUidById(schedule[fldNameA]);
+					await dbSaveScheduleByAss(fldNameA, uid, schedule.weekOf);
+				}
+
+				const fldNameAssA = `ass${i}_ass_A`;
+				if (schedule[fldNameAssA] !== undefined) {
+					const uid = await dbGetStudentUidById(schedule[fldNameAssA]);
+					await dbSaveScheduleByAss(fldNameAssA, uid, schedule.weekOf);
+				}
+
+				const fldNameB = `ass${i}_stu_B`;
+				if (schedule[fldNameB] !== undefined) {
+					const uid = await dbGetStudentUidById(schedule[fldNameB]);
+					await dbSaveScheduleByAss(fldNameB, uid, schedule.weekOf);
+				}
+
+				const fldNameAssB = `ass${i}_ass_B`;
+				if (schedule[fldNameAssB] !== undefined) {
+					const uid = await dbGetStudentUidById(schedule[fldNameAssB]);
+					await dbSaveScheduleByAss(fldNameAssB, uid, schedule.weekOf);
+				}
+			}
+		}
+
+		// save settings
+		let obj = {};
+		obj.isScheduleConverted = true;
+		await dbUpdateAppSettings(obj);
 	}
 });
 

@@ -343,10 +343,12 @@ const Students = () => {
 	};
 
 	const handleDelete = async () => {
-		const varID = currentStudent.id;
+		const varID = currentStudent.person_uid;
 		await dbDeleteStudent(varID);
-		let newPersons = students.filter((student) => student.id !== varID);
-		let dbNewPersons = dbStudents.filter((student) => student.id !== varID);
+		let newPersons = students.filter((student) => student.person_uid !== varID);
+		let dbNewPersons = dbStudents.filter(
+			(student) => student.person_uid !== varID
+		);
 		setIsStudentDelete(false);
 		setStudents(newPersons);
 		setDbStudents(dbNewPersons);
@@ -567,7 +569,7 @@ const Students = () => {
 				{students.length > 0 && (
 					<Grid container>
 						{students.map((student) => (
-							<StudentCard key={student.id} student={student} />
+							<StudentCard key={student.person_uid} student={student} />
 						))}
 					</Grid>
 				)}

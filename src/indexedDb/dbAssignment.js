@@ -169,7 +169,6 @@ export const dbHistoryAssignment = async () => {
 };
 
 export const dbLastBRead = async (stuID) => {
-	stuID = parseInt(stuID, 10);
 	const appData = await dbHistoryAssignment();
 	const lastBRead = appData.filter(
 		(data) => (data.assignmentID === 0) & (data.studentID === stuID)
@@ -183,7 +182,6 @@ export const dbLastBRead = async (stuID) => {
 };
 
 export const dbLastIniCall = async (stuID) => {
-	stuID = parseInt(stuID, 10);
 	const appData = await dbHistoryAssignment();
 	const lastIniCall = appData.filter(
 		(data) => (data.assignmentID === 1) & (data.studentID === stuID)
@@ -197,7 +195,6 @@ export const dbLastIniCall = async (stuID) => {
 };
 
 export const dbLastRV = async (stuID) => {
-	stuID = parseInt(stuID, 10);
 	const appData = await dbHistoryAssignment();
 	const lastRV = appData.filter(
 		(data) => (data.assignmentID === 2) & (data.studentID === stuID)
@@ -211,7 +208,6 @@ export const dbLastRV = async (stuID) => {
 };
 
 export const dbLastBibleStudy = async (stuID) => {
-	stuID = parseInt(stuID, 10);
 	const appData = await dbHistoryAssignment();
 	const lastBibleStudy = appData.filter(
 		(data) => (data.assignmentID === 3) & (data.studentID === stuID)
@@ -225,7 +221,6 @@ export const dbLastBibleStudy = async (stuID) => {
 };
 
 export const dbLastTalk = async (stuID) => {
-	stuID = parseInt(stuID, 10);
 	const appData = await dbHistoryAssignment();
 	const lastTalk = appData.filter(
 		(data) => (data.assignmentID === 4) & (data.studentID === stuID)
@@ -239,7 +234,6 @@ export const dbLastTalk = async (stuID) => {
 };
 
 export const dbLastAssistant = async (stuID) => {
-	stuID = parseInt(stuID, 10);
 	const appData = await dbHistoryAssignment();
 	const lastAssistant = appData.filter(
 		(data) => (data.assignmentID === 8) & (data.studentID === stuID)
@@ -252,7 +246,6 @@ export const dbLastAssistant = async (stuID) => {
 };
 
 export const dbLastAssignment = async (stuID) => {
-	stuID = parseInt(stuID, 10);
 	const appData = await dbHistoryAssignment();
 	const lastAssignment = appData.filter((data) => data.studentID === stuID);
 	var dLast;
@@ -303,11 +296,12 @@ export const dbRefreshStudentHistory = async (varPrev, varNew, varAss) => {
 				newValue = stuAssistant;
 			}
 
-			const idPers = parseInt(varPers, 10);
+			const student = await dbGetStudentDetails(varPers);
+
 			var obj = {};
 			obj[fldToUpdate] = newValue;
 			obj.lastAssignment = stuAssignment;
-			await appDb.table('persons').update(idPers, { ...obj });
+			await appDb.table('persons').update(student.id, { ...obj });
 		}
 	}
 };

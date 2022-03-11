@@ -83,13 +83,13 @@ const PocketDelete = () => {
 			})
 				.then(async (res) => {
 					if (res.status === 200) {
-						await dbSavePerson(currentPocket.id, {
+						await dbSavePerson(currentPocket.person_uid, {
 							student_PIN: '',
 							viewStudent_Part: [],
 						});
 
 						const index = pocketUsers.findIndex(
-							(pocket) => pocket.id === currentPocket.id
+							(pocket) => pocket.person_uid === currentPocket.person_uid
 						);
 
 						if (index > -1) {

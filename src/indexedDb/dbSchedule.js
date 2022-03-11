@@ -145,7 +145,7 @@ export const dbAutoFill = async (schedule) => {
 			var students = [];
 			students = await dbGetPersonsByAssType('isBRead');
 			if (students.length > 0) {
-				const stuBReadA = students[0].id;
+				const stuBReadA = students[0].person_uid;
 				await dbSaveAss(weekValue, stuBReadA, 'bRead_stu_A', 0);
 			}
 
@@ -153,7 +153,7 @@ export const dbAutoFill = async (schedule) => {
 			if (settings.class_count === 2 && scheduleData.week_type === 1) {
 				students = await dbGetPersonsByAssType('isBRead');
 				if (students.length > 0) {
-					const stuBReadB = students[0].id;
+					const stuBReadB = students[0].person_uid;
 					await dbSaveAss(weekValue, stuBReadB, 'bRead_stu_B', 0);
 				}
 			}
@@ -183,7 +183,7 @@ export const dbAutoFill = async (schedule) => {
 					assType === 20
 				) {
 					if (students.length > 0) {
-						const stuA = students[0].id;
+						const stuA = students[0].person_uid;
 						await dbSaveAss(weekValue, stuA, fldName, assType);
 					}
 				}
@@ -193,7 +193,7 @@ export const dbAutoFill = async (schedule) => {
 					fldName = 'ass' + a + '_ass_A';
 					students = await dbGetPersonsByAssType('isAssistant');
 					if (students.length > 0) {
-						const assA = students[0].id;
+						const assA = students[0].person_uid;
 						await dbSaveAss(weekValue, assA, fldName, 8);
 					}
 				}
@@ -219,7 +219,7 @@ export const dbAutoFill = async (schedule) => {
 						assType === 20
 					) {
 						if (students.length > 0) {
-							const stuB = students[0].id;
+							const stuB = students[0].person_uid;
 							await dbSaveAss(weekValue, stuB, fldName, assType);
 						}
 					}
@@ -234,7 +234,7 @@ export const dbAutoFill = async (schedule) => {
 						fldName = 'ass' + a + '_ass_B';
 						students = await dbGetPersonsByAssType('isAssistant');
 						if (students.length > 0) {
-							const assB = students[0].id;
+							const assB = students[0].person_uid;
 							await dbSaveAss(weekValue, assB, fldName, 8);
 						}
 					}
@@ -289,4 +289,11 @@ export const dbBuildScheduleForShare = async (scheduleIndex) => {
 	}
 
 	return JSON.stringify(dataMSC);
+};
+
+export const dbSaveScheduleByAss = async (field, value, weekOf) => {
+	var obj = {};
+	obj[field] = value;
+
+	await appDb.table('sched_MM').update(weekOf, { ...obj });
 };

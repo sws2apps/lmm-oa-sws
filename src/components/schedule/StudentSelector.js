@@ -66,7 +66,7 @@ const StudentSelector = (props) => {
 
 	const handleSelectStudent = (selectedStudent) => {
 		setSelectedStudent(selectedStudent.innerText);
-		setSelectedStuID(parseInt(selectedStudent.dataset.personId, 10));
+		setSelectedStuID(selectedStudent.dataset.personId);
 	};
 
 	const handleAssignStudent = () => {
@@ -287,9 +287,14 @@ const StudentSelector = (props) => {
 						</TableHead>
 						<TableBody>
 							{pickStudents.map((student) => (
-								<TableRow key={student.id} hover role='checkbox' tabIndex={-1}>
+								<TableRow
+									key={student.person_uid}
+									hover
+									role='checkbox'
+									tabIndex={-1}
+								>
 									<TableCell
-										data-person-id={student.id}
+										data-person-id={student.person_uid}
 										onClick={(e) => handleSelectStudent(e.target)}
 										sx={{
 											'& .MuiTableCell-sizeSmall': sharedStyles.tblData,
