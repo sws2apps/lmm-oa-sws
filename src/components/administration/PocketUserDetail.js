@@ -96,8 +96,6 @@ const PocketUserDetail = (props) => {
 				cong_number: congNumber,
 			};
 
-			console.log(reqPayload);
-
 			fetch(`${apiHost}api/congregation/pocket-generate-pin`, {
 				signal: abortCont.signal,
 				method: 'POST',

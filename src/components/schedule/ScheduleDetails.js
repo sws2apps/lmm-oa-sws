@@ -327,8 +327,6 @@ const ScheduleDetails = (props) => {
 			const scheduleData = await dbGetScheduleData(week);
 			const sourceData = await dbGetSourceMaterial(week);
 
-			console.log(scheduleData, sourceData);
-
 			setBibleReadingSrc(sourceData.bibleReading_src);
 			setStuBReadA(scheduleData.bRead_stu_A_dispName);
 			setStuBReadB(scheduleData.bRead_stu_B_dispName);
