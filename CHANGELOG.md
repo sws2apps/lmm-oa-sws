@@ -1,3 +1,20 @@
+# [1.0.0-alpha.34](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.33...v1.0.0-alpha.34) (2022-03-16)
+
+
+### Bug Fixes
+
+* **schedule:** use uid when assigning students ([e9c24ed](https://github.com/sws2apps/lmm-oa-sws/commit/e9c24edaf23cc3b3948ccc90bafbf44b3b8c1ec7))
+
+
+### Features
+
+* **deps:** bump @mui/icons-material from 5.5.0 to 5.5.1 ([399bd47](https://github.com/sws2apps/lmm-oa-sws/commit/399bd476027197e9ce56f631f22d9aa18aba4ad5))
+* **deps:** bump @mui/lab from 5.0.0-alpha.72 to 5.0.0-alpha.73 ([b391b89](https://github.com/sws2apps/lmm-oa-sws/commit/b391b8983c4b728ceaa4ef559a03cc9350401524))
+* **deps:** bump @mui/material from 5.5.0 to 5.5.1 ([7c99f5d](https://github.com/sws2apps/lmm-oa-sws/commit/7c99f5dd4be6d0f7c586e7a7aabc7a05b0f80cd2))
+* **deps:** bump @mui/styles from 5.5.0 to 5.5.1 ([b3e5a77](https://github.com/sws2apps/lmm-oa-sws/commit/b3e5a77d3d1ce98ab4f5fa9591c2df50f0c83ae0))
+* **deps:** bump json-as-xlsx from 2.3.10 to 2.4.0 ([203b20b](https://github.com/sws2apps/lmm-oa-sws/commit/203b20b027e755e2451b45483e2c3d6565afa423))
+* **deps:** bump react-i18next from 11.15.6 to 11.15.7 ([5344844](https://github.com/sws2apps/lmm-oa-sws/commit/5344844b5f32b1841739ba3963596de7dfe72019))
+
 # [1.0.0-alpha.33](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.32...v1.0.0-alpha.33) (2022-03-11)
 
 
