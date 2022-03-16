@@ -225,7 +225,7 @@ const ScheduleDetails = (props) => {
 		const assType = selectedStudent.assType;
 		var studentID = undefined;
 		if (typeof selectedStudent.studentId !== 'undefined') {
-			studentID = parseInt(selectedStudent.studentId, 10);
+			studentID = selectedStudent.studentId;
 		}
 		const studentName = selectedStudent.studentName;
 
