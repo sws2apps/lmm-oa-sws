@@ -1,3 +1,11 @@
+# [1.0.0-alpha.35](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.34...v1.0.0-alpha.35) (2022-03-16)
+
+
+### Bug Fixes
+
+* **schedule:** fix 4th student assignments not being populated ([7519742](https://github.com/sws2apps/lmm-oa-sws/commit/75197424b61fb515c48689689e8c1a900bcbe811))
+* **source-material:** resolve 4th assignment timing to empty string if it is an object ([5340c4d](https://github.com/sws2apps/lmm-oa-sws/commit/5340c4de9ebd3be733a428aa4002ccfd41753395))
+
 # [1.0.0-alpha.34](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.33...v1.0.0-alpha.34) (2022-03-16)
 
 
