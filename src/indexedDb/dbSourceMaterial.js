@@ -81,7 +81,11 @@ export const dbGetSourceMaterial = async (weekOf) => {
 	indexType = assTypeList.findIndex((type) => type.value === obj.ass4_type);
 	obj.ass4_type_name = indexType >= 0 ? assTypeList[indexType].label : '';
 
-	obj.ass4_time = appData.ass4_time || '';
+	obj.ass4_time = appData.ass4_time
+		? typeof appData.ass4_time === 'object'
+			? ''
+			: appData.ass4_time
+		: '';
 	obj.ass4_src = appData.ass4_src ? appData.ass4_src[lang] || '' : '';
 
 	const weekSchedInfo = await dbGetScheduleWeekInfo(weekOf);
