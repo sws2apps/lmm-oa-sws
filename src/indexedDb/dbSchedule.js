@@ -125,6 +125,38 @@ export const dbGetScheduleData = async (weekValue) => {
 		student = await dbGetStudentDetails(schedule.ass3_ass_B);
 		schedule.ass3_ass_B_dispName = student.person_displayName;
 	}
+	if (typeof appData.ass4_stu_A === 'undefined') {
+		schedule.ass4_stu_A = '';
+		schedule.ass4_stu_A_dispName = '';
+	} else {
+		schedule.ass4_stu_A = appData.ass4_stu_A;
+		student = await dbGetStudentDetails(schedule.ass4_stu_A);
+		schedule.ass4_stu_A_dispName = student.person_displayName;
+	}
+	if (typeof appData.ass4_ass_A === 'undefined') {
+		schedule.ass4_ass_A = '';
+		schedule.ass4_ass_A_dispName = '';
+	} else {
+		schedule.ass4_ass_A = appData.ass4_ass_A;
+		student = await dbGetStudentDetails(schedule.ass4_ass_A);
+		schedule.ass4_ass_A_dispName = student.person_displayName;
+	}
+	if (typeof appData.ass4_stu_B === 'undefined') {
+		schedule.ass4_stu_B = '';
+		schedule.ass4_stu_B_dispName = '';
+	} else {
+		schedule.ass4_stu_B = appData.ass4_stu_B;
+		student = await dbGetStudentDetails(schedule.ass4_stu_B);
+		schedule.ass4_stu_B_dispName = student.person_displayName;
+	}
+	if (typeof appData.ass4_ass_B === 'undefined') {
+		schedule.ass4_ass_B = '';
+		schedule.ass4_ass_B_dispName = '';
+	} else {
+		schedule.ass4_ass_B = appData.ass4_ass_B;
+		student = await dbGetStudentDetails(schedule.ass4_ass_B);
+		schedule.ass4_ass_B_dispName = student.person_displayName;
+	}
 	schedule.week_type = parseInt(appData.week_type, 10);
 	schedule.week_type_name = await dbGetWeekTypeName(schedule.week_type);
 	schedule.noMeeting = appData.noMeeting;
