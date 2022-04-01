@@ -1,3 +1,20 @@
+# [1.0.0-alpha.36](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.35...v1.0.0-alpha.36) (2022-04-01)
+
+
+### Features
+
+* **deps:** bump @fontsource/roboto from 4.5.3 to 4.5.5 ([927fffd](https://github.com/sws2apps/lmm-oa-sws/commit/927fffd7dc0d85fd015775bc7a28c6e462325308))
+* **deps:** bump @mui/lab from 5.0.0-alpha.73 to 5.0.0-alpha.74 ([942316c](https://github.com/sws2apps/lmm-oa-sws/commit/942316c3029d44a150f9485682229cfd733fb74a))
+* **deps:** bump @mui/lab from 5.0.0-alpha.74 to 5.0.0-alpha.75 ([51fed32](https://github.com/sws2apps/lmm-oa-sws/commit/51fed3260c9eb5248ebf85c0daf47f59ed0b2d36))
+* **deps:** bump @mui/material from 5.5.1 to 5.5.2 ([0967099](https://github.com/sws2apps/lmm-oa-sws/commit/0967099f6ef2fc9bf321480faeab41c75c5fbe17))
+* **deps:** bump @mui/material from 5.5.2 to 5.5.3 ([3850ee8](https://github.com/sws2apps/lmm-oa-sws/commit/3850ee820e5fc77036377d6347f21a23cac6d3b1))
+* **deps:** bump @mui/styles from 5.5.1 to 5.5.3 ([a77554c](https://github.com/sws2apps/lmm-oa-sws/commit/a77554c45a215b987cb55292b51608ab5205dd7c))
+* **deps:** bump jw-epub-parser from 1.4.2 to 1.5.0 ([d14ca8a](https://github.com/sws2apps/lmm-oa-sws/commit/d14ca8a71ef31085846e386ed3acbe3556ad2be0))
+* **deps:** bump react-i18next from 11.15.7 to 11.16.1 ([03070dc](https://github.com/sws2apps/lmm-oa-sws/commit/03070dc539e3be91c9e9664eba061ee05a19daa1))
+* **deps:** bump react-i18next from 11.16.1 to 11.16.2 ([5e50d3e](https://github.com/sws2apps/lmm-oa-sws/commit/5e50d3ee7a62b047f8bd70c7f3b089771c4f05ce))
+* **deps:** bump react-router-dom from 6.2.2 to 6.3.0 ([86cf64e](https://github.com/sws2apps/lmm-oa-sws/commit/86cf64eac8c1d242f9eebe31d8992a61472b005b))
+* **deps:** bump workbox-cli from 6.5.1 to 6.5.2 ([36231c2](https://github.com/sws2apps/lmm-oa-sws/commit/36231c29a14e36cf34e65209ab39a0036a42e4f5))
+
 # [1.0.0-alpha.35](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.34...v1.0.0-alpha.35) (2022-03-16)
 
 
