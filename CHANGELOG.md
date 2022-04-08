@@ -1,3 +1,17 @@
+# [1.0.0-alpha.37](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.36...v1.0.0-alpha.37) (2022-04-08)
+
+
+### Features
+
+* **deps:** bump @emotion/react from 11.8.2 to 11.9.0 ([44b2212](https://github.com/sws2apps/lmm-oa-sws/commit/44b2212f478cbb61e807c0c7d4808de588141f65))
+* **deps:** bump @mui/icons-material from 5.5.1 to 5.6.0 ([2931f92](https://github.com/sws2apps/lmm-oa-sws/commit/2931f929aaa82c8d563a4832687b0f79a183eafe))
+* **deps:** bump @mui/lab from 5.0.0-alpha.75 to 5.0.0-alpha.76 ([40408b1](https://github.com/sws2apps/lmm-oa-sws/commit/40408b17565f30d61f06dbe045d5fa60e9157f1b))
+* **deps:** bump @mui/material from 5.5.3 to 5.6.0 ([fbff4ee](https://github.com/sws2apps/lmm-oa-sws/commit/fbff4eef86975c620bcc53040bed782377e1abe2))
+* **deps:** bump @mui/styles from 5.5.3 to 5.6.0 ([1f13c33](https://github.com/sws2apps/lmm-oa-sws/commit/1f13c33c11f519bbf19494ce7cf8aebea5d4c2e6))
+* **deps:** bump jw-epub-parser from 1.5.0 to 1.6.0 ([642bad0](https://github.com/sws2apps/lmm-oa-sws/commit/642bad04f1c40e54367c7de1cb5fe82297c37c7d))
+* **deps:** bump jw-epub-parser from 1.6.0 to 1.7.1 ([f068b6f](https://github.com/sws2apps/lmm-oa-sws/commit/f068b6fe95ef926b501015a4eca1b0d2b8cca604))
+* **deps:** bump recoil from 0.6.1 to 0.7.0 ([9e306fa](https://github.com/sws2apps/lmm-oa-sws/commit/9e306fa1037da720af9f252151feb491456f8800))
+
 # [1.0.0-alpha.36](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.35...v1.0.0-alpha.36) (2022-04-01)
 
 
