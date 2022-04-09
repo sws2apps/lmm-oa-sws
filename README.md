@@ -1,70 +1,17 @@
-# Getting Started with Create React App
+# Life and Ministry Meeting Overseer Assistant (LMM-OA)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![GitHub package.json version (branch)](https://img.shields.io/github/package-json/v/sws2apps/lmm-oa-sws/alpha)
 
-## Available Scripts
+LMM-OA is a web application that will allow you to schedule students assignment for Midweek Meeting for Jehovah’s Witnesses. Currently, it is still under its initial development phase. If you want to test it, please visit [https://dev-lmm-oa-sws.web.app](https://dev-lmm-oa-sws.web.app).
 
-In the project directory, you can run:
+## Who should use LMM-OA?
 
-### `npm start`
+LMM-OA is designed for use by the Life and Ministry Meeting Overseer.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## What are the device requirements to open LMM-OA?
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+LMM-OA is a web application, and it is also PWA capable. All devices that have up to date browser, depending on which platform it is running can use this web application.
 
-### `npm test`
+## May I contribute?
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Of course!!! We are more than happy to receive support from you, if you are very interested to help us. Please read our contribution workflow on how to do so.
