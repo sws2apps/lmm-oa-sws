@@ -1,18 +1,15 @@
 {
   "name": "lmm-oa-sws",
-  "version": "0.1.0",
+  "version": "1.0.0-alpha.38",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
-    "@fingerprintjs/fingerprintjs-pro": "^3.6.1",
     "@fontsource/roboto": "^4.5.5",
-    "@mui/icons-material": "^5.6.0",
-    "@mui/lab": "^5.0.0-alpha.76",
-    "@mui/material": "^5.6.0",
-    "@mui/styles": "^5.6.0",
-    "crypto-browserify": "^3.12.0",
-    "crypto-js": "^4.1.1",
+    "@mui/icons-material": "^5.6.1",
+    "@mui/lab": "^5.0.0-alpha.77",
+    "@mui/material": "^5.6.1",
+    "@mui/styles": "^5.6.1",
     "cryptr": "^6.0.2",
     "dateformat": "^5.0.3",
     "dexie": "^3.2.1",
@@ -20,21 +17,20 @@
     "downloadjs": "^1.4.7",
     "file-select-dialog": "^1.5.4",
     "html2pdf.js": "^0.10.1",
-    "i18next": "^21.6.14",
+    "i18next": "^21.6.16",
     "interweave": "^13.0.0",
     "json-as-xlsx": "^2.4.0",
     "jw-epub-parser": "^1.8.0",
-    "qrcode": "^1.5.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-i18next": "^11.16.2",
+    "react-i18next": "^11.16.6",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^5.0.1",
-    "recoil": "^0.7.0",
+    "recoil": "^0.7.2",
     "recoil-outside": "^0.1.1",
     "ua-parser-js": "^1.0.2",
     "use-pwa2": "^0.2.0",
-    "workbox-cli": "^6.5.2"
+    "workbox-cli": "^6.5.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -58,9 +54,14 @@
       "last 1 safari version"
     ]
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sws2apps/lmm-oa-sws.git"
+  },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.1",
-    "@semantic-release/exec": "^6.0.3",
-    "@semantic-release/git": "^10.0.1"
+    "@semantic-release/exec": "^6.0.2",
+    "@semantic-release/git": "^10.0.1",
+    "react-error-overlay": "^6.0.9"
   }
 }

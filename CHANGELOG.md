@@ -1,165 +1,162 @@
-# [1.0.0-alpha.37](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.36...v1.0.0-alpha.37) (2022-04-08)
-
+# [1.0.0-alpha.38](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.37...v1.0.0-alpha.38) (2022-04-15)
 
 ### Features
 
-* **deps:** bump @emotion/react from 11.8.2 to 11.9.0 ([44b2212](https://github.com/sws2apps/lmm-oa-sws/commit/44b2212f478cbb61e807c0c7d4808de588141f65))
-* **deps:** bump @mui/icons-material from 5.5.1 to 5.6.0 ([2931f92](https://github.com/sws2apps/lmm-oa-sws/commit/2931f929aaa82c8d563a4832687b0f79a183eafe))
-* **deps:** bump @mui/lab from 5.0.0-alpha.75 to 5.0.0-alpha.76 ([40408b1](https://github.com/sws2apps/lmm-oa-sws/commit/40408b17565f30d61f06dbe045d5fa60e9157f1b))
-* **deps:** bump @mui/material from 5.5.3 to 5.6.0 ([fbff4ee](https://github.com/sws2apps/lmm-oa-sws/commit/fbff4eef86975c620bcc53040bed782377e1abe2))
-* **deps:** bump @mui/styles from 5.5.3 to 5.6.0 ([1f13c33](https://github.com/sws2apps/lmm-oa-sws/commit/1f13c33c11f519bbf19494ce7cf8aebea5d4c2e6))
-* **deps:** bump jw-epub-parser from 1.5.0 to 1.6.0 ([642bad0](https://github.com/sws2apps/lmm-oa-sws/commit/642bad04f1c40e54367c7de1cb5fe82297c37c7d))
-* **deps:** bump jw-epub-parser from 1.6.0 to 1.7.1 ([f068b6f](https://github.com/sws2apps/lmm-oa-sws/commit/f068b6fe95ef926b501015a4eca1b0d2b8cca604))
-* **deps:** bump recoil from 0.6.1 to 0.7.0 ([9e306fa](https://github.com/sws2apps/lmm-oa-sws/commit/9e306fa1037da720af9f252151feb491456f8800))
+- **deps:** bump @mui/icons-material from 5.6.0 to 5.6.1 ([38c6a3e](https://github.com/sws2apps/lmm-oa-sws/commit/38c6a3ece86dfd8795e35d9d222900efd8358497))
+- **deps:** bump @mui/lab from 5.0.0-alpha.76 to 5.0.0-alpha.77 ([e3dda47](https://github.com/sws2apps/lmm-oa-sws/commit/e3dda47403035b1a9a4b3a073b10fc2ba0c68259))
+- **deps:** bump @mui/material from 5.6.0 to 5.6.1 ([f3bb7af](https://github.com/sws2apps/lmm-oa-sws/commit/f3bb7af0047d12929b46fc3b41e3408e7e11f3c2))
+- **deps:** bump @mui/styles from 5.6.0 to 5.6.1 ([aa3d461](https://github.com/sws2apps/lmm-oa-sws/commit/aa3d4612a89375499543ff332f43cd1be21e3b13))
+- **deps:** bump i18next from 21.6.14 to 21.6.15 ([6bfb49a](https://github.com/sws2apps/lmm-oa-sws/commit/6bfb49ae82d90a818f80c4dc8382c7f8676a8ada))
+- **deps:** bump i18next from 21.6.15 to 21.6.16 ([3c62332](https://github.com/sws2apps/lmm-oa-sws/commit/3c6233208929b821e64a8c1401517ad6213cd8f7))
+- **deps:** bump jw-epub-parser from 1.7.1 to 1.8.0 ([eda4893](https://github.com/sws2apps/lmm-oa-sws/commit/eda489359af5bfb4944647d3b3417b86d9d60086))
+- **deps:** bump react-i18next from 11.16.2 to 11.16.5 ([411bc44](https://github.com/sws2apps/lmm-oa-sws/commit/411bc44858d5d561d0aa9105f70a16009ae26e8c))
+- **deps:** bump react-i18next from 11.16.5 to 11.16.6 ([f02d274](https://github.com/sws2apps/lmm-oa-sws/commit/f02d274950ce781892c30583a72d80e04f6d1213))
+- **deps:** bump recoil from 0.7.0 to 0.7.2 ([1727f69](https://github.com/sws2apps/lmm-oa-sws/commit/1727f699004f70c90371dae00174bd0854e3f2fb))
+- **deps:** bump workbox-cli from 6.5.2 to 6.5.3 ([382c26b](https://github.com/sws2apps/lmm-oa-sws/commit/382c26b006547c09db1bb23a1fbae4f7ce741eef))
+
+# [1.0.0-alpha.37](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.36...v1.0.0-alpha.37) (2022-04-08)
+
+### Features
+
+- **deps:** bump @emotion/react from 11.8.2 to 11.9.0 ([44b2212](https://github.com/sws2apps/lmm-oa-sws/commit/44b2212f478cbb61e807c0c7d4808de588141f65))
+- **deps:** bump @mui/icons-material from 5.5.1 to 5.6.0 ([2931f92](https://github.com/sws2apps/lmm-oa-sws/commit/2931f929aaa82c8d563a4832687b0f79a183eafe))
+- **deps:** bump @mui/lab from 5.0.0-alpha.75 to 5.0.0-alpha.76 ([40408b1](https://github.com/sws2apps/lmm-oa-sws/commit/40408b17565f30d61f06dbe045d5fa60e9157f1b))
+- **deps:** bump @mui/material from 5.5.3 to 5.6.0 ([fbff4ee](https://github.com/sws2apps/lmm-oa-sws/commit/fbff4eef86975c620bcc53040bed782377e1abe2))
+- **deps:** bump @mui/styles from 5.5.3 to 5.6.0 ([1f13c33](https://github.com/sws2apps/lmm-oa-sws/commit/1f13c33c11f519bbf19494ce7cf8aebea5d4c2e6))
+- **deps:** bump jw-epub-parser from 1.5.0 to 1.6.0 ([642bad0](https://github.com/sws2apps/lmm-oa-sws/commit/642bad04f1c40e54367c7de1cb5fe82297c37c7d))
+- **deps:** bump jw-epub-parser from 1.6.0 to 1.7.1 ([f068b6f](https://github.com/sws2apps/lmm-oa-sws/commit/f068b6fe95ef926b501015a4eca1b0d2b8cca604))
+- **deps:** bump recoil from 0.6.1 to 0.7.0 ([9e306fa](https://github.com/sws2apps/lmm-oa-sws/commit/9e306fa1037da720af9f252151feb491456f8800))
 
 # [1.0.0-alpha.36](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.35...v1.0.0-alpha.36) (2022-04-01)
 
-
 ### Features
 
-* **deps:** bump @fontsource/roboto from 4.5.3 to 4.5.5 ([927fffd](https://github.com/sws2apps/lmm-oa-sws/commit/927fffd7dc0d85fd015775bc7a28c6e462325308))
-* **deps:** bump @mui/lab from 5.0.0-alpha.73 to 5.0.0-alpha.74 ([942316c](https://github.com/sws2apps/lmm-oa-sws/commit/942316c3029d44a150f9485682229cfd733fb74a))
-* **deps:** bump @mui/lab from 5.0.0-alpha.74 to 5.0.0-alpha.75 ([51fed32](https://github.com/sws2apps/lmm-oa-sws/commit/51fed3260c9eb5248ebf85c0daf47f59ed0b2d36))
-* **deps:** bump @mui/material from 5.5.1 to 5.5.2 ([0967099](https://github.com/sws2apps/lmm-oa-sws/commit/0967099f6ef2fc9bf321480faeab41c75c5fbe17))
-* **deps:** bump @mui/material from 5.5.2 to 5.5.3 ([3850ee8](https://github.com/sws2apps/lmm-oa-sws/commit/3850ee820e5fc77036377d6347f21a23cac6d3b1))
-* **deps:** bump @mui/styles from 5.5.1 to 5.5.3 ([a77554c](https://github.com/sws2apps/lmm-oa-sws/commit/a77554c45a215b987cb55292b51608ab5205dd7c))
-* **deps:** bump jw-epub-parser from 1.4.2 to 1.5.0 ([d14ca8a](https://github.com/sws2apps/lmm-oa-sws/commit/d14ca8a71ef31085846e386ed3acbe3556ad2be0))
-* **deps:** bump react-i18next from 11.15.7 to 11.16.1 ([03070dc](https://github.com/sws2apps/lmm-oa-sws/commit/03070dc539e3be91c9e9664eba061ee05a19daa1))
-* **deps:** bump react-i18next from 11.16.1 to 11.16.2 ([5e50d3e](https://github.com/sws2apps/lmm-oa-sws/commit/5e50d3ee7a62b047f8bd70c7f3b089771c4f05ce))
-* **deps:** bump react-router-dom from 6.2.2 to 6.3.0 ([86cf64e](https://github.com/sws2apps/lmm-oa-sws/commit/86cf64eac8c1d242f9eebe31d8992a61472b005b))
-* **deps:** bump workbox-cli from 6.5.1 to 6.5.2 ([36231c2](https://github.com/sws2apps/lmm-oa-sws/commit/36231c29a14e36cf34e65209ab39a0036a42e4f5))
+- **deps:** bump @fontsource/roboto from 4.5.3 to 4.5.5 ([927fffd](https://github.com/sws2apps/lmm-oa-sws/commit/927fffd7dc0d85fd015775bc7a28c6e462325308))
+- **deps:** bump @mui/lab from 5.0.0-alpha.73 to 5.0.0-alpha.74 ([942316c](https://github.com/sws2apps/lmm-oa-sws/commit/942316c3029d44a150f9485682229cfd733fb74a))
+- **deps:** bump @mui/lab from 5.0.0-alpha.74 to 5.0.0-alpha.75 ([51fed32](https://github.com/sws2apps/lmm-oa-sws/commit/51fed3260c9eb5248ebf85c0daf47f59ed0b2d36))
+- **deps:** bump @mui/material from 5.5.1 to 5.5.2 ([0967099](https://github.com/sws2apps/lmm-oa-sws/commit/0967099f6ef2fc9bf321480faeab41c75c5fbe17))
+- **deps:** bump @mui/material from 5.5.2 to 5.5.3 ([3850ee8](https://github.com/sws2apps/lmm-oa-sws/commit/3850ee820e5fc77036377d6347f21a23cac6d3b1))
+- **deps:** bump @mui/styles from 5.5.1 to 5.5.3 ([a77554c](https://github.com/sws2apps/lmm-oa-sws/commit/a77554c45a215b987cb55292b51608ab5205dd7c))
+- **deps:** bump jw-epub-parser from 1.4.2 to 1.5.0 ([d14ca8a](https://github.com/sws2apps/lmm-oa-sws/commit/d14ca8a71ef31085846e386ed3acbe3556ad2be0))
+- **deps:** bump react-i18next from 11.15.7 to 11.16.1 ([03070dc](https://github.com/sws2apps/lmm-oa-sws/commit/03070dc539e3be91c9e9664eba061ee05a19daa1))
+- **deps:** bump react-i18next from 11.16.1 to 11.16.2 ([5e50d3e](https://github.com/sws2apps/lmm-oa-sws/commit/5e50d3ee7a62b047f8bd70c7f3b089771c4f05ce))
+- **deps:** bump react-router-dom from 6.2.2 to 6.3.0 ([86cf64e](https://github.com/sws2apps/lmm-oa-sws/commit/86cf64eac8c1d242f9eebe31d8992a61472b005b))
+- **deps:** bump workbox-cli from 6.5.1 to 6.5.2 ([36231c2](https://github.com/sws2apps/lmm-oa-sws/commit/36231c29a14e36cf34e65209ab39a0036a42e4f5))
 
 # [1.0.0-alpha.35](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.34...v1.0.0-alpha.35) (2022-03-16)
 
-
 ### Bug Fixes
 
-* **schedule:** fix 4th student assignments not being populated ([7519742](https://github.com/sws2apps/lmm-oa-sws/commit/75197424b61fb515c48689689e8c1a900bcbe811))
-* **source-material:** resolve 4th assignment timing to empty string if it is an object ([5340c4d](https://github.com/sws2apps/lmm-oa-sws/commit/5340c4de9ebd3be733a428aa4002ccfd41753395))
+- **schedule:** fix 4th student assignments not being populated ([7519742](https://github.com/sws2apps/lmm-oa-sws/commit/75197424b61fb515c48689689e8c1a900bcbe811))
+- **source-material:** resolve 4th assignment timing to empty string if it is an object ([5340c4d](https://github.com/sws2apps/lmm-oa-sws/commit/5340c4de9ebd3be733a428aa4002ccfd41753395))
 
 # [1.0.0-alpha.34](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.33...v1.0.0-alpha.34) (2022-03-16)
 
-
 ### Bug Fixes
 
-* **schedule:** use uid when assigning students ([e9c24ed](https://github.com/sws2apps/lmm-oa-sws/commit/e9c24edaf23cc3b3948ccc90bafbf44b3b8c1ec7))
-
+- **schedule:** use uid when assigning students ([e9c24ed](https://github.com/sws2apps/lmm-oa-sws/commit/e9c24edaf23cc3b3948ccc90bafbf44b3b8c1ec7))
 
 ### Features
 
-* **deps:** bump @mui/icons-material from 5.5.0 to 5.5.1 ([399bd47](https://github.com/sws2apps/lmm-oa-sws/commit/399bd476027197e9ce56f631f22d9aa18aba4ad5))
-* **deps:** bump @mui/lab from 5.0.0-alpha.72 to 5.0.0-alpha.73 ([b391b89](https://github.com/sws2apps/lmm-oa-sws/commit/b391b8983c4b728ceaa4ef559a03cc9350401524))
-* **deps:** bump @mui/material from 5.5.0 to 5.5.1 ([7c99f5d](https://github.com/sws2apps/lmm-oa-sws/commit/7c99f5dd4be6d0f7c586e7a7aabc7a05b0f80cd2))
-* **deps:** bump @mui/styles from 5.5.0 to 5.5.1 ([b3e5a77](https://github.com/sws2apps/lmm-oa-sws/commit/b3e5a77d3d1ce98ab4f5fa9591c2df50f0c83ae0))
-* **deps:** bump json-as-xlsx from 2.3.10 to 2.4.0 ([203b20b](https://github.com/sws2apps/lmm-oa-sws/commit/203b20b027e755e2451b45483e2c3d6565afa423))
-* **deps:** bump react-i18next from 11.15.6 to 11.15.7 ([5344844](https://github.com/sws2apps/lmm-oa-sws/commit/5344844b5f32b1841739ba3963596de7dfe72019))
+- **deps:** bump @mui/icons-material from 5.5.0 to 5.5.1 ([399bd47](https://github.com/sws2apps/lmm-oa-sws/commit/399bd476027197e9ce56f631f22d9aa18aba4ad5))
+- **deps:** bump @mui/lab from 5.0.0-alpha.72 to 5.0.0-alpha.73 ([b391b89](https://github.com/sws2apps/lmm-oa-sws/commit/b391b8983c4b728ceaa4ef559a03cc9350401524))
+- **deps:** bump @mui/material from 5.5.0 to 5.5.1 ([7c99f5d](https://github.com/sws2apps/lmm-oa-sws/commit/7c99f5dd4be6d0f7c586e7a7aabc7a05b0f80cd2))
+- **deps:** bump @mui/styles from 5.5.0 to 5.5.1 ([b3e5a77](https://github.com/sws2apps/lmm-oa-sws/commit/b3e5a77d3d1ce98ab4f5fa9591c2df50f0c83ae0))
+- **deps:** bump json-as-xlsx from 2.3.10 to 2.4.0 ([203b20b](https://github.com/sws2apps/lmm-oa-sws/commit/203b20b027e755e2451b45483e2c3d6565afa423))
+- **deps:** bump react-i18next from 11.15.6 to 11.15.7 ([5344844](https://github.com/sws2apps/lmm-oa-sws/commit/5344844b5f32b1841739ba3963596de7dfe72019))
 
 # [1.0.0-alpha.33](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.32...v1.0.0-alpha.33) (2022-03-11)
 
-
 ### Features
 
-* **deps:** bump @emotion/react from 11.8.1 to 11.8.2 ([7d85fd1](https://github.com/sws2apps/lmm-oa-sws/commit/7d85fd1dd48d36cacd0a0a5a0eaaef7b0722d5b2))
-* **deps:** bump i18next from 21.6.13 to 21.6.14 ([eea8421](https://github.com/sws2apps/lmm-oa-sws/commit/eea8421ae02e6edde34d17d2a169e0f72e97723d))
-* **schedule:** publish schedule to sws pocket users ([b8485f0](https://github.com/sws2apps/lmm-oa-sws/commit/b8485f0ee92ef8138321af0dea0a838608b06a1a))
-* **students:** use uid instead of the default id in indexedDb ([274c516](https://github.com/sws2apps/lmm-oa-sws/commit/274c5169ef68d22bd9c98a3638a38845a7a1be76))
+- **deps:** bump @emotion/react from 11.8.1 to 11.8.2 ([7d85fd1](https://github.com/sws2apps/lmm-oa-sws/commit/7d85fd1dd48d36cacd0a0a5a0eaaef7b0722d5b2))
+- **deps:** bump i18next from 21.6.13 to 21.6.14 ([eea8421](https://github.com/sws2apps/lmm-oa-sws/commit/eea8421ae02e6edde34d17d2a169e0f72e97723d))
+- **schedule:** publish schedule to sws pocket users ([b8485f0](https://github.com/sws2apps/lmm-oa-sws/commit/b8485f0ee92ef8138321af0dea0a838608b06a1a))
+- **students:** use uid instead of the default id in indexedDb ([274c516](https://github.com/sws2apps/lmm-oa-sws/commit/274c5169ef68d22bd9c98a3638a38845a7a1be76))
 
 # [1.0.0-alpha.32](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.31...v1.0.0-alpha.32) (2022-03-08)
 
-
 ### Features
 
-* **deps:** bump @mui/icons-material from 5.4.4 to 5.5.0 ([7fe704f](https://github.com/sws2apps/lmm-oa-sws/commit/7fe704ffb8fdbd468a7c19b8da22108c2802904e))
-* **deps:** bump @mui/lab from 5.0.0-alpha.71 to 5.0.0-alpha.72 ([bb8ce77](https://github.com/sws2apps/lmm-oa-sws/commit/bb8ce77ee81756af954af5fc00f7d520f1249556))
-* **deps:** bump @mui/material from 5.4.4 to 5.5.0 ([c3d6730](https://github.com/sws2apps/lmm-oa-sws/commit/c3d6730cf9769aa1a63cd4af11386eca612b83a6))
-* **deps:** bump @mui/styles from 5.4.4 to 5.5.0 ([07bdb1f](https://github.com/sws2apps/lmm-oa-sws/commit/07bdb1fd98f9c7572bec4d5bb2ff58bc4512e1c7))
-* **deps:** bump react-i18next from 11.15.5 to 11.15.6 ([dc9f6ea](https://github.com/sws2apps/lmm-oa-sws/commit/dc9f6eabaa9f935e6b33bece20b42829b4f01cef))
+- **deps:** bump @mui/icons-material from 5.4.4 to 5.5.0 ([7fe704f](https://github.com/sws2apps/lmm-oa-sws/commit/7fe704ffb8fdbd468a7c19b8da22108c2802904e))
+- **deps:** bump @mui/lab from 5.0.0-alpha.71 to 5.0.0-alpha.72 ([bb8ce77](https://github.com/sws2apps/lmm-oa-sws/commit/bb8ce77ee81756af954af5fc00f7d520f1249556))
+- **deps:** bump @mui/material from 5.4.4 to 5.5.0 ([c3d6730](https://github.com/sws2apps/lmm-oa-sws/commit/c3d6730cf9769aa1a63cd4af11386eca612b83a6))
+- **deps:** bump @mui/styles from 5.4.4 to 5.5.0 ([07bdb1f](https://github.com/sws2apps/lmm-oa-sws/commit/07bdb1fd98f9c7572bec4d5bb2ff58bc4512e1c7))
+- **deps:** bump react-i18next from 11.15.5 to 11.15.6 ([dc9f6ea](https://github.com/sws2apps/lmm-oa-sws/commit/dc9f6eabaa9f935e6b33bece20b42829b4f01cef))
 
 # [1.0.0-alpha.31](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.30...v1.0.0-alpha.31) (2022-03-07)
 
-
 ### Bug Fixes
 
-* **home:** improve to handle previous and next week navigation ([5014a5f](https://github.com/sws2apps/lmm-oa-sws/commit/5014a5f064196bc5d03fd0dda99940b7854314e3))
-
+- **home:** improve to handle previous and next week navigation ([5014a5f](https://github.com/sws2apps/lmm-oa-sws/commit/5014a5f064196bc5d03fd0dda99940b7854314e3))
 
 ### Features
 
-* **deps:** bump interweave from 12.9.0 to 13.0.0 ([5b7e620](https://github.com/sws2apps/lmm-oa-sws/commit/5b7e620f7937c95ead6812ff9470946a17b7658c))
+- **deps:** bump interweave from 12.9.0 to 13.0.0 ([5b7e620](https://github.com/sws2apps/lmm-oa-sws/commit/5b7e620f7937c95ead6812ff9470946a17b7658c))
 
 # [1.0.0-alpha.30](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.29...v1.0.0-alpha.30) (2022-03-06)
 
-
 ### Bug Fixes
 
-* **home:** skip navigation to memorial week ([9220ea9](https://github.com/sws2apps/lmm-oa-sws/commit/9220ea9e7f01c5078ac609e7cc8760d7dad1a4d7))
+- **home:** skip navigation to memorial week ([9220ea9](https://github.com/sws2apps/lmm-oa-sws/commit/9220ea9e7f01c5078ac609e7cc8760d7dad1a4d7))
 
 # [1.0.0-alpha.29](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.28...v1.0.0-alpha.29) (2022-03-06)
 
-
 ### Bug Fixes
 
-* **locales:** adjust name of the 6th month in Malagasy ([07bf0fd](https://github.com/sws2apps/lmm-oa-sws/commit/07bf0fdb2e51662ec3ce32b048534cbd2376f64d))
+- **locales:** adjust name of the 6th month in Malagasy ([07bf0fd](https://github.com/sws2apps/lmm-oa-sws/commit/07bf0fdb2e51662ec3ce32b048534cbd2376f64d))
 
 # [1.0.0-alpha.28](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.27...v1.0.0-alpha.28) (2022-03-05)
 
-
 ### Bug Fixes
 
-* **help:** help documentation are no longer bundled inside the app ([bb39edf](https://github.com/sws2apps/lmm-oa-sws/commit/bb39edf85ac5309a34d6fe1408a0c9685144e4b1))
+- **help:** help documentation are no longer bundled inside the app ([bb39edf](https://github.com/sws2apps/lmm-oa-sws/commit/bb39edf85ac5309a34d6fe1408a0c9685144e4b1))
 
 # [1.0.0-alpha.27](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.26...v1.0.0-alpha.27) (2022-03-05)
 
-
 ### Bug Fixes
 
-* **updater:** localize update notification ([92b524c](https://github.com/sws2apps/lmm-oa-sws/commit/92b524cd0ebfdec9fbebeea5c88542594a24c0b7))
+- **updater:** localize update notification ([92b524c](https://github.com/sws2apps/lmm-oa-sws/commit/92b524cd0ebfdec9fbebeea5c88542594a24c0b7))
 
 # [1.0.0-alpha.26](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.25...v1.0.0-alpha.26) (2022-03-05)
 
-
 ### Bug Fixes
 
-* **administration:** display button to create congregation account ([5d07a83](https://github.com/sws2apps/lmm-oa-sws/commit/5d07a83716159a7e81a84b254dd67c6306ef974b))
+- **administration:** display button to create congregation account ([5d07a83](https://github.com/sws2apps/lmm-oa-sws/commit/5d07a83716159a7e81a84b254dd67c6306ef974b))
 
 # [1.0.0-alpha.25](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.24...v1.0.0-alpha.25) (2022-03-05)
 
-
 ### Bug Fixes
 
-* **app:** handle new assignment type in mwb22.03 ([0e174b7](https://github.com/sws2apps/lmm-oa-sws/commit/0e174b7be3aa1037894aee11a796f13e99513f20))
+- **app:** handle new assignment type in mwb22.03 ([0e174b7](https://github.com/sws2apps/lmm-oa-sws/commit/0e174b7be3aa1037894aee11a796f13e99513f20))
 
 # [1.0.0-alpha.24](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.23...v1.0.0-alpha.24) (2022-03-04)
 
-
 ### Bug Fixes
 
-* **source-material:** fix false path traversal error when importing epub ([ca4b1f8](https://github.com/sws2apps/lmm-oa-sws/commit/ca4b1f87ee600412471de6e3587d259c920063a1))
+- **source-material:** fix false path traversal error when importing epub ([ca4b1f8](https://github.com/sws2apps/lmm-oa-sws/commit/ca4b1f87ee600412471de6e3587d259c920063a1))
 
 # [1.0.0-alpha.23](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.22...v1.0.0-alpha.23) (2022-03-04)
 
-
 ### Bug Fixes
 
-* **source-material:** fix bug preventing epub import ([863dcb4](https://github.com/sws2apps/lmm-oa-sws/commit/863dcb4324a70e065e91b168258d13ca99a221dc))
-
+- **source-material:** fix bug preventing epub import ([863dcb4](https://github.com/sws2apps/lmm-oa-sws/commit/863dcb4324a70e065e91b168258d13ca99a221dc))
 
 ### Features
 
-* **deps:** bump @mui/icons-material from 5.4.2 to 5.4.4 ([c36edc7](https://github.com/sws2apps/lmm-oa-sws/commit/c36edc7d51a53fc54f47bce269bfffda3344e8e3))
-* **deps:** bump @mui/lab from 5.0.0-alpha.70 to 5.0.0-alpha.71 ([d9722b5](https://github.com/sws2apps/lmm-oa-sws/commit/d9722b5a9f733dd20040c2b1fed0b5a8909f882f))
-* **deps:** bump @mui/material from 5.4.3 to 5.4.4 ([3417339](https://github.com/sws2apps/lmm-oa-sws/commit/341733941548416b5f790fe8e74918e3d88f58fc))
-* **deps:** bump @mui/styles from 5.4.2 to 5.4.4 ([fbbc175](https://github.com/sws2apps/lmm-oa-sws/commit/fbbc1759570c19d3fe52ec0047feb58f4db1bb6a))
-* **deps:** bump i18next from 21.6.12 to 21.6.13 ([bbb63de](https://github.com/sws2apps/lmm-oa-sws/commit/bbb63dea456088571803d60a95a06b5cfa431b54))
-* **deps:** bump react-router-dom from 6.2.1 to 6.2.2 ([ee75717](https://github.com/sws2apps/lmm-oa-sws/commit/ee7571779ad94853b61ec2570555c7ff9d854fbb))
-* **deps:** bump workbox-cli from 6.5.0 to 6.5.1 ([44e7db1](https://github.com/sws2apps/lmm-oa-sws/commit/44e7db1125b977f68ae7037481d42ccbbe6ef2be))
+- **deps:** bump @mui/icons-material from 5.4.2 to 5.4.4 ([c36edc7](https://github.com/sws2apps/lmm-oa-sws/commit/c36edc7d51a53fc54f47bce269bfffda3344e8e3))
+- **deps:** bump @mui/lab from 5.0.0-alpha.70 to 5.0.0-alpha.71 ([d9722b5](https://github.com/sws2apps/lmm-oa-sws/commit/d9722b5a9f733dd20040c2b1fed0b5a8909f882f))
+- **deps:** bump @mui/material from 5.4.3 to 5.4.4 ([3417339](https://github.com/sws2apps/lmm-oa-sws/commit/341733941548416b5f790fe8e74918e3d88f58fc))
+- **deps:** bump @mui/styles from 5.4.2 to 5.4.4 ([fbbc175](https://github.com/sws2apps/lmm-oa-sws/commit/fbbc1759570c19d3fe52ec0047feb58f4db1bb6a))
+- **deps:** bump i18next from 21.6.12 to 21.6.13 ([bbb63de](https://github.com/sws2apps/lmm-oa-sws/commit/bbb63dea456088571803d60a95a06b5cfa431b54))
+- **deps:** bump react-router-dom from 6.2.1 to 6.2.2 ([ee75717](https://github.com/sws2apps/lmm-oa-sws/commit/ee7571779ad94853b61ec2570555c7ff9d854fbb))
+- **deps:** bump workbox-cli from 6.5.0 to 6.5.1 ([44e7db1](https://github.com/sws2apps/lmm-oa-sws/commit/44e7db1125b977f68ae7037481d42ccbbe6ef2be))
 
 # [1.0.0-alpha.22](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.21...v1.0.0-alpha.22) (2022-02-26)
 
-
 ### Features
 
-* **administration:** manage sws pocket users ([cc39ef3](https://github.com/sws2apps/lmm-oa-sws/commit/cc39ef3c08c7aaea5883caac5f9a0b00f481c57e))
+- **administration:** manage sws pocket users ([cc39ef3](https://github.com/sws2apps/lmm-oa-sws/commit/cc39ef3c08c7aaea5883caac5f9a0b00f481c57e))
 
 # [1.0.0-alpha.21](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.20...v1.0.0-alpha.21) (2022-02-24)
 
