@@ -15,13 +15,16 @@ import {
 } from '../../appStates/appNotification';
 import {
 	apiHostState,
+	isAppLoadState,
 	isCongAccountCreateState,
+	isSetupState,
 	isUnauthorizedRoleState,
 	isUserMfaVerifyState,
 	userEmailState,
 	visitorIDState,
 } from '../../appStates/appSettings';
-import { isDbExist } from '../../indexedDb/dbUtility';
+import { checkSrcUpdate } from '../../indexedDb/dbSourceMaterial';
+import { initAppDb, isDbExist } from '../../indexedDb/dbUtility';
 import { dbUpdateAppSettings } from '../../indexedDb/dbAppSettings';
 
 const UserMfaVerify = () => {
@@ -39,6 +42,8 @@ const UserMfaVerify = () => {
 	const setIsCongAccountCreate = useSetRecoilState(isCongAccountCreateState);
 	const setIsUserMfaVerify = useSetRecoilState(isUserMfaVerifyState);
 	const setIsUnauthorizedRole = useSetRecoilState(isUnauthorizedRoleState);
+	const setIsSetup = useSetRecoilState(isSetupState);
+	const setIsAppLoad = useSetRecoilState(isAppLoadState);
 
 	const apiHost = useRecoilValue(apiHostState);
 	const userEmail = useRecoilValue(userEmailState);
@@ -69,16 +74,33 @@ const UserMfaVerify = () => {
 					const data = await res.json();
 					if (res.status === 200) {
 						if (data.congregation) {
-							if (
-								data.congregation.role === 'lmm-oa' ||
-								data.congregation.role === 'lmm-oa-backup'
-							) {
-								const isMainDb = await isDbExist('lmm_oa');
-								if (isMainDb) {
+							if (data.congregation.cong_role.length > 0) {
+								if (
+									data.congregation.cong_role.includes('lmmo') ||
+									data.congregation.cong_role.includes('lmmo-backup')
+								) {
+									const isMainDb = await isDbExist('lmm_oa');
+									if (!isMainDb) {
+										await initAppDb();
+									}
+
 									// save congregation update if any
 									let obj = {};
-									obj.isScheduleConverted = true;
+									obj.isCongVerified = true;
+									obj.cong_name = data.congregation.cong_name;
+									obj.cong_number = data.congregation.cong_number;
 									await dbUpdateAppSettings(obj);
+
+									await checkSrcUpdate();
+
+									setIsSetup(false);
+									setTimeout(() => {
+										setIsAppLoad(false);
+									}, [2000]);
+								} else {
+									setIsProcessing(false);
+									setIsUserMfaVerify(false);
+									setIsUnauthorizedRole(true);
 								}
 							} else {
 								setIsProcessing(false);

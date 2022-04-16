@@ -4,6 +4,8 @@ import download from 'downloadjs';
 import backupDb from './backupDb';
 import appDb from './mainDb';
 
+import { encryptString } from '../utils/sws-cryptr';
+
 export const initAppDb = async () => {
 	await appDb.open();
 };
@@ -75,11 +77,9 @@ export const dbExportDb = async (passcode) => {
 		};
 
 		const data = await convertBase64();
-		const Cryptr = require('cryptr');
-		const cryptr = new Cryptr(passcode);
-		const encryptedData = cryptr.encrypt(data);
+		const encryptedData = encryptString(passcode, data);
 
-		const newBlob = new Blob([encryptedData], { type: 'text/csv' });
+		const newBlob = new Blob([encryptedData], { type: 'text/plain' });
 
 		download(newBlob, 'lmm-oa.backup.db', 'text/plain');
 	} catch {
@@ -99,8 +99,6 @@ export const dbExportJsonDb = async (passcode) => {
 	};
 
 	const data = await convertBase64();
-	const Cryptr = require('cryptr');
-	const cryptr = new Cryptr(passcode);
-	const encryptedData = cryptr.encrypt(data);
+	const encryptedData = encryptString(passcode, data);
 	return encryptedData;
 };

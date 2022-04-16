@@ -11,6 +11,11 @@ export const isAppLoadState = atom({
 	default: true,
 });
 
+export const isSetupState = atom({
+	key: 'isSetup',
+	default: true,
+});
+
 export const apiHostState = atom({
 	key: 'apiHost',
 	default: '',

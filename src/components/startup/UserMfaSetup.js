@@ -20,11 +20,19 @@ import {
 } from '../../appStates/appNotification';
 import {
 	apiHostState,
+	isAppLoadState,
+	isCongAccountCreateState,
+	isSetupState,
+	isUnauthorizedRoleState,
+	isUserMfaVerifyState,
 	qrCodePathState,
 	secretTokenPathState,
 	userEmailState,
 	visitorIDState,
 } from '../../appStates/appSettings';
+import { checkSrcUpdate } from '../../indexedDb/dbSourceMaterial';
+import { initAppDb, isDbExist } from '../../indexedDb/dbUtility';
+import { dbUpdateAppSettings } from '../../indexedDb/dbAppSettings';
 
 const UserMfaSetup = () => {
 	const { t } = useTranslation();
@@ -41,6 +49,11 @@ const UserMfaSetup = () => {
 	const setAppSnackOpen = useSetRecoilState(appSnackOpenState);
 	const setAppSeverity = useSetRecoilState(appSeverityState);
 	const setAppMessage = useSetRecoilState(appMessageState);
+	const setIsCongAccountCreate = useSetRecoilState(isCongAccountCreateState);
+	const setIsUserMfaVerify = useSetRecoilState(isUserMfaVerifyState);
+	const setIsUnauthorizedRole = useSetRecoilState(isUnauthorizedRoleState);
+	const setIsSetup = useSetRecoilState(isSetupState);
+	const setIsAppLoad = useSetRecoilState(isAppLoadState);
 
 	const apiHost = useRecoilValue(apiHostState);
 	const qrCodePath = useRecoilValue(qrCodePathState);
@@ -76,11 +89,45 @@ const UserMfaSetup = () => {
 
 					const data = await res.json();
 					if (res.status === 200) {
-						console.log(data);
-						setIsProcessing(false);
-						setAppMessage('SUCCESS');
-						setAppSeverity('success');
-						setAppSnackOpen(true);
+						if (data.congregation) {
+							if (data.congregation.cong_role.length > 0) {
+								if (
+									data.congregation.cong_role.includes('lmmo') ||
+									data.congregation.cong_role.includes('lmmo-backup')
+								) {
+									const isMainDb = await isDbExist('lmm_oa');
+									if (!isMainDb) {
+										await initAppDb();
+									}
+
+									// save congregation update if any
+									let obj = {};
+									obj.isCongVerified = true;
+									obj.cong_name = data.congregation.cong_name;
+									obj.cong_number = data.congregation.cong_number;
+									await dbUpdateAppSettings(obj);
+
+									await checkSrcUpdate();
+
+									setIsSetup(false);
+									setTimeout(() => {
+										setIsAppLoad(false);
+									}, [2000]);
+								} else {
+									setIsProcessing(false);
+									setIsUserMfaVerify(false);
+									setIsUnauthorizedRole(true);
+								}
+							} else {
+								setIsProcessing(false);
+								setIsUserMfaVerify(false);
+								setIsUnauthorizedRole(true);
+							}
+						} else {
+							setIsProcessing(false);
+							setIsUserMfaVerify(false);
+							setIsCongAccountCreate(true);
+						}
 					} else {
 						setIsProcessing(false);
 						setAppMessage(data.message);
