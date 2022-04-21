@@ -110,7 +110,9 @@ const Schedule = () => {
 
 	const handleWeekChange = async (value) => {
 		setIsS89(false);
-		setCurrentWeek(value);
+		if (value !== undefined) {
+			setCurrentWeek(value);
+		}
 	};
 
 	const handlePreviewSchedule = () => {

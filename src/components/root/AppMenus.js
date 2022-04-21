@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import styled from '@emotion/styled';
@@ -12,22 +12,14 @@ import Drawer from '@mui/material/Drawer';
 import GetApp from '@mui/icons-material/GetApp';
 import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
-import LoginIcon from '@mui/icons-material/Login';
-import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
+import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import Toolbar from '@mui/material/Toolbar';
-import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import AppDrawer from './AppDrawer';
 import AppLanguage from './AppLanguage';
 import * as serviceWorkerRegistration from '../../serviceWorkerRegistration';
-import {
-	appStageState,
-	isAboutOpenState,
-	isLoginOpenState,
-	isUserLoggedState,
-	uidUserState,
-} from '../../appStates/appSettings';
+import { appStageState, isAboutOpenState } from '../../appStates/appSettings';
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 const drawerWidth = 240;
@@ -38,11 +30,7 @@ const AppMenus = (props) => {
 	const [appBarTitle, setAppBarTitle] = useState('');
 	const { enabledInstall, isLoading, installPwa } = props;
 
-	const [isUserLogged, setIsUserLogged] = useRecoilState(isUserLoggedState);
-
 	const setIsAboutOpen = useSetRecoilState(isAboutOpenState);
-	const setIsLoginOpen = useSetRecoilState(isLoginOpenState);
-	const setUidUser = useSetRecoilState(uidUserState);
 
 	const appStage = useRecoilValue(appStageState);
 
@@ -63,15 +51,6 @@ const AppMenus = (props) => {
 
 	const handleAbout = () => {
 		setIsAboutOpen(true);
-	};
-
-	const handleLogin = () => {
-		setIsLoginOpen(true);
-	};
-
-	const handleLogout = () => {
-		setUidUser('');
-		setIsUserLogged(false);
 	};
 
 	useEffect(() => {
@@ -189,40 +168,17 @@ const AppMenus = (props) => {
 						</IconButton>
 					)}
 					<AppLanguage />
-					{navigator.onLine && (
-						<>
-							{!isUserLogged && (
-								<Tooltip title={t('global.login')}>
-									<IconButton
-										color='inherit'
-										edge='start'
-										sx={{ marginRight: '8px' }}
-										onClick={handleLogin}
-									>
-										<LoginIcon />
-									</IconButton>
-								</Tooltip>
-							)}
-							{isUserLogged && (
-								<Tooltip title={t('global.logout')}>
-									<IconButton
-										color='inherit'
-										edge='start'
-										sx={{ marginRight: '8px' }}
-										onClick={handleLogout}
-									>
-										<LogoutIcon />
-									</IconButton>
-								</Tooltip>
-							)}
-						</>
-					)}
+
 					<IconButton
 						color='inherit'
 						edge='start'
+						sx={{ marginRight: '8px' }}
 						onClick={() => handleAbout()}
 					>
 						<InfoIcon />
+					</IconButton>
+					<IconButton color='inherit' edge='start'>
+						<PowerSettingsNewIcon />
 					</IconButton>
 				</Box>
 			</AppBar>

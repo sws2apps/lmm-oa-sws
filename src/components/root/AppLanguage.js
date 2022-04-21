@@ -10,7 +10,10 @@ import TranslateIcon from '@mui/icons-material/Translate';
 import Typography from '@mui/material/Typography';
 import { blue } from '@mui/material/colors';
 import { appLangState } from '../../appStates/appSettings';
-import { dbUpdateAppSettings } from '../../indexedDb/dbAppSettings';
+import {
+	dbGetAppSettings,
+	dbUpdateAppSettings,
+} from '../../indexedDb/dbAppSettings';
 import { isDbExist } from '../../indexedDb/dbUtility';
 import { langList } from '../../locales/langList';
 
@@ -18,16 +21,18 @@ const AppLanguage = (props) => {
 	const { t, i18n } = useTranslation();
 	const { isStartup } = props;
 
-	const [anchorEl, setAnchorEl] = useState(null);
-
 	const [appLang, setAppLang] = useRecoilState(appLangState);
+
+	const [anchorEl, setAnchorEl] = useState(null);
 	const [appLangLocal, setAppLangLocal] = useState(appLang);
+	const [userChange, setUserChange] = useState(false);
 
 	const blueColor = blue[400];
 
 	let isMenuOpen = Boolean(anchorEl);
 
 	const handleLangChange = async (e) => {
+		setUserChange(true);
 		const app_lang = e.target.parentElement.dataset.code;
 		setAppLangLocal(app_lang);
 		handleClose();
@@ -43,27 +48,49 @@ const AppLanguage = (props) => {
 
 	useEffect(() => {
 		const updateLang = async () => {
-			await i18n.changeLanguage(appLangLocal);
-
-			const isoLang =
-				getI18n().getDataByLanguage(appLangLocal).translation['global.iso'];
-			document.documentElement.setAttribute('lang', isoLang);
-
-			setAppLang(appLangLocal);
-
 			const isExist = await isDbExist('lmm_oa');
 
-			if (isExist) {
-				await dbUpdateAppSettings({
-					app_lang: appLangLocal,
-				});
+			if (userChange) {
+				await i18n.changeLanguage(appLangLocal);
+
+				const isoLang =
+					getI18n().getDataByLanguage(appLangLocal).translation['global.iso'];
+				document.documentElement.setAttribute('lang', isoLang);
+
+				setAppLang(appLangLocal);
+
+				const isExist = await isDbExist('lmm_oa');
+
+				if (isExist) {
+					await dbUpdateAppSettings({
+						app_lang: appLangLocal,
+					});
+				} else {
+					localStorage.setItem('app_lang', appLangLocal);
+				}
+				setUserChange(false);
 			} else {
-				localStorage.setItem('app_lang', appLangLocal);
+				let appLang = 'e';
+				if (isExist) {
+					const { app_lang } = await dbGetAppSettings();
+					if (app_lang) {
+						appLang = app_lang;
+					}
+				}
+
+				if (appLang !== appLangLocal) {
+					await i18n.changeLanguage(appLang);
+
+					setAppLang(appLang);
+					await dbUpdateAppSettings({
+						app_lang: appLang,
+					});
+				}
 			}
 		};
 
 		updateLang();
-	}, [appLangLocal, i18n, setAppLang]);
+	}, [appLangLocal, i18n, setAppLang, userChange]);
 
 	return (
 		<>

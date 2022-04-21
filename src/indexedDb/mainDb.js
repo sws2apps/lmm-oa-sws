@@ -83,6 +83,10 @@ appDb.version(15).stores({
 	app_settings:
 		'++id, cong_number, cong_name, class_count, meeting_day, cong_ID, isScheduleConverted, isCongVerified',
 });
+appDb.version(16).stores({
+	app_settings:
+		'++id, cong_number, cong_name, class_count, meeting_day, pwd, isScheduleConverted, isCongVerified',
+});
 
 appDb.on('populate', function () {
 	appDb.app_settings.add({

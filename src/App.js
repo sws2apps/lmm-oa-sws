@@ -58,13 +58,13 @@ const App = () => {
 				appUrl === 'dev-lmm-oa-sws.firebaseapp.com'
 			) {
 				setApiHost('https://dev-sws2apps.herokuapp.com/');
-				setAppStage('DEV Environment');
+				setAppStage('ALPHA Environment');
 			} else if (
 				appUrl === 'staging-lmm-oa-sws.web.app' ||
 				appUrl === 'staging-lmm-oa-sws.firebaseapp.com'
 			) {
 				setApiHost('https://staging-sws2apps.herokuapp.com/');
-				setAppStage('STG Environment');
+				setAppStage('BETA Environment');
 			} else if (
 				appUrl === 'lmm-oa-sws.web.app' ||
 				appUrl === 'lmm-oa-sws.firebaseapp.com'

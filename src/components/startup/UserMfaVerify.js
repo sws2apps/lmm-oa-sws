@@ -23,7 +23,7 @@ import {
 	userEmailState,
 	visitorIDState,
 } from '../../appStates/appSettings';
-import { checkSrcUpdate } from '../../indexedDb/dbSourceMaterial';
+import { loadApp } from '../../utils/app';
 import { initAppDb, isDbExist } from '../../indexedDb/dbUtility';
 import { dbUpdateAppSettings } from '../../indexedDb/dbAppSettings';
 
@@ -91,7 +91,7 @@ const UserMfaVerify = () => {
 									obj.cong_number = data.congregation.cong_number;
 									await dbUpdateAppSettings(obj);
 
-									await checkSrcUpdate();
+									await loadApp();
 
 									setIsSetup(false);
 									setTimeout(() => {
