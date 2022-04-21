@@ -1,6 +1,5 @@
 import { useRecoilValue } from 'recoil';
 import { useTranslation } from 'react-i18next';
-import { styled } from '@mui/styles';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import EditIcon from '@mui/icons-material/Edit';
@@ -9,18 +8,13 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { classCountState } from '../../appStates/appCongregation';
 
-const TypoStudentPart = styled(Typography)(() => ({
-	fontWeight: 'bold',
-	fontSize: '16px',
-}));
-
-const BoxStudentAYF = styled(Box)(() => ({
+const boxStudentAYF = {
 	display: 'flex',
 	flexDirection: 'column',
 	marginBottom: '8px',
-}));
+};
 
-const TypoStudentField = styled(Typography)(() => ({
+const typoStudentField = {
 	height: '25px',
 	lineHeight: '25px',
 	width: '165px',
@@ -29,21 +23,21 @@ const TypoStudentField = styled(Typography)(() => ({
 	padding: '2px 2px 2px 5px',
 	borderRadius: 5,
 	fontWeight: 'bold',
-}));
+};
 
-const BoxStudentFldContainer = styled(Box)(() => ({
+const boxStudentFldContainer = {
 	display: 'flex',
 	marginRight: '5px',
 	alignItems: 'flex-end',
-}));
+};
 
-const IconButtonContainer = styled(IconButton)(() => ({
+const iconButtonContainer = {
 	padding: '1px',
-}));
+};
 
-const EditIconButton = styled(EditIcon)(() => ({
+const editIconButton = {
 	fontSize: '24px',
-}));
+};
 
 const StudentAYF = (props) => {
 	const { t } = useTranslation();
@@ -151,9 +145,12 @@ const StudentAYF = (props) => {
 						}
 					>
 						{assType !== 7 && (
-							<TypoStudentPart variant='body1'>
+							<Typography
+								variant='body1'
+								sx={{ fontWeight: 'bold', fontSize: '16px' }}
+							>
 								{assTypeName} ({assTime} min.)
-							</TypoStudentPart>
+							</Typography>
 						)}
 						<Typography variant='body1'>{assSrc}</Typography>
 					</Grid>
@@ -166,9 +163,11 @@ const StudentAYF = (props) => {
 									: studentContainer2Styles
 							}
 						>
-							<BoxStudentAYF>
-								<BoxStudentFldContainer>
-									<TypoStudentField variant='body1'>{stuA}</TypoStudentField>
+							<Box sx={boxStudentAYF}>
+								<Box sx={boxStudentFldContainer}>
+									<Typography sx={typoStudentField} variant='body1'>
+										{stuA}
+									</Typography>
 									{isStuA && (
 										<CircularProgress
 											sx={{ padding: '1px' }}
@@ -178,18 +177,21 @@ const StudentAYF = (props) => {
 										/>
 									)}
 									{!isStuA && (
-										<IconButtonContainer
+										<IconButton
+											sx={iconButtonContainer}
 											onClick={() =>
 												loadStuPicker(stuAID, assType, assTypeName, stuA)
 											}
 										>
-											<EditIconButton />
-										</IconButtonContainer>
+											<EditIcon sx={editIconButton} />
+										</IconButton>
 									)}
-								</BoxStudentFldContainer>
+								</Box>
 								{assType !== 4 && (
-									<BoxStudentFldContainer>
-										<TypoStudentField variant='body1'>{assA}</TypoStudentField>
+									<Box sx={boxStudentFldContainer}>
+										<Typography sx={typoStudentField} variant='body1'>
+											{assA}
+										</Typography>
 										{isAssA && (
 											<CircularProgress
 												sx={{ padding: '1px' }}
@@ -199,7 +201,8 @@ const StudentAYF = (props) => {
 											/>
 										)}
 										{!isAssA && (
-											<IconButtonContainer
+											<IconButton
+												sx={iconButtonContainer}
 												onClick={() =>
 													loadStuPicker(
 														assAID,
@@ -211,16 +214,18 @@ const StudentAYF = (props) => {
 													)
 												}
 											>
-												<EditIconButton />
-											</IconButtonContainer>
+												<EditIcon sx={editIconButton} />
+											</IconButton>
 										)}
-									</BoxStudentFldContainer>
+									</Box>
 								)}
-							</BoxStudentAYF>
+							</Box>
 							{classCount === 2 && (
-								<BoxStudentAYF>
-									<BoxStudentFldContainer>
-										<TypoStudentField variant='body1'>{stuB}</TypoStudentField>
+								<Box sx={boxStudentAYF}>
+									<Box sx={boxStudentFldContainer}>
+										<Typography sx={typoStudentField} variant='body1'>
+											{stuB}
+										</Typography>
 										{isStuB && (
 											<CircularProgress
 												sx={{ padding: '1px' }}
@@ -230,20 +235,21 @@ const StudentAYF = (props) => {
 											/>
 										)}
 										{!isStuB && (
-											<IconButtonContainer
+											<IconButton
+												sx={iconButtonContainer}
 												onClick={() =>
 													loadStuPicker(stuBID, assType, assTypeName, stuB)
 												}
 											>
-												<EditIconButton />
-											</IconButtonContainer>
+												<EditIcon sx={editIconButton} />
+											</IconButton>
 										)}
-									</BoxStudentFldContainer>
+									</Box>
 									{assType !== 4 && (
-										<BoxStudentFldContainer>
-											<TypoStudentField variant='body1'>
+										<Box sx={boxStudentFldContainer}>
+											<Typography sx={typoStudentField} variant='body1'>
 												{assB}
-											</TypoStudentField>
+											</Typography>
 											{isAssB && (
 												<CircularProgress
 													sx={{ padding: '1px' }}
@@ -253,7 +259,8 @@ const StudentAYF = (props) => {
 												/>
 											)}
 											{!isAssB && (
-												<IconButtonContainer
+												<IconButton
+													sx={iconButtonContainer}
 													onClick={() =>
 														loadStuPicker(
 															assBID,
@@ -265,12 +272,12 @@ const StudentAYF = (props) => {
 														)
 													}
 												>
-													<EditIconButton />
-												</IconButtonContainer>
+													<EditIcon sx={editIconButton} />
+												</IconButton>
 											)}
-										</BoxStudentFldContainer>
+										</Box>
 									)}
-								</BoxStudentAYF>
+								</Box>
 							)}
 						</Grid>
 					)}

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useTranslation } from 'react-i18next';
-import { styled } from '@mui/styles';
 import dateFormat from 'dateformat';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -66,7 +65,7 @@ const sharedStyles = {
 	},
 };
 
-const BoxMeetingPart = styled(Box)(() => ({
+const boxMeetingPart = {
 	maxWidth: '100%',
 	minWidth: '320px',
 	borderRadius: '10px',
@@ -74,15 +73,15 @@ const BoxMeetingPart = styled(Box)(() => ({
 	color: 'white',
 	marginTop: '10px',
 	marginBottom: '5px',
-}));
+};
 
-const BoxPartContainer = styled(Box)(() => ({
+const boxPartContainer = {
 	display: 'flex',
 	flexWrap: 'wrap',
 	alignItems: 'flex-start',
 	justifyContent: 'space-between',
 	marginBottom: '10px',
-}));
+};
 
 const BoxStudentAYF = styled(Box)(() => ({
 	display: 'flex',
@@ -332,12 +331,12 @@ const Home = () => {
 					)}
 					{!noMeeting && (
 						<>
-							<BoxMeetingPart className={'tgwPart'}>
+							<Box sx={boxMeetingPart} className={'tgwPart'}>
 								<Typography variant='h6' sx={sharedStyles.typoLineHeight}>
 									{t('global.treasuresPart')}
 								</Typography>
-							</BoxMeetingPart>
-							<BoxPartContainer>
+							</Box>
+							<Box sx={boxPartContainer}>
 								<Grid
 									item
 									sx={
@@ -372,14 +371,14 @@ const Home = () => {
 										</BoxStudentFldContainer>
 									)}
 								</Grid>
-							</BoxPartContainer>
-							<BoxMeetingPart className={'ayfPart'}>
+							</Box>
+							<Box sx={boxMeetingPart} className={'ayfPart'}>
 								<Typography variant='h6' sx={sharedStyles.typoLineHeight}>
 									{t('global.applyFieldMinistryPart')}
 								</Typography>
-							</BoxMeetingPart>
+							</Box>
 							{ass1Src && (
-								<BoxPartContainer>
+								<Box sx={boxPartContainer}>
 									<Grid
 										item
 										sx={
@@ -434,10 +433,10 @@ const Home = () => {
 											)}
 										</Grid>
 									)}
-								</BoxPartContainer>
+								</Box>
 							)}
 							{ass2Src && (
-								<BoxPartContainer>
+								<Box sx={boxPartContainer}>
 									<Grid
 										item
 										sx={
@@ -492,10 +491,10 @@ const Home = () => {
 											)}
 										</Grid>
 									)}
-								</BoxPartContainer>
+								</Box>
 							)}
 							{ass3Src && (
-								<BoxPartContainer>
+								<Box sx={boxPartContainer}>
 									<Grid
 										item
 										sx={
@@ -550,10 +549,10 @@ const Home = () => {
 											)}
 										</Grid>
 									)}
-								</BoxPartContainer>
+								</Box>
 							)}
 							{ass4Src && (
-								<BoxPartContainer>
+								<Box sx={boxPartContainer}>
 									<Grid
 										item
 										sx={
@@ -608,7 +607,7 @@ const Home = () => {
 											)}
 										</Grid>
 									)}
-								</BoxPartContainer>
+								</Box>
 							)}
 						</>
 					)}
