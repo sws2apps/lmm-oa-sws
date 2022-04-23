@@ -83,20 +83,20 @@ const boxPartContainer = {
 	marginBottom: '10px',
 };
 
-const BoxStudentAYF = styled(Box)(() => ({
+const boxStudentAYF = {
 	display: 'flex',
 	flexDirection: 'column',
 	marginBottom: '8px',
-}));
+};
 
-const BoxStudentFldContainer = styled(Box)(() => ({
+const boxStudentFldContainer = {
 	display: 'flex',
 	marginRight: '5px',
 	marginBottom: '1px',
 	alignItems: 'flex-end',
-}));
+};
 
-const TypoStudentField = styled(Typography)(() => ({
+const typoStudentField = {
 	height: '25px',
 	lineHeight: '25px',
 	width: '165px',
@@ -105,12 +105,12 @@ const TypoStudentField = styled(Typography)(() => ({
 	padding: '2px 2px 2px 5px',
 	borderRadius: 5,
 	fontWeight: 'bold',
-}));
+};
 
-const TypoStudentPart = styled(Typography)(() => ({
+const typoStudentPart = {
 	fontWeight: 'bold',
 	fontSize: '16px',
-}));
+};
 
 const Home = () => {
 	const { t } = useTranslation();
@@ -345,9 +345,9 @@ const Home = () => {
 											: sharedStyles.studentPartWrapper2
 									}
 								>
-									<TypoStudentPart variant='body1'>
+									<Typography sx={typoStudentPart} variant='body1'>
 										{t('global.bibleReadingText')}
-									</TypoStudentPart>
+									</Typography>
 									<Typography variant='body1'>{bibleReadingSrc}</Typography>
 								</Grid>
 								<Grid
@@ -358,17 +358,17 @@ const Home = () => {
 											: sharedStyles.studentContainer2
 									}
 								>
-									<BoxStudentFldContainer>
-										<TypoStudentField variant='body1'>
+									<Box sx={boxStudentFldContainer}>
+										<Typography sx={typoStudentField} variant='body1'>
 											{stuBReadA}
-										</TypoStudentField>
-									</BoxStudentFldContainer>
+										</Typography>
+									</Box>
 									{classCount === 2 && (
-										<BoxStudentFldContainer>
-											<TypoStudentField variant='body1'>
+										<Box sx={boxStudentFldContainer}>
+											<Typography sx={typoStudentField} variant='body1'>
 												{stuBReadB}
-											</TypoStudentField>
-										</BoxStudentFldContainer>
+											</Typography>
+										</Box>
 									)}
 								</Grid>
 							</Box>
@@ -387,9 +387,9 @@ const Home = () => {
 												: sharedStyles.studentPartWrapper2
 										}
 									>
-										<TypoStudentPart variant='body1'>
+										<Typography sx={typoStudentPart} variant='body1'>
 											{ass1TypeName} ({ass1Time} min.)
-										</TypoStudentPart>
+										</Typography>
 										<Typography variant='body1'>{ass1Src}</Typography>
 									</Grid>
 									{ass1Type !== 5 && ass1Type !== 6 && ass1Type !== 7 && (
@@ -401,35 +401,35 @@ const Home = () => {
 													: sharedStyles.studentContainer2
 											}
 										>
-											<BoxStudentAYF>
-												<BoxStudentFldContainer>
-													<TypoStudentField variant='body1'>
+											<Box sx={boxStudentAYF}>
+												<Box sx={boxStudentFldContainer}>
+													<Typography sx={typoStudentField} variant='body1'>
 														{stu1A}
-													</TypoStudentField>
-												</BoxStudentFldContainer>
+													</Typography>
+												</Box>
 												{ass1Type !== 4 && (
-													<BoxStudentFldContainer>
-														<TypoStudentField variant='body1'>
+													<Box sx={boxStudentFldContainer}>
+														<Typography sx={typoStudentField} variant='body1'>
 															{ass1A}
-														</TypoStudentField>
-													</BoxStudentFldContainer>
+														</Typography>
+													</Box>
 												)}
-											</BoxStudentAYF>
+											</Box>
 											{classCount === 2 && (
-												<BoxStudentAYF>
-													<BoxStudentFldContainer>
-														<TypoStudentField variant='body1'>
+												<Box sx={boxStudentAYF}>
+													<Box sx={boxStudentFldContainer}>
+														<Typography sx={typoStudentField} variant='body1'>
 															{stu1B}
-														</TypoStudentField>
-													</BoxStudentFldContainer>
+														</Typography>
+													</Box>
 													{ass1Type !== 4 && (
-														<BoxStudentFldContainer>
-															<TypoStudentField variant='body1'>
+														<Box sx={boxStudentFldContainer}>
+															<Typography sx={typoStudentField} variant='body1'>
 																{ass1B}
-															</TypoStudentField>
-														</BoxStudentFldContainer>
+															</Typography>
+														</Box>
 													)}
-												</BoxStudentAYF>
+												</Box>
 											)}
 										</Grid>
 									)}
@@ -445,9 +445,9 @@ const Home = () => {
 												: sharedStyles.studentPartWrapper2
 										}
 									>
-										<TypoStudentPart variant='body1'>
+										<Typography sx={typoStudentPart} variant='body1'>
 											{ass2TypeName} ({ass2Time} min.)
-										</TypoStudentPart>
+										</Typography>
 										<Typography variant='body1'>{ass2Src}</Typography>
 									</Grid>
 									{ass2Type !== 5 && ass2Type !== 6 && ass2Type !== 7 && (
@@ -459,35 +459,35 @@ const Home = () => {
 													: sharedStyles.studentContainer2
 											}
 										>
-											<BoxStudentAYF>
-												<BoxStudentFldContainer>
-													<TypoStudentField variant='body1'>
+											<Box sx={boxStudentAYF}>
+												<Box sx={boxStudentFldContainer}>
+													<Typography sx={typoStudentField} variant='body1'>
 														{stu2A}
-													</TypoStudentField>
-												</BoxStudentFldContainer>
+													</Typography>
+												</Box>
 												{ass2Type !== 4 && (
-													<BoxStudentFldContainer>
-														<TypoStudentField variant='body1'>
+													<Box sx={boxStudentFldContainer}>
+														<Typography sx={typoStudentField} variant='body1'>
 															{ass2A}
-														</TypoStudentField>
-													</BoxStudentFldContainer>
+														</Typography>
+													</Box>
 												)}
-											</BoxStudentAYF>
+											</Box>
 											{classCount === 2 && (
-												<BoxStudentAYF>
-													<BoxStudentFldContainer>
-														<TypoStudentField variant='body1'>
+												<Box sx={boxStudentAYF}>
+													<Box sx={boxStudentFldContainer}>
+														<Typography sx={typoStudentField} variant='body1'>
 															{stu2B}
-														</TypoStudentField>
-													</BoxStudentFldContainer>
+														</Typography>
+													</Box>
 													{ass2Type !== 4 && (
-														<BoxStudentFldContainer>
-															<TypoStudentField variant='body1'>
+														<Box sx={boxStudentFldContainer}>
+															<Typography sx={typoStudentField} variant='body1'>
 																{ass2B}
-															</TypoStudentField>
-														</BoxStudentFldContainer>
+															</Typography>
+														</Box>
 													)}
-												</BoxStudentAYF>
+												</Box>
 											)}
 										</Grid>
 									)}
@@ -503,9 +503,9 @@ const Home = () => {
 												: sharedStyles.studentPartWrapper2
 										}
 									>
-										<TypoStudentPart variant='body1'>
+										<Typography sx={typoStudentPart} variant='body1'>
 											{ass3TypeName} ({ass3Time} min.)
-										</TypoStudentPart>
+										</Typography>
 										<Typography variant='body1'>{ass3Src}</Typography>
 									</Grid>
 									{ass3Type !== 5 && ass3Type !== 6 && ass3Type !== 7 && (
@@ -517,35 +517,35 @@ const Home = () => {
 													: sharedStyles.studentContainer2
 											}
 										>
-											<BoxStudentAYF>
-												<BoxStudentFldContainer>
-													<TypoStudentField variant='body1'>
+											<Box sx={boxStudentAYF}>
+												<Box sx={boxStudentFldContainer}>
+													<Typography sx={typoStudentField} variant='body1'>
 														{stu3A}
-													</TypoStudentField>
-												</BoxStudentFldContainer>
+													</Typography>
+												</Box>
 												{ass3Type !== 4 && (
-													<BoxStudentFldContainer>
-														<TypoStudentField variant='body1'>
+													<Box sx={boxStudentFldContainer}>
+														<Typography sx={typoStudentField} variant='body1'>
 															{ass3A}
-														</TypoStudentField>
-													</BoxStudentFldContainer>
+														</Typography>
+													</Box>
 												)}
-											</BoxStudentAYF>
+											</Box>
 											{classCount === 2 && (
-												<BoxStudentAYF>
-													<BoxStudentFldContainer>
-														<TypoStudentField variant='body1'>
+												<Box sx={boxStudentAYF}>
+													<Box sx={boxStudentFldContainer}>
+														<Typography sx={typoStudentField} variant='body1'>
 															{stu3B}
-														</TypoStudentField>
-													</BoxStudentFldContainer>
+														</Typography>
+													</Box>
 													{ass3Type !== 4 && (
-														<BoxStudentFldContainer>
-															<TypoStudentField variant='body1'>
+														<Box sx={boxStudentFldContainer}>
+															<Typography sx={typoStudentField} variant='body1'>
 																{ass3B}
-															</TypoStudentField>
-														</BoxStudentFldContainer>
+															</Typography>
+														</Box>
 													)}
-												</BoxStudentAYF>
+												</Box>
 											)}
 										</Grid>
 									)}
@@ -561,9 +561,9 @@ const Home = () => {
 												: sharedStyles.studentPartWrapper2
 										}
 									>
-										<TypoStudentPart variant='body1'>
+										<Typography sx={typoStudentPart} variant='body1'>
 											{ass4TypeName} ({ass4Time} min.)
-										</TypoStudentPart>
+										</Typography>
 										<Typography variant='body1'>{ass4Src}</Typography>
 									</Grid>
 									{ass4Type !== 5 && ass4Type !== 6 && ass4Type !== 7 && (
@@ -575,35 +575,35 @@ const Home = () => {
 													: sharedStyles.studentContainer2
 											}
 										>
-											<BoxStudentAYF>
-												<BoxStudentFldContainer>
-													<TypoStudentField variant='body1'>
+											<Box sx={boxStudentAYF}>
+												<Box sx={boxStudentFldContainer}>
+													<Typography sx={typoStudentField} variant='body1'>
 														{stu4A}
-													</TypoStudentField>
-												</BoxStudentFldContainer>
+													</Typography>
+												</Box>
 												{ass4Type !== 4 && (
-													<BoxStudentFldContainer>
-														<TypoStudentField variant='body1'>
+													<Box sx={boxStudentFldContainer}>
+														<Typography sx={typoStudentField} variant='body1'>
 															{ass4A}
-														</TypoStudentField>
-													</BoxStudentFldContainer>
+														</Typography>
+													</Box>
 												)}
-											</BoxStudentAYF>
+											</Box>
 											{classCount === 2 && (
-												<BoxStudentAYF>
-													<BoxStudentFldContainer>
-														<TypoStudentField variant='body1'>
+												<Box sx={boxStudentAYF}>
+													<Box sx={boxStudentFldContainer}>
+														<Typography sx={typoStudentField} variant='body1'>
 															{stu4B}
-														</TypoStudentField>
-													</BoxStudentFldContainer>
+														</Typography>
+													</Box>
 													{ass4Type !== 4 && (
-														<BoxStudentFldContainer>
-															<TypoStudentField variant='body1'>
+														<Box sx={boxStudentFldContainer}>
+															<Typography sx={typoStudentField} variant='body1'>
 																{ass4B}
-															</TypoStudentField>
-														</BoxStudentFldContainer>
+															</Typography>
+														</Box>
 													)}
-												</BoxStudentAYF>
+												</Box>
 											)}
 										</Grid>
 									)}
