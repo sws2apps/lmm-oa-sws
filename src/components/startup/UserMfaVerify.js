@@ -8,6 +8,7 @@ import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import StartupHeader from './StartupHeader';
+import { encryptString } from '../../utils/sws-cryptr';
 import {
 	appMessageState,
 	appSeverityState,
@@ -21,6 +22,7 @@ import {
 	isUnauthorizedRoleState,
 	isUserMfaVerifyState,
 	userEmailState,
+	userPasswordState,
 	visitorIDState,
 } from '../../appStates/appSettings';
 import { loadApp } from '../../utils/app';
@@ -48,6 +50,7 @@ const UserMfaVerify = () => {
 	const apiHost = useRecoilValue(apiHostState);
 	const userEmail = useRecoilValue(userEmailState);
 	const visitorID = useRecoilValue(visitorIDState);
+	const userPwd = useRecoilValue(userPasswordState);
 
 	const handleVerifyOTP = async () => {
 		try {
@@ -84,11 +87,19 @@ const UserMfaVerify = () => {
 										await initAppDb();
 									}
 
+									// encrypt email & pwd
+									const encPwd = encryptString(
+										userPwd,
+										JSON.stringify({ email: userEmail, pwd: userPwd })
+									);
+
 									// save congregation update if any
 									let obj = {};
 									obj.isCongVerified = true;
 									obj.cong_name = data.congregation.cong_name;
 									obj.cong_number = data.congregation.cong_number;
+									obj.pwd = encPwd;
+
 									await dbUpdateAppSettings(obj);
 
 									await loadApp();

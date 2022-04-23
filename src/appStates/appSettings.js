@@ -33,7 +33,7 @@ export const isLoginOpenState = atom({
 
 export const appLangState = atom({
 	key: 'appLang',
-	default: 'e',
+	default: localStorage.getItem('app_lang') || 'e',
 });
 
 export const uidUserState = atom({
@@ -255,5 +255,10 @@ export const isUserMfaVerifyState = atom({
 
 export const isUnauthorizedRoleState = atom({
 	key: 'isUnauthorizedRole',
+	default: false,
+});
+
+export const isAppClosingState = atom({
+	key: 'isAppClosing',
 	default: false,
 });

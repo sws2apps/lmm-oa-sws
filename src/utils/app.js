@@ -11,6 +11,7 @@ import {
 } from '../indexedDb/dbSourceMaterial';
 import { dbGetListAssType } from '../indexedDb/dbAssignment';
 import { dbGetStudents } from '../indexedDb/dbPersons';
+import { initAppDb } from '../indexedDb/dbUtility';
 
 // states
 import {
@@ -34,14 +35,11 @@ import {
 export const loadApp = async () => {
 	const I18n = getI18n();
 
-	let {
-		cong_number,
-		cong_name,
-		class_count,
-		meeting_day,
-		app_lang,
-		liveEventClass,
-	} = await dbGetAppSettings();
+	await initAppDb();
+	let { cong_number, cong_name, class_count, meeting_day, liveEventClass } =
+		await dbGetAppSettings();
+
+	const app_lang = localStorage.getItem('app_lang') || 'e';
 
 	await checkSrcUpdate();
 
@@ -49,7 +47,7 @@ export const loadApp = async () => {
 	await promiseSetRecoil(congNumberState, cong_number);
 	await promiseSetRecoil(classCountState, class_count);
 	await promiseSetRecoil(meetingDayState, meeting_day);
-	await promiseSetRecoil(appLangState, app_lang || 'e');
+	await promiseSetRecoil(appLangState, app_lang);
 	await promiseSetRecoil(liveClassState, liveEventClass);
 
 	I18n.changeLanguage(app_lang);

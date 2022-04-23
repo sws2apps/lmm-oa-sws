@@ -13,6 +13,7 @@ import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import StartupHeader from './StartupHeader';
+import { encryptString } from '../../utils/sws-cryptr';
 import {
 	appMessageState,
 	appSeverityState,
@@ -28,6 +29,7 @@ import {
 	qrCodePathState,
 	secretTokenPathState,
 	userEmailState,
+	userPasswordState,
 	visitorIDState,
 } from '../../appStates/appSettings';
 import { loadApp } from '../../utils/app';
@@ -60,6 +62,7 @@ const UserMfaSetup = () => {
 	const token = useRecoilValue(secretTokenPathState);
 	const userEmail = useRecoilValue(userEmailState);
 	const visitorID = useRecoilValue(visitorIDState);
+	const userPwd = useRecoilValue(userPasswordState);
 
 	const handleCopyClipboard = async (text) => {
 		await navigator.clipboard.writeText(text);
@@ -100,11 +103,18 @@ const UserMfaSetup = () => {
 										await initAppDb();
 									}
 
+									// encrypt email & pwd
+									const encPwd = encryptString(
+										userPwd,
+										JSON.stringify({ email: userEmail, pwd: userPwd })
+									);
+
 									// save congregation update if any
 									let obj = {};
 									obj.isCongVerified = true;
 									obj.cong_name = data.congregation.cong_name;
 									obj.cong_number = data.congregation.cong_number;
+									obj.pwd = encPwd;
 									await dbUpdateAppSettings(obj);
 
 									await loadApp();

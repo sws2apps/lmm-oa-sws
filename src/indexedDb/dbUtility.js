@@ -14,6 +14,10 @@ export const initBackupDb = async () => {
 	await backupDb.open();
 };
 
+export const deleteDbByName = async (dbName) => {
+	await Dexie.delete(dbName);
+};
+
 export const deleteDb = async () => {
 	const databases = await Dexie.getDatabaseNames();
 

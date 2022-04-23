@@ -19,7 +19,11 @@ import Typography from '@mui/material/Typography';
 import AppDrawer from './AppDrawer';
 import AppLanguage from './AppLanguage';
 import * as serviceWorkerRegistration from '../../serviceWorkerRegistration';
-import { appStageState, isAboutOpenState } from '../../appStates/appSettings';
+import {
+	appStageState,
+	isAboutOpenState,
+	isAppClosingState,
+} from '../../appStates/appSettings';
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 const drawerWidth = 240;
@@ -31,6 +35,7 @@ const AppMenus = (props) => {
 	const { enabledInstall, isLoading, installPwa } = props;
 
 	const setIsAboutOpen = useSetRecoilState(isAboutOpenState);
+	const setIsAppClosing = useSetRecoilState(isAppClosingState);
 
 	const appStage = useRecoilValue(appStageState);
 
@@ -51,6 +56,10 @@ const AppMenus = (props) => {
 
 	const handleAbout = () => {
 		setIsAboutOpen(true);
+	};
+
+	const handleLogout = async () => {
+		setIsAppClosing(true);
 	};
 
 	useEffect(() => {
@@ -177,7 +186,7 @@ const AppMenus = (props) => {
 					>
 						<InfoIcon />
 					</IconButton>
-					<IconButton color='inherit' edge='start'>
+					<IconButton color='inherit' edge='start' onClick={handleLogout}>
 						<PowerSettingsNewIcon />
 					</IconButton>
 				</Box>

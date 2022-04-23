@@ -9,6 +9,7 @@ import InternetChecker from './components/root/InternetChecker';
 import Layout from './components/root/Layout';
 import ServiceWorkerWrapper from './components/root/ServiceWorkerWrapper';
 import Startup from './pages/Startup';
+import UserSignOut from './components/root/UserSignOut';
 import {
 	apiHostState,
 	appStageState,
@@ -92,6 +93,7 @@ const App = () => {
 		<ThemeProvider theme={theme}>
 			<InternetChecker />
 			<ServiceWorkerWrapper updatePwa={updatePwa} />
+			<UserSignOut />
 			{appSnackOpen && <AppNotification />}
 			{isAppLoad && <Startup />}
 			{!isAppLoad && (

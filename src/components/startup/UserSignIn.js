@@ -10,9 +10,15 @@ import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import StartupHeader from './StartupHeader';
+import { loadApp } from '../../utils/app';
 import { isEmailValid } from '../../utils/emailValid';
-import { dbGetAppSettings } from '../../indexedDb/dbAppSettings';
-import { isDbExist } from '../../indexedDb/dbUtility';
+import { decryptString } from '../../utils/sws-cryptr';
+import { dbGetAppSettings, dbGetBackup } from '../../indexedDb/dbAppSettings';
+import {
+	dbRestoreDb,
+	deleteDbByName,
+	isDbExist,
+} from '../../indexedDb/dbUtility';
 import {
 	appMessageState,
 	appSeverityState,
@@ -20,8 +26,10 @@ import {
 } from '../../appStates/appNotification';
 import {
 	apiHostState,
+	isAppLoadState,
 	isEmailNotVerifiedState,
 	isOnlineState,
+	isSetupState,
 	isUserMfaSetupState,
 	isUserMfaVerifyState,
 	isUserSignInState,
@@ -44,7 +52,6 @@ const UserSignIn = () => {
 	const [hasErrorPwd, setHasErrorPwd] = useState(false);
 	const [isProcessing, setIsProcessing] = useState(false);
 	const [isInternetNeeded, setIsInternetNeeded] = useState(true);
-	const [isValidating, setIsValidating] = useState(false);
 
 	const [visitorID, setVisitorID] = useRecoilState(visitorIDState);
 
@@ -60,6 +67,8 @@ const UserSignIn = () => {
 	const setUserPassword = useSetRecoilState(userPasswordState);
 	const setQrCodePath = useSetRecoilState(qrCodePathState);
 	const setSecretTokenPath = useSetRecoilState(secretTokenPathState);
+	const setIsSetup = useSetRecoilState(isSetupState);
+	const setIsAppLoad = useSetRecoilState(isAppLoadState);
 
 	const apiHost = useRecoilValue(apiHostState);
 	const isOnline = useRecoilValue(isOnlineState);
@@ -67,6 +76,90 @@ const UserSignIn = () => {
 	const handleSignUp = () => {
 		setUserSignUp(true);
 		setUserSignIn(false);
+	};
+
+	const handleRestoreBackup = async () => {
+		const appBackup = await dbGetBackup();
+		const decryptedData = decryptString(userTmpPwd, appBackup);
+
+		const data = await fetch(decryptedData);
+		const blob = await data.blob();
+
+		await dbRestoreDb(blob);
+	};
+
+	const signInSwitch = async () => {
+		if (isInternetNeeded) {
+			await handleSignIn();
+		} else {
+			await handleSignInWithoutInternet();
+		}
+	};
+
+	const handleSignInWithoutInternet = async () => {
+		try {
+			setHasErrorEmail(false);
+			setHasErrorPwd(false);
+			if (isEmailValid(userTmpEmail) && userTmpPwd.length >= 10) {
+				setIsProcessing(true);
+				const isMainDb = await isDbExist('lmm_oa');
+				const isBackupDb = await isDbExist('lmm_oa_backup');
+
+				if (isBackupDb) {
+					await handleRestoreBackup();
+					await loadApp();
+
+					await deleteDbByName('lmm_oa_backup');
+
+					setIsSetup(false);
+					setTimeout(() => {
+						setIsAppLoad(false);
+					}, [2000]);
+
+					return;
+				}
+
+				if (!isBackupDb && isMainDb) {
+					const { pwd } = await dbGetAppSettings();
+					const decryptPwd = decryptString(userTmpPwd, pwd);
+					const data = JSON.parse(decryptPwd);
+					if (userTmpEmail === data.email && userTmpPwd === data.pwd) {
+						if (isOnline) {
+							await handleSignIn();
+						} else {
+							await loadApp();
+
+							setIsSetup(false);
+							setTimeout(() => {
+								setIsAppLoad(false);
+							}, [2000]);
+						}
+					} else {
+						setAppMessage(t('login.incorrectInfo'));
+						setAppSeverity('warning');
+						setIsProcessing(false);
+						setAppSnackOpen(true);
+					}
+				}
+			} else {
+				if (!isEmailValid(userTmpEmail)) {
+					setHasErrorEmail(true);
+				}
+				if (userTmpPwd.length < 10) {
+					setHasErrorPwd(true);
+				}
+			}
+		} catch (err) {
+			if (err.message === 'Malformed UTF-8 data') {
+				setAppMessage(t('login.incorrectInfo'));
+				setAppSeverity('warning');
+			} else {
+				setAppMessage(err.message);
+				setAppSeverity('error');
+			}
+			setIsProcessing(false);
+			setAppSnackOpen(true);
+		}
 	};
 
 	const handleSignIn = () => {
@@ -163,15 +256,18 @@ const UserSignIn = () => {
 			if (!isMainDb && !isBackupDb) {
 				setIsInternetNeeded(true);
 			} else {
+				if (isBackupDb) {
+					setIsInternetNeeded(false);
+					return;
+				}
 				if (isMainDb) {
 					const { pwd } = await dbGetAppSettings();
 					if (!pwd) {
 						setIsInternetNeeded(true);
-						return;
+					} else {
+						setIsInternetNeeded(false);
 					}
 				}
-
-				setIsInternetNeeded(false);
 			}
 		};
 
@@ -200,60 +296,6 @@ const UserSignIn = () => {
 			getUserID();
 		}
 	}, [setVisitorID, isOnline]);
-
-	// check if user has valid session if online only
-	useEffect(() => {
-		const userValidate = async (email) => {
-			setIsValidating(true);
-
-			const isBackupDb = await isDbExist('lmm_oa_backup');
-
-			if (isBackupDb) {
-				setIsValidating(false);
-			} else {
-				if (apiHost !== '') {
-					fetch(`${apiHost}api/user/validate-me`, {
-						signal: abortCont.signal,
-						method: 'GET',
-						headers: {
-							'Content-Type': 'application/json',
-							email: email,
-							visitor_id: visitorID,
-						},
-					})
-						.then(async (res) => {
-							const data = await res.json();
-							if (res.status === 200) {
-								console.log(data);
-								setIsValidating(false);
-							} else {
-								console.log(data);
-								setIsValidating(false);
-							}
-						})
-						.catch((err) => {
-							setIsProcessing(false);
-							setAppMessage(err.message);
-							setAppSeverity('error');
-							setAppSnackOpen(true);
-						});
-				}
-			}
-		};
-
-		const email = localStorage.getItem('email');
-		if (isOnline && email?.length > 0 && visitorID.length > 0) {
-			userValidate(email);
-		}
-	}, [
-		isOnline,
-		abortCont,
-		apiHost,
-		setAppMessage,
-		setAppSeverity,
-		setAppSnackOpen,
-		visitorID,
-	]);
 
 	useEffect(() => {
 		return () => abortCont.abort();
@@ -286,100 +328,81 @@ const UserSignIn = () => {
 							marginBottom: '25px',
 						}}
 					>
-						{isValidating
-							? 'Please wait'
-							: isInternetNeeded
+						{isInternetNeeded
 							? t('login.signInWithInternet')
 							: t('login.signInNoInternet')}
 					</Typography>
 				</Box>
 			</Box>
 
-			{isValidating && (
+			<TextField
+				id='outlined-email'
+				label={t('login.email')}
+				variant='outlined'
+				size='small'
+				autoComplete='off'
+				required
+				value={userTmpEmail}
+				onChange={(e) => setUserTmpEmail(e.target.value)}
+				error={hasErrorEmail ? true : false}
+			/>
+			<TextField
+				sx={{ marginTop: '15px' }}
+				id='outlined-password'
+				label={t('login.password')}
+				type='password'
+				variant='outlined'
+				size='small'
+				autoComplete='off'
+				required
+				value={userTmpPwd}
+				onChange={(e) => setUserTmpPwd(e.target.value)}
+				error={hasErrorPwd ? true : false}
+			/>
+
+			{isProcessing && (
 				<Container
 					sx={{
 						display: 'flex',
 						justifyContent: 'center',
 						marginTop: '15px',
-						marginBottom: '20px',
 					}}
 				>
-					<CircularProgress disableShrink color='secondary' size={'80px'} />
+					<CircularProgress disableShrink color='secondary' size={'40px'} />
 				</Container>
 			)}
 
-			{!isValidating && (
-				<>
-					<TextField
-						id='outlined-email'
-						label={t('login.email')}
-						variant='outlined'
-						size='small'
-						autoComplete='off'
-						required
-						value={userTmpEmail}
-						onChange={(e) => setUserTmpEmail(e.target.value)}
-						error={hasErrorEmail ? true : false}
-					/>
-					<TextField
-						sx={{ marginTop: '15px' }}
-						id='outlined-password'
-						label={t('login.password')}
-						type='password'
-						variant='outlined'
-						size='small'
-						autoComplete='off'
-						required
-						value={userTmpPwd}
-						onChange={(e) => setUserTmpPwd(e.target.value)}
-						error={hasErrorPwd ? true : false}
-					/>
-
-					{isProcessing && (
-						<Container
-							sx={{
-								display: 'flex',
-								justifyContent: 'center',
-								marginTop: '15px',
-							}}
+			<Box
+				sx={{
+					marginTop: '20px',
+					display: 'flex',
+					justifyContent: 'space-between',
+					alignItems: 'center',
+				}}
+			>
+				<Box>
+					{visitorID.length > 0 && (
+						<Link
+							component='button'
+							underline='none'
+							variant='body2'
+							onClick={handleSignUp}
 						>
-							<CircularProgress disableShrink color='secondary' size={'40px'} />
-						</Container>
+							{t('login.createSwsAccount')}
+						</Link>
 					)}
+				</Box>
 
-					<Box
-						sx={{
-							marginTop: '20px',
-							display: 'flex',
-							justifyContent: 'space-between',
-							alignItems: 'center',
-						}}
-					>
-						<Box>
-							{visitorID.length > 0 && (
-								<Link
-									component='button'
-									underline='none'
-									variant='body2'
-									onClick={handleSignUp}
-								>
-									{t('login.createSwsAccount')}
-								</Link>
-							)}
-						</Box>
-
-						<Button
-							variant='contained'
-							onClick={handleSignIn}
-							disabled={
-								isProcessing || (isInternetNeeded && visitorID.length === 0)
-							}
-						>
-							{t('global.signIn')}
-						</Button>
-					</Box>
-				</>
-			)}
+				<Button
+					variant='contained'
+					onClick={signInSwitch}
+					disabled={
+						isProcessing || (isInternetNeeded && visitorID.length === 0)
+					}
+				>
+					{t('global.signIn')}
+				</Button>
+			</Box>
 		</StartupHeader>
 	);
 };

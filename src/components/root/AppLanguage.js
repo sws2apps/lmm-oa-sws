@@ -10,11 +10,6 @@ import TranslateIcon from '@mui/icons-material/Translate';
 import Typography from '@mui/material/Typography';
 import { blue } from '@mui/material/colors';
 import { appLangState } from '../../appStates/appSettings';
-import {
-	dbGetAppSettings,
-	dbUpdateAppSettings,
-} from '../../indexedDb/dbAppSettings';
-import { isDbExist } from '../../indexedDb/dbUtility';
 import { langList } from '../../locales/langList';
 
 const AppLanguage = (props) => {
@@ -48,8 +43,6 @@ const AppLanguage = (props) => {
 
 	useEffect(() => {
 		const updateLang = async () => {
-			const isExist = await isDbExist('lmm_oa');
-
 			if (userChange) {
 				await i18n.changeLanguage(appLangLocal);
 
@@ -59,33 +52,13 @@ const AppLanguage = (props) => {
 
 				setAppLang(appLangLocal);
 
-				const isExist = await isDbExist('lmm_oa');
-
-				if (isExist) {
-					await dbUpdateAppSettings({
-						app_lang: appLangLocal,
-					});
-				} else {
-					localStorage.setItem('app_lang', appLangLocal);
-				}
+				localStorage.setItem('app_lang', appLangLocal);
 				setUserChange(false);
 			} else {
-				let appLang = 'e';
-				if (isExist) {
-					const { app_lang } = await dbGetAppSettings();
-					if (app_lang) {
-						appLang = app_lang;
-					}
-				}
+				let appLang = localStorage.getItem('app_lang') || 'e';
+				await i18n.changeLanguage(appLang);
 
-				if (appLang !== appLangLocal) {
-					await i18n.changeLanguage(appLang);
-
-					setAppLang(appLang);
-					await dbUpdateAppSettings({
-						app_lang: appLang,
-					});
-				}
+				setAppLang(appLang);
 			}
 		};
 
