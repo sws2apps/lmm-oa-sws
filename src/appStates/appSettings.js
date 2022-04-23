@@ -11,6 +11,11 @@ export const isAppLoadState = atom({
 	default: true,
 });
 
+export const isSetupState = atom({
+	key: 'isSetup',
+	default: true,
+});
+
 export const apiHostState = atom({
 	key: 'apiHost',
 	default: '',
@@ -28,7 +33,7 @@ export const isLoginOpenState = atom({
 
 export const appLangState = atom({
 	key: 'appLang',
-	default: 'e',
+	default: localStorage.getItem('app_lang') || 'e',
 });
 
 export const uidUserState = atom({
@@ -171,4 +176,89 @@ export const isCongUpdateAccountState = atom({
 export const appStageState = atom({
 	key: 'appStage',
 	default: 'LIVE',
+});
+
+export const isUserSignInState = atom({
+	key: 'isUserSignIn',
+	default: true,
+});
+
+export const isUserSignUpState = atom({
+	key: 'isUserSignUp',
+	default: false,
+});
+
+export const isEmailNotVerifiedState = atom({
+	key: 'isEmailNotVerified',
+	default: false,
+});
+
+export const isEmailBlockedState = atom({
+	key: 'isEmailBlocked',
+	default: false,
+});
+
+export const isCongAccountCreateState = atom({
+	key: 'isCongAccountCreate',
+	default: false,
+});
+
+export const isCongRequestSentState = atom({
+	key: 'isCongRequestSent',
+	default: false,
+});
+
+export const userEmailState = atom({
+	key: 'userEmail',
+	default: '',
+});
+
+export const isCongWaitRequestState = atom({
+	key: 'isCongWaitRequest',
+	default: false,
+});
+
+export const isShowTermsUseState = atom({
+	key: 'isShowLAG',
+	default: true,
+});
+
+export const visitorIDState = atom({
+	key: 'visitorID',
+	default: '',
+});
+
+export const qrCodePathState = atom({
+	key: 'qrCodePath',
+	default: '',
+});
+
+export const secretTokenPathState = atom({
+	key: 'secretTokenPath',
+	default: '',
+});
+
+export const isOnlineState = atom({
+	key: 'isOnline',
+	default: navigator.onLine,
+});
+
+export const isUserMfaSetupState = atom({
+	key: 'isUserMfaSetup',
+	default: false,
+});
+
+export const isUserMfaVerifyState = atom({
+	key: 'isUserMfaVerify',
+	default: false,
+});
+
+export const isUnauthorizedRoleState = atom({
+	key: 'isUnauthorizedRole',
+	default: false,
+});
+
+export const isAppClosingState = atom({
+	key: 'isAppClosing',
+	default: false,
 });

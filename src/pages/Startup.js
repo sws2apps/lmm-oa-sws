@@ -1,321 +1,64 @@
-import { useEffect, useState } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { useTranslation } from 'react-i18next';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import { useRecoilValue } from 'recoil';
 import CircularProgress from '@mui/material/CircularProgress';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import StepContent from '@mui/material/StepContent';
-import Typography from '@mui/material/Typography';
-import AppLanguage from '../components/root/AppLanguage';
-import StepperWelcome from '../components/startup/StepperWelcome';
-import StepperCongregation from '../components/startup/StepperCongregation';
-import StepperMeetingDetails from '../components/startup/StepperMeetingDetails';
-import { initAppDb, isDbExist } from '../indexedDb/dbUtility';
+import CongregationRequestSent from '../components/startup/CongregationRequestSent';
+import CongregationSignUp from '../components/startup/CongregationSignUp';
+import CongregationWait from '../components/startup/CongregationWait';
+import EmailBlocked from '../components/startup/EmailBlocked';
+import EmailNotVerified from '../components/startup/EmailNotVerified';
+import TermsUse from '../components/startup/TermsUse';
+import UnauthorizedRole from '../components/startup/UnauthorizedRole';
+import UserMfaSetup from '../components/startup/UserMfaSetup';
+import UserMfaVerify from '../components/startup/UserMfaVerify';
+import UserSignIn from '../components/startup/UserSignIn';
+import UserSignUp from '../components/startup/UserSignUp';
 import {
-	checkSrcUpdate,
-	dbGetListWeekType,
-	dbGetYearList,
-} from '../indexedDb/dbSourceMaterial';
-import {
-	dbGetAppSettings,
-	dbUpdateAppSettings,
-} from '../indexedDb/dbAppSettings';
-import {
-	classCountState,
-	congIDState,
-	congNameState,
-	congNumberState,
-	congPasswordState,
-	isErrorCongNameState,
-	isErrorCongNumberState,
-	liveClassState,
-	meetingDayState,
-} from '../appStates/appCongregation';
-import {
-	appLangState,
-	isAppLoadState,
-	isCongConnectedState,
-	isUserLoggedState,
-	uidUserState,
+	isCongAccountCreateState,
+	isCongRequestSentState,
+	isCongWaitRequestState,
+	isEmailBlockedState,
+	isEmailNotVerifiedState,
+	isSetupState,
+	isShowTermsUseState,
+	isUnauthorizedRoleState,
+	isUserMfaSetupState,
+	isUserMfaVerifyState,
+	isUserSignInState,
+	isUserSignUpState,
 } from '../appStates/appSettings';
-import {
-	assTypeListState,
-	weekTypeListState,
-	yearsListState,
-} from '../appStates/appSourceMaterial';
-import {
-	allStudentsState,
-	filteredStudentsState,
-} from '../appStates/appStudents';
-import { dbGetStudents } from '../indexedDb/dbPersons';
-import { dbGetListAssType } from '../indexedDb/dbAssignment';
 
 const Startup = () => {
-	const { t, i18n } = useTranslation();
-
-	const [isSetup, setIsSetup] = useState(false);
-
-	const [congName, setCongName] = useRecoilState(congNameState);
-	const [congNumber, setCongNumber] = useRecoilState(congNumberState);
-	const [isErrorCongName, setIsErrorCongName] =
-		useRecoilState(isErrorCongNameState);
-	const [isErrorCongNumber, setIsErrorCongNumber] = useRecoilState(
-		isErrorCongNumberState
-	);
-	const [meetingDay, setMeetingDay] = useRecoilState(meetingDayState);
-	const [classCount, setClassCount] = useRecoilState(classCountState);
-
-	const setCongID = useSetRecoilState(congIDState);
-	const setAppLang = useSetRecoilState(appLangState);
-	const setIsAppLoad = useSetRecoilState(isAppLoadState);
-	const setDbStudents = useSetRecoilState(allStudentsState);
-	const setStudents = useSetRecoilState(filteredStudentsState);
-	const setYearsList = useSetRecoilState(yearsListState);
-	const setAssTypeList = useSetRecoilState(assTypeListState);
-	const setWeekTypeList = useSetRecoilState(weekTypeListState);
-	const setLiveClass = useSetRecoilState(liveClassState);
-	const setIsConnected = useSetRecoilState(isCongConnectedState);
-	const setUidUser = useSetRecoilState(uidUserState);
-	const setIsUserLogged = useSetRecoilState(isUserLoggedState);
-	const setCongPassword = useSetRecoilState(congPasswordState);
-
-	const [activeStep, setActiveStep] = useState(0);
-	const steps = [
-		t('startup.welcomeTitle'),
-		t('startup.congInfoTitle'),
-		t('startup.meetingInfoTitle'),
-		t('startup.setupCompleteTitle'),
-	];
-
-	const getStepContent = (step) => {
-		if (step === 0) {
-			return <StepperWelcome />;
-		} else if (step === 1) {
-			return <StepperCongregation />;
-		} else if (step === 2) {
-			return <StepperMeetingDetails />;
-		} else if (step === 3) {
-			return (
-				<Typography variant='body2'>
-					{t('startup.setupCompleteDescription')}
-				</Typography>
-			);
-		}
-	};
-
-	const handleNext = async () => {
-		setIsErrorCongName(false);
-		setIsErrorCongNumber(false);
-		if (activeStep < steps.length - 1) {
-			let hasError = false;
-
-			if (activeStep === 1) {
-				if (congName === '') {
-					setIsErrorCongName(true);
-					hasError = true;
-				}
-				if (congNumber === '') {
-					setIsErrorCongNumber(true);
-					hasError = true;
-				}
-				if (!hasError) {
-					setActiveStep((prevActiveStep) => prevActiveStep + 1);
-				}
-			} else {
-				setActiveStep((prevActiveStep) => prevActiveStep + 1);
-			}
-		} else if (activeStep === steps.length - 1) {
-			await handleDbInit();
-		}
-	};
-
-	const handleDbInit = async () => {
-		setIsSetup(false);
-		await initAppDb();
-		var obj = {};
-		obj.cong_name = congName;
-		obj.cong_number = congNumber;
-		obj.class_count = classCount;
-		obj.meeting_day = meetingDay;
-		obj.liveEventClass = false;
-		await dbUpdateAppSettings(obj);
-
-		await checkSrcUpdate();
-		setTimeout(() => {
-			setIsAppLoad(false);
-		}, 1000);
-	};
-
-	const handleBack = () => {
-		setActiveStep((prevActiveStep) => prevActiveStep - 1);
-	};
-
-	useEffect(() => {
-		const isExist = async () => {
-			const isDataExist = await isDbExist();
-			if (isDataExist) {
-				setIsSetup(false);
-				await initAppDb();
-				await checkSrcUpdate();
-
-				let {
-					cong_number,
-					cong_name,
-					class_count,
-					meeting_day,
-					cong_id,
-					app_lang,
-					liveEventClass,
-				} = await dbGetAppSettings();
-
-				setCongNumber(cong_number);
-				setCongName(cong_name);
-				setClassCount(class_count);
-				setMeetingDay(meeting_day);
-				setCongID(+cong_id || '');
-				setAppLang(app_lang || 'e');
-				setLiveClass(liveEventClass);
-
-				if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-					setIsUserLogged(true);
-					setIsConnected(true);
-					setUidUser(process.env.REACT_APP_TEST_UID_USER);
-					setCongPassword(process.env.REACT_APP_TEST_CONG_PASSWORD);
-					setCongID(process.env.REACT_APP_TEST_CONG_ID);
-				}
-
-				i18n.changeLanguage(app_lang);
-
-				const weekTypeList = await dbGetListWeekType();
-				setWeekTypeList(weekTypeList);
-
-				const assTypeList = await dbGetListAssType();
-				setAssTypeList(assTypeList);
-
-				const data = await dbGetStudents();
-				setDbStudents(data);
-				setStudents(data);
-
-				const years = await dbGetYearList();
-				setYearsList(years);
-
-				setTimeout(() => {
-					setIsAppLoad(false);
-				}, 1000);
-			} else {
-				setIsSetup(true);
-			}
-		};
-
-		isExist();
-
-		return () => {
-			//clean up
-		};
-	}, [
-		i18n,
-		setIsAppLoad,
-		setClassCount,
-		setCongID,
-		setCongName,
-		setCongNumber,
-		setLiveClass,
-		setMeetingDay,
-		setAppLang,
-		setDbStudents,
-		setStudents,
-		setYearsList,
-		setAssTypeList,
-		setWeekTypeList,
-		setIsConnected,
-		setUidUser,
-		setIsUserLogged,
-		setCongPassword,
-	]);
+	const isSetup = useRecoilValue(isSetupState);
+	const isUserMfaSetup = useRecoilValue(isUserMfaSetupState);
+	const isUserMfaVerify = useRecoilValue(isUserMfaVerifyState);
+	const isUserSignIn = useRecoilValue(isUserSignInState);
+	const isUserSignUp = useRecoilValue(isUserSignUpState);
+	const isEmailBlocked = useRecoilValue(isEmailBlockedState);
+	const isEmailNotVerified = useRecoilValue(isEmailNotVerifiedState);
+	const isCongAccountCreate = useRecoilValue(isCongAccountCreateState);
+	const isCongRequestSent = useRecoilValue(isCongRequestSentState);
+	const isCongWaitRequest = useRecoilValue(isCongWaitRequestState);
+	const isShowTermsUse = useRecoilValue(isShowTermsUseState);
+	const isUnauthorizedRole = useRecoilValue(isUnauthorizedRoleState);
 
 	if (isSetup) {
 		return (
-			<Box
-				sx={{
-					display: 'flex',
-					flexDirection: 'column',
-					alignItems: 'center',
-				}}
-			>
-				<Box
-					sx={{
-						position: 'absolute',
-						right: 0,
-					}}
-				>
-					<AppLanguage isStartup />
-				</Box>
-				<Box
-					sx={{
-						maxWidth: '500px',
-						marginTop: '20px',
-					}}
-				>
-					<Box
-						sx={{
-							display: 'flex',
-							flexDirection: 'column',
-							alignItems: 'center',
-						}}
-					>
-						<img
-							src='/img/appLogo.png'
-							alt='App logo'
-							className={'appLogoMini'}
-						/>
-						<Typography variant='h6'>LMM-OA App</Typography>
-					</Box>
-					<Stepper activeStep={activeStep} orientation='vertical'>
-						{steps.map((label, index) => (
-							<Step key={label}>
-								<StepLabel>{label}</StepLabel>
-								<StepContent>
-									{getStepContent(index)}
-									<div>
-										<div>
-											<Button
-												disabled={activeStep === 0}
-												onClick={handleBack}
-												sx={{
-													marginTop: '10px',
-													marginRight: '10px',
-												}}
-											>
-												{t('startup.back')}
-											</Button>
-											<Button
-												disabled={
-													activeStep === 1 &&
-													(isErrorCongName || isErrorCongNumber)
-												}
-												variant='contained'
-												color='primary'
-												onClick={handleNext}
-												sx={{
-													marginTop: '10px',
-													marginRight: '10px',
-												}}
-											>
-												{activeStep === steps.length - 1
-													? t('startup.openApp')
-													: t('startup.next')}
-											</Button>
-										</div>
-									</div>
-								</StepContent>
-							</Step>
-						))}
-					</Stepper>
-				</Box>
-			</Box>
+			<>
+				{isShowTermsUse && <TermsUse />}
+				{!isShowTermsUse && (
+					<>
+						{isUserSignIn && <UserSignIn />}
+						{isUserSignUp && <UserSignUp />}
+						{isEmailNotVerified && <EmailNotVerified />}
+						{isEmailBlocked && <EmailBlocked />}
+						{isUserMfaSetup && <UserMfaSetup />}
+						{isUserMfaVerify && <UserMfaVerify />}
+						{isUnauthorizedRole && <UnauthorizedRole />}
+						{isCongAccountCreate && <CongregationSignUp />}
+						{isCongRequestSent && <CongregationRequestSent />}
+						{isCongWaitRequest && <CongregationWait />}
+					</>
+				)}
+			</>
 		);
 	}
 

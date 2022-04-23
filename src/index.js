@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { RecoilRoot } from 'recoil';
 import RecoilOutside from 'recoil-outside';
 import './i18n';
@@ -10,12 +10,12 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import './styles/global.css';
 
-ReactDOM.render(
-	<React.StrictMode>
-		<RecoilRoot>
-			<RecoilOutside />
-			<App />
-		</RecoilRoot>
-	</React.StrictMode>,
-	document.getElementById('root')
+const container = document.getElementById('root');
+const root = createRoot(container);
+
+root.render(
+	<RecoilRoot>
+		<RecoilOutside />
+		<App />
+	</RecoilRoot>
 );

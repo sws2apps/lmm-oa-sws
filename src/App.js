@@ -5,9 +5,11 @@ import usePwa2 from 'use-pwa2/dist/index.js';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AppNotification from './components/root/AppNotification';
 import DBRestore from './pages/DBRestore';
+import InternetChecker from './components/root/InternetChecker';
 import Layout from './components/root/Layout';
 import ServiceWorkerWrapper from './components/root/ServiceWorkerWrapper';
 import Startup from './pages/Startup';
+import UserSignOut from './components/root/UserSignOut';
 import {
 	apiHostState,
 	appStageState,
@@ -57,13 +59,13 @@ const App = () => {
 				appUrl === 'dev-lmm-oa-sws.firebaseapp.com'
 			) {
 				setApiHost('https://dev-sws2apps.herokuapp.com/');
-				setAppStage('DEV Environment');
+				setAppStage('ALPHA Environment');
 			} else if (
 				appUrl === 'staging-lmm-oa-sws.web.app' ||
 				appUrl === 'staging-lmm-oa-sws.firebaseapp.com'
 			) {
 				setApiHost('https://staging-sws2apps.herokuapp.com/');
-				setAppStage('STG Environment');
+				setAppStage('BETA Environment');
 			} else if (
 				appUrl === 'lmm-oa-sws.web.app' ||
 				appUrl === 'lmm-oa-sws.firebaseapp.com'
@@ -89,7 +91,9 @@ const App = () => {
 
 	return (
 		<ThemeProvider theme={theme}>
+			<InternetChecker />
 			<ServiceWorkerWrapper updatePwa={updatePwa} />
+			<UserSignOut />
 			{appSnackOpen && <AppNotification />}
 			{isAppLoad && <Startup />}
 			{!isAppLoad && (

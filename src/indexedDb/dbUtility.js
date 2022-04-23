@@ -1,10 +1,21 @@
 import Dexie from 'dexie';
 import { exportDB, importDB } from 'dexie-export-import';
 import download from 'downloadjs';
+import backupDb from './backupDb';
 import appDb from './mainDb';
+
+import { encryptString } from '../utils/sws-cryptr';
 
 export const initAppDb = async () => {
 	await appDb.open();
+};
+
+export const initBackupDb = async () => {
+	await backupDb.open();
+};
+
+export const deleteDbByName = async (dbName) => {
+	await Dexie.delete(dbName);
 };
 
 export const deleteDb = async () => {
@@ -15,9 +26,9 @@ export const deleteDb = async () => {
 	}
 };
 
-export const isDbExist = async () => {
+export const isDbExist = async (dbName) => {
 	return new Promise((resolve, reject) => {
-		Dexie.exists('lmm_oa')
+		Dexie.exists(dbName)
 			.then(function (exists) {
 				if (exists) {
 					resolve(true);
@@ -70,11 +81,9 @@ export const dbExportDb = async (passcode) => {
 		};
 
 		const data = await convertBase64();
-		const Cryptr = require('cryptr');
-		const cryptr = new Cryptr(passcode);
-		const encryptedData = cryptr.encrypt(data);
+		const encryptedData = encryptString(passcode, data);
 
-		const newBlob = new Blob([encryptedData], { type: 'text/csv' });
+		const newBlob = new Blob([encryptedData], { type: 'text/plain' });
 
 		download(newBlob, 'lmm-oa.backup.db', 'text/plain');
 	} catch {
@@ -94,8 +103,6 @@ export const dbExportJsonDb = async (passcode) => {
 	};
 
 	const data = await convertBase64();
-	const Cryptr = require('cryptr');
-	const cryptr = new Cryptr(passcode);
-	const encryptedData = cryptr.encrypt(data);
+	const encryptedData = encryptString(passcode, data);
 	return encryptedData;
 };

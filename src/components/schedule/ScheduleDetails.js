@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useTranslation } from 'react-i18next';
-import { styled } from '@mui/styles';
 import { useTheme } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Box from '@mui/material/Box';
@@ -82,7 +81,7 @@ const sharedStyles = {
 	},
 };
 
-const BoxMeetingPart = styled(Box)(() => ({
+const boxMeetingPart = {
 	maxWidth: '100%',
 	minWidth: '320px',
 	borderRadius: '10px',
@@ -90,9 +89,9 @@ const BoxMeetingPart = styled(Box)(() => ({
 	color: 'white',
 	marginTop: '10px',
 	marginBottom: '5px',
-}));
+};
 
-const TypoStudentField = styled(Typography)(() => ({
+const typoStudentField = {
 	height: '25px',
 	lineHeight: '25px',
 	width: '165px',
@@ -101,23 +100,23 @@ const TypoStudentField = styled(Typography)(() => ({
 	padding: '2px 2px 2px 5px',
 	borderRadius: 5,
 	fontWeight: 'bold',
-}));
+};
 
-const BoxStudentFldContainer = styled(Box)(() => ({
+const boxStudentFldContainer = {
 	display: 'flex',
 	marginRight: '5px',
 	alignItems: 'flex-end',
-}));
+};
 
-const IconButtonContainer = styled(IconButton)(() => ({
+const iconButtonContainer = {
 	padding: 1,
-}));
+};
 
-const EditIconButton = styled(EditIcon)(() => ({
+const editIconButton = {
 	fontSize: '24px',
-}));
+};
 
-const BoxStudentSelector = styled(Box)(() => ({
+const boxStudentSelector = {
 	marginLeft: '5px',
 	marginTop: '10px',
 	width: '600px',
@@ -125,7 +124,7 @@ const BoxStudentSelector = styled(Box)(() => ({
 		xs: 'none',
 		lg: 'block',
 	},
-}));
+};
 
 const ScheduleDetails = (props) => {
 	const { t } = useTranslation();
@@ -451,9 +450,9 @@ const ScheduleDetails = (props) => {
 				</Dialog>
 			)}
 			<Box sx={{ width: '100%' }}>
-				<BoxMeetingPart className={'tgwPart'}>
+				<Box sx={boxMeetingPart} className={'tgwPart'}>
 					<Typography variant='h6'>{t('global.treasuresPart')}</Typography>
-				</BoxMeetingPart>
+				</Box>
 				<Box
 					sx={{
 						display: 'flex',
@@ -489,8 +488,10 @@ const ScheduleDetails = (props) => {
 								: sharedStyles.studentContainer2
 						}
 					>
-						<BoxStudentFldContainer>
-							<TypoStudentField variant='body1'>{stuBReadA}</TypoStudentField>
+						<Box sx={boxStudentFldContainer}>
+							<Typography sx={typoStudentField} variant='body1'>
+								{stuBReadA}
+							</Typography>
 							{isStuBReadA && (
 								<CircularProgress
 									sx={sharedStyles.fieldBtnContainer}
@@ -500,7 +501,8 @@ const ScheduleDetails = (props) => {
 								/>
 							)}
 							{!isStuBReadA && (
-								<IconButtonContainer
+								<IconButton
+									sx={iconButtonContainer}
 									onClick={() =>
 										loadStudentPicker({
 											assID: 0,
@@ -510,13 +512,15 @@ const ScheduleDetails = (props) => {
 										})
 									}
 								>
-									<EditIconButton />
-								</IconButtonContainer>
+									<EditIcon sx={editIconButton} />
+								</IconButton>
 							)}
-						</BoxStudentFldContainer>
+						</Box>
 						{classCount === 2 && (
-							<BoxStudentFldContainer>
-								<TypoStudentField variant='body1'>{stuBReadB}</TypoStudentField>
+							<Box sx={boxStudentFldContainer}>
+								<Typography sx={typoStudentField} variant='body1'>
+									{stuBReadB}
+								</Typography>
 								{isStuBReadB && (
 									<CircularProgress
 										sx={sharedStyles.fieldBtnContainer}
@@ -526,7 +530,8 @@ const ScheduleDetails = (props) => {
 									/>
 								)}
 								{!isStuBReadB && (
-									<IconButtonContainer
+									<IconButton
+										sx={iconButtonContainer}
 										onClick={() =>
 											loadStudentPicker({
 												assID: 1,
@@ -536,18 +541,18 @@ const ScheduleDetails = (props) => {
 											})
 										}
 									>
-										<EditIconButton />
-									</IconButtonContainer>
+										<EditIcon sx={editIconButton} />
+									</IconButton>
 								)}
-							</BoxStudentFldContainer>
+							</Box>
 						)}
 					</Grid>
 				</Box>
-				<BoxMeetingPart className='ayfPart'>
+				<Box sx={boxMeetingPart} className='ayfPart'>
 					<Typography variant='h6'>
 						{t('global.applyFieldMinistryPart')}
 					</Typography>
-				</BoxMeetingPart>
+				</Box>
 				<ScheduleAYF
 					params={{
 						classCount,
@@ -644,7 +649,7 @@ const ScheduleDetails = (props) => {
 				)}
 			</Box>
 			{!mdDown && (
-				<BoxStudentSelector>
+				<Box sx={boxStudentSelector}>
 					{isAssign && (
 						<StudentSelector
 							assInfo={assInfo}
@@ -660,7 +665,7 @@ const ScheduleDetails = (props) => {
 							setIsS89={(value) => setIsS89(value)}
 						/>
 					)}
-				</BoxStudentSelector>
+				</Box>
 			)}
 		</Box>
 	);

@@ -131,11 +131,12 @@ const WeekList = () => {
 			}
 			setWeeks(newData);
 
-			setCurrentWeek(newData[0].value);
+			setTimeout(() => {
+				setCurrentWeek(newData[0].value);
+			}, [1000]);
 		};
 
 		if (currentSchedule !== '') {
-			setCurrentWeek('');
 			getWeekBySchedule();
 		}
 	}, [isRerender, currentSchedule, shortDateFormat, setCurrentWeek]);

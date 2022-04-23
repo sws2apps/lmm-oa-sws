@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { useTranslation } from 'react-i18next';
+import { getI18n, useTranslation } from 'react-i18next';
 import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
 import Menu from '@mui/material/Menu';
@@ -10,25 +10,26 @@ import TranslateIcon from '@mui/icons-material/Translate';
 import Typography from '@mui/material/Typography';
 import { blue } from '@mui/material/colors';
 import { appLangState } from '../../appStates/appSettings';
-import { dbUpdateAppSettings } from '../../indexedDb/dbAppSettings';
-import { isDbExist } from '../../indexedDb/dbUtility';
 import { langList } from '../../locales/langList';
 
 const AppLanguage = (props) => {
 	const { t, i18n } = useTranslation();
 	const { isStartup } = props;
 
-	const [anchorEl, setAnchorEl] = useState(null);
-
 	const [appLang, setAppLang] = useRecoilState(appLangState);
+
+	const [anchorEl, setAnchorEl] = useState(null);
 	const [appLangLocal, setAppLangLocal] = useState(appLang);
+	const [userChange, setUserChange] = useState(false);
 
 	const blueColor = blue[400];
 
 	let isMenuOpen = Boolean(anchorEl);
 
 	const handleLangChange = async (e) => {
-		setAppLangLocal(e.target.parentElement.dataset.code);
+		setUserChange(true);
+		const app_lang = e.target.parentElement.dataset.code;
+		setAppLangLocal(app_lang);
 		handleClose();
 	};
 
@@ -42,20 +43,27 @@ const AppLanguage = (props) => {
 
 	useEffect(() => {
 		const updateLang = async () => {
-			i18n.changeLanguage(appLangLocal);
-			setAppLang(appLangLocal);
+			if (userChange) {
+				await i18n.changeLanguage(appLangLocal);
 
-			const isExist = await isDbExist();
+				const isoLang =
+					getI18n().getDataByLanguage(appLangLocal).translation['global.iso'];
+				document.documentElement.setAttribute('lang', isoLang);
 
-			if (isExist) {
-				await dbUpdateAppSettings({
-					app_lang: appLangLocal,
-				});
+				setAppLang(appLangLocal);
+
+				localStorage.setItem('app_lang', appLangLocal);
+				setUserChange(false);
+			} else {
+				let appLang = localStorage.getItem('app_lang') || 'e';
+				await i18n.changeLanguage(appLang);
+
+				setAppLang(appLang);
 			}
 		};
 
 		updateLang();
-	}, [appLangLocal, i18n, setAppLang]);
+	}, [appLangLocal, i18n, setAppLang, userChange]);
 
 	return (
 		<>
