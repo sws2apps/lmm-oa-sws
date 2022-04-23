@@ -1,3 +1,16 @@
+# [1.0.0-alpha.39](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.38...v1.0.0-alpha.39) (2022-04-23)
+
+
+### Features
+
+* **app:** new login flow ([9e93a0b](https://github.com/sws2apps/lmm-oa-sws/commit/9e93a0b011ff3f2c3bf90852eada5acc4a7505a8))
+* **deps:** bump @mui/icons-material from 5.6.1 to 5.6.2 ([ac34b61](https://github.com/sws2apps/lmm-oa-sws/commit/ac34b6174bf6cbf802c6518e72ffd6af85f70a03))
+* **deps:** bump @mui/lab from 5.0.0-alpha.77 to 5.0.0-alpha.78 ([c164a04](https://github.com/sws2apps/lmm-oa-sws/commit/c164a0430a9fdfc7fcf4ac09ecdfa1d8d53d5b37))
+* **deps:** bump @mui/material from 5.6.1 to 5.6.2 ([d72a99d](https://github.com/sws2apps/lmm-oa-sws/commit/d72a99d50a38aca3750a616275d57d5c9d5a92f9))
+* **deps:** bump @mui/styles from 5.6.1 to 5.6.2 ([a9ae643](https://github.com/sws2apps/lmm-oa-sws/commit/a9ae6432c2e6955fa1898346e873ee9569b44b89))
+* **deps:** bump cryptr from 6.0.2 to 6.0.3 ([83db645](https://github.com/sws2apps/lmm-oa-sws/commit/83db645b213234f6792f37e2b39029632cbc4b2a))
+* **deps:** bump react-i18next from 11.16.6 to 11.16.7 ([bb43373](https://github.com/sws2apps/lmm-oa-sws/commit/bb43373f4c45189f51f4ecd80dfb5a81264b62a4))
+
 # [1.0.0-alpha.38](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.37...v1.0.0-alpha.38) (2022-04-15)
 
 ### Features
