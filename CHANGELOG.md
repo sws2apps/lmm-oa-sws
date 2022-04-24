@@ -1,3 +1,9 @@
+# [1.0.0-alpha.41](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.40...v1.0.0-alpha.41) (2022-04-24)
+
+### Bug Fixes
+
+- **firebase:** update csp connect-src ([119e4b4](https://github.com/sws2apps/lmm-oa-sws/commit/119e4b463106244317479b2b81e1323d4cd7472c))
+
 # [1.0.0-alpha.40](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.39...v1.0.0-alpha.40) (2022-04-23)
 
 ### Bug Fixes
