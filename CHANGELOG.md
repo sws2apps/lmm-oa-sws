@@ -1,3 +1,15 @@
+# [1.0.0-alpha.42](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.41...v1.0.0-alpha.42) (2022-04-28)
+
+
+### Features
+
+* **deps:** bump @mui/lab from 5.0.0-alpha.78 to 5.0.0-alpha.79 ([e9fec76](https://github.com/sws2apps/lmm-oa-sws/commit/e9fec76c0b5f73be9f105fb58dc8e780ee349e2b))
+* **deps:** bump @mui/material from 5.6.2 to 5.6.3 ([42597f2](https://github.com/sws2apps/lmm-oa-sws/commit/42597f29db83af9425a6ab4556354bf31da0abda))
+* **deps:** bump dexie from 3.2.1 to 3.2.2 ([27b48b1](https://github.com/sws2apps/lmm-oa-sws/commit/27b48b19bb19a6771b0d4b8ae8cd0ea3044f48e2))
+* **deps:** bump json-as-xlsx from 2.4.0 to 2.4.1 ([ad42ae7](https://github.com/sws2apps/lmm-oa-sws/commit/ad42ae73a22d9053219934f5dac40d2f855ff684))
+* **deps:** bump react from 18.0.0 to 18.1.0 ([8adc67d](https://github.com/sws2apps/lmm-oa-sws/commit/8adc67db5e08909c7e06b0e8ed6d0f14fa415059))
+* **deps:** bump react-dom from 18.0.0 to 18.1.0 ([a1f93bd](https://github.com/sws2apps/lmm-oa-sws/commit/a1f93bd5d30b8207dc30bc551482989992adf587))
+
 # [1.0.0-alpha.41](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.40...v1.0.0-alpha.41) (2022-04-24)
 
 
