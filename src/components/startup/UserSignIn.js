@@ -120,8 +120,8 @@ const UserSignIn = () => {
 				}
 
 				if (!isBackupDb && isMainDb) {
-					const { pwd } = await dbGetAppSettings();
-					const decryptData = decryptString(userTmpPwd, pwd);
+					const { userMe } = await dbGetAppSettings();
+					const decryptData = decryptString(userTmpPwd, userMe);
 					if (
 						userTmpEmail === decryptData.email &&
 						userTmpPwd === decryptData.pwd
@@ -142,7 +142,6 @@ const UserSignIn = () => {
 						setIsProcessing(false);
 						setAppSnackOpen(true);
 					}
-					// await handleSignIn();
 				}
 			} else {
 				if (!isEmailValid(userTmpEmail)) {
@@ -264,8 +263,8 @@ const UserSignIn = () => {
 					return;
 				}
 				if (isMainDb) {
-					const { pwd } = await dbGetAppSettings();
-					if (!pwd) {
+					const { userMe } = await dbGetAppSettings();
+					if (!userMe) {
 						setIsInternetNeeded(true);
 					} else {
 						setIsInternetNeeded(false);
