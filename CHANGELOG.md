@@ -1,3 +1,10 @@
+# [1.0.0-alpha.43](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.42...v1.0.0-alpha.43) (2022-04-30)
+
+
+### Features
+
+* **encryption:** update encryption library ([2d34ffe](https://github.com/sws2apps/lmm-oa-sws/commit/2d34ffe809de1b59a33b0752f032fd99becaa47e))
+
 # [1.0.0-alpha.42](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.41...v1.0.0-alpha.42) (2022-04-28)
 
 
