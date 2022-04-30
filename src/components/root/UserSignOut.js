@@ -20,11 +20,7 @@ import {
 
 // utils
 import { dbSaveBackup } from '../../indexedDb/dbAppSettings';
-import {
-	dbExportJsonDb,
-	deleteDbByName,
-	initBackupDb,
-} from '../../indexedDb/dbUtility';
+import { dbExportJsonDb, initBackupDb } from '../../indexedDb/dbUtility';
 
 const UserSignOut = () => {
 	const { t } = useTranslation();
