@@ -1,3 +1,10 @@
+# [1.0.0-alpha.44](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.43...v1.0.0-alpha.44) (2022-04-30)
+
+
+### Bug Fixes
+
+* **db:** update field to use new encryption ([f2a247c](https://github.com/sws2apps/lmm-oa-sws/commit/f2a247cf2c8cb72f28bcce26abf1ff641d730d43))
+
 # [1.0.0-alpha.43](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.42...v1.0.0-alpha.43) (2022-04-30)
 
 
