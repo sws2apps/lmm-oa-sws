@@ -1,3 +1,10 @@
+# [1.0.0-alpha.45](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.44...v1.0.0-alpha.45) (2022-04-30)
+
+
+### Features
+
+* **app:** register service worker on initial page load ([de413c7](https://github.com/sws2apps/lmm-oa-sws/commit/de413c796ee178a88396adaf93e79e3dd2ea722c))
+
 # [1.0.0-alpha.44](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.43...v1.0.0-alpha.44) (2022-04-30)
 
 
