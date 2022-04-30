@@ -53,8 +53,6 @@ const UserSignOut = () => {
 
 			await dbSaveBackup(appBackup);
 
-			await deleteDbByName('lmm_oa');
-
 			setOpen(false);
 			setIsAppLoad(true);
 			setIsSetup(true);

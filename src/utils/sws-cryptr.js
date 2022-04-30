@@ -1,10 +1,11 @@
-import CryptoJS from 'crypto-js';
+import SimpleCrypto from 'simple-crypto-js';
 
 export const encryptString = (secret, payload) => {
-	return CryptoJS.AES.encrypt(payload, secret).toString();
+	const simpleCrypto = new SimpleCrypto(secret);
+	return simpleCrypto.encrypt(payload);
 };
 
 export const decryptString = (secret, payload) => {
-	const bytes = CryptoJS.AES.decrypt(payload, secret);
-	return bytes.toString(CryptoJS.enc.Utf8);
+	const simpleCrypto = new SimpleCrypto(secret);
+	return simpleCrypto.decrypt(payload);
 };

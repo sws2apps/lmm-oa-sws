@@ -16,6 +16,8 @@ export const dbSaveBackup = async (data) => {
 	await backupDb.table('backup').update(1, {
 		backup: data,
 	});
+	await appDb.close();
+	await appDb.delete();
 };
 
 export const dbGetBackup = async () => {

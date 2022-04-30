@@ -18,6 +18,11 @@ export const deleteDbByName = async (dbName) => {
 	await Dexie.delete(dbName);
 };
 
+export const deleteDbBackup = async (dbName) => {
+	await backupDb.close();
+	await backupDb.delete();
+};
+
 export const deleteDb = async () => {
 	const databases = await Dexie.getDatabaseNames();
 
@@ -103,6 +108,6 @@ export const dbExportJsonDb = async (passcode) => {
 	};
 
 	const data = await convertBase64();
-	const encryptedData = encryptString(passcode, data);
+	const encryptedData = encryptString(passcode, JSON.stringify(data));
 	return encryptedData;
 };
