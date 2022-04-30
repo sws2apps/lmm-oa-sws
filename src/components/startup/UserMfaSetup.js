@@ -114,7 +114,7 @@ const UserMfaSetup = () => {
 									obj.isCongVerified = true;
 									obj.cong_name = data.congregation.cong_name;
 									obj.cong_number = data.congregation.cong_number;
-									obj.pwd = encPwd;
+									obj.userMe = encPwd;
 									await dbUpdateAppSettings(obj);
 
 									await loadApp();
