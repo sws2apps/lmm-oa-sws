@@ -16,7 +16,7 @@ import { decryptString } from '../../utils/sws-cryptr';
 import { dbGetAppSettings, dbGetBackup } from '../../indexedDb/dbAppSettings';
 import {
 	dbRestoreDb,
-	deleteDbByName,
+	deleteDbBackup,
 	isDbExist,
 } from '../../indexedDb/dbUtility';
 import {
@@ -109,7 +109,7 @@ const UserSignIn = () => {
 					await handleRestoreBackup();
 					await loadApp();
 
-					await deleteDbByName('lmm_oa_backup');
+					await deleteDbBackup();
 
 					setIsSetup(false);
 					setTimeout(() => {
@@ -121,9 +121,11 @@ const UserSignIn = () => {
 
 				if (!isBackupDb && isMainDb) {
 					const { pwd } = await dbGetAppSettings();
-					const decryptPwd = decryptString(userTmpPwd, pwd);
-					const data = JSON.parse(decryptPwd);
-					if (userTmpEmail === data.email && userTmpPwd === data.pwd) {
+					const decryptData = decryptString(userTmpPwd, pwd);
+					if (
+						userTmpEmail === decryptData.email &&
+						userTmpPwd === decryptData.pwd
+					) {
 						if (isOnline) {
 							await handleSignIn();
 						} else {
@@ -140,6 +142,7 @@ const UserSignIn = () => {
 						setIsProcessing(false);
 						setAppSnackOpen(true);
 					}
+					// await handleSignIn();
 				}
 			} else {
 				if (!isEmailValid(userTmpEmail)) {
