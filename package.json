@@ -62,7 +62,6 @@
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/exec": "^6.0.2",
-    "@semantic-release/git": "^10.0.1",
-    "react-error-overlay": "^6.0.9"
+    "@semantic-release/git": "^10.0.1"
   }
 }
