@@ -1,3 +1,10 @@
+# [1.0.0-alpha.47](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.46...v1.0.0-alpha.47) (2022-05-05)
+
+
+### Bug Fixes
+
+* **encryption:** possible invalid quotes failing decryption on simple-crypto-js ([ec45422](https://github.com/sws2apps/lmm-oa-sws/commit/ec454220d99b5601adfce3caa76fdb651a9436b6))
+
 # [1.0.0-alpha.46](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.45...v1.0.0-alpha.46) (2022-05-05)
 
 
