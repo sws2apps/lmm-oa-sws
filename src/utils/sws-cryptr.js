@@ -7,5 +7,7 @@ export const encryptString = (secret, payload) => {
 
 export const decryptString = (secret, payload) => {
 	const simpleCrypto = new SimpleCrypto(secret);
-	return simpleCrypto.decrypt(payload);
+	// remove quotes
+	const cypheredText = payload.substr(0, payload.length);
+	return simpleCrypto.decrypt(cypheredText);
 };
