@@ -1,3 +1,10 @@
+# [1.0.0-alpha.48](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.47...v1.0.0-alpha.48) (2022-05-06)
+
+
+### Bug Fixes
+
+* **encryption:** add logging for troubleshooting ([456067f](https://github.com/sws2apps/lmm-oa-sws/commit/456067f1b468b98a286c31cb2c8e94043b3c96fd))
+
 # [1.0.0-alpha.47](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.46...v1.0.0-alpha.47) (2022-05-05)
 
 
