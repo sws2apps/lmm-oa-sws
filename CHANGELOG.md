@@ -1,3 +1,10 @@
+# [1.0.0-alpha.49](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.48...v1.0.0-alpha.49) (2022-05-06)
+
+
+### Bug Fixes
+
+* **indexedDb:** encrypt data directly without stringify (exp) ([e2e44b3](https://github.com/sws2apps/lmm-oa-sws/commit/e2e44b39a8e869ce29fd04cd978ab77ce16785fd))
+
 # [1.0.0-alpha.48](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.47...v1.0.0-alpha.48) (2022-05-06)
 
 
