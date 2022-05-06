@@ -108,6 +108,6 @@ export const dbExportJsonDb = async (passcode) => {
 	};
 
 	const data = await convertBase64();
-	const encryptedData = encryptString(passcode, JSON.stringify(data));
+	const encryptedData = encryptString(passcode, data);
 	return encryptedData;
 };
