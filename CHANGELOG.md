@@ -1,3 +1,10 @@
+# [1.0.0-alpha.50](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.49...v1.0.0-alpha.50) (2022-05-06)
+
+
+### Bug Fixes
+
+* **firebase:** update csp for img-src ([5e3cc0f](https://github.com/sws2apps/lmm-oa-sws/commit/5e3cc0f8e969807155c765b3324fb72d49f8f2de))
+
 # [1.0.0-alpha.49](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.48...v1.0.0-alpha.49) (2022-05-06)
 
 
