@@ -16,7 +16,7 @@
     "downloadjs": "^1.4.7",
     "file-select-dialog": "^1.5.4",
     "html2pdf.js": "^0.10.1",
-    "i18next": "^21.6.16",
+    "i18next": "^21.8.0",
     "interweave": "^13.0.0",
     "json-as-xlsx": "^2.4.2",
     "jw-epub-parser": "^1.8.0",
