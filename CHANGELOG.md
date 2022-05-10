@@ -1,3 +1,13 @@
+# [1.0.0-alpha.51](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.50...v1.0.0-alpha.51) (2022-05-10)
+
+
+### Features
+
+* **deps:** bump i18next from 21.6.16 to 21.8.0 ([d699319](https://github.com/sws2apps/lmm-oa-sws/commit/d699319516812fc0c3fd174225aceb61a9749f78))
+* **deps:** bump json-as-xlsx from 2.4.1 to 2.4.2 ([3acee45](https://github.com/sws2apps/lmm-oa-sws/commit/3acee452305f07b18d361d7e439e91af9994d477))
+* **deps:** bump react-i18next from 11.16.7 to 11.16.9 ([db4c944](https://github.com/sws2apps/lmm-oa-sws/commit/db4c9447c885ce05ce57532100192c4b4754e56e))
+* **encryption:** update encryption library to tiny-enc ([6fe079b](https://github.com/sws2apps/lmm-oa-sws/commit/6fe079bf4a7a877e682c1c5e4ef6ef5af0a02bd7))
+
 # [1.0.0-alpha.50](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.49...v1.0.0-alpha.50) (2022-05-06)
 
 
