@@ -13,7 +13,7 @@ import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import StartupHeader from './StartupHeader';
-import { encryptString } from '../../utils/sws-cryptr';
+import { encryptString } from '../../utils/sws-encryption';
 import {
 	appMessageState,
 	appSeverityState,
@@ -104,7 +104,7 @@ const UserMfaSetup = () => {
 									}
 
 									// encrypt email & pwd
-									const encPwd = encryptString(
+									const encPwd = await encryptString(
 										userPwd,
 										JSON.stringify({ email: userEmail, pwd: userPwd })
 									);
@@ -114,7 +114,7 @@ const UserMfaSetup = () => {
 									obj.isCongVerified = true;
 									obj.cong_name = data.congregation.cong_name;
 									obj.cong_number = data.congregation.cong_number;
-									obj.userMe = encPwd;
+									obj.crd = encPwd;
 									await dbUpdateAppSettings(obj);
 
 									await loadApp();

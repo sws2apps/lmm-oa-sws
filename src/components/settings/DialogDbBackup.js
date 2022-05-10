@@ -14,7 +14,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import StorageIcon from '@mui/icons-material/Storage';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { decryptString } from '../../utils/sws-cryptr';
+import { decryptString } from '../../utils/sws-encryption';
 import {
 	appMessageState,
 	appSeverityState,
@@ -162,7 +162,7 @@ const DialogDbBackup = () => {
 		const backupData = await getEncryptedText();
 
 		try {
-			const decryptedData = decryptString(backupConfirmPwd, backupData);
+			const decryptedData = await decryptString(backupConfirmPwd, backupData);
 			fetch(decryptedData)
 				.then((res) => res.blob())
 				.then((blob) => {
@@ -191,7 +191,7 @@ const DialogDbBackup = () => {
 		setIsDisabled(true);
 
 		try {
-			const decryptedData = decryptString(backupConfirmPwd, backupData);
+			const decryptedData = await decryptString(backupConfirmPwd, backupData);
 			fetch(decryptedData)
 				.then((res) => res.blob())
 				.then((blob) => {

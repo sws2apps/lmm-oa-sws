@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import StartupHeader from './StartupHeader';
 import { loadApp } from '../../utils/app';
 import { isEmailValid } from '../../utils/emailValid';
-import { decryptString } from '../../utils/sws-cryptr';
+import { decryptString } from '../../utils/sws-encryption';
 import { dbGetAppSettings, dbGetBackup } from '../../indexedDb/dbAppSettings';
 import {
 	dbRestoreDb,
@@ -80,7 +80,7 @@ const UserSignIn = () => {
 
 	const handleRestoreBackup = async () => {
 		const appBackup = await dbGetBackup();
-		const decryptedData = decryptString(userTmpPwd, appBackup);
+		const decryptedData = await decryptString(userTmpPwd, appBackup);
 
 		const data = await fetch(decryptedData);
 		const blob = await data.blob();
@@ -120,12 +120,10 @@ const UserSignIn = () => {
 				}
 
 				if (!isBackupDb && isMainDb) {
-					const { userMe } = await dbGetAppSettings();
-					const decryptData = decryptString(userTmpPwd, userMe);
-					if (
-						userTmpEmail === decryptData.email &&
-						userTmpPwd === decryptData.pwd
-					) {
+					const { crd } = await dbGetAppSettings();
+					const decryptData = await decryptString(userTmpPwd, crd);
+					const crdParse = JSON.parse(decryptData);
+					if (userTmpEmail === crdParse.email && userTmpPwd === crdParse.pwd) {
 						if (isOnline) {
 							await handleSignIn();
 						} else {
@@ -263,8 +261,8 @@ const UserSignIn = () => {
 					return;
 				}
 				if (isMainDb) {
-					const { userMe } = await dbGetAppSettings();
-					if (!userMe) {
+					const { crd } = await dbGetAppSettings();
+					if (!crd) {
 						setIsInternetNeeded(true);
 					} else {
 						setIsInternetNeeded(false);
