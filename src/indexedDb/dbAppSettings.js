@@ -2,6 +2,7 @@ import appDb from './mainDb';
 import backupDb from './backupDb';
 
 export const dbUpdateAppSettings = async (settingValue) => {
+	console.log(settingValue);
 	await appDb.table('app_settings').update(1, {
 		...settingValue,
 	});

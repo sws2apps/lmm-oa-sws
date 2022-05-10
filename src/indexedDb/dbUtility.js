@@ -4,7 +4,7 @@ import download from 'downloadjs';
 import backupDb from './backupDb';
 import appDb from './mainDb';
 
-import { encryptString } from '../utils/sws-cryptr';
+import { encryptString } from '../utils/sws-encryption';
 
 export const initAppDb = async () => {
 	await appDb.open();
@@ -86,7 +86,7 @@ export const dbExportDb = async (passcode) => {
 		};
 
 		const data = await convertBase64();
-		const encryptedData = encryptString(passcode, data);
+		const encryptedData = await encryptString(passcode, data);
 
 		const newBlob = new Blob([encryptedData], { type: 'text/plain' });
 
@@ -108,6 +108,6 @@ export const dbExportJsonDb = async (passcode) => {
 	};
 
 	const data = await convertBase64();
-	const encryptedData = encryptString(passcode, data);
+	const encryptedData = await encryptString(passcode, data);
 	return encryptedData;
 };
