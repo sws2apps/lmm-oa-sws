@@ -1,3 +1,31 @@
+# [1.0.0-alpha.50](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.49...v1.0.0-alpha.50) (2022-05-06)
+
+
+### Bug Fixes
+
+* **firebase:** update csp for img-src ([5e3cc0f](https://github.com/sws2apps/lmm-oa-sws/commit/5e3cc0f8e969807155c765b3324fb72d49f8f2de))
+
+# [1.0.0-alpha.49](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.48...v1.0.0-alpha.49) (2022-05-06)
+
+
+### Bug Fixes
+
+* **indexedDb:** encrypt data directly without stringify (exp) ([e2e44b3](https://github.com/sws2apps/lmm-oa-sws/commit/e2e44b39a8e869ce29fd04cd978ab77ce16785fd))
+
+# [1.0.0-alpha.48](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.47...v1.0.0-alpha.48) (2022-05-06)
+
+
+### Bug Fixes
+
+* **encryption:** add logging for troubleshooting ([456067f](https://github.com/sws2apps/lmm-oa-sws/commit/456067f1b468b98a286c31cb2c8e94043b3c96fd))
+
+# [1.0.0-alpha.47](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.46...v1.0.0-alpha.47) (2022-05-05)
+
+
+### Bug Fixes
+
+* **encryption:** possible invalid quotes failing decryption on simple-crypto-js ([ec45422](https://github.com/sws2apps/lmm-oa-sws/commit/ec454220d99b5601adfce3caa76fdb651a9436b6))
+
 # [1.0.0-alpha.46](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.45...v1.0.0-alpha.46) (2022-05-05)
 
 
