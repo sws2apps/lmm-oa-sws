@@ -1,8 +1,6 @@
 import appDb from './mainDb';
-import backupDb from './backupDb';
 
 export const dbUpdateAppSettings = async (settingValue) => {
-	console.log(settingValue);
 	await appDb.table('app_settings').update(1, {
 		...settingValue,
 	});
@@ -14,14 +12,7 @@ export const dbGetAppSettings = async () => {
 };
 
 export const dbSaveBackup = async (data) => {
-	await backupDb.table('backup').update(1, {
-		backup: data,
-	});
+	localStorage.setItem('lmm_oa_backup', data);
 	await appDb.close();
 	await appDb.delete();
-};
-
-export const dbGetBackup = async () => {
-	const appBackup = await backupDb.table('backup').get({ id: 1 });
-	return appBackup.backup;
 };
