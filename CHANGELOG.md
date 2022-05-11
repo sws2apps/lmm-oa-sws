@@ -1,3 +1,10 @@
+# [1.0.0-alpha.52](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.51...v1.0.0-alpha.52) (2022-05-11)
+
+
+### Features
+
+* **deps:** bump jw-epub-parser from 1.10.1 to 1.10.2 ([2ed13ed](https://github.com/sws2apps/lmm-oa-sws/commit/2ed13ede48bc096e98c238600cb246e8d27e20a6))
+
 # [1.0.0-alpha.51](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.50...v1.0.0-alpha.51) (2022-05-10)
 
 
