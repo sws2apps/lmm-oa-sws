@@ -6,6 +6,7 @@ export const encryptString = async (secret, payload) => {
 };
 
 export const decryptString = async (secret, payload) => {
+	console.log(secret, payload);
 	const decrypted = await tinyEnc.decrypt(secret, payload);
 	return decrypted;
 };
