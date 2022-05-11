@@ -1,17 +1,18 @@
-import tinyEnc from 'tiny-enc';
+import SimpleCrypto from 'simple-crypto-js';
 
 export const encryptString = async (secret, payload) => {
-	const encrypted = await tinyEnc.encrypt(secret, payload);
+	const simpleCrypto = new SimpleCrypto(secret);
+	const encrypted = await simpleCrypto.encrypt(payload);
 	return encrypted;
 };
 
 export const decryptString = async (secret, payload) => {
 	try {
-	console.log(secret, payload);
-	const decrypted = await tinyEnc.decrypt(secret, `${payload}`);
-	console.log(decrypted);
-	return decrypted;
+		console.log(secret, payload);
+		const simpleCrypto = new SimpleCrypto(secret);
+		const decrypted = await simpleCrypto.decrypt(payload);
+		return decrypted;
 	} catch (err) {
-		console.log(err)
+		throw new Error(err);
 	}
 };

@@ -13,7 +13,7 @@ import StartupHeader from './StartupHeader';
 import { loadApp } from '../../utils/app';
 import { isEmailValid } from '../../utils/emailValid';
 import { decryptString } from '../../utils/sws-encryption';
-import { dbGetAppSettings, dbGetBackup } from '../../indexedDb/dbAppSettings';
+import { dbGetAppSettings } from '../../indexedDb/dbAppSettings';
 import {
 	dbRestoreDb,
 	deleteDbBackup,
@@ -79,14 +79,17 @@ const UserSignIn = () => {
 	};
 
 	const handleRestoreBackup = async () => {
-		const appBackup = await dbGetBackup();
+		const appBackup = localStorage.getItem('lmm_oa_backup');
 		const decryptedData = await decryptString(userTmpPwd, appBackup);
-		console.log(decryptedData);
+		console.log(decryptedData, decryptedData.length);
+		if (decryptedData.length === 0) {
+			throw new Error('Invalid credentials');
+		} else {
+			const data = await fetch(decryptedData);
+			const blob = await data.blob();
 
-		const data = await fetch(decryptedData);
-		const blob = await data.blob();
-
-		await dbRestoreDb(blob);
+			await dbRestoreDb(blob);
+		}
 	};
 
 	const signInSwitch = async () => {
@@ -104,7 +107,7 @@ const UserSignIn = () => {
 			if (isEmailValid(userTmpEmail) && userTmpPwd.length >= 10) {
 				setIsProcessing(true);
 				const isMainDb = await isDbExist('lmm_oa');
-				const isBackupDb = await isDbExist('lmm_oa_backup');
+				const isBackupDb = localStorage.getItem('lmm_oa_backup')?.length > 0;
 
 				if (isBackupDb) {
 					await handleRestoreBackup();
@@ -121,20 +124,15 @@ const UserSignIn = () => {
 				}
 
 				if (!isBackupDb && isMainDb) {
-					const { crd } = await dbGetAppSettings();
-					const decryptData = await decryptString(userTmpPwd, crd);
-					const crdParse = JSON.parse(decryptData);
+					const { userPass } = await dbGetAppSettings();
+					const crdParse = await decryptString(userTmpPwd, userPass);
 					if (userTmpEmail === crdParse.email && userTmpPwd === crdParse.pwd) {
-						if (isOnline) {
-							await handleSignIn();
-						} else {
-							await loadApp();
+						await loadApp();
 
-							setIsSetup(false);
-							setTimeout(() => {
-								setIsAppLoad(false);
-							}, [2000]);
-						}
+						setIsSetup(false);
+						setTimeout(() => {
+							setIsAppLoad(false);
+						}, [2000]);
 					} else {
 						setAppMessage(t('login.incorrectInfo'));
 						setAppSeverity('warning');
@@ -151,13 +149,9 @@ const UserSignIn = () => {
 				}
 			}
 		} catch (err) {
-			if (err.message === 'Malformed UTF-8 data') {
-				setAppMessage(t('login.incorrectInfo'));
-				setAppSeverity('warning');
-			} else {
-				setAppMessage(err.message);
-				setAppSeverity('error');
-			}
+			console.log(err);
+			setAppMessage(t('login.incorrectInfo'));
+			setAppSeverity('warning');
 			setIsProcessing(false);
 			setAppSnackOpen(true);
 		}
@@ -252,7 +246,7 @@ const UserSignIn = () => {
 	useEffect(() => {
 		const checkDbs = async () => {
 			const isMainDb = await isDbExist('lmm_oa');
-			const isBackupDb = await isDbExist('lmm_oa_backup');
+			const isBackupDb = localStorage.getItem('lmm_oa_backup')?.length > 0;
 
 			if (!isMainDb && !isBackupDb) {
 				setIsInternetNeeded(true);
@@ -262,8 +256,8 @@ const UserSignIn = () => {
 					return;
 				}
 				if (isMainDb) {
-					const { crd } = await dbGetAppSettings();
-					if (!crd) {
+					const { userPass } = await dbGetAppSettings();
+					if (!userPass) {
 						setIsInternetNeeded(true);
 					} else {
 						setIsInternetNeeded(false);

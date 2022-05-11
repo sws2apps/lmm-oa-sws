@@ -98,7 +98,7 @@ const UserMfaVerify = () => {
 									obj.isCongVerified = true;
 									obj.cong_name = data.congregation.cong_name;
 									obj.cong_number = data.congregation.cong_number;
-									obj.crd = encPwd;
+									obj.userPass = encPwd;
 
 									await dbUpdateAppSettings(obj);
 

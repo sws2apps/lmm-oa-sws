@@ -20,7 +20,7 @@ import {
 
 // utils
 import { dbSaveBackup } from '../../indexedDb/dbAppSettings';
-import { dbExportJsonDb, initBackupDb } from '../../indexedDb/dbUtility';
+import { dbExportJsonDb } from '../../indexedDb/dbUtility';
 
 const UserSignOut = () => {
 	const { t } = useTranslation();
@@ -45,7 +45,6 @@ const UserSignOut = () => {
 	useEffect(() => {
 		const handleBackup = async () => {
 			const appBackup = await dbExportJsonDb(userPwd);
-			await initBackupDb();
 
 			await dbSaveBackup(appBackup);
 
