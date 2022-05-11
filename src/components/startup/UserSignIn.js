@@ -81,6 +81,7 @@ const UserSignIn = () => {
 	const handleRestoreBackup = async () => {
 		const appBackup = await dbGetBackup();
 		const decryptedData = await decryptString(userTmpPwd, appBackup);
+		console.log(decryptedData);
 
 		const data = await fetch(decryptedData);
 		const blob = await data.blob();
