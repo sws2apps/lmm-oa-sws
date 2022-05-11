@@ -1,3 +1,10 @@
+# [1.0.0-alpha.57](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.56...v1.0.0-alpha.57) (2022-05-11)
+
+
+### Bug Fixes
+
+* **encryption:** update location to save encrypted data on exit ([0125ab7](https://github.com/sws2apps/lmm-oa-sws/commit/0125ab79eb6e7e869a675f17c3f7cb03eb96af59))
+
 # [1.0.0-alpha.56](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.55...v1.0.0-alpha.56) (2022-05-11)
 
 
