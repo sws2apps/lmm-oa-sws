@@ -13,6 +13,7 @@ const ServiceWorkerWrapper = (props) => {
 	const [waitingWorker, setWaitingWorker] = useState(null);
 
 	const onSWUpdate = (registration) => {
+		console.log(registration);
 		setShowReload(true);
 		setWaitingWorker(registration.waiting);
 	};

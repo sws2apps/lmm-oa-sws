@@ -1,4 +1,5 @@
-import { useRecoilValue } from 'recoil';
+import { useEffect } from 'react';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import CircularProgress from '@mui/material/CircularProgress';
 import CongregationRequestSent from '../components/startup/CongregationRequestSent';
 import CongregationSignUp from '../components/startup/CongregationSignUp';
@@ -12,6 +13,7 @@ import UserMfaVerify from '../components/startup/UserMfaVerify';
 import UserSignIn from '../components/startup/UserSignIn';
 import UserSignUp from '../components/startup/UserSignUp';
 import {
+	isAppLoadState,
 	isCongAccountCreateState,
 	isCongRequestSentState,
 	isCongWaitRequestState,
@@ -25,9 +27,13 @@ import {
 	isUserSignInState,
 	isUserSignUpState,
 } from '../appStates/appSettings';
+import { dbGetAppSettings } from '../indexedDb/dbAppSettings';
 
 const Startup = () => {
-	const isSetup = useRecoilValue(isSetupState);
+	const [isSetup, setIsSetup] = useRecoilState(isSetupState);
+
+	const setIsAppLoad = useSetRecoilState(isAppLoadState);
+
 	const isUserMfaSetup = useRecoilValue(isUserMfaSetupState);
 	const isUserMfaVerify = useRecoilValue(isUserMfaVerifyState);
 	const isUserSignIn = useRecoilValue(isUserSignInState);
@@ -39,6 +45,24 @@ const Startup = () => {
 	const isCongWaitRequest = useRecoilValue(isCongWaitRequestState);
 	const isShowTermsUse = useRecoilValue(isShowTermsUseState);
 	const isUnauthorizedRole = useRecoilValue(isUnauthorizedRoleState);
+
+	useEffect(() => {
+		const checkLoginState = async () => {
+			let { isLoggedOut } = await dbGetAppSettings();
+
+			isLoggedOut = isLoggedOut === undefined ? true : isLoggedOut;
+
+			if (isLoggedOut) {
+				setIsSetup(true);
+			} else {
+				setTimeout(() => {
+					setIsAppLoad(false);
+				}, [2000]);
+			}
+		};
+
+		checkLoginState();
+	}, [setIsAppLoad, setIsSetup]);
 
 	if (isSetup) {
 		return (

@@ -19,8 +19,7 @@ import {
 } from '../../appStates/appSettings';
 
 // utils
-import { dbSaveBackup } from '../../indexedDb/dbAppSettings';
-import { dbExportJsonDb } from '../../indexedDb/dbUtility';
+import { dbUpdateAppSettings } from '../../indexedDb/dbAppSettings';
 
 const UserSignOut = () => {
 	const { t } = useTranslation();
@@ -43,10 +42,8 @@ const UserSignOut = () => {
 	};
 
 	useEffect(() => {
-		const handleBackup = async () => {
-			const appBackup = await dbExportJsonDb(userPwd);
-
-			await dbSaveBackup(appBackup);
+		const handleLoggout = async () => {
+			await dbUpdateAppSettings({ isLoggedOut: true });
 
 			setOpen(false);
 			setIsAppLoad(true);
@@ -56,7 +53,7 @@ const UserSignOut = () => {
 			setUserSignIn(true);
 		};
 
-		if (open) handleBackup();
+		if (open) handleLoggout();
 	}, [
 		open,
 		setIsAppLoad,

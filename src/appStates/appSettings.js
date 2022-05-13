@@ -13,7 +13,7 @@ export const isAppLoadState = atom({
 
 export const isSetupState = atom({
 	key: 'isSetup',
-	default: true,
+	default: false,
 });
 
 export const apiHostState = atom({

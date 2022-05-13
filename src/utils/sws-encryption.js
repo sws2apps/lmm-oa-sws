@@ -8,7 +8,6 @@ export const encryptString = async (secret, payload) => {
 
 export const decryptString = async (secret, payload) => {
 	try {
-		console.log(secret, payload);
 		const simpleCrypto = new SimpleCrypto(secret);
 		const decrypted = await simpleCrypto.decrypt(payload);
 		return decrypted;
