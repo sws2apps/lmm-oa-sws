@@ -99,6 +99,18 @@ appDb.version(19).stores({
 	app_settings:
 		'++id, cong_number, cong_name, class_count, meeting_day, userPass, isScheduleConverted, isCongVerified',
 });
+appDb.version(20).stores({
+	app_settings:
+		'++id, cong_number, cong_name, class_count, meeting_day, userPass, blob_exp, isScheduleConverted, isCongVerified',
+});
+appDb.version(21).stores({
+	app_settings:
+		'++id, cong_number, cong_name, class_count, meeting_day, userPass, isScheduleConverted, isCongVerified',
+});
+appDb.version(22).stores({
+	app_settings:
+		'++id, cong_number, cong_name, class_count, meeting_day, userPass, isLoggedOut, isScheduleConverted, isCongVerified',
+});
 
 appDb.on('populate', function () {
 	appDb.app_settings.add({

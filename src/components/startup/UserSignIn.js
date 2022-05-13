@@ -13,12 +13,10 @@ import StartupHeader from './StartupHeader';
 import { loadApp } from '../../utils/app';
 import { isEmailValid } from '../../utils/emailValid';
 import { decryptString } from '../../utils/sws-encryption';
-import { dbGetAppSettings } from '../../indexedDb/dbAppSettings';
 import {
-	dbRestoreDb,
-	deleteDbBackup,
-	isDbExist,
-} from '../../indexedDb/dbUtility';
+	dbGetAppSettings,
+	dbUpdateAppSettings,
+} from '../../indexedDb/dbAppSettings';
 import {
 	appMessageState,
 	appSeverityState,
@@ -78,20 +76,6 @@ const UserSignIn = () => {
 		setUserSignIn(false);
 	};
 
-	const handleRestoreBackup = async () => {
-		const appBackup = localStorage.getItem('lmm_oa_backup');
-		const decryptedData = await decryptString(userTmpPwd, appBackup);
-		console.log(decryptedData, decryptedData.length);
-		if (decryptedData.length === 0) {
-			throw new Error('Invalid credentials');
-		} else {
-			const data = await fetch(decryptedData);
-			const blob = await data.blob();
-
-			await dbRestoreDb(blob);
-		}
-	};
-
 	const signInSwitch = async () => {
 		if (isInternetNeeded) {
 			await handleSignIn();
@@ -106,39 +90,22 @@ const UserSignIn = () => {
 			setHasErrorPwd(false);
 			if (isEmailValid(userTmpEmail) && userTmpPwd.length >= 10) {
 				setIsProcessing(true);
-				const isMainDb = await isDbExist('lmm_oa');
-				const isBackupDb = localStorage.getItem('lmm_oa_backup')?.length > 0;
 
-				if (isBackupDb) {
-					await handleRestoreBackup();
+				const { userPass } = await dbGetAppSettings();
+				const crdParse = await decryptString(userTmpPwd, userPass);
+				if (userTmpEmail === crdParse.email && userTmpPwd === crdParse.pwd) {
 					await loadApp();
-
-					await deleteDbBackup();
+					await dbUpdateAppSettings({ isLoggedOut: false });
 
 					setIsSetup(false);
 					setTimeout(() => {
 						setIsAppLoad(false);
 					}, [2000]);
-
-					return;
-				}
-
-				if (!isBackupDb && isMainDb) {
-					const { userPass } = await dbGetAppSettings();
-					const crdParse = await decryptString(userTmpPwd, userPass);
-					if (userTmpEmail === crdParse.email && userTmpPwd === crdParse.pwd) {
-						await loadApp();
-
-						setIsSetup(false);
-						setTimeout(() => {
-							setIsAppLoad(false);
-						}, [2000]);
-					} else {
-						setAppMessage(t('login.incorrectInfo'));
-						setAppSeverity('warning');
-						setIsProcessing(false);
-						setAppSnackOpen(true);
-					}
+				} else {
+					setAppMessage(t('login.incorrectInfo'));
+					setAppSeverity('warning');
+					setIsProcessing(false);
+					setAppSnackOpen(true);
 				}
 			} else {
 				if (!isEmailValid(userTmpEmail)) {
@@ -149,7 +116,6 @@ const UserSignIn = () => {
 				}
 			}
 		} catch (err) {
-			console.log(err);
 			setAppMessage(t('login.incorrectInfo'));
 			setAppSeverity('warning');
 			setIsProcessing(false);
@@ -245,24 +211,11 @@ const UserSignIn = () => {
 
 	useEffect(() => {
 		const checkDbs = async () => {
-			const isMainDb = await isDbExist('lmm_oa');
-			const isBackupDb = localStorage.getItem('lmm_oa_backup')?.length > 0;
-
-			if (!isMainDb && !isBackupDb) {
+			const { userPass } = await dbGetAppSettings();
+			if (!userPass) {
 				setIsInternetNeeded(true);
 			} else {
-				if (isBackupDb) {
-					setIsInternetNeeded(false);
-					return;
-				}
-				if (isMainDb) {
-					const { userPass } = await dbGetAppSettings();
-					if (!userPass) {
-						setIsInternetNeeded(true);
-					} else {
-						setIsInternetNeeded(false);
-					}
-				}
+				setIsInternetNeeded(false);
 			}
 		};
 

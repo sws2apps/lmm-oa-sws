@@ -26,7 +26,6 @@ import {
 	visitorIDState,
 } from '../../appStates/appSettings';
 import { loadApp } from '../../utils/app';
-import { initAppDb, isDbExist } from '../../indexedDb/dbUtility';
 import { dbUpdateAppSettings } from '../../indexedDb/dbAppSettings';
 
 const UserMfaVerify = () => {
@@ -82,11 +81,6 @@ const UserMfaVerify = () => {
 									data.congregation.cong_role.includes('lmmo') ||
 									data.congregation.cong_role.includes('lmmo-backup')
 								) {
-									const isMainDb = await isDbExist('lmm_oa');
-									if (!isMainDb) {
-										await initAppDb();
-									}
-
 									// encrypt email & pwd
 									const encPwd = await encryptString(
 										userPwd,
@@ -99,6 +93,7 @@ const UserMfaVerify = () => {
 									obj.cong_name = data.congregation.cong_name;
 									obj.cong_number = data.congregation.cong_number;
 									obj.userPass = encPwd;
+									obj.isLoggedOut = false;
 
 									await dbUpdateAppSettings(obj);
 

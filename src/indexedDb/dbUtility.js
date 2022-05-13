@@ -2,6 +2,7 @@ import Dexie from 'dexie';
 import { exportDB, importDB } from 'dexie-export-import';
 import download from 'downloadjs';
 import appDb from './mainDb';
+import backupDb from './backupDb';
 
 import { encryptString } from '../utils/sws-encryption';
 
@@ -9,12 +10,17 @@ export const initAppDb = async () => {
 	await appDb.open();
 };
 
+export const initBackupDb = async () => {
+	await backupDb.open();
+};
+
 export const deleteDbByName = async (dbName) => {
 	await Dexie.delete(dbName);
 };
 
-export const deleteDbBackup = async () => {
-	localStorage.removeItem('lmm_oa_backup');
+export const deleteDbBackup = async (dbName) => {
+	await backupDb.close();
+	await backupDb.delete();
 };
 
 export const deleteDb = async () => {
@@ -102,7 +108,6 @@ export const dbExportJsonDb = async (passcode) => {
 	};
 
 	const data = await convertBase64();
-	console.log(data);
 	const encryptedData = await encryptString(passcode, data);
 	return encryptedData;
 };
