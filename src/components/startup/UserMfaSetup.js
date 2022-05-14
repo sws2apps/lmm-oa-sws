@@ -25,7 +25,7 @@ import {
 	isCongAccountCreateState,
 	isSetupState,
 	isUnauthorizedRoleState,
-	isUserMfaVerifyState,
+	isUserMfaSetupState,
 	qrCodePathState,
 	secretTokenPathState,
 	userEmailState,
@@ -52,7 +52,7 @@ const UserMfaSetup = () => {
 	const setAppSeverity = useSetRecoilState(appSeverityState);
 	const setAppMessage = useSetRecoilState(appMessageState);
 	const setIsCongAccountCreate = useSetRecoilState(isCongAccountCreateState);
-	const setIsUserMfaVerify = useSetRecoilState(isUserMfaVerifyState);
+	const setIsUserMfaSetup = useSetRecoilState(isUserMfaSetupState);
 	const setIsUnauthorizedRole = useSetRecoilState(isUnauthorizedRoleState);
 	const setIsSetup = useSetRecoilState(isSetupState);
 	const setIsAppLoad = useSetRecoilState(isAppLoadState);
@@ -126,17 +126,17 @@ const UserMfaSetup = () => {
 									}, [2000]);
 								} else {
 									setIsProcessing(false);
-									setIsUserMfaVerify(false);
+									setIsUserMfaSetup(false);
 									setIsUnauthorizedRole(true);
 								}
 							} else {
 								setIsProcessing(false);
-								setIsUserMfaVerify(false);
+								setIsUserMfaSetup(false);
 								setIsUnauthorizedRole(true);
 							}
 						} else {
 							setIsProcessing(false);
-							setIsUserMfaVerify(false);
+							setIsUserMfaSetup(false);
 							setIsCongAccountCreate(true);
 						}
 					} else {
