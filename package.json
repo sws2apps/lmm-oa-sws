@@ -1,6 +1,6 @@
 {
   "name": "lmm-oa-sws",
-  "version": "1.0.0-alpha.68",
+  "version": "1.0.0-alpha.69",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.9.0",
