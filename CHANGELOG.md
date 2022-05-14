@@ -1,3 +1,11 @@
+# [1.0.0-alpha.58](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.57...v1.0.0-alpha.58) (2022-05-13)
+
+
+### Features
+
+* **apps:** update application storage logic ([a7e31fb](https://github.com/sws2apps/lmm-oa-sws/commit/a7e31fb24b463034dd3668cd01577f3b1427f46b))
+* **deps:** bump i18next from 21.8.0 to 21.8.1 ([a5e881f](https://github.com/sws2apps/lmm-oa-sws/commit/a5e881f8dd2361a9d938587374d0856b48291fd4))
+
 # [1.0.0-alpha.57](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.56...v1.0.0-alpha.57) (2022-05-11)
 
 

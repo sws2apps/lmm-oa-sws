@@ -93,7 +93,7 @@ const UserSignIn = () => {
 
 				const { userPass } = await dbGetAppSettings();
 				const crdParse = await decryptString(userTmpPwd, userPass);
-				console.log(crdParse);
+
 				if (userTmpEmail === crdParse.email && userTmpPwd === crdParse.pwd) {
 					await loadApp();
 					await dbUpdateAppSettings({ isLoggedOut: false });
