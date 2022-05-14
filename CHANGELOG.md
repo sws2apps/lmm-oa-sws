@@ -1,3 +1,10 @@
+# [1.0.0-alpha.71](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.70...v1.0.0-alpha.71) (2022-05-14)
+
+
+### Bug Fixes
+
+* **service-worker:** fix service worker update notification not triggering ([43f49fb](https://github.com/sws2apps/lmm-oa-sws/commit/43f49fbe90c49cb2822145f17f149ce300a15e53))
+
 # [1.0.0-alpha.70](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.69...v1.0.0-alpha.70) (2022-05-14)
 
 
