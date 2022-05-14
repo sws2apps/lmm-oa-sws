@@ -19,10 +19,8 @@ export function register(config) {
 			return;
 		}
 		
-		console.log('register-before-evl');
 		window.addEventListener('load', () => {
 			const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
-			console.log('event-listener-run');
 			if (isLocalhost) {
 				// This is running on localhost. Let's check if a service worker still exists or not.
 				checkValidServiceWorker(swUrl, config);
@@ -47,22 +45,17 @@ function registerValidSW(swUrl, config) {
 	navigator.serviceWorker
 		.register(swUrl)
 		.then((registration) => {
-			console.log(registration);
 			registration.onupdatefound = () => {
 				const installingWorker = registration.installing;
-				console.log(installingWorker);
 				
 				const waitingWorker = registration.waiting;
 				console.log(waitingWorker);
-				if (installingWorker == null) {
-					return;
-				}
-
-				installingWorker.onstatechange = () => {
-					console.log(installingWorker);
-					console.log(navigator.serviceWorker.controller);
+				
+				if (installingWorker) {
+					installingWorker.onstatechange = () => {
+					console.log(installingWorker.state);
 					if (installingWorker.state === 'installed') {
-						if (navigator.serviceWorker.controller) {
+						if (waitingWorker) {
 							// At this point, the updated precached content has been fetched,
 							// but the previous service worker will still serve the older
 							// content until all client tabs are closed.
@@ -88,6 +81,7 @@ function registerValidSW(swUrl, config) {
 						}
 					}
 				};
+				}
 			};
 		})
 		.catch((error) => {
