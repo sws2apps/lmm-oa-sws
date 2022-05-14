@@ -65,7 +65,7 @@ function registerValidSW(swUrl, config) {
 				}
 
 				const waitingWorker = registration.waiting;
-
+				console.log(waitingWorker);
 				if (waitingWorker) {
 					waitingWorker.onstatechange = () => {
 						console.log(waitingWorker.state);
