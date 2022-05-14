@@ -1,3 +1,10 @@
+# [1.0.0-alpha.63](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.62...v1.0.0-alpha.63) (2022-05-14)
+
+
+### Bug Fixes
+
+* **indexedDb:** add cleanup function on db ready to remove old settings ([f8071de](https://github.com/sws2apps/lmm-oa-sws/commit/f8071deaa4921f17276d24aa3d653964ec0bfe0e))
+
 # [1.0.0-alpha.62](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.61...v1.0.0-alpha.62) (2022-05-14)
 
 
