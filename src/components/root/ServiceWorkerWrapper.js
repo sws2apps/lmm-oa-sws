@@ -15,7 +15,7 @@ const onSWInstalled = () => {
 };
 
 const onSWUpdate = (registration) => {
-	console.log(registration);
+	console.log(registration.waiting);
 	promiseSetRecoil(showReloadState, true);
 	promiseSetRecoil(waitingWorkerState, registration.waiting);
 };
