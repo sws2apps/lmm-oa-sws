@@ -18,7 +18,8 @@ export function register(config) {
 			// serve assets; see https://github.com/facebook/create-react-app/issues/2374
 			return;
 		}
-
+		
+		console.log('register-before-evl');
 		window.addEventListener('load', () => {
 			const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
 			console.log('event-listener-run');
