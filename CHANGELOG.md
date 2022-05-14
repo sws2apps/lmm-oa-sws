@@ -1,3 +1,10 @@
+# [1.0.0-alpha.77](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.76...v1.0.0-alpha.77) (2022-05-14)
+
+
+### Bug Fixes
+
+* **sw:** update exp 11 ([617e8b8](https://github.com/sws2apps/lmm-oa-sws/commit/617e8b84c7e9ce1ae1f88a9da15e87dd15041086))
+
 # [1.0.0-alpha.76](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.75...v1.0.0-alpha.76) (2022-05-14)
 
 
