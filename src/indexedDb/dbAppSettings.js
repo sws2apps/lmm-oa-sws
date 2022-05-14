@@ -1,10 +1,14 @@
 import appDb from './mainDb';
 import backupDb from './backupDb';
 
-export const dbUpdateAppSettings = async (settingValue) => {
-	await appDb.table('app_settings').update(1, {
-		...settingValue,
-	});
+export const dbUpdateAppSettings = async (settingValue, overwrite) => {
+	if (overwrite) {
+		await appDb.table('app_settings').put({ id: 1, ...settingValue });
+	} else {
+		await appDb.table('app_settings').update(1, {
+			...settingValue,
+		});
+	}
 };
 
 export const dbGetAppSettings = async () => {
