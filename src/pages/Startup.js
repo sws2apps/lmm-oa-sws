@@ -28,6 +28,7 @@ import {
 	isUserSignUpState,
 } from '../appStates/appSettings';
 import { dbGetAppSettings } from '../indexedDb/dbAppSettings';
+import { loadApp } from '../utils/app';
 
 const Startup = () => {
 	const [isSetup, setIsSetup] = useRecoilState(isSetupState);
@@ -55,7 +56,8 @@ const Startup = () => {
 			if (isLoggedOut) {
 				setIsSetup(true);
 			} else {
-				setTimeout(() => {
+				setTimeout(async () => {
+					await loadApp();
 					setIsAppLoad(false);
 				}, [2000]);
 			}
