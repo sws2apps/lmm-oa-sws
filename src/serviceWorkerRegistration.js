@@ -52,6 +52,7 @@ function registerValidSW(swUrl, config) {
 					installingWorker.onstatechange = () => {
 						console.log(installingWorker.state);
 						if (installingWorker.state === 'installed') {
+							console.log(registration);
 							const waitingWorker = registration.waiting;
 							if (waitingWorker) {
 								// At this point, the updated precached content has been fetched,
