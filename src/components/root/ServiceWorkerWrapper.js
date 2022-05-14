@@ -1,33 +1,38 @@
 import { useEffect, useState } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { useTranslation } from 'react-i18next';
+import { promiseSetRecoil } from 'recoil-outside';
 import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import * as serviceWorkerRegistration from '../../serviceWorkerRegistration';
+import {
+	isPrecachedState,
+	showReloadState,
+	waitingWorkerState,
+} from '../../appStates/appSettings';
+
+const onSWInstalled = () => {
+	promiseSetRecoil(isPrecachedState, true);
+};
+
+const onSWUpdate = (registration) => {
+	promiseSetRecoil(showReloadState, true);
+	promiseSetRecoil(waitingWorkerState, registration.waiting);
+};
+
+serviceWorkerRegistration.register({
+	onSuccess: onSWInstalled,
+	onUpdate: onSWUpdate,
+});
 
 const ServiceWorkerWrapper = (props) => {
 	const { updatePwa } = props;
 	const { t } = useTranslation();
 
-	const [showReload, setShowReload] = useState(false);
-	const [isPrecached, setIsPrecached] = useState(false);
-	const [waitingWorker, setWaitingWorker] = useState(null);
+	const [isPrecached, setIsPrecached] = useRecoilState(isPrecachedState);
+	const [showReload, setShowReload] = useRecoilState(showReloadState);
 
-	const onSWUpdate = (registration) => {
-		console.log(registration);
-		setShowReload(true);
-		setWaitingWorker(registration.waiting);
-	};
-
-	const onSWInstalled = () => {
-		setIsPrecached(true);
-	};
-
-	useEffect(() => {
-		serviceWorkerRegistration.register({
-			onUpdate: onSWUpdate,
-			onSuccess: onSWInstalled,
-		});
-	});
+	const waitingWorker = useRecoilValue(waitingWorkerState);
 
 	const reloadPage = () => {
 		waitingWorker?.postMessage({ type: 'SKIP_WAITING' });

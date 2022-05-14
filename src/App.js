@@ -54,7 +54,10 @@ const App = () => {
 			setAppStage('local');
 		} else {
 			const appUrl = window.location.hostname;
-			if (
+			if (appUrl === 'localhost') {
+				setApiHost('http://localhost:8000/');
+				setAppStage('local');
+			} else if (
 				appUrl === 'dev-lmm-oa-sws.web.app' ||
 				appUrl === 'dev-lmm-oa-sws.firebaseapp.com'
 			) {

@@ -36,7 +36,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && workbox generateSW workbox-config.js"
+    "build": "react-scripts build && workbox generateSW workbox-config.cjs",
+    "preview": "npm run build && serve -l 5000 -s build"
   },
   "eslintConfig": {
     "extends": [
