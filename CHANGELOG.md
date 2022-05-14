@@ -1,3 +1,10 @@
+# [1.0.0-alpha.61](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.60...v1.0.0-alpha.61) (2022-05-14)
+
+
+### Bug Fixes
+
+* **app:** application data not populated on reload ([dac539b](https://github.com/sws2apps/lmm-oa-sws/commit/dac539b4aa456a9db4c665a1ddfde4a96c63dab0))
+
 # [1.0.0-alpha.60](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.59...v1.0.0-alpha.60) (2022-05-14)
 
 
