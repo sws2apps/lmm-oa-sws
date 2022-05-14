@@ -1,3 +1,10 @@
+# [1.0.0-alpha.59](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.58...v1.0.0-alpha.59) (2022-05-14)
+
+
+### Bug Fixes
+
+* **service-worker:** fix issue where service worker install or update not tracked ([b4dca32](https://github.com/sws2apps/lmm-oa-sws/commit/b4dca3217e356f76f12d25f0b8dcdbac0f898074))
+
 # [1.0.0-alpha.58](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.57...v1.0.0-alpha.58) (2022-05-13)
 
 
