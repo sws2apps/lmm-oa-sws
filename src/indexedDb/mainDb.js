@@ -261,7 +261,7 @@ appDb.on('ready', async () => {
 	}
 
 	// updating schedule assignment to use uid
-	const appSettings = await dbGetAppSettings();
+	let appSettings = await dbGetAppSettings();
 	if (!appSettings.isScheduleConverted) {
 		var scheduleData = await appDb.table('sched_MM').toArray();
 
@@ -307,6 +307,17 @@ appDb.on('ready', async () => {
 		let obj = {};
 		obj.isScheduleConverted = true;
 		await dbUpdateAppSettings(obj);
+	}
+
+	// remove trailing crd and pwd settings props
+	appSettings = await dbGetAppSettings();
+	if (appSettings.crd) {
+		delete appSettings.crd;
+		await dbUpdateAppSettings({ ...appSettings }, true);
+	}
+	if (appSettings.pwd) {
+		delete appSettings.pwd;
+		await dbUpdateAppSettings({ ...appSettings }, true);
 	}
 });
 
