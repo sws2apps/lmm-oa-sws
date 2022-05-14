@@ -1,3 +1,10 @@
+# [1.0.0-alpha.72](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.71...v1.0.0-alpha.72) (2022-05-14)
+
+
+### Bug Fixes
+
+* **app:** user credentials are no longer included in the backup ([c453581](https://github.com/sws2apps/lmm-oa-sws/commit/c4535814ad637fff4961349bc6249a10ba404b00))
+
 # [1.0.0-alpha.71](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.70...v1.0.0-alpha.71) (2022-05-14)
 
 
