@@ -68,6 +68,7 @@ function registerValidSW(swUrl, config) {
 
 				if (waitingWorker) {
 					waitingWorker.onstatechange = () => {
+						console.log(waitingWorker.state);
 						if (
 							waitingWorker.state === 'installed' ||
 							waitingWorker.state === 'activated'
