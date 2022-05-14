@@ -1,3 +1,10 @@
+# [1.0.0-alpha.64](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.63...v1.0.0-alpha.64) (2022-05-14)
+
+
+### Bug Fixes
+
+* **indexedDb:** remove userMe settings from database ([8204121](https://github.com/sws2apps/lmm-oa-sws/commit/820412119dab34fcc586f0d8a4fe807ec9683fb7))
+
 # [1.0.0-alpha.63](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.62...v1.0.0-alpha.63) (2022-05-14)
 
 
