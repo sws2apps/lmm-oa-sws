@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import { promiseSetRecoil } from 'recoil-outside';
