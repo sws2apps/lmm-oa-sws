@@ -310,6 +310,7 @@ appDb.on('ready', async () => {
 	}
 
 	// remove trailing crd and pwd settings props
+	appSettings = await dbGetAppSettings();
 	if (appSettings.crd) {
 		delete appSettings.crd;
 		await dbUpdateAppSettings({ ...appSettings }, true);
