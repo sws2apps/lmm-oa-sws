@@ -262,3 +262,18 @@ export const isAppClosingState = atom({
 	key: 'isAppClosing',
 	default: false,
 });
+
+export const isPrecachedState = atom({
+	key: 'isPrecached',
+	default: false,
+});
+
+export const showReloadState = atom({
+	key: 'showReload',
+	default: false,
+});
+
+export const waitingWorkerState = atom({
+	key: 'waitingWorker',
+	default: null,
+});
