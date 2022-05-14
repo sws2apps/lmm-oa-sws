@@ -1,3 +1,10 @@
+# [1.0.0-alpha.60](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.59...v1.0.0-alpha.60) (2022-05-14)
+
+
+### Bug Fixes
+
+* **startup:** screen gets mixed when user is not authorized on registration ([79c6132](https://github.com/sws2apps/lmm-oa-sws/commit/79c613298258e2678e073106b6819626a6b7af40))
+
 # [1.0.0-alpha.59](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.58...v1.0.0-alpha.59) (2022-05-14)
 
 
