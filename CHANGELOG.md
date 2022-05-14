@@ -1,3 +1,10 @@
+# [1.0.0-alpha.62](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.61...v1.0.0-alpha.62) (2022-05-14)
+
+
+### Bug Fixes
+
+* **indexedDb:** force version bump to cleanup database ([2bf8040](https://github.com/sws2apps/lmm-oa-sws/commit/2bf804064943876579d5a01175956627f63de2d2))
+
 # [1.0.0-alpha.61](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.60...v1.0.0-alpha.61) (2022-05-14)
 
 
