@@ -46,44 +46,38 @@ function registerValidSW(swUrl, config) {
 		.register(swUrl)
 		.then((registration) => {
 			registration.onupdatefound = () => {
+				console.log(registration);
 				const installingWorker = registration.installing;
-
+				
 				if (installingWorker) {
 					installingWorker.onstatechange = () => {
+						console.log(installingWorker.state);
 						if (installingWorker.state === 'installed') {
-							// At this point, everything has been precached.
-							// It's the perfect time to display a
-							// "Content is cached for offline use." message.
-							console.log('Content is cached for offline use.');
+							console.log(registration);
+							const waitingWorker = registration.waiting;
+							if (waitingWorker) {
+								// At this point, the updated precached content has been fetched,
+								// but the previous service worker will still serve the older
+								// content until all client tabs are closed.
+								console.log(
+									'New content is available and will be used when all ' +
+										'tabs for this page are closed. See https://cra.link/PWA.'
+								);
 
-							// Execute callback
-							if (config && config.onSuccess) {
-								config.onSuccess();
-							}
-						}
-					};
-				}
+								// Execute callback
+								if (config && config.onUpdate) {
+									config.onUpdate(registration);
+								}
+							} else {
+								// At this point, everything has been precached.
+								// It's the perfect time to display a
+								// "Content is cached for offline use." message.
+								console.log('Content is cached for offline use.');
 
-				const waitingWorker = registration.waiting;
-				console.log(waitingWorker);
-				if (waitingWorker) {
-					waitingWorker.onstatechange = () => {
-						console.log(waitingWorker.state);
-						if (
-							waitingWorker.state === 'installed' ||
-							waitingWorker.state === 'activated'
-						) {
-							// At this point, the updated precached content has been fetched,
-							// but the previous service worker will still serve the older
-							// content until all client tabs are closed.
-							console.log(
-								'New content is available and will be used when all ' +
-									'tabs for this page are closed. See https://cra.link/PWA.'
-							);
-
-							// Execute callback
-							if (config && config.onUpdate) {
-								config.onUpdate(registration);
+								// Execute callback
+								if (config && config.onSuccess) {
+									config.onSuccess();
+								}
 							}
 						}
 					};
