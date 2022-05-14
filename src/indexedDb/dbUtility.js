@@ -5,6 +5,7 @@ import appDb from './mainDb';
 import backupDb from './backupDb';
 
 import { encryptString } from '../utils/sws-encryption';
+import { dbGetAppSettings, dbUpdateAppSettings } from './dbAppSettings';
 
 export const initAppDb = async () => {
 	await appDb.open();
@@ -68,14 +69,35 @@ export const isValidJSON = async (fileJSON) => {
 };
 
 export const dbRestoreDb = async (fileJSON) => {
+	// get user credentials before import
+	const { userPass } = await dbGetAppSettings();
+
+	// do restore
 	await appDb.close();
 	await appDb.delete();
 	await importDB(fileJSON);
+
+	// append saved user credentials
+	await appDb.open();
+	await dbUpdateAppSettings({ userPass: userPass });
+	await appDb.close();
 };
 
 export const dbExportDb = async (passcode) => {
 	try {
+		// remove user credentials before export
+		let appSettings = await dbGetAppSettings();
+		const { userPass } = appSettings;
+		delete appSettings.userPass;
+		await dbUpdateAppSettings({ ...appSettings }, true);
+
+		// export indexedDb
 		const blob = await exportDB(appDb);
+
+		// pause export and restore credentials as soon as indexedDb is exported
+		await dbUpdateAppSettings({ userPass: userPass });
+
+		// resume export function
 		const convertBase64 = () => {
 			return new Promise((resolve, reject) => {
 				let reader = new FileReader();
