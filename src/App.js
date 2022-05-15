@@ -40,8 +40,8 @@ const theme = createTheme({
 	},
 });
 
-const App = () => {
-	const { enabledInstall, installPwa, isLoading, updatePwa } = usePwa2();
+const App = ({ updatePwa }) => {
+	const { enabledInstall, installPwa, isLoading } = usePwa2();
 	const isAppLoad = useRecoilValue(isAppLoadState);
 	const appSnackOpen = useRecoilValue(appSnackOpenState);
 
@@ -95,7 +95,10 @@ const App = () => {
 	return (
 		<ThemeProvider theme={theme}>
 			<InternetChecker />
-			<ServiceWorkerWrapper updatePwa={updatePwa} />
+			<ServiceWorkerWrapper
+				enabledInstall={enabledInstall}
+				updatePwa={updatePwa}
+			/>
 			<UserSignOut />
 			{appSnackOpen && <AppNotification />}
 			{isAppLoad && <Startup />}
