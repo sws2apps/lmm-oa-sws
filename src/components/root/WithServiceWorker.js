@@ -105,7 +105,7 @@ export default class WithServiceWorker extends Component {
 			const registration = await navigator.serviceWorker.register(
 				serviceWorkerUrl
 			);
-
+			console.log(registration);
 			this.setState({ registration });
 
 			// check if there are any awaiting sw
