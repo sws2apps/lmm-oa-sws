@@ -1,3 +1,10 @@
+# [1.0.0-alpha.83](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.82...v1.0.0-alpha.83) (2022-05-15)
+
+
+### Bug Fixes
+
+* **service-worker:** improve service worker management ([477b862](https://github.com/sws2apps/lmm-oa-sws/commit/477b862f47a6760277d049f8f75b1d4c89570e3d))
+
 # [1.0.0-alpha.82](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.81...v1.0.0-alpha.82) (2022-05-14)
 
 
