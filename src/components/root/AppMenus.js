@@ -61,10 +61,12 @@ const AppMenus = (props) => {
 		setIsAppClosing(true);
 	};
 
-	const checkPwaUpdate = async () => {
+	const checkPwaUpdate = () => {
 		if ('serviceWorker' in navigator) {
 			const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
-			await navigator.serviceWorker.register(swUrl);
+			navigator.serviceWorker.register(swUrl).then((reg) => {
+				reg.update();
+			});
 		}
 	};
 

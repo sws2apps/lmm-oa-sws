@@ -102,11 +102,13 @@ export default class WithServiceWorker extends Component {
 		const { onError, onInstalled, onUpdated, onStaled } = this.props;
 		const { serviceWorkerUrl } = this.state;
 		try {
-			const registration = await navigator.serviceWorker.register(
-				serviceWorkerUrl
-			);
-			console.log(registration);
-			this.setState({ registration });
+			let registration = await navigator.serviceWorker.getRegistration();
+
+			if (!registration) {
+				registration = await navigator.serviceWorker.register(
+					serviceWorkerUrl
+				);
+			}
 
 			// check if there are any awaiting sw
 			const waitingWorker = registration.waiting;
@@ -114,7 +116,10 @@ export default class WithServiceWorker extends Component {
 				onStaled && onStaled();
 			}
 
-			registration.onupdatefound = () => {
+			console.log(registration);
+			this.setState({ registration });
+
+			registration.addEventListener('updatefound', () => {
 				const installingWorker = registration.installing;
 				installingWorker.onstatechange = () => {
 					console.log(installingWorker)
@@ -138,7 +143,7 @@ export default class WithServiceWorker extends Component {
 						onInstalled && onInstalled();
 					}
 				};
-			};
+			});
 		} catch (err) {
 			console.error('Error during service worker registration:', err);
 			onError && onError(err);
