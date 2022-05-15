@@ -103,7 +103,6 @@ export default class WithServiceWorker extends Component {
 		const { serviceWorkerUrl } = this.state;
 		try {
 			let registration = await navigator.serviceWorker.getRegistration();
-			console.log(registration);
 			if (!registration) {
 				registration = await navigator.serviceWorker.register(
 					serviceWorkerUrl
@@ -115,7 +114,6 @@ export default class WithServiceWorker extends Component {
 			if (waitingWorker && waitingWorker.state === 'installed') {
 				onStaled && onStaled();
 			}
-
 			
 			this.setState({ registration });
 
@@ -124,7 +122,6 @@ export default class WithServiceWorker extends Component {
 
 				if (installingWorker) {
 					installingWorker.onstatechange = () => {
-						console.log(installingWorker)
 						if (installingWorker.state === 'installed') {
 							console.log(navigator.serviceWorker);
 							if (navigator.serviceWorker.controller) {
@@ -138,7 +135,6 @@ export default class WithServiceWorker extends Component {
 				const waitingWorker = registration.waiting;
 				if (waitingWorker) {
 					waitingWorker.onstatechange = () => {
-						console.log(waitingWorker)
 						if (waitingWorker.state === 'installed') {
 							console.log(navigator.serviceWorker);
 							if (navigator.serviceWorker.controller) {
