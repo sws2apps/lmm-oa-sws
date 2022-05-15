@@ -123,7 +123,6 @@ export default class WithServiceWorker extends Component {
 				if (installingWorker) {
 					installingWorker.onstatechange = () => {
 						if (installingWorker.state === 'installed') {
-							console.log(navigator.serviceWorker);
 							if (navigator.serviceWorker.controller) {
 								onUpdated && onUpdated();
 							}
@@ -136,7 +135,6 @@ export default class WithServiceWorker extends Component {
 				if (waitingWorker) {
 					waitingWorker.onstatechange = () => {
 						if (waitingWorker.state === 'installed') {
-							console.log(navigator.serviceWorker);
 							if (navigator.serviceWorker.controller) {
 								onUpdated && onUpdated();
 							}
