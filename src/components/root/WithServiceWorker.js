@@ -117,8 +117,8 @@ export default class WithServiceWorker extends Component {
 			registration.onupdatefound = () => {
 				const installingWorker = registration.installing;
 				installingWorker.onstatechange = () => {
+					console.log(installingWorker)
 					if (installingWorker.state === 'installed') {
-						console.log(registration);
 						console.log(navigator.serviceWorker);
 						if (navigator.serviceWorker.controller) {
 							onUpdated && onUpdated();
