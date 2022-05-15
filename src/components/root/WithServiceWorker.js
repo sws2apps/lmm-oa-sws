@@ -103,7 +103,7 @@ export default class WithServiceWorker extends Component {
 		const { serviceWorkerUrl } = this.state;
 		try {
 			let registration = await navigator.serviceWorker.getRegistration();
-
+			console.log(registration);
 			if (!registration) {
 				registration = await navigator.serviceWorker.register(
 					serviceWorkerUrl
@@ -116,7 +116,7 @@ export default class WithServiceWorker extends Component {
 				onStaled && onStaled();
 			}
 
-			console.log(registration);
+			
 			this.setState({ registration });
 
 			registration.addEventListener('updatefound', () => {
