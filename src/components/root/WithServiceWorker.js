@@ -126,6 +126,18 @@ export default class WithServiceWorker extends Component {
 						onInstalled && onInstalled();
 					}
 				};
+				
+				const waitingWorker = registration.waiting;
+				waitingWorker.onstatechange = () => {
+					console.log(waitingWorker)
+					if (waitingWorker.state === 'installed') {
+						console.log(navigator.serviceWorker);
+						if (navigator.serviceWorker.controller) {
+							onUpdated && onUpdated();
+						}
+						onInstalled && onInstalled();
+					}
+				};
 			};
 		} catch (err) {
 			console.error('Error during service worker registration:', err);
