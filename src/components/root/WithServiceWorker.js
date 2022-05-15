@@ -108,7 +108,7 @@ export default class WithServiceWorker extends Component {
 
 			this.setState({ registration });
 
-			// check if there are any pending sw
+			// check if there are any awaiting sw
 			const waitingWorker = registration.waiting;
 			if (waitingWorker && waitingWorker.state === 'installed') {
 				onStaled && onStaled();
