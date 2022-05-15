@@ -1,3 +1,10 @@
+# [1.0.0-alpha.98](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.97...v1.0.0-alpha.98) (2022-05-15)
+
+
+### Bug Fixes
+
+* **service-worker:** fix service worker bug not tracked ([5ed5c52](https://github.com/sws2apps/lmm-oa-sws/commit/5ed5c52a54a75cdd9681d3e69e5a4ed5e530bd1f))
+
 # [1.0.0-alpha.97](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.96...v1.0.0-alpha.97) (2022-05-15)
 
 
