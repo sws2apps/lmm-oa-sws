@@ -121,28 +121,33 @@ export default class WithServiceWorker extends Component {
 
 			registration.addEventListener('updatefound', () => {
 				const installingWorker = registration.installing;
-				installingWorker.onstatechange = () => {
-					console.log(installingWorker)
-					if (installingWorker.state === 'installed') {
-						console.log(navigator.serviceWorker);
-						if (navigator.serviceWorker.controller) {
-							onUpdated && onUpdated();
+
+				if (installingWorker) {
+					installingWorker.onstatechange = () => {
+						console.log(installingWorker)
+						if (installingWorker.state === 'installed') {
+							console.log(navigator.serviceWorker);
+							if (navigator.serviceWorker.controller) {
+								onUpdated && onUpdated();
+							}
+							onInstalled && onInstalled();
 						}
-						onInstalled && onInstalled();
-					}
-				};
+					};
+				}				
 				
 				const waitingWorker = registration.waiting;
-				waitingWorker.onstatechange = () => {
-					console.log(waitingWorker)
-					if (waitingWorker.state === 'installed') {
-						console.log(navigator.serviceWorker);
-						if (navigator.serviceWorker.controller) {
-							onUpdated && onUpdated();
+				if (waitingWorker) {
+					waitingWorker.onstatechange = () => {
+						console.log(waitingWorker)
+						if (waitingWorker.state === 'installed') {
+							console.log(navigator.serviceWorker);
+							if (navigator.serviceWorker.controller) {
+								onUpdated && onUpdated();
+							}
+							onInstalled && onInstalled();
 						}
-						onInstalled && onInstalled();
-					}
-				};
+					};
+				}				
 			});
 		} catch (err) {
 			console.error('Error during service worker registration:', err);
