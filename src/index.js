@@ -33,10 +33,10 @@ root.render(
 
 const onSWInstalled = () => {
 	promiseSetRecoil(isPrecachedState, true);
-	console.log('Service worker installed');
+	console.log('[Exp] Service worker installed');
 };
 
 const onSWUpdated = () => {
 	promiseSetRecoil(showReloadState, true);
-	console.log('Service worker updated');
+	console.log('[Exp] Service worker updated');
 };
