@@ -18,7 +18,6 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import AppDrawer from './AppDrawer';
 import AppLanguage from './AppLanguage';
-import * as serviceWorkerRegistration from '../../serviceWorkerRegistration';
 import {
 	appStageState,
 	isAboutOpenState,
@@ -62,6 +61,15 @@ const AppMenus = (props) => {
 		setIsAppClosing(true);
 	};
 
+	const checkPwaUpdate = () => {
+		if ('serviceWorker' in navigator) {
+			const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
+			navigator.serviceWorker.register(swUrl).then((reg) => {
+				reg.update();
+			});
+		}
+	};
+
 	useEffect(() => {
 		if (location.pathname === '/') {
 			setAppBarTitle(t('global.home'));
@@ -78,7 +86,7 @@ const AppMenus = (props) => {
 		}
 		if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
 		} else {
-			serviceWorkerRegistration.update();
+			checkPwaUpdate();
 		}
 	}, [t, location.pathname]);
 
