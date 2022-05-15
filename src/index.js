@@ -40,5 +40,3 @@ const onSWUpdated = () => {
 	promiseSetRecoil(showReloadState, true);
 	console.log('Service worker updated');
 };
-
-console.log('testing sw persist');
