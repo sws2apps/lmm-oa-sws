@@ -19,7 +19,6 @@ root.render(
 	<RecoilRoot>
 		<RecoilOutside />
 		<WithServiceWorker
-			registerOnMount={process.env.NODE_ENV === 'production'}
 			onError={(err) => console.log(`An error occured: ${err}`)}
 			onInstalled={() => onSWInstalled()}
 			onUpdated={() => onSWUpdated()}
