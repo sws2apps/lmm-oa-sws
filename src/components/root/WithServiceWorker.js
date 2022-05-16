@@ -104,9 +104,7 @@ export default class WithServiceWorker extends Component {
 		try {
 			let registration = await navigator.serviceWorker.getRegistration();
 			if (!registration) {
-				registration = await navigator.serviceWorker.register(
-					serviceWorkerUrl
-				);
+				registration = await navigator.serviceWorker.register(serviceWorkerUrl);
 			}
 
 			// check if there are any awaiting sw
@@ -114,7 +112,7 @@ export default class WithServiceWorker extends Component {
 			if (waitingWorker && waitingWorker.state === 'installed') {
 				onStaled && onStaled();
 			}
-			
+
 			this.setState({ registration });
 
 			registration.addEventListener('updatefound', () => {
@@ -129,8 +127,8 @@ export default class WithServiceWorker extends Component {
 							onInstalled && onInstalled();
 						}
 					};
-				}				
-				
+				}
+
 				const waitingWorker = registration.waiting;
 				if (waitingWorker) {
 					waitingWorker.onstatechange = () => {
@@ -141,7 +139,7 @@ export default class WithServiceWorker extends Component {
 							onInstalled && onInstalled();
 						}
 					};
-				}				
+				}
 			});
 		} catch (err) {
 			console.error('Error during service worker registration:', err);
