@@ -1,3 +1,11 @@
+# [1.0.0-alpha.99](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.98...v1.0.0-alpha.99) (2022-05-16)
+
+
+### Features
+
+* **deps:** bump @fontsource/roboto from 4.5.5 to 4.5.7 ([c8c4134](https://github.com/sws2apps/lmm-oa-sws/commit/c8c41344b196c1f51575611a7760a12c6746057c))
+* **deps:** bump i18next from 21.8.1 to 21.8.2 ([ffe324d](https://github.com/sws2apps/lmm-oa-sws/commit/ffe324d909e0421388f62e90b638d9c3e009d150))
+
 # [1.0.0-alpha.98](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.97...v1.0.0-alpha.98) (2022-05-15)
 
 
