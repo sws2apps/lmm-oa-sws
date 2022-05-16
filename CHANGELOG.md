@@ -1,3 +1,123 @@
+# [1.0.0-alpha.99](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.98...v1.0.0-alpha.99) (2022-05-16)
+
+
+### Features
+
+* **deps:** bump @fontsource/roboto from 4.5.5 to 4.5.7 ([c8c4134](https://github.com/sws2apps/lmm-oa-sws/commit/c8c41344b196c1f51575611a7760a12c6746057c))
+* **deps:** bump i18next from 21.8.1 to 21.8.2 ([ffe324d](https://github.com/sws2apps/lmm-oa-sws/commit/ffe324d909e0421388f62e90b638d9c3e009d150))
+
+# [1.0.0-alpha.98](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.97...v1.0.0-alpha.98) (2022-05-15)
+
+
+### Bug Fixes
+
+* **service-worker:** fix service worker bug not tracked ([5ed5c52](https://github.com/sws2apps/lmm-oa-sws/commit/5ed5c52a54a75cdd9681d3e69e5a4ed5e530bd1f))
+
+# [1.0.0-alpha.97](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.96...v1.0.0-alpha.97) (2022-05-15)
+
+
+### Bug Fixes
+
+* **sw:** update exp 30 ([fe862c2](https://github.com/sws2apps/lmm-oa-sws/commit/fe862c28b2139a899254132454cdc49adf5fe4ed))
+
+# [1.0.0-alpha.96](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.95...v1.0.0-alpha.96) (2022-05-15)
+
+
+### Bug Fixes
+
+* **sw:** update exp 29 ([0028043](https://github.com/sws2apps/lmm-oa-sws/commit/002804374ea1a770431f297e579e44867a751c33))
+
+# [1.0.0-alpha.95](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.94...v1.0.0-alpha.95) (2022-05-15)
+
+
+### Bug Fixes
+
+* **sw:** update exp 28 ([a9a7705](https://github.com/sws2apps/lmm-oa-sws/commit/a9a77051e025904369d3fee10469866303de8a7b))
+
+# [1.0.0-alpha.94](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.93...v1.0.0-alpha.94) (2022-05-15)
+
+
+### Bug Fixes
+
+* **sw:** update exp 27 ([9ef7679](https://github.com/sws2apps/lmm-oa-sws/commit/9ef76791190d869a41412b1ecb4cd8a4274272ed))
+
+# [1.0.0-alpha.93](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.92...v1.0.0-alpha.93) (2022-05-15)
+
+
+### Bug Fixes
+
+* **sw:** update exp 26 ([97de760](https://github.com/sws2apps/lmm-oa-sws/commit/97de760a9b294e9ef4ce334872190b5405e4f1ac))
+
+# [1.0.0-alpha.92](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.91...v1.0.0-alpha.92) (2022-05-15)
+
+
+### Bug Fixes
+
+* **sw:** update exp 25 ([a52403b](https://github.com/sws2apps/lmm-oa-sws/commit/a52403bfa12c6d3c502bf400902bb747237905f3))
+
+# [1.0.0-alpha.91](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.90...v1.0.0-alpha.91) (2022-05-15)
+
+
+### Bug Fixes
+
+* **sw:** update exp 24 ([5c294c3](https://github.com/sws2apps/lmm-oa-sws/commit/5c294c34729eb6456f918e40e621447cb0a3b709))
+
+# [1.0.0-alpha.90](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.89...v1.0.0-alpha.90) (2022-05-15)
+
+
+### Bug Fixes
+
+* **sw:** update exp 23 ([9aa9a2e](https://github.com/sws2apps/lmm-oa-sws/commit/9aa9a2e87bd80e1e38049e51be104b238212a468))
+
+# [1.0.0-alpha.89](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.88...v1.0.0-alpha.89) (2022-05-15)
+
+
+### Bug Fixes
+
+* **sw:** update exp 22 ([fc0ac07](https://github.com/sws2apps/lmm-oa-sws/commit/fc0ac076542ef06d0fd0c12e8cac038a0310df85))
+
+# [1.0.0-alpha.88](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.87...v1.0.0-alpha.88) (2022-05-15)
+
+
+### Bug Fixes
+
+* **sw:** update exp 21 ([6e0590a](https://github.com/sws2apps/lmm-oa-sws/commit/6e0590ac7a6048a6b3fcb100a611aafa4c89c3e4))
+
+# [1.0.0-alpha.87](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.86...v1.0.0-alpha.87) (2022-05-15)
+
+
+### Bug Fixes
+
+* **sw:** update exp 20 ([553196e](https://github.com/sws2apps/lmm-oa-sws/commit/553196e5baa10f7c2691a5bd1b69e58b5c499e8b))
+
+# [1.0.0-alpha.86](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.85...v1.0.0-alpha.86) (2022-05-15)
+
+
+### Bug Fixes
+
+* **sw:** update exp 19 ([6fa539a](https://github.com/sws2apps/lmm-oa-sws/commit/6fa539aff664d95d091a8613cd476d64cd96e1f2))
+
+# [1.0.0-alpha.85](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.84...v1.0.0-alpha.85) (2022-05-15)
+
+
+### Bug Fixes
+
+* **sw:** update exp 18 ([2f41fc3](https://github.com/sws2apps/lmm-oa-sws/commit/2f41fc30a27bcf03627e1b7a99c83bd940edca61))
+
+# [1.0.0-alpha.84](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.83...v1.0.0-alpha.84) (2022-05-15)
+
+
+### Bug Fixes
+
+* **sw:** update exp 17 ([908b6ee](https://github.com/sws2apps/lmm-oa-sws/commit/908b6ee4742e3b7f7d96ed17391bd01c46afe426))
+
+# [1.0.0-alpha.83](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.82...v1.0.0-alpha.83) (2022-05-15)
+
+
+### Bug Fixes
+
+* **service-worker:** improve service worker management ([477b862](https://github.com/sws2apps/lmm-oa-sws/commit/477b862f47a6760277d049f8f75b1d4c89570e3d))
+
 # [1.0.0-alpha.82](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.81...v1.0.0-alpha.82) (2022-05-14)
 
 

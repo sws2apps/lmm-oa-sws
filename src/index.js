@@ -19,6 +19,7 @@ root.render(
 	<RecoilRoot>
 		<RecoilOutside />
 		<WithServiceWorker
+			registerOnMount={process.env.NODE_ENV === 'production'}
 			onError={(err) => console.log(`An error occured: ${err}`)}
 			onInstalled={() => onSWInstalled()}
 			onUpdated={() => onSWUpdated()}
@@ -32,10 +33,10 @@ root.render(
 
 const onSWInstalled = () => {
 	promiseSetRecoil(isPrecachedState, true);
-	console.log('Service worker installed');
+	console.log('[Exp] Service worker installed');
 };
 
 const onSWUpdated = () => {
 	promiseSetRecoil(showReloadState, true);
-	console.log('Service worker updated');
+	console.log('[Exp] Service worker updated');
 };

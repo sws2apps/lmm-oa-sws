@@ -102,29 +102,45 @@ export default class WithServiceWorker extends Component {
 		const { onError, onInstalled, onUpdated, onStaled } = this.props;
 		const { serviceWorkerUrl } = this.state;
 		try {
-			const registration = await navigator.serviceWorker.register(
-				serviceWorkerUrl
-			);
+			let registration = await navigator.serviceWorker.getRegistration();
+			if (!registration) {
+				registration = await navigator.serviceWorker.register(serviceWorkerUrl);
+			}
 
-			this.setState({ registration });
-
-			// check if there are any pending sw
+			// check if there are any awaiting sw
 			const waitingWorker = registration.waiting;
 			if (waitingWorker && waitingWorker.state === 'installed') {
 				onStaled && onStaled();
 			}
 
-			registration.onupdatefound = () => {
+			this.setState({ registration });
+
+			registration.addEventListener('updatefound', () => {
 				const installingWorker = registration.installing;
-				installingWorker.onstatechange = () => {
-					if (installingWorker.state === 'installed') {
-						if (navigator.serviceWorker.controller) {
-							onUpdated && onUpdated();
+
+				if (installingWorker) {
+					installingWorker.onstatechange = () => {
+						if (installingWorker.state === 'installed') {
+							if (navigator.serviceWorker.controller) {
+								onUpdated && onUpdated();
+							}
+							onInstalled && onInstalled();
 						}
-						onInstalled && onInstalled();
-					}
-				};
-			};
+					};
+				}
+
+				const waitingWorker = registration.waiting;
+				if (waitingWorker) {
+					waitingWorker.onstatechange = () => {
+						if (waitingWorker.state === 'installed') {
+							if (navigator.serviceWorker.controller) {
+								onUpdated && onUpdated();
+							}
+							onInstalled && onInstalled();
+						}
+					};
+				}
+			});
 		} catch (err) {
 			console.error('Error during service worker registration:', err);
 			onError && onError(err);

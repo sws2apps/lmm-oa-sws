@@ -1,12 +1,12 @@
 {
   "name": "lmm-oa-sws",
-  "version": "1.0.0-alpha.82",
+  "version": "1.0.0-alpha.99",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@fingerprintjs/fingerprintjs-pro": "^3.6.2",
-    "@fontsource/roboto": "^4.5.5",
+    "@fontsource/roboto": "^4.5.7",
     "@mui/icons-material": "^5.6.2",
     "@mui/lab": "^5.0.0-alpha.81",
     "@mui/material": "^5.7.0",
@@ -16,7 +16,7 @@
     "downloadjs": "^1.4.7",
     "file-select-dialog": "^1.5.4",
     "html2pdf.js": "^0.10.1",
-    "i18next": "^21.8.1",
+    "i18next": "^21.8.2",
     "interweave": "^13.0.0",
     "json-as-xlsx": "^2.4.2",
     "jw-epub-parser": "^1.10.2",
