@@ -1,3 +1,10 @@
+# [1.0.0-alpha.101](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.100...v1.0.0-alpha.101) (2022-05-16)
+
+
+### Bug Fixes
+
+* **service-worker:** update hook to functional component ([90a3ad6](https://github.com/sws2apps/lmm-oa-sws/commit/90a3ad6e7108ab395fa32d3ab4cc36189b775ac3))
+
 # [1.0.0-alpha.100](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.99...v1.0.0-alpha.100) (2022-05-16)
 
 
