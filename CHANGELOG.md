@@ -1,3 +1,10 @@
+# [1.0.0-alpha.100](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.99...v1.0.0-alpha.100) (2022-05-16)
+
+
+### Bug Fixes
+
+* **service-worker:** add the webmanifest file to list of precached assets ([3b7390d](https://github.com/sws2apps/lmm-oa-sws/commit/3b7390dc4092dc44119b0ba547ff449aa12f4c87))
+
 # [1.0.0-alpha.99](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.98...v1.0.0-alpha.99) (2022-05-16)
 
 
