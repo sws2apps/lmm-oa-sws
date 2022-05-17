@@ -1,3 +1,10 @@
+# [1.0.0-alpha.102](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.101...v1.0.0-alpha.102) (2022-05-17)
+
+
+### Bug Fixes
+
+* **app:** change S-89 and Schedule Template to be fetched on load ([f5bc87b](https://github.com/sws2apps/lmm-oa-sws/commit/f5bc87b03c2f38e9f74f0e02cd457ef9816a1328))
+
 # [1.0.0-alpha.101](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.100...v1.0.0-alpha.101) (2022-05-16)
 
 
