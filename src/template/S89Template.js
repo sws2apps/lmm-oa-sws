@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { useTranslation } from 'react-i18next';
@@ -7,6 +7,11 @@ import html2pdf from 'html2pdf.js';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
+import CircularProgress from '@mui/material/CircularProgress';
+import Container from '@mui/material/Container';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -31,7 +36,10 @@ const S89Template = () => {
 	const appLang = useRecoilValue(appLangState);
 	const s89Data = useRecoilValue(s89DataState);
 
+	const [dlgOpen, setDlgOpen] = useState(false);
+
 	const savePDF = async () => {
+		setDlgOpen(true);
 		const element = document.getElementById('S89-wrapper');
 		var opt = {
 			filename: 'S-89.pdf',
@@ -39,9 +47,14 @@ const S89Template = () => {
 			html2canvas: { scale: 2 },
 			jsPDF: { unit: 'in', format: [3.35, 4.45], orientation: 'portrait' },
 		};
-		console.log('saving...');
 		await html2pdf().set(opt).from(element).save();
-		console.log('saved');
+		setDlgOpen(false);
+	};
+
+	const handleClose = (event, reason) => {
+		if (reason === 'backdropClick' || reason === 'escapeKeyDown') {
+			return;
+		}
 	};
 
 	useEffect(() => {
@@ -52,6 +65,27 @@ const S89Template = () => {
 
 	return (
 		<Box>
+			<Dialog
+				open={dlgOpen}
+				onClose={handleClose}
+				aria-labelledby='alert-dialog-title'
+				aria-describedby='alert-dialog-description'
+			>
+				<DialogTitle id='alert-dialog-title'>
+					{t('global.pleaseWait')}
+				</DialogTitle>
+				<DialogContent>
+					<Container
+						sx={{
+							display: 'flex',
+							justifyContent: 'center',
+							padding: '15px',
+						}}
+					>
+						<CircularProgress disableShrink color='secondary' size={'60px'} />
+					</Container>
+				</DialogContent>
+			</Dialog>
 			{s89Data.length > 0 && (
 				<>
 					<Button
