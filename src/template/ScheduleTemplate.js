@@ -111,7 +111,6 @@ const ScheduleTemplate = () => {
 								</Typography>
 							</Box>
 							{data.map((weekItem) => {
-								console.log(month);
 								const dateV =
 									weekItem.week.split('/')[1] + ' ' + month.toUpperCase();
 
@@ -151,7 +150,6 @@ const ScheduleTemplate = () => {
 													marginBottom: '5px',
 												}}
 											>
-												{console.log(weekItem.scheduleData.week_type_name)}
 												{weekItem.scheduleData.week_type_name.toUpperCase()}
 											</Typography>
 										)}
