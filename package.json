@@ -19,9 +19,7 @@
     "i18next": "^21.8.2",
     "interweave": "^13.0.0",
     "json-as-xlsx": "^2.4.2",
-    "jspdf": "^2.5.1",
     "jw-epub-parser": "^1.10.2",
-    "public-encrypt": "^4.0.3",
     "qrcode": "^1.5.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
@@ -65,6 +63,7 @@
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/exec": "^6.0.2",
-    "@semantic-release/git": "^10.0.1"
+    "@semantic-release/git": "^10.0.1",
+    "prop-types": "^15.8.1"
   }
 }
