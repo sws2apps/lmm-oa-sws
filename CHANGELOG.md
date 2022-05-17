@@ -4,6 +4,14 @@
 ### Bug Fixes
 
 * **schedule-template:** html render exp 1 ([b570fcd](https://github.com/sws2apps/lmm-oa-sws/commit/b570fcddfca8f27414165b41714a441d0209448e))
+* **schedule-template:** html render exp 2 ([5a3fdd2](https://github.com/sws2apps/lmm-oa-sws/commit/5a3fdd27e71106241946d4f20bb3c12e9f67c9f8))
+
+# [1.0.0-alpha.104](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.103...v1.0.0-alpha.104) (2022-05-17)
+
+
+### Bug Fixes
+
+* **schedule-template:** html render exp 1 ([b570fcd](https://github.com/sws2apps/lmm-oa-sws/commit/b570fcddfca8f27414165b41714a441d0209448e))
 
 # [1.0.0-alpha.103](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.102...v1.0.0-alpha.103) (2022-05-17)
 
