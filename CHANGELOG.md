@@ -1,3 +1,10 @@
+# [1.0.0-alpha.105](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.104...v1.0.0-alpha.105) (2022-05-17)
+
+
+### Bug Fixes
+
+* **schedule-template:** html render exp 3 ([584d8b3](https://github.com/sws2apps/lmm-oa-sws/commit/584d8b390e43a14a3c9e5998083555a964d86fa5))
+
 # [1.0.0-alpha.104](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.103...v1.0.0-alpha.104) (2022-05-17)
 
 
