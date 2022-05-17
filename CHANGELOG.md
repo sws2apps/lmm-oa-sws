@@ -1,3 +1,10 @@
+# [1.0.0-alpha.107](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.106...v1.0.0-alpha.107) (2022-05-17)
+
+
+### Bug Fixes
+
+* **schedule-template:** page not rendered ([8496685](https://github.com/sws2apps/lmm-oa-sws/commit/849668532eaeb96513e0039ef71204f308ec6ce3))
+
 # [1.0.0-alpha.106](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.105...v1.0.0-alpha.106) (2022-05-17)
 
 
