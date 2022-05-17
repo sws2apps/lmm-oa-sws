@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { useTranslation } from 'react-i18next';
+import html2pdf from 'html2pdf.js';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
@@ -29,7 +30,6 @@ const ScheduleTemplate = () => {
 	const monthNames = useRecoilValue(monthNamesState);
 
 	const savePDF = () => {
-		var html2pdf = require('html2pdf.js');
 		const element = document.getElementById('schedule_template');
 		var opt = {
 			margin: [0.2, 0.5, 0.2, 0.5],
@@ -111,6 +111,7 @@ const ScheduleTemplate = () => {
 								</Typography>
 							</Box>
 							{data.map((weekItem) => {
+								console.log(month);
 								const dateV =
 									weekItem.week.split('/')[1] + ' ' + month.toUpperCase();
 
@@ -150,6 +151,7 @@ const ScheduleTemplate = () => {
 													marginBottom: '5px',
 												}}
 											>
+												{console.log(weekItem.scheduleData.week_type_name)}
 												{weekItem.scheduleData.week_type_name.toUpperCase()}
 											</Typography>
 										)}
