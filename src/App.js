@@ -10,6 +10,8 @@ import Layout from './components/root/Layout';
 import ServiceWorkerWrapper from './components/root/ServiceWorkerWrapper';
 import Startup from './pages/Startup';
 import UserSignOut from './components/root/UserSignOut';
+import ScheduleTemplate from './template/ScheduleTemplate';
+import S89Template from './template/S89Template';
 import {
 	apiHostState,
 	appStageState,
@@ -22,8 +24,6 @@ const Schedule = lazy(() => import('./pages/Schedule'));
 const Settings = lazy(() => import('./pages/Settings'));
 const SourceMaterial = lazy(() => import('./pages/SourceMaterial'));
 const Students = lazy(() => import('./pages/Students'));
-const ScheduleTemplate = lazy(() => import('./template/ScheduleTemplate'));
-const S89Template = lazy(() => import('./template/S89Template'));
 const Administration = lazy(() => import('./pages/Administration'));
 
 const theme = createTheme({

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import { Markup } from 'interweave';
+import html2pdf from 'html2pdf.js';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
@@ -30,8 +31,7 @@ const S89Template = () => {
 	const appLang = useRecoilValue(appLangState);
 	const s89Data = useRecoilValue(s89DataState);
 
-	const savePDF = () => {
-		const html2pdf = require('html2pdf.js');
+	const savePDF = async () => {
 		const element = document.getElementById('S89-wrapper');
 		var opt = {
 			filename: 'S-89.pdf',
@@ -39,7 +39,9 @@ const S89Template = () => {
 			html2canvas: { scale: 2 },
 			jsPDF: { unit: 'in', format: [3.35, 4.45], orientation: 'portrait' },
 		};
-		html2pdf().set(opt).from(element).save();
+		console.log('saving...');
+		await html2pdf().set(opt).from(element).save();
+		console.log('saved');
 	};
 
 	useEffect(() => {
