@@ -30,13 +30,16 @@ export const dbGetScheduleWeekInfo = async (weekOf) => {
 };
 
 export const dbGetWeekTypeName = async (weekType) => {
+	const appLang = await promiseGetRecoil(appLangState) || 'e';
+	const lang = appLang.toUpperCase();
+
 	var srcWeekType = '';
 	if (weekType === '') {
 		return srcWeekType;
 	} else {
 		var i = parseInt(weekType, 10);
 		const appData = await appDb.table('week_type').get(i);
-		srcWeekType = appData.week_type_name;
+		srcWeekType = appData.week_type_name[lang];
 		return srcWeekType;
 	}
 };
