@@ -97,7 +97,7 @@ const ScheduleTemplate = () => {
 									}}
 								>
 									{congName !== '' && congNumber !== ''
-										? `${congName.toUpperCase()} (${congNumber.toUpperCase()})`
+										? `${congName.toUpperCase()} (${congNumber})`
 										: ''}
 								</Typography>
 								<Typography
