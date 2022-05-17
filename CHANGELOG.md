@@ -1,3 +1,10 @@
+# [1.0.0-alpha.103](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.102...v1.0.0-alpha.103) (2022-05-17)
+
+
+### Bug Fixes
+
+* **schedule-template:** add logging for troubleshooting ([8f48258](https://github.com/sws2apps/lmm-oa-sws/commit/8f48258197e6ee2bd98dd20801d37b75ee193c73))
+
 # [1.0.0-alpha.102](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.101...v1.0.0-alpha.102) (2022-05-17)
 
 
