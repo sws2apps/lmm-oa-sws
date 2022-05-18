@@ -2,7 +2,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { RecoilRoot } from 'recoil';
 import RecoilOutside, { promiseSetRecoil } from 'recoil-outside';
-import WithServiceWorker from './components/root/WithServiceWorker';
+import ServiceWorkerWrapper from '@sws2apps/react-sw-helper';
 import './i18n';
 import App from './App';
 import '@fontsource/roboto/300.css';
@@ -18,8 +18,7 @@ const root = createRoot(container);
 root.render(
 	<RecoilRoot>
 		<RecoilOutside />
-		<WithServiceWorker
-			registerOnMount={process.env.NODE_ENV === 'production'}
+		<ServiceWorkerWrapper
 			onError={(err) => console.log(`An error occured: ${err}`)}
 			onInstalled={() => onSWInstalled()}
 			onUpdated={() => onSWUpdated()}
@@ -27,7 +26,7 @@ root.render(
 			publicServiceWorkerDest='/service-worker.js'
 		>
 			{({ update }) => <App updatePwa={update} />}
-		</WithServiceWorker>
+		</ServiceWorkerWrapper>
 	</RecoilRoot>
 );
 
