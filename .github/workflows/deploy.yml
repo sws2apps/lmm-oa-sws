@@ -42,7 +42,7 @@ jobs:
 
       - name: Deploy to Firebase
         if: ${{ steps.check_build.outputs.files_exists == 'true' }}
-        uses: sws2apps/firebase-deployment@7814e4dc7d5035839d138c9ba43a858eb115248e
+        uses: sws2apps/firebase-deployment@036aa286a23c07f56572d03819c0a21f60dea601
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           FIREBASE_PROJECT: ${{ secrets.FIREBASE_PROJECT }}
