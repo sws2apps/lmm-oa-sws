@@ -1,3 +1,17 @@
+# [1.0.0-alpha.111](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.110...v1.0.0-alpha.111) (2022-05-19)
+
+
+### Features
+
+* **deps:** bump i18next from 21.8.2 to 21.8.3 ([4bc4c9a](https://github.com/sws2apps/lmm-oa-sws/commit/4bc4c9a61773b64705c73b660b3d2b67fa38cc4c))
+
+# [1.0.0-alpha.110](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.109...v1.0.0-alpha.110) (2022-05-18)
+
+
+### Features
+
+* **deps:** add @sws2apps/react-sw-helper ([bc4722d](https://github.com/sws2apps/lmm-oa-sws/commit/bc4722db071397db963f77d500413214c3e496bf))
+
 # [1.0.0-alpha.109](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.108...v1.0.0-alpha.109) (2022-05-18)
 
 
