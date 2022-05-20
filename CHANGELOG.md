@@ -1,3 +1,10 @@
+# [1.0.0-alpha.112](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.111...v1.0.0-alpha.112) (2022-05-20)
+
+
+### Features
+
+* **email:** add note about verifying junk or spam folder ([37b9a84](https://github.com/sws2apps/lmm-oa-sws/commit/37b9a84a6d198685c9d288194127a47e95b89d70))
+
 # [1.0.0-alpha.111](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.110...v1.0.0-alpha.111) (2022-05-19)
 
 
