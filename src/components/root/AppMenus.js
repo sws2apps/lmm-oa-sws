@@ -202,10 +202,15 @@ const AppMenus = (props) => {
 						<IconButton
 							color='inherit'
 							edge='start'
-							sx={{ marginRight: '8px' }}
+							sx={sharedStyles.menuIcon}
 							onClick={() => handleInstallPwa()}
 						>
 							<GetApp />
+							{largeView && (
+								<Typography sx={{ marginLeft: '5px' }} variant='body1'>
+									{t('global.install')}
+								</Typography>
+							)}
 						</IconButton>
 					)}
 					<AppLanguage />
