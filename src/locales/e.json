@@ -105,6 +105,8 @@
     "global.cacheCompleted": "LMM-OA can be used offline now",
     "global.signIn": "Sign in",
     "global.waitSignOut": "Please wait! Don’t close your browser ...",
+    "global.about": "About",
+    "global.quit": "Quit",
 
     "startup.welcomeTitle": "Welcome to LMM-OA",
     "startup.welcomeDescription": "LMM-OA (or Life and Ministry Meeting Overseer Assistant) is an application designed for the Life and Ministry Meeting Overseer.",
