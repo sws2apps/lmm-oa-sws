@@ -22,7 +22,7 @@ root.render(
 			onError={(err) => console.log(`An error occured: ${err}`)}
 			onInstalled={() => onSWInstalled()}
 			onUpdated={() => onSWUpdated()}
-			onStaled={() => onSWUpdated()}
+			onWaiting={() => onSWUpdated()}
 			publicServiceWorkerDest='/service-worker.js'
 		>
 			{({ update }) => <App updatePwa={update} />}
