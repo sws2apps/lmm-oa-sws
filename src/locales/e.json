@@ -158,7 +158,7 @@
     "login.accountNewLink": "The verification email has been resent",
     "login.hostBlocked": "This device has been blocked from making any requests, try again later",
     "login.incorrectInfo": "Your username or password is incorrect",
-    "login.verifyAccount": "An email message has been sent you to verify your account. You will not be able to use your account if it has not been verified yet. Resend the verification message in case you did not received it.",
+    "login.verifyAccount": "An email message has been sent you to verify your account. You will not be able to use your account if it has not been verified yet. You may need to check the Spam or Junk Email folder. Resend the verification message in case you did not received it.",
     "login.blockedAccount": "This email address is blocked. Please verify that the information you provided are correct.",
     "login.resendVerify": "Resend verification email",
     "login.createCongregationAccount": "Request a congregation account",
