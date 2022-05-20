@@ -1,3 +1,10 @@
+# [1.0.0-alpha.114](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.113...v1.0.0-alpha.114) (2022-05-20)
+
+
+### Features
+
+* **deps:** update to sws2apps/react-sw-helper beta version ([9efc6b5](https://github.com/sws2apps/lmm-oa-sws/commit/9efc6b5dc056da2a5d1cc01a1b7541505e9396ef))
+
 # [1.0.0-alpha.113](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.112...v1.0.0-alpha.113) (2022-05-20)
 
 
