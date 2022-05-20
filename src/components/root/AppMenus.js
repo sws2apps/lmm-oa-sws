@@ -27,6 +27,17 @@ import {
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 const drawerWidth = 240;
 
+const sharedStyles = {
+	menuIcon: {
+		marginRight: '8px',
+		borderRadius: '8px',
+		'.MuiTouchRipple-ripple .MuiTouchRipple-child': {
+			borderRadius: 0,
+			backgroundColor: 'rgba(23, 32, 42, .3)',
+		},
+	},
+};
+
 const AppMenus = (props) => {
 	const location = useLocation();
 	const [mobileOpen, setMobileOpen] = useState(false);
@@ -42,6 +53,10 @@ const AppMenus = (props) => {
 
 	const theme = useTheme();
 	const miniView = useMediaQuery(theme.breakpoints.down('sm'), {
+		noSsr: true,
+	});
+
+	const largeView = useMediaQuery(theme.breakpoints.up('md'), {
 		noSsr: true,
 	});
 
@@ -129,23 +144,32 @@ const AppMenus = (props) => {
 					>
 						<MenuIcon />
 					</IconButton>
-					<Typography variant='h6' noWrap>
-						<Box sx={{ display: 'flex' }}>
-							<Box
-								sx={{
-									'@media screen and (max-width: 959px)': {
-										display: 'none',
-									},
-									'@media screen and (min-width: 960px)': {
-										marginRight: '3px',
-										display: 'block',
-									},
-								}}
-							>
-								LMM-OA |
-							</Box>
-							{appBarTitle}
-						</Box>
+					<Box
+						sx={{
+							alignItems: 'center',
+							'@media screen and (max-width: 959px)': {
+								display: 'none',
+							},
+							'@media screen and (min-width: 960px)': {
+								marginRight: '3px',
+								display: 'flex',
+							},
+						}}
+					>
+						<img
+							src='./img/appLogo.png'
+							alt='App Logo'
+							style={{
+								width: 'auto',
+								height: '40px',
+							}}
+						/>
+						<Typography noWrap sx={{ marginLeft: '10px', fontSize: '18px' }}>
+							LMM-OA |{' '}
+						</Typography>
+					</Box>
+					<Typography noWrap sx={{ fontSize: '18px' }}>
+						{appBarTitle}
 					</Typography>
 				</Toolbar>
 				<Box
@@ -187,15 +211,31 @@ const AppMenus = (props) => {
 					<AppLanguage />
 
 					<IconButton
-						color='inherit'
 						edge='start'
-						sx={{ marginRight: '8px' }}
+						color='inherit'
+						sx={sharedStyles.menuIcon}
 						onClick={() => handleAbout()}
 					>
 						<InfoIcon />
+						{largeView && (
+							<Typography sx={{ marginLeft: '5px' }} variant='body1'>
+								{t('global.about')}
+							</Typography>
+						)}
 					</IconButton>
-					<IconButton color='inherit' edge='start' onClick={handleLogout}>
+
+					<IconButton
+						color='inherit'
+						edge='start'
+						sx={sharedStyles.menuIcon}
+						onClick={handleLogout}
+					>
 						<PowerSettingsNewIcon />
+						{largeView && (
+							<Typography sx={{ marginLeft: '5px' }} variant='body1'>
+								{t('global.quit')}
+							</Typography>
+						)}
 					</IconButton>
 				</Box>
 			</AppBar>
@@ -232,12 +272,10 @@ const AppMenus = (props) => {
 						},
 					}}
 				>
-					<Typography
-						variant='h6'
-						noWrap
+					<Box
 						sx={{
 							display: 'flex',
-							flexDirection: 'column',
+							flexDirection: 'row',
 							alignItems: 'center',
 							justifyContent: 'center',
 							color: 'white',
@@ -245,8 +283,18 @@ const AppMenus = (props) => {
 							height: 50,
 						}}
 					>
-						LMM-OA
-					</Typography>
+						<img
+							src='./img/appLogo.png'
+							alt='App Logo'
+							style={{
+								width: 'auto',
+								height: '40px',
+							}}
+						/>
+						<Typography sx={{ marginLeft: '10px', fontSize: '18px' }}>
+							LMM-OA
+						</Typography>
+					</Box>
 					<AppDrawer />
 				</Drawer>
 				<Drawer

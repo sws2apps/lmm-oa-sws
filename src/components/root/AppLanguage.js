@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { getI18n, useTranslation } from 'react-i18next';
+import { useTheme } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
 import Menu from '@mui/material/Menu';
@@ -23,6 +25,11 @@ const AppLanguage = (props) => {
 	const [userChange, setUserChange] = useState(false);
 
 	const blueColor = blue[400];
+
+	const theme = useTheme();
+	const largeView = useMediaQuery(theme.breakpoints.up('md'), {
+		noSsr: true,
+	});
 
 	let isMenuOpen = Boolean(anchorEl);
 
@@ -67,17 +74,27 @@ const AppLanguage = (props) => {
 
 	return (
 		<>
-			<Tooltip title={t('global.changeLanguage')}>
+			<Tooltip title={largeView ? '' : t('global.changeLanguage')}>
 				<IconButton
 					color='inherit'
 					edge='start'
 					sx={{
 						marginRight: '8px',
 						backgroundColor: isStartup ? blueColor : null,
+						borderRadius: '8px',
+						'.MuiTouchRipple-ripple .MuiTouchRipple-child': {
+							borderRadius: 0,
+							backgroundColor: 'rgba(23, 32, 42, .3)',
+						},
 					}}
 					onClick={handleClick}
 				>
 					<TranslateIcon />
+					{largeView && (
+						<Typography sx={{ marginLeft: '5px' }} variant='body1'>
+							{t('global.changeLanguage')}
+						</Typography>
+					)}
 				</IconButton>
 			</Tooltip>
 			<Menu

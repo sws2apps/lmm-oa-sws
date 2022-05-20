@@ -106,6 +106,8 @@
     "global.cacheCompleted": "Afaka mampiasa ny LMM-OA ianao izao na tsy misy internet aza",
     "global.signIn": "Hiditra",
     "global.waitSignOut": "Miandrasa kely azafady ...",
+    "global.about": "Mombamomba",
+    "global.quit": "Hanidy",
 
     "startup.welcomeTitle": "Tongasoa eto amin’ny LMM-OA",
     "startup.welcomeDescription": "Programa natao ho ampiasain’ny Mpiandraikitra ny Fivoriana Momba ny Fiainantsika sy ny Fanompoana ny LMM-OA (na Life and Ministry Meeting Overseer Assistant).",
