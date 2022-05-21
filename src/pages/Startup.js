@@ -49,17 +49,17 @@ const Startup = () => {
 
 	useEffect(() => {
 		const checkLoginState = async () => {
-			let { isLoggedOut } = await dbGetAppSettings();
+			let { isLoggedOut, userPass, username } = await dbGetAppSettings();
 
 			isLoggedOut = isLoggedOut === undefined ? true : isLoggedOut;
 
-			if (isLoggedOut) {
-				setIsSetup(true);
-			} else {
+			if (!isLoggedOut && userPass.length > 0 && username.length > 0) {
 				setTimeout(async () => {
 					await loadApp();
 					setIsAppLoad(false);
 				}, [2000]);
+			} else {
+				setIsSetup(true);
 			}
 		};
 
