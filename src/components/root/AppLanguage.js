@@ -91,7 +91,7 @@ const AppLanguage = (props) => {
 				>
 					<TranslateIcon />
 					{largeView && (
-						<Typography sx={{ marginLeft: '5px' }} variant='body1'>
+						<Typography sx={{ marginLeft: '5px', fontSize: '14px' }}>
 							{t('global.changeLanguage')}
 						</Typography>
 					)}

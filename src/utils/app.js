@@ -20,6 +20,7 @@ import {
 	congNumberState,
 	liveClassState,
 	meetingDayState,
+	usernameState,
 } from '../appStates/appCongregation';
 import { appLangState } from '../appStates/appSettings';
 import {
@@ -36,19 +37,26 @@ export const loadApp = async () => {
 	const I18n = getI18n();
 
 	await initAppDb();
-	let { cong_number, cong_name, class_count, meeting_day, liveEventClass } =
-		await dbGetAppSettings();
+	let {
+		username,
+		cong_number,
+		cong_name,
+		class_count,
+		meeting_day,
+		liveEventClass,
+	} = await dbGetAppSettings();
 
 	const app_lang = localStorage.getItem('app_lang') || 'e';
 
 	await checkSrcUpdate();
 
-	await promiseSetRecoil(congNameState, cong_name);
-	await promiseSetRecoil(congNumberState, cong_number);
-	await promiseSetRecoil(classCountState, class_count);
-	await promiseSetRecoil(meetingDayState, meeting_day);
-	await promiseSetRecoil(appLangState, app_lang);
-	await promiseSetRecoil(liveClassState, liveEventClass);
+	await promiseSetRecoil(usernameState, username || '');
+	await promiseSetRecoil(congNameState, cong_name || '');
+	await promiseSetRecoil(congNumberState, cong_number || '');
+	await promiseSetRecoil(classCountState, class_count || 1);
+	await promiseSetRecoil(meetingDayState, meeting_day || 3);
+	await promiseSetRecoil(appLangState, app_lang || 'e');
+	await promiseSetRecoil(liveClassState, liveEventClass || false);
 
 	I18n.changeLanguage(app_lang);
 

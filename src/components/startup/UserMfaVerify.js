@@ -75,6 +75,7 @@ const UserMfaVerify = () => {
 
 					const data = await res.json();
 					if (res.status === 200) {
+						console.log(data);
 						if (data.congregation) {
 							if (data.congregation.cong_role.length > 0) {
 								if (
@@ -89,6 +90,7 @@ const UserMfaVerify = () => {
 
 									// save congregation update if any
 									let obj = {};
+									obj.username = data.username;
 									obj.isCongVerified = true;
 									obj.cong_name = data.congregation.cong_name;
 									obj.cong_number = data.congregation.cong_number;
