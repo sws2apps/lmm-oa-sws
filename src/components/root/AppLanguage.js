@@ -79,13 +79,13 @@ const AppLanguage = (props) => {
 					color='inherit'
 					edge='start'
 					sx={{
-						marginRight: '8px',
 						backgroundColor: isStartup ? blueColor : null,
 						borderRadius: '8px',
 						'.MuiTouchRipple-ripple .MuiTouchRipple-child': {
 							borderRadius: 0,
 							backgroundColor: 'rgba(23, 32, 42, .3)',
 						},
+						marginRight: largeView ? '5px' : '8px',
 					}}
 					onClick={handleClick}
 				>

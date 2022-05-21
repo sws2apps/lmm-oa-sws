@@ -208,7 +208,6 @@ const AppMenus = (props) => {
 							sx={{
 								display: 'flex',
 								alignItems: 'center',
-								marginRight: '40px',
 								backgroundColor: '#F5EEF8',
 								padding: '2px 10px 2px 10px',
 								height: '25px',
@@ -216,6 +215,7 @@ const AppMenus = (props) => {
 								borderRadius: '5px',
 								fontSize: '12px',
 								fontWeight: 'bold',
+								marginRight: '20px',
 							}}
 						>
 							{miniView ? appStage.substring(0, 1).toUpperCase() : appStage}
@@ -228,7 +228,7 @@ const AppMenus = (props) => {
 							edge='start'
 							sx={{
 								...sharedStyles.menuIcon,
-								marginLeft: miniView ? '5px' : null,
+								marginRight: largeView ? '5px' : '8px',
 							}}
 							onClick={() => handleInstallPwa()}
 						>
@@ -240,6 +240,7 @@ const AppMenus = (props) => {
 							)}
 						</IconButton>
 					)}
+
 					<AppLanguage />
 
 					<IconButton
@@ -247,7 +248,7 @@ const AppMenus = (props) => {
 						edge='start'
 						sx={{
 							...sharedStyles.menuIcon,
-							marginLeft: miniView ? '5px' : null,
+							marginRight: largeView ? '5px' : '8px',
 						}}
 						onClick={handleMenu}
 						id='button-account'
