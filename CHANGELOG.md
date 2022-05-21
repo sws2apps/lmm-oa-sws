@@ -1,3 +1,10 @@
+# [1.0.0-alpha.117](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.116...v1.0.0-alpha.117) (2022-05-21)
+
+
+### Bug Fixes
+
+* **startup:** test undefined vars on startup ([dd45335](https://github.com/sws2apps/lmm-oa-sws/commit/dd4533574dfb32638eec75556e67c7e06cb3f033))
+
 # [1.0.0-alpha.116](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.115...v1.0.0-alpha.116) (2022-05-21)
 
 
