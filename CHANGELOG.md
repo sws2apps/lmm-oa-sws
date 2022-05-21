@@ -1,3 +1,10 @@
+# [1.0.0-alpha.119](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.118...v1.0.0-alpha.119) (2022-05-21)
+
+
+### Features
+
+* **webmanifest:** add id property ([8e28a5f](https://github.com/sws2apps/lmm-oa-sws/commit/8e28a5f03b5332f0bb27322d195bf5e5624d472a))
+
 # [1.0.0-alpha.118](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.117...v1.0.0-alpha.118) (2022-05-21)
 
 
