@@ -1,3 +1,10 @@
+# [1.0.0-alpha.116](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.115...v1.0.0-alpha.116) (2022-05-21)
+
+
+### Bug Fixes
+
+* **app:** startup check flow ([ea9f687](https://github.com/sws2apps/lmm-oa-sws/commit/ea9f68775163cab9cf284348067d305b754dd464))
+
 # [1.0.0-alpha.115](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.114...v1.0.0-alpha.115) (2022-05-21)
 
 
