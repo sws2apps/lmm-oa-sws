@@ -53,7 +53,7 @@ const Startup = () => {
 
 			isLoggedOut = isLoggedOut === undefined ? true : isLoggedOut;
 
-			if (!isLoggedOut && userPass.length > 0 && username.length > 0) {
+			if (!isLoggedOut && userPass?.length > 0 && username?.length > 0) {
 				setTimeout(async () => {
 					await loadApp();
 					setIsAppLoad(false);
