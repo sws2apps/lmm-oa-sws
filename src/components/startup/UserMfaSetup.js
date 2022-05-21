@@ -111,6 +111,7 @@ const UserMfaSetup = () => {
 
 									// save congregation update if any
 									let obj = {};
+									obj.username = data.username;
 									obj.isCongVerified = true;
 									obj.cong_name = data.congregation.cong_name;
 									obj.cong_number = data.congregation.cong_number;

@@ -115,6 +115,10 @@ appDb.version(23).stores({
 	app_settings:
 		'++id, cong_number, cong_name, class_count, meeting_day, userPass, isLoggedOut, isScheduleConverted, isCongVerified',
 });
+appDb.version(24).stores({
+	app_settings:
+		'++id, username, cong_number, cong_name, class_count, meeting_day, userPass, isLoggedOut, isScheduleConverted, isCongVerified',
+});
 
 appDb.on('populate', function () {
 	appDb.app_settings.add({

@@ -6,18 +6,27 @@ import styled from '@emotion/styled';
 import { useTheme } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CssBaseline from '@mui/material/CssBaseline';
+import AccountCircle from '@mui/icons-material/AccountCircle';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import GetApp from '@mui/icons-material/GetApp';
 import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import AppDrawer from './AppDrawer';
 import AppLanguage from './AppLanguage';
+import {
+	congInfoFormattedState,
+	usernameState,
+} from '../../appStates/appCongregation';
 import {
 	appStageState,
 	isAboutOpenState,
@@ -42,12 +51,17 @@ const AppMenus = (props) => {
 	const location = useLocation();
 	const [mobileOpen, setMobileOpen] = useState(false);
 	const [appBarTitle, setAppBarTitle] = useState('');
+	const [anchorEl, setAnchorEl] = useState(null);
 	const { enabledInstall, isLoading, installPwa } = props;
+
+	const open = Boolean(anchorEl);
 
 	const setIsAboutOpen = useSetRecoilState(isAboutOpenState);
 	const setIsAppClosing = useSetRecoilState(isAppClosingState);
 
 	const appStage = useRecoilValue(appStageState);
+	const congInfo = useRecoilValue(congInfoFormattedState);
+	const username = useRecoilValue(usernameState);
 
 	const { t } = useTranslation();
 
@@ -60,6 +74,14 @@ const AppMenus = (props) => {
 		noSsr: true,
 	});
 
+	const handleMenu = (e) => {
+		setAnchorEl(e.currentTarget);
+	};
+
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
+
 	const handleInstallPwa = () => {
 		installPwa();
 	};
@@ -69,10 +91,12 @@ const AppMenus = (props) => {
 	};
 
 	const handleAbout = () => {
+		handleClose();
 		setIsAboutOpen(true);
 	};
 
 	const handleLogout = async () => {
+		handleClose();
 		setIsAppClosing(true);
 	};
 
@@ -176,6 +200,7 @@ const AppMenus = (props) => {
 					sx={{
 						minWidth: '30px',
 						display: 'flex',
+						alignItems: 'center',
 					}}
 				>
 					{appStage !== 'LIVE' && (
@@ -183,8 +208,7 @@ const AppMenus = (props) => {
 							sx={{
 								display: 'flex',
 								alignItems: 'center',
-								marginTop: '8px',
-								marginRight: '20px',
+								marginRight: '40px',
 								backgroundColor: '#F5EEF8',
 								padding: '2px 10px 2px 10px',
 								height: '25px',
@@ -202,7 +226,10 @@ const AppMenus = (props) => {
 						<IconButton
 							color='inherit'
 							edge='start'
-							sx={sharedStyles.menuIcon}
+							sx={{
+								...sharedStyles.menuIcon,
+								marginLeft: miniView ? '5px' : null,
+							}}
 							onClick={() => handleInstallPwa()}
 						>
 							<GetApp />
@@ -216,32 +243,98 @@ const AppMenus = (props) => {
 					<AppLanguage />
 
 					<IconButton
-						edge='start'
-						color='inherit'
-						sx={sharedStyles.menuIcon}
-						onClick={() => handleAbout()}
-					>
-						<InfoIcon />
-						{largeView && (
-							<Typography sx={{ marginLeft: '5px' }} variant='body1'>
-								{t('global.about')}
-							</Typography>
-						)}
-					</IconButton>
-
-					<IconButton
 						color='inherit'
 						edge='start'
-						sx={sharedStyles.menuIcon}
-						onClick={handleLogout}
+						sx={{
+							...sharedStyles.menuIcon,
+							marginLeft: miniView ? '5px' : null,
+						}}
+						onClick={handleMenu}
+						id='button-account'
+						aria-controls={open ? 'menu-account' : undefined}
+						aria-haspopup='true'
+						aria-expanded={open ? 'true' : undefined}
 					>
-						<PowerSettingsNewIcon />
 						{largeView && (
-							<Typography sx={{ marginLeft: '5px' }} variant='body1'>
-								{t('global.quit')}
-							</Typography>
+							<Box sx={{ marginRight: '5px' }}>
+								<Typography
+									sx={{
+										marginLeft: '5px',
+										textAlign: 'right',
+										fontSize: '12px',
+									}}
+								>
+									{username}
+								</Typography>
+								<Typography
+									sx={{
+										marginLeft: '5px',
+										textAlign: 'right',
+										fontSize: '12px',
+									}}
+								>
+									{congInfo}
+								</Typography>
+							</Box>
 						)}
+						<AccountCircle sx={{ fontSize: '40px' }} />
 					</IconButton>
+					<Menu
+						sx={{ marginTop: '40px' }}
+						id='menu-account'
+						MenuListProps={{
+							'aria-labelledby': 'button-account',
+						}}
+						anchorEl={anchorEl}
+						anchorOrigin={{
+							vertical: 'top',
+							horizontal: 'right',
+						}}
+						keepMounted
+						transformOrigin={{
+							vertical: 'top',
+							horizontal: 'right',
+						}}
+						open={Boolean(anchorEl)}
+						onClose={handleClose}
+					>
+						<MenuItem onClick={handleAbout}>
+							<ListItemIcon>
+								<InfoIcon fontSize='medium' />
+							</ListItemIcon>
+							<ListItemText>{t('global.about')}</ListItemText>
+						</MenuItem>
+						<MenuItem onClick={handleLogout}>
+							<ListItemIcon>
+								<PowerSettingsNewIcon fontSize='medium' />
+							</ListItemIcon>
+							<ListItemText>{t('global.quit')}</ListItemText>
+						</MenuItem>
+						{!largeView && (
+							<MenuItem disabled={true} sx={{ opacity: '1 !important' }}>
+								<Box sx={{ borderTop: '1px outset', paddingTop: '5px' }}>
+									<Typography
+										sx={{
+											marginLeft: '5px',
+											textAlign: 'right',
+											fontSize: '12px',
+										}}
+									>
+										{username}
+									</Typography>
+									<Typography
+										sx={{
+											marginLeft: '5px',
+											textAlign: 'right',
+											fontSize: '12px',
+										}}
+									>
+										{congInfo}
+									</Typography>
+								</Box>
+							</MenuItem>
+						)}
+					</Menu>
 				</Box>
 			</AppBar>
 

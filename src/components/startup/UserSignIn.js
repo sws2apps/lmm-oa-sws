@@ -212,8 +212,8 @@ const UserSignIn = () => {
 
 	useEffect(() => {
 		const checkDbs = async () => {
-			const { userPass } = await dbGetAppSettings();
-			if (!userPass) {
+			const { username, userPass } = await dbGetAppSettings();
+			if (!username || !userPass) {
 				setIsInternetNeeded(true);
 			} else {
 				setIsInternetNeeded(false);

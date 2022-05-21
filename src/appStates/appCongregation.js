@@ -1,4 +1,4 @@
-import { atom } from 'recoil';
+import { atom, selector } from 'recoil';
 
 export const congNameState = atom({
 	key: 'congName',
@@ -43,4 +43,24 @@ export const classCountState = atom({
 export const liveClassState = atom({
 	key: 'liveClass',
 	default: false,
+});
+
+export const usernameState = atom({
+	key: 'username',
+	default: '',
+});
+
+export const congInfoFormattedState = selector({
+	key: 'congInforFormattedState',
+	get: ({ get }) => {
+		const congName = get(congNameState);
+		const congNumber = get(congNumberState);
+
+		let formatted = '';
+		if (congName !== '' && congNumber !== '') {
+			formatted = `${congName} (${congNumber})`;
+		}
+
+		return formatted;
+	},
 });
