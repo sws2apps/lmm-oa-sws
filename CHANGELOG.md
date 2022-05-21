@@ -1,3 +1,10 @@
+# [1.0.0-alpha.118](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.117...v1.0.0-alpha.118) (2022-05-21)
+
+
+### Features
+
+* **app:** style update in appbar for smaller devices ([01eae82](https://github.com/sws2apps/lmm-oa-sws/commit/01eae820eceecc2d20977d621093a8de0464efdd))
+
 # [1.0.0-alpha.117](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.116...v1.0.0-alpha.117) (2022-05-21)
 
 
