@@ -75,7 +75,6 @@ const UserMfaVerify = () => {
 
 					const data = await res.json();
 					if (res.status === 200) {
-						console.log(data);
 						if (data.congregation) {
 							if (data.congregation.cong_role.length > 0) {
 								if (
