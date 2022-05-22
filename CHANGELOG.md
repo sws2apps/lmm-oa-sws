@@ -1,3 +1,10 @@
+# [1.0.0-alpha.121](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.120...v1.0.0-alpha.121) (2022-05-22)
+
+
+### Features
+
+* **app:** print app version on startup screen ([647bd03](https://github.com/sws2apps/lmm-oa-sws/commit/647bd03e8aa52c34f054913e858de2f24b8f11de))
+
 # [1.0.0-alpha.120](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.119...v1.0.0-alpha.120) (2022-05-22)
 
 
