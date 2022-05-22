@@ -1,4 +1,5 @@
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import AppLanguage from '../root/AppLanguage';
 
 const StartupHeader = ({ children }) => {
@@ -52,6 +53,18 @@ const StartupHeader = ({ children }) => {
 					}}
 				>
 					{children}
+					<Typography
+						sx={{
+							marginTop: '10px',
+							borderTop: '1px outset',
+							fontSize: '12px',
+							fontWeight: 'bold',
+							color: '#707B7C',
+							paddingTop: '2px',
+						}}
+					>
+						{`v${process.env.REACT_APP_VERSION}`}
+					</Typography>
 				</Box>
 			</Box>
 		</Box>
