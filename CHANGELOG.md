@@ -1,3 +1,10 @@
+# [1.0.0-alpha.120](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.119...v1.0.0-alpha.120) (2022-05-22)
+
+
+### Bug Fixes
+
+* **email-utils:** validate email address with underscore ([c798a95](https://github.com/sws2apps/lmm-oa-sws/commit/c798a9565e0103ae736ed6b62a529cb218fd9784))
+
 # [1.0.0-alpha.119](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.118...v1.0.0-alpha.119) (2022-05-21)
 
 
