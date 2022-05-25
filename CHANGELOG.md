@@ -1,3 +1,20 @@
+# [1.0.0-alpha.123](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.122...v1.0.0-alpha.123) (2022-05-24)
+
+
+### Features
+
+* **deps:** bump @mui/lab from 5.0.0-alpha.82 to 5.0.0-alpha.83 ([6cd6027](https://github.com/sws2apps/lmm-oa-sws/commit/6cd602798fc3c73d6ede8fa08e67acc524f4d732))
+* **deps:** bump @mui/material from 5.8.0 to 5.8.1 ([11289fa](https://github.com/sws2apps/lmm-oa-sws/commit/11289fa66f5eaab3a1dcf027bc8de0d28468264e))
+* **deps:** bump i18next from 21.8.3 to 21.8.4 ([4759fcc](https://github.com/sws2apps/lmm-oa-sws/commit/4759fcc85c5262249940ac0a22783acf0851379c))
+* **deps:** bump jw-epub-parser from 1.10.2 to 1.11.0 ([8fd1ee2](https://github.com/sws2apps/lmm-oa-sws/commit/8fd1ee294e8e648c67fa56995f92b3e396afcf43))
+
+# [1.0.0-alpha.122](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.121...v1.0.0-alpha.122) (2022-05-23)
+
+
+### Features
+
+* **deps:** bump @sws2apps/react-sw-helper from 1.0.0-beta.1 to 1.0.0 ([6e38752](https://github.com/sws2apps/lmm-oa-sws/commit/6e3875267b3dd004fe6e8e8647d203534251638e))
+
 # [1.0.0-alpha.121](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.120...v1.0.0-alpha.121) (2022-05-22)
 
 
