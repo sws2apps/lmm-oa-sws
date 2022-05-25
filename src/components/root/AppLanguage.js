@@ -65,6 +65,10 @@ const AppLanguage = (props) => {
 				let appLang = localStorage.getItem('app_lang') || 'e';
 				await i18n.changeLanguage(appLang);
 
+				const isoLang =
+					getI18n().getDataByLanguage(appLangLocal).translation['global.iso'];
+				document.documentElement.setAttribute('lang', isoLang);
+
 				setAppLang(appLang);
 			}
 		};
