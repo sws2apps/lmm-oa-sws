@@ -70,7 +70,7 @@ export const isValidJSON = async (fileJSON) => {
 
 export const dbRestoreDb = async (fileJSON) => {
 	// get user credentials before import
-	const { userPass } = await dbGetAppSettings();
+	const { userPass, username } = await dbGetAppSettings();
 
 	// do restore
 	await appDb.close();
@@ -79,7 +79,7 @@ export const dbRestoreDb = async (fileJSON) => {
 
 	// append saved user credentials
 	await appDb.open();
-	await dbUpdateAppSettings({ userPass: userPass });
+	await dbUpdateAppSettings({ userPass: userPass, username: username });
 	await appDb.close();
 };
 
@@ -87,15 +87,16 @@ export const dbExportDb = async (passcode) => {
 	try {
 		// remove user credentials before export
 		let appSettings = await dbGetAppSettings();
-		const { userPass } = appSettings;
+		const { userPass, username } = appSettings;
 		delete appSettings.userPass;
+		delete appSettings.username;
 		await dbUpdateAppSettings({ ...appSettings }, true);
 
 		// export indexedDb
 		const blob = await exportDB(appDb);
 
 		// pause export and restore credentials as soon as indexedDb is exported
-		await dbUpdateAppSettings({ userPass: userPass });
+		await dbUpdateAppSettings({ userPass: userPass, username: username });
 
 		// resume export function
 		const convertBase64 = () => {
