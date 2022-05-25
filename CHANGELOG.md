@@ -1,3 +1,11 @@
+# [1.0.0-alpha.124](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.123...v1.0.0-alpha.124) (2022-05-25)
+
+
+### Bug Fixes
+
+* **app:** set html lang on startup ([27f5851](https://github.com/sws2apps/lmm-oa-sws/commit/27f585184493f3dc4980c2f053f5551bba735223))
+* **backup:** exclude username from backup ([fe64046](https://github.com/sws2apps/lmm-oa-sws/commit/fe6404609b1a9908fff2a768a7d7b4ea3ebda673))
+
 # [1.0.0-alpha.123](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.122...v1.0.0-alpha.123) (2022-05-24)
 
 
