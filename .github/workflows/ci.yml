@@ -1,0 +1,27 @@
+name: E2E Tests
+
+on: [pull_request]
+
+permissions: read-all
+
+jobs:
+  cypress-run:
+    name: End-to-end tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository for cypress tests
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+
+      - name: Use Node.js current version
+        uses: actions/setup-node@17f8bd926464a1afa4c6a11669539e9c1ba77048
+        with:
+          node-version: current
+
+      - name: Install package dependencies
+        run: npm ci
+
+      - name: Preview application
+        run: npm run preview
+
+      - name: Run cypress for E2E
+        run: npm run test
