@@ -66,7 +66,7 @@ const AppLanguage = (props) => {
 				await i18n.changeLanguage(appLang);
 
 				const isoLang =
-					getI18n().getDataByLanguage(appLangLocal).translation['global.iso'];
+					getI18n().getDataByLanguage(appLang).translation['global.iso'];
 				document.documentElement.setAttribute('lang', isoLang);
 
 				setAppLang(appLang);
