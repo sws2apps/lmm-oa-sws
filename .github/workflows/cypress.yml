@@ -1,4 +1,4 @@
-name: Cypress tests
+name: Cypress QA
 
 on: [push]
 
@@ -12,7 +12,7 @@ jobs:
       - name: Checkout repository for cypress tests
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
-      - name: Cypress run
+      - name: Cypress Run E2E Tests and record
         uses: cypress-io/github-action@c662a784116e1a26360c4e1fc0a90feedb4b5ed3
         with:
           build: npm run build
