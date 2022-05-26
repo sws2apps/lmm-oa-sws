@@ -20,8 +20,8 @@ jobs:
       - name: Install package dependencies
         run: npm ci
 
-      - name: Preview application
-        run: npm run preview
-
-      - name: Run cypress for E2E
-        run: npm run test
+      - name: Cypress run
+        uses: cypress-io/github-action@c662a784116e1a26360c4e1fc0a90feedb4b5ed3
+        with:
+          build: npm build
+          start: npm preview
