@@ -91,10 +91,10 @@ const TermsUse = () => {
 				open={open}
 				onClose={handleClose}
 				scroll='paper'
-				aria-labelledby='scroll-dialog-title'
+				aria-labelledby='dlg-terms-use'
 				aria-describedby='scroll-dialog-description'
 			>
-				<DialogTitle id='scroll-dialog-title'>
+				<DialogTitle id='dlg-terms-use'>
 					<Box
 						sx={{
 							display: 'flex',
@@ -247,6 +247,7 @@ const TermsUse = () => {
 						<FormControlLabel
 							control={
 								<Checkbox
+									id='checkContinue'
 									checked={readComplete}
 									onChange={(e) => setReadComplete(e.target.checked)}
 								/>
@@ -267,7 +268,7 @@ const TermsUse = () => {
 						alignItems: 'center',
 					}}
 				>
-					<Box sx={{ marginLeft: '15px' }}>
+					<Box sx={{ marginLeft: '15px' }} id='appLanguage'>
 						<AppLanguage isStartup />
 					</Box>
 					<Box>

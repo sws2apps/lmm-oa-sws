@@ -37,7 +37,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build && workbox generateSW workbox-config.cjs",
-    "preview": "npm run build && serve -l 5000 -s build"
+    "preview": "serve -l 5000 -s build",
+    "test": "cypress run"
   },
   "eslintConfig": {
     "extends": [
@@ -66,6 +67,7 @@
     "@semantic-release/exec": "^6.0.2",
     "@semantic-release/git": "^10.0.1",
     "cypress": "^9.7.0",
-    "prop-types": "^15.8.1"
+    "prop-types": "^15.8.1",
+    "serve": "^13.0.2"
   }
 }
