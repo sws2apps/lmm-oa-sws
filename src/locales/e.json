@@ -108,6 +108,9 @@
     "global.about": "About",
     "global.quit": "Quit",
     "global.install": "Install",
+    "global.whatsNew": "What’s new",
+    "global.nothingNew": "There is nothing new at this moment. Come back here later to check again.",
+    "global.offlineWhatsNew": "You are currently offline, so what’s new cannot be fetched.",
 
     "startup.welcomeTitle": "Welcome to LMM-OA",
     "startup.welcomeDescription": "LMM-OA (or Life and Ministry Meeting Overseer Assistant) is an application designed for the Life and Ministry Meeting Overseer.",

@@ -8,7 +8,6 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import CssBaseline from '@mui/material/CssBaseline';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import AppBar from '@mui/material/AppBar';
-import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import GetApp from '@mui/icons-material/GetApp';
@@ -19,13 +18,12 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import NotificationsIcon from '@mui/icons-material/Notifications';
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import AppDrawer from './AppDrawer';
 import AppLanguage from './AppLanguage';
-import NotificationContent from './NotificationContent';
 import {
 	congInfoFormattedState,
 	usernameState,
@@ -34,6 +32,7 @@ import {
 	appStageState,
 	isAboutOpenState,
 	isAppClosingState,
+	isWhatsNewOpenState,
 } from '../../appStates/appSettings';
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
@@ -55,13 +54,13 @@ const AppMenus = (props) => {
 	const [mobileOpen, setMobileOpen] = useState(false);
 	const [appBarTitle, setAppBarTitle] = useState('');
 	const [anchorEl, setAnchorEl] = useState(null);
-	const [anchorPopoverEl, setAnchorPopoverEl] = useState(null);
 	const { enabledInstall, isLoading, installPwa } = props;
 
 	const open = Boolean(anchorEl);
 
 	const setIsAboutOpen = useSetRecoilState(isAboutOpenState);
 	const setIsAppClosing = useSetRecoilState(isAppClosingState);
+	const setIsWhatsNewOpen = useSetRecoilState(isWhatsNewOpenState);
 
 	const appStage = useRecoilValue(appStageState);
 	const congInfo = useRecoilValue(congInfoFormattedState);
@@ -86,17 +85,6 @@ const AppMenus = (props) => {
 		setAnchorEl(null);
 	};
 
-	const handleNotificationClick = (e) => {
-		setAnchorPopoverEl(e.currentTarget);
-	};
-
-	const handlePopoverClose = () => {
-		setAnchorPopoverEl(null);
-	};
-
-	const openPopover = Boolean(anchorPopoverEl);
-	const id = openPopover ? 'simple-popover' : undefined;
-
 	const handleInstallPwa = () => {
 		installPwa();
 	};
@@ -108,6 +96,11 @@ const AppMenus = (props) => {
 	const handleAbout = () => {
 		handleClose();
 		setIsAboutOpen(true);
+	};
+
+	const handleWhatsNew = () => {
+		handleClose();
+		setIsWhatsNewOpen(true);
 	};
 
 	const handleLogout = async () => {
@@ -243,7 +236,7 @@ const AppMenus = (props) => {
 							edge='start'
 							sx={{
 								...sharedStyles.menuIcon,
-								marginRight: largeView ? '5px' : '8px',
+								marginRight: '10px',
 							}}
 							onClick={() => handleInstallPwa()}
 						>
@@ -259,34 +252,11 @@ const AppMenus = (props) => {
 					<AppLanguage />
 
 					<IconButton
-						size='large'
-						edge='start'
-						aria-label='show-notification'
-						color='inherit'
-						sx={{
-							...sharedStyles.menuIcon,
-							marginRight: largeView ? '5px' : '8px',
-						}}
-						aria-describedby={id}
-						onClick={handleNotificationClick}
-					>
-						<Badge badgeContent={2} color='error'>
-							<NotificationsIcon />
-						</Badge>
-					</IconButton>
-					<NotificationContent
-						id={id}
-						anchorEl={anchorPopoverEl}
-						open={openPopover}
-						handleClose={handlePopoverClose}
-					/>
-
-					<IconButton
 						color='inherit'
 						edge='start'
 						sx={{
 							...sharedStyles.menuIcon,
-							marginRight: largeView ? '5px' : '8px',
+							marginRight: '10px',
 						}}
 						onClick={handleMenu}
 						id='button-account'
@@ -337,15 +307,24 @@ const AppMenus = (props) => {
 						open={Boolean(anchorEl)}
 						onClose={handleClose}
 					>
+						<MenuItem onClick={handleWhatsNew}>
+							<ListItemIcon>
+								<NewReleasesIcon fontSize='medium' sx={{ color: '#2ECC71' }} />
+							</ListItemIcon>
+							<ListItemText>{t('global.whatsNew')}</ListItemText>
+						</MenuItem>
 						<MenuItem onClick={handleAbout}>
 							<ListItemIcon>
-								<InfoIcon fontSize='medium' />
+								<InfoIcon fontSize='medium' sx={{ color: '#3498DB' }} />
 							</ListItemIcon>
 							<ListItemText>{t('global.about')}</ListItemText>
 						</MenuItem>
 						<MenuItem onClick={handleLogout}>
 							<ListItemIcon>
-								<PowerSettingsNewIcon fontSize='medium' />
+								<PowerSettingsNewIcon
+									fontSize='medium'
+									sx={{ color: '#E74C3C' }}
+								/>
 							</ListItemIcon>
 							<ListItemText>{t('global.quit')}</ListItemText>
 						</MenuItem>
