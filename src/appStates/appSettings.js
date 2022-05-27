@@ -282,3 +282,24 @@ export const isWhatsNewOpenState = atom({
 	key: 'isWhatsNewOpen',
 	default: false,
 });
+
+export const appNotificationsState = atom({
+	key: 'appNotifications',
+	default: [],
+});
+
+export const countNotificationsState = selector({
+	key: 'countNotifications',
+	get: ({ get }) => {
+		const notifications = get(appNotificationsState);
+		const unread = notifications.filter(
+			(notification) => notification.isRead !== true
+		);
+		return unread.length;
+	},
+});
+
+export const currentNotificationState = atom({
+	key: 'currentNotification',
+	default: {},
+});

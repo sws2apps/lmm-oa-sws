@@ -8,6 +8,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import CssBaseline from '@mui/material/CssBaseline';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import AppBar from '@mui/material/AppBar';
+import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import GetApp from '@mui/icons-material/GetApp';
@@ -19,17 +20,21 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import NewReleasesIcon from '@mui/icons-material/NewReleases';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import AppDrawer from './AppDrawer';
 import AppLanguage from './AppLanguage';
+import NotificationContent from './NotificationContent';
+import { fetchNotifications } from '../../utils/app';
 import {
 	congInfoFormattedState,
 	usernameState,
 } from '../../appStates/appCongregation';
 import {
 	appStageState,
+	countNotificationsState,
 	isAboutOpenState,
 	isAppClosingState,
 	isWhatsNewOpenState,
@@ -54,9 +59,12 @@ const AppMenus = (props) => {
 	const [mobileOpen, setMobileOpen] = useState(false);
 	const [appBarTitle, setAppBarTitle] = useState('');
 	const [anchorEl, setAnchorEl] = useState(null);
+	const [anchorPopoverEl, setAnchorPopoverEl] = useState(null);
 	const { enabledInstall, isLoading, installPwa } = props;
 
 	const open = Boolean(anchorEl);
+	const openPopover = Boolean(anchorPopoverEl);
+	const id = openPopover ? 'notification-popover' : undefined;
 
 	const setIsAboutOpen = useSetRecoilState(isAboutOpenState);
 	const setIsAppClosing = useSetRecoilState(isAppClosingState);
@@ -65,6 +73,15 @@ const AppMenus = (props) => {
 	const appStage = useRecoilValue(appStageState);
 	const congInfo = useRecoilValue(congInfoFormattedState);
 	const username = useRecoilValue(usernameState);
+	const cnNews = useRecoilValue(countNotificationsState);
+
+	const handleNotificationClick = (event) => {
+		setAnchorPopoverEl(event.currentTarget);
+	};
+
+	const handleNotificationClose = () => {
+		setAnchorPopoverEl(null);
+	};
 
 	const { t } = useTranslation();
 
@@ -131,6 +148,7 @@ const AppMenus = (props) => {
 		} else if (location.pathname === '/Administration') {
 			setAppBarTitle(t('global.administration'));
 		}
+		fetchNotifications();
 		if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
 		} else {
 			checkPwaUpdate();
@@ -249,7 +267,30 @@ const AppMenus = (props) => {
 						</IconButton>
 					)}
 
-					<AppLanguage />
+					<Box sx={{ marginRight: '10px' }}>
+						<AppLanguage />
+					</Box>
+
+					<IconButton
+						color='inherit'
+						edge='start'
+						sx={{
+							...sharedStyles.menuIcon,
+							marginRight: '15px',
+						}}
+						aria-describedby={id}
+						onClick={handleNotificationClick}
+					>
+						<Badge badgeContent={cnNews} color='error'>
+							<NotificationsIcon />
+						</Badge>
+					</IconButton>
+					<NotificationContent
+						id={id}
+						open={openPopover}
+						anchorEl={anchorPopoverEl}
+						handleClose={handleNotificationClose}
+					/>
 
 					<IconButton
 						color='inherit'

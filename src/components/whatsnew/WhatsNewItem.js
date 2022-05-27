@@ -1,17 +1,26 @@
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import Typography from '@mui/material/Typography';
-import { appLangState } from '../../appStates/appSettings';
+import { dbReadNotification } from '../../indexedDb/dbNotifications';
+import {
+	appLangState,
+	currentNotificationState,
+	isWhatsNewOpenState,
+} from '../../appStates/appSettings';
 
-const WhatsNewItem = ({ announcement, setItem, setIsView }) => {
+const WhatsNewItem = ({ announcement, handlePopoverClose }) => {
+	const setWhatsNewOpen = useSetRecoilState(isWhatsNewOpenState);
+	const setCurrent = useSetRecoilState(currentNotificationState);
 	const appLang = useRecoilValue(appLangState);
 
-	const handleView = () => {
-		setItem(announcement);
-		setIsView(true);
+	const handleView = async () => {
+		handlePopoverClose();
+		setCurrent(announcement);
+		await dbReadNotification(announcement.notification_id);
+		setWhatsNewOpen(true);
 	};
 
 	return (
@@ -26,7 +35,7 @@ const WhatsNewItem = ({ announcement, setItem, setIsView }) => {
 			<Box sx={{ display: 'flex', alignItems: 'center' }}>
 				<NotificationsActiveIcon
 					color='success'
-					sx={{ fontSize: '50px', marginRight: '10px' }}
+					sx={{ fontSize: '30px', marginRight: '10px' }}
 				/>
 				<Box
 					sx={{
@@ -37,11 +46,11 @@ const WhatsNewItem = ({ announcement, setItem, setIsView }) => {
 					}}
 				>
 					<Box>
-						<Typography sx={{ fontSize: '16px', fontWeight: 'bold' }}>
-							{announcement[appLang.toUpperCase()].title}
+						<Typography sx={{ fontSize: '14px', fontWeight: 'bold' }}>
+							{announcement.content[appLang.toUpperCase()].title}
 						</Typography>
-						<Typography sx={{ fontSize: '14px' }}>
-							{announcement[appLang.toUpperCase()].desc}
+						<Typography sx={{ fontSize: '12px' }}>
+							{announcement.content[appLang.toUpperCase()].desc}
 						</Typography>
 					</Box>
 					<IconButton onClick={handleView}>

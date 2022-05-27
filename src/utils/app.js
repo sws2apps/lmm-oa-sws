@@ -1,6 +1,6 @@
 // dependency
 import { getI18n } from 'react-i18next';
-import { promiseSetRecoil } from 'recoil-outside';
+import { promiseGetRecoil, promiseSetRecoil } from 'recoil-outside';
 
 // utils
 import { dbGetAppSettings } from '../indexedDb/dbAppSettings';
@@ -12,6 +12,7 @@ import {
 import { dbGetListAssType } from '../indexedDb/dbAssignment';
 import { dbGetStudents } from '../indexedDb/dbPersons';
 import { initAppDb } from '../indexedDb/dbUtility';
+import { dbSaveNotifications } from '../indexedDb/dbNotifications';
 
 // states
 import {
@@ -22,7 +23,11 @@ import {
 	meetingDayState,
 	usernameState,
 } from '../appStates/appCongregation';
-import { appLangState } from '../appStates/appSettings';
+import {
+	apiHostState,
+	appLangState,
+	isOnlineState,
+} from '../appStates/appSettings';
 import {
 	assTypeListState,
 	weekTypeListState,
@@ -72,4 +77,18 @@ export const loadApp = async () => {
 
 	const years = await dbGetYearList();
 	await promiseSetRecoil(yearsListState, years);
+};
+
+export const fetchNotifications = async () => {
+	const isOnline = await promiseGetRecoil(isOnlineState);
+	const apiHost = await promiseGetRecoil(apiHostState);
+
+	if (isOnline && apiHost !== '') {
+		const res = await fetch(`${apiHost}api/user/announcement`, {
+			method: 'GET',
+		});
+
+		const data = await res.json();
+		await dbSaveNotifications(data);
+	}
 };

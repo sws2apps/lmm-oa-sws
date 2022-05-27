@@ -119,6 +119,9 @@ appDb.version(24).stores({
 	app_settings:
 		'++id, username, cong_number, cong_name, class_count, meeting_day, userPass, isLoggedOut, isScheduleConverted, isCongVerified',
 });
+appDb.version(25).stores({
+	notifications: '++id, notification_id, isRead, content',
+});
 
 appDb.on('populate', function () {
 	appDb.app_settings.add({
