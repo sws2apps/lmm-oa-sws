@@ -1,3 +1,10 @@
+# [1.0.0-alpha.126](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.125...v1.0.0-alpha.126) (2022-05-27)
+
+
+### Features
+
+* **app:** change what’s new to have notification badge ([1138c2d](https://github.com/sws2apps/lmm-oa-sws/commit/1138c2d0809b690f8031cd2767ade289a184b191))
+
 # [1.0.0-alpha.125](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.124...v1.0.0-alpha.125) (2022-05-27)
 
 
