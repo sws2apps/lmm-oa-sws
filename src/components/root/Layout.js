@@ -3,9 +3,11 @@ import Box from '@mui/material/Box';
 import About from './About';
 import AppMenus from './AppMenus';
 import Login from './Login';
+import WhatsNew from './WhatsNew';
 import {
 	isAboutOpenState,
 	isLoginOpenState,
+	isWhatsNewOpenState,
 } from '../../appStates/appSettings';
 
 const Layout = (props) => {
@@ -13,11 +15,14 @@ const Layout = (props) => {
 
 	const isOpenAbout = useRecoilValue(isAboutOpenState);
 	const isOpenLogin = useRecoilValue(isLoginOpenState);
+	const isOpenWhatsNew = useRecoilValue(isWhatsNewOpenState);
 
 	return (
 		<Box sx={{ display: 'flex' }}>
 			{isOpenAbout && <About />}
 			{isOpenLogin && <Login />}
+			{isOpenWhatsNew && <WhatsNew />}
+
 			<AppMenus
 				enabledInstall={enabledInstall}
 				isLoading={isLoading}

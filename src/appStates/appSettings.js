@@ -277,3 +277,8 @@ export const waitingWorkerState = atom({
 	key: 'waitingWorker',
 	default: null,
 });
+
+export const isWhatsNewOpenState = atom({
+	key: 'isWhatsNewOpen',
+	default: false,
+});

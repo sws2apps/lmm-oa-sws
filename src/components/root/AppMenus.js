@@ -18,6 +18,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -31,6 +32,7 @@ import {
 	appStageState,
 	isAboutOpenState,
 	isAppClosingState,
+	isWhatsNewOpenState,
 } from '../../appStates/appSettings';
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
@@ -58,6 +60,7 @@ const AppMenus = (props) => {
 
 	const setIsAboutOpen = useSetRecoilState(isAboutOpenState);
 	const setIsAppClosing = useSetRecoilState(isAppClosingState);
+	const setIsWhatsNewOpen = useSetRecoilState(isWhatsNewOpenState);
 
 	const appStage = useRecoilValue(appStageState);
 	const congInfo = useRecoilValue(congInfoFormattedState);
@@ -93,6 +96,11 @@ const AppMenus = (props) => {
 	const handleAbout = () => {
 		handleClose();
 		setIsAboutOpen(true);
+	};
+
+	const handleWhatsNew = () => {
+		handleClose();
+		setIsWhatsNewOpen(true);
 	};
 
 	const handleLogout = async () => {
@@ -228,7 +236,7 @@ const AppMenus = (props) => {
 							edge='start'
 							sx={{
 								...sharedStyles.menuIcon,
-								marginRight: largeView ? '5px' : '8px',
+								marginRight: '10px',
 							}}
 							onClick={() => handleInstallPwa()}
 						>
@@ -248,7 +256,7 @@ const AppMenus = (props) => {
 						edge='start'
 						sx={{
 							...sharedStyles.menuIcon,
-							marginRight: largeView ? '5px' : '8px',
+							marginRight: '10px',
 						}}
 						onClick={handleMenu}
 						id='button-account'
@@ -299,15 +307,24 @@ const AppMenus = (props) => {
 						open={Boolean(anchorEl)}
 						onClose={handleClose}
 					>
+						<MenuItem onClick={handleWhatsNew}>
+							<ListItemIcon>
+								<NewReleasesIcon fontSize='medium' sx={{ color: '#2ECC71' }} />
+							</ListItemIcon>
+							<ListItemText>{t('global.whatsNew')}</ListItemText>
+						</MenuItem>
 						<MenuItem onClick={handleAbout}>
 							<ListItemIcon>
-								<InfoIcon fontSize='medium' />
+								<InfoIcon fontSize='medium' sx={{ color: '#3498DB' }} />
 							</ListItemIcon>
 							<ListItemText>{t('global.about')}</ListItemText>
 						</MenuItem>
 						<MenuItem onClick={handleLogout}>
 							<ListItemIcon>
-								<PowerSettingsNewIcon fontSize='medium' />
+								<PowerSettingsNewIcon
+									fontSize='medium'
+									sx={{ color: '#E74C3C' }}
+								/>
 							</ListItemIcon>
 							<ListItemText>{t('global.quit')}</ListItemText>
 						</MenuItem>
