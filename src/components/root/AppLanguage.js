@@ -89,7 +89,6 @@ const AppLanguage = (props) => {
 							borderRadius: 0,
 							backgroundColor: 'rgba(23, 32, 42, .3)',
 						},
-						marginRight: largeView ? '5px' : '8px',
 					}}
 					onClick={handleClick}
 				>
