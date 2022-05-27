@@ -1,3 +1,10 @@
+# [1.0.0-alpha.125](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.124...v1.0.0-alpha.125) (2022-05-27)
+
+
+### Features
+
+* **app:** add what’s new component ([d995cb2](https://github.com/sws2apps/lmm-oa-sws/commit/d995cb2c3eeb3413dfa0567f4f9f90c4261076d7))
+
 # [1.0.0-alpha.124](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.123...v1.0.0-alpha.124) (2022-05-25)
 
 
