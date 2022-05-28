@@ -30,6 +30,7 @@ const WhatsNewItem = ({ announcement, handlePopoverClose }) => {
 				borderRadius: '8px',
 				boxShadow: '0 3px 5px 2px rgba(23, 32, 42, .3)',
 				backgroundColor: '#F4F6F6',
+				marginBottom: '10px',
 			}}
 		>
 			<Box sx={{ display: 'flex', alignItems: 'center' }}>
