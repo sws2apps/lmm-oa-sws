@@ -1,3 +1,10 @@
+# [1.0.0-alpha.129](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.128...v1.0.0-alpha.129) (2022-05-28)
+
+
+### Bug Fixes
+
+* **appbar:** improve performance in menu ([6bb5444](https://github.com/sws2apps/lmm-oa-sws/commit/6bb54442a31a52010d638aff2da928be6dabf4b1))
+
 # [1.0.0-alpha.128](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.127...v1.0.0-alpha.128) (2022-05-28)
 
 
