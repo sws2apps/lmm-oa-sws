@@ -1,3 +1,15 @@
+# [1.0.0-alpha.128](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.127...v1.0.0-alpha.128) (2022-05-28)
+
+
+### Bug Fixes
+
+* **notifications:** improve performance on handling offline scenario ([76d7b39](https://github.com/sws2apps/lmm-oa-sws/commit/76d7b39fbec03be779890674a88b06998e5826c8))
+
+
+### Features
+
+* **app:** move backup and restore menu location to navbar ([e7dc1da](https://github.com/sws2apps/lmm-oa-sws/commit/e7dc1da234aeaa75c7da62f0dc41e7c098b2a73f))
+
 # [1.0.0-alpha.127](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.126...v1.0.0-alpha.127) (2022-05-28)
 
 
