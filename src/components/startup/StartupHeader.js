@@ -8,7 +8,7 @@ const StartupHeader = ({ children }) => {
 			<Box
 				sx={{
 					position: 'absolute',
-					right: 0,
+					right: 10,
 				}}
 			>
 				<AppLanguage isStartup />
