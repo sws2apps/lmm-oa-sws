@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { fileDialog } from 'file-select-dialog';
 import styled from '@emotion/styled';
 import { useTheme } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -10,10 +11,14 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import AppBar from '@mui/material/AppBar';
 import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
+import Collapse from '@mui/material/Collapse';
 import Drawer from '@mui/material/Drawer';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
 import GetApp from '@mui/icons-material/GetApp';
 import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
+import List from '@mui/material/List';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Menu from '@mui/material/Menu';
@@ -21,7 +26,10 @@ import MenuIcon from '@mui/icons-material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
+import RestoreIcon from '@mui/icons-material/Restore';
+import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import Toolbar from '@mui/material/Toolbar';
+import TopicIcon from '@mui/icons-material/Topic';
 import Typography from '@mui/material/Typography';
 import AppDrawer from './AppDrawer';
 import AppLanguage from './AppLanguage';
@@ -33,9 +41,15 @@ import {
 } from '../../appStates/appCongregation';
 import {
 	appStageState,
+	backupEncryptedState,
 	countNotificationsState,
 	isAboutOpenState,
 	isAppClosingState,
+	isBackupDbOpenState,
+	isBackupOfflineState,
+	isBackupOnlineState,
+	isRestoreOfflineState,
+	isRestoreOnlineState,
 } from '../../appStates/appSettings';
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
@@ -52,25 +66,35 @@ const sharedStyles = {
 	},
 };
 
-const AppMenus = (props) => {
+const AppMenus = ({ enabledInstall, isLoading, installPwa }) => {
 	const location = useLocation();
-	const [mobileOpen, setMobileOpen] = useState(false);
-	const [appBarTitle, setAppBarTitle] = useState('');
-	const [anchorEl, setAnchorEl] = useState(null);
-	const [anchorPopoverEl, setAnchorPopoverEl] = useState(null);
-	const { enabledInstall, isLoading, installPwa } = props;
+	const { t } = useTranslation();
 
-	const open = Boolean(anchorEl);
-	const openPopover = Boolean(anchorPopoverEl);
-	const id = openPopover ? 'notification-popover' : undefined;
+	const theme = useTheme();
 
 	const setIsAboutOpen = useSetRecoilState(isAboutOpenState);
 	const setIsAppClosing = useSetRecoilState(isAppClosingState);
+	const setBackupOffline = useSetRecoilState(isBackupOfflineState);
+	const setBackupOnline = useSetRecoilState(isBackupOnlineState);
+	const setRestoreOffline = useSetRecoilState(isRestoreOfflineState);
+	const setRestoreOnline = useSetRecoilState(isRestoreOnlineState);
+	const setIsBackupDb = useSetRecoilState(isBackupDbOpenState);
+	const setBackupFile = useSetRecoilState(backupEncryptedState);
 
 	const appStage = useRecoilValue(appStageState);
 	const congInfo = useRecoilValue(congInfoFormattedState);
 	const username = useRecoilValue(usernameState);
 	const cnNews = useRecoilValue(countNotificationsState);
+
+	const [mobileOpen, setMobileOpen] = useState(false);
+	const [appBarTitle, setAppBarTitle] = useState('');
+	const [anchorEl, setAnchorEl] = useState(null);
+	const [anchorPopoverEl, setAnchorPopoverEl] = useState(null);
+	const [backupOpen, setBackupOpen] = useState(false);
+
+	const open = Boolean(anchorEl);
+	const openPopover = Boolean(anchorPopoverEl);
+	const id = openPopover ? 'notification-popover' : undefined;
 
 	const handleNotificationClick = (event) => {
 		setAnchorPopoverEl(event.currentTarget);
@@ -80,9 +104,6 @@ const AppMenus = (props) => {
 		setAnchorPopoverEl(null);
 	};
 
-	const { t } = useTranslation();
-
-	const theme = useTheme();
 	const miniView = useMediaQuery(theme.breakpoints.down('sm'), {
 		noSsr: true,
 	});
@@ -90,6 +111,10 @@ const AppMenus = (props) => {
 	const largeView = useMediaQuery(theme.breakpoints.up('md'), {
 		noSsr: true,
 	});
+
+	const handleBackupClick = () => {
+		setBackupOpen(!backupOpen);
+	};
 
 	const handleMenu = (e) => {
 		setAnchorEl(e.currentTarget);
@@ -105,6 +130,30 @@ const AppMenus = (props) => {
 
 	const handleDrawerToggle = () => {
 		setMobileOpen(!mobileOpen);
+	};
+
+	const handleCreateBackup = () => {
+		handleClose();
+		setBackupOnline(false);
+		setRestoreOnline(false);
+		setRestoreOffline(false);
+		setBackupOffline(true);
+		setIsBackupDb(true);
+	};
+
+	const handleImportBackup = async () => {
+		handleClose();
+		const file = await fileDialog({
+			accept: '.db',
+			strict: true,
+		});
+
+		setBackupFile(file);
+		setBackupOffline(false);
+		setBackupOnline(false);
+		setRestoreOnline(false);
+		setRestoreOffline(true);
+		setIsBackupDb(true);
 	};
 
 	const handleAbout = () => {
@@ -340,6 +389,34 @@ const AppMenus = (props) => {
 						open={Boolean(anchorEl)}
 						onClose={handleClose}
 					>
+						<MenuItem onClick={handleBackupClick}>
+							<ListItemIcon>
+								<TopicIcon />
+							</ListItemIcon>
+							<ListItemText
+								primary={t('global.backup')}
+								sx={{ marginRight: '10px' }}
+							/>
+							{backupOpen ? <ExpandLess /> : <ExpandMore />}
+						</MenuItem>
+						<Collapse in={backupOpen} timeout='auto' unmountOnExit>
+							<List component='div' disablePadding sx={{ paddingLeft: '20px' }}>
+								<MenuItem onClick={handleCreateBackup}>
+									<ListItemIcon>
+										<SaveAltIcon fontSize='medium' sx={{ color: '#2ECC71' }} />
+									</ListItemIcon>
+									<ListItemText>{t('global.createOfflineBackup')}</ListItemText>
+								</MenuItem>
+								<MenuItem onClick={handleImportBackup}>
+									<ListItemIcon>
+										<RestoreIcon fontSize='medium' sx={{ color: '#5D6D7E' }} />
+									</ListItemIcon>
+									<ListItemText>
+										{t('global.restoreOfflineBackup')}
+									</ListItemText>
+								</MenuItem>
+							</List>
+						</Collapse>
 						<MenuItem onClick={handleAbout}>
 							<ListItemIcon>
 								<InfoIcon fontSize='medium' sx={{ color: '#3498DB' }} />
