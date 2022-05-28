@@ -1,10 +1,13 @@
 import { useRecoilValue } from 'recoil';
+import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
 import Popover from '@mui/material/Popover';
+import Typography from '@mui/material/Typography';
 import WhatsNewItem from '../whatsnew/WhatsNewItem';
 import { appNotificationsState } from '../../appStates/appSettings';
 
 const NotificationContent = ({ id, open, anchorEl, handleClose }) => {
+	const { t } = useTranslation();
 	const notifications = useRecoilValue(appNotificationsState);
 
 	return (
@@ -27,7 +30,7 @@ const NotificationContent = ({ id, open, anchorEl, handleClose }) => {
 				sx={{
 					backgroundColor: '#AEB6BF',
 					maxWidth: '400px',
-					padding: '20px 10px',
+					padding: '10px',
 				}}
 			>
 				{notifications.length > 0 && (
@@ -40,6 +43,11 @@ const NotificationContent = ({ id, open, anchorEl, handleClose }) => {
 							/>
 						))}
 					</>
+				)}
+				{notifications.length === 0 && (
+					<Typography sx={{ fontSize: '12px' }}>
+						{t('global.nothingNew')}
+					</Typography>
 				)}
 			</Box>
 		</Popover>
