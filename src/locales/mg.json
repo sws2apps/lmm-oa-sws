@@ -112,6 +112,11 @@
     "global.whatsNew": "Zava-baovao",
     "global.nothingNew": "Tsy mbola misy zava-baovao aloha amin’izao. Miverena eto indray raha te hanamarina an’izany amin’ny manaraka.",
     "global.offlineWhatsNew": "Tsy afaka mijery zava-baovao aloha ianao izao satria tsy mandeha ny internet.",
+    "global.backup": "Rakitra fiandry",
+    "global.createOfflineBackup": "Hamorona rakitra fiandry",
+    "global.createOnlineBackup": "Handefa rakitra fiandry",
+    "global.restoreOfflineBackup": "Hampiditra rakitra fiandry",
+    "global.restoreOnlineBackup": "Hamerina rakitra fiandry",
 
     "startup.welcomeTitle": "Tongasoa eto amin’ny LMM-OA",
     "startup.welcomeDescription": "Programa natao ho ampiasain’ny Mpiandraikitra ny Fivoriana Momba ny Fiainantsika sy ny Fanompoana ny LMM-OA (na Life and Ministry Meeting Overseer Assistant).",
