@@ -389,7 +389,7 @@ const AppMenus = ({ enabledInstall, isLoading, installPwa }) => {
 						open={Boolean(anchorEl)}
 						onClose={handleClose}
 					>
-						<MenuItem onClick={handleBackupClick}>
+						<MenuItem onClick={handleBackupClick} sx={{ width: '320px' }}>
 							<ListItemIcon>
 								<TopicIcon />
 							</ListItemIcon>
@@ -434,7 +434,13 @@ const AppMenus = ({ enabledInstall, isLoading, installPwa }) => {
 						</MenuItem>
 						{!largeView && (
 							<MenuItem disabled={true} sx={{ opacity: '1 !important' }}>
-								<Box sx={{ borderTop: '1px outset', paddingTop: '5px' }}>
+								<Box
+									sx={{
+										borderTop: '1px outset',
+										paddingTop: '5px',
+										width: '280px',
+									}}
+								>
 									<Typography
 										sx={{
 											marginLeft: '5px',
