@@ -1,3 +1,10 @@
+# [1.0.0-alpha.127](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.126...v1.0.0-alpha.127) (2022-05-28)
+
+
+### Bug Fixes
+
+* **navbar:** remove whats’s new under user profile ([7416013](https://github.com/sws2apps/lmm-oa-sws/commit/7416013d5a715b9f8730c82efa93646d2daf0064))
+
 # [1.0.0-alpha.126](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.125...v1.0.0-alpha.126) (2022-05-27)
 
 
