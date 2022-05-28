@@ -1,3 +1,10 @@
+# [1.0.0-alpha.130](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.129...v1.0.0-alpha.130) (2022-05-28)
+
+
+### Bug Fixes
+
+* **appbar:** add margin for consecutive announcements ([3a5559a](https://github.com/sws2apps/lmm-oa-sws/commit/3a5559add5ad2f8efb3d475b7f8637438eeeb8bc))
+
 # [1.0.0-alpha.129](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.128...v1.0.0-alpha.129) (2022-05-28)
 
 
