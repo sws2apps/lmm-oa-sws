@@ -109,7 +109,7 @@ const boxStudentFldContainer = {
 };
 
 const iconButtonContainer = {
-	padding: 1,
+	padding: '1px',
 };
 
 const editIconButton = {
