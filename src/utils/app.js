@@ -12,7 +12,10 @@ import {
 import { dbGetListAssType } from '../indexedDb/dbAssignment';
 import { dbGetStudents } from '../indexedDb/dbPersons';
 import { initAppDb } from '../indexedDb/dbUtility';
-import { dbSaveNotifications } from '../indexedDb/dbNotifications';
+import {
+	dbGetNotifications,
+	dbSaveNotifications,
+} from '../indexedDb/dbNotifications';
 
 // states
 import {
@@ -26,6 +29,7 @@ import {
 import {
 	apiHostState,
 	appLangState,
+	appNotificationsState,
 	isOnlineState,
 } from '../appStates/appSettings';
 import {
@@ -77,18 +81,23 @@ export const loadApp = async () => {
 
 	const years = await dbGetYearList();
 	await promiseSetRecoil(yearsListState, years);
+
+	const notifications = await dbGetNotifications();
+	await promiseSetRecoil(appNotificationsState, notifications);
 };
 
 export const fetchNotifications = async () => {
-	const isOnline = await promiseGetRecoil(isOnlineState);
-	const apiHost = await promiseGetRecoil(apiHostState);
+	try {
+		const isOnline = await promiseGetRecoil(isOnlineState);
+		const apiHost = await promiseGetRecoil(apiHostState);
 
-	if (isOnline && apiHost !== '') {
-		const res = await fetch(`${apiHost}api/user/announcement`, {
-			method: 'GET',
-		});
+		if (isOnline && apiHost !== '') {
+			const res = await fetch(`${apiHost}api/user/announcement`, {
+				method: 'GET',
+			});
 
-		const data = await res.json();
-		await dbSaveNotifications(data);
-	}
+			const data = await res.json();
+			await dbSaveNotifications(data);
+		}
+	} catch {}
 };
