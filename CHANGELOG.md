@@ -1,3 +1,10 @@
+# [1.0.0-alpha.131](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.130...v1.0.0-alpha.131) (2022-05-29)
+
+
+### Bug Fixes
+
+* **schedule:** fix padding issue on bible reading assignment ([3047890](https://github.com/sws2apps/lmm-oa-sws/commit/3047890501ff5f40272b06fec126a3973cbe98c9))
+
 # [1.0.0-alpha.130](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.129...v1.0.0-alpha.130) (2022-05-28)
 
 
