@@ -1,3 +1,10 @@
+# [1.0.0-alpha.132](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.131...v1.0.0-alpha.132) (2022-05-30)
+
+
+### Features
+
+* **deps:** bump i18next from 21.8.4 to 21.8.5 ([d007630](https://github.com/sws2apps/lmm-oa-sws/commit/d0076304fe418113151a36e1c38459fdfc5ed23c))
+
 # [1.0.0-alpha.131](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.130...v1.0.0-alpha.131) (2022-05-29)
 
 
