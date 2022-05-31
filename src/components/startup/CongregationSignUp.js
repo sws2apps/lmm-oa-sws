@@ -59,7 +59,7 @@ const CongregationSignUp = () => {
 				email: userEmail,
 				cong_name: userTmpCongName,
 				cong_number: userTmpCongNumber,
-				app_requestor: 'lmm-oa',
+				app_requestor: 'lmmo',
 			};
 
 			if (apiHost !== '') {
