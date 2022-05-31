@@ -1,3 +1,10 @@
+# [1.0.0-alpha.133](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.132...v1.0.0-alpha.133) (2022-05-31)
+
+
+### Bug Fixes
+
+* **startup:** allow congregation account creation after mfa verification ([94a8deb](https://github.com/sws2apps/lmm-oa-sws/commit/94a8debe678c1ce9dec9b6f4a77c9401bb658c3b))
+
 # [1.0.0-alpha.132](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.131...v1.0.0-alpha.132) (2022-05-30)
 
 
