@@ -46,11 +46,13 @@ export const dbGetListAssType = async () => {
 		.table('ass_type')
 		.reverse()
 		.reverse()
-		.sortBy('id_type');
+		.sortBy('code');
 
 	for (let i = 0; i < appData.length; i++) {
 		obj = {};
 		obj.id_type = appData[i].id_type;
+		obj.code = appData[i].code;
+		obj.assignable = appData[i].assignable;
 		obj.ass_type_name = appData[i].ass_type_name;
 		assType.push(obj);
 	}
@@ -90,6 +92,7 @@ export const dbHistoryAssignment = async () => {
 				person.weekOf = appData[i].weekOf;
 				person.weekOfFormatted = dateFormatted;
 				person.studentID = appData[i][fldName];
+
 				const stuDetails = await dbGetStudentDetails(person.studentID);
 				person.studentName = stuDetails.person_displayName;
 				person.assignmentID = 0;
@@ -181,6 +184,19 @@ export const dbLastBRead = async (stuID) => {
 	return dLast;
 };
 
+export const dbFirstBRead = async (stuID) => {
+	const appData = await dbHistoryAssignment();
+	const lastBRead = appData.filter(
+		(data) => (data.assignmentID === 0) & (data.studentID === stuID)
+	);
+
+	var dLast;
+	if (lastBRead.length > 0) {
+		dLast = lastBRead[lastBRead.length - 1].weekOf;
+	}
+	return dLast;
+};
+
 export const dbLastIniCall = async (stuID) => {
 	const appData = await dbHistoryAssignment();
 	const lastIniCall = appData.filter(
@@ -190,6 +206,19 @@ export const dbLastIniCall = async (stuID) => {
 	var dLast;
 	if (lastIniCall.length > 0) {
 		dLast = lastIniCall[0].weekOf;
+	}
+	return dLast;
+};
+
+export const dbFirstIniCall = async (stuID) => {
+	const appData = await dbHistoryAssignment();
+	const lastIniCall = appData.filter(
+		(data) => (data.assignmentID === 1) & (data.studentID === stuID)
+	);
+
+	var dLast;
+	if (lastIniCall.length > 0) {
+		dLast = lastIniCall[lastIniCall.length - 1].weekOf;
 	}
 	return dLast;
 };
@@ -207,6 +236,19 @@ export const dbLastRV = async (stuID) => {
 	return dLast;
 };
 
+export const dbFirstRV = async (stuID) => {
+	const appData = await dbHistoryAssignment();
+	const lastRV = appData.filter(
+		(data) => (data.assignmentID === 2) & (data.studentID === stuID)
+	);
+
+	var dLast;
+	if (lastRV.length > 0) {
+		dLast = lastRV[lastRV.length - 1].weekOf;
+	}
+	return dLast;
+};
+
 export const dbLastBibleStudy = async (stuID) => {
 	const appData = await dbHistoryAssignment();
 	const lastBibleStudy = appData.filter(
@@ -220,6 +262,19 @@ export const dbLastBibleStudy = async (stuID) => {
 	return dLast;
 };
 
+export const dbFirstBibleStudy = async (stuID) => {
+	const appData = await dbHistoryAssignment();
+	const lastBibleStudy = appData.filter(
+		(data) => (data.assignmentID === 3) & (data.studentID === stuID)
+	);
+
+	var dLast;
+	if (lastBibleStudy.length > 0) {
+		dLast = lastBibleStudy[lastBibleStudy.length - 1].weekOf;
+	}
+	return dLast;
+};
+
 export const dbLastTalk = async (stuID) => {
 	const appData = await dbHistoryAssignment();
 	const lastTalk = appData.filter(
@@ -229,6 +284,19 @@ export const dbLastTalk = async (stuID) => {
 	var dLast;
 	if (lastTalk.length > 0) {
 		dLast = lastTalk[0].weekOf;
+	}
+	return dLast;
+};
+
+export const dbFirstTalk = async (stuID) => {
+	const appData = await dbHistoryAssignment();
+	const lastTalk = appData.filter(
+		(data) => (data.assignmentID === 4) & (data.studentID === stuID)
+	);
+
+	var dLast;
+	if (lastTalk.length > 0) {
+		dLast = lastTalk[lastTalk.length - 1].weekOf;
 	}
 	return dLast;
 };
@@ -591,3 +659,5 @@ export const dbGetScheduleForPrint = async (scheduleName) => {
 	}
 	return data;
 };
+
+export const dbBuildNewAssignmentsFormat = async () => {};

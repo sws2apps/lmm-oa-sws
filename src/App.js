@@ -7,11 +7,12 @@ import AppNotification from './components/root/AppNotification';
 import DBRestore from './pages/DBRestore';
 import InternetChecker from './components/root/InternetChecker';
 import Layout from './components/root/Layout';
+import S89Template from './template/S89Template';
+import ScheduleTemplate from './template/ScheduleTemplate';
 import ServiceWorkerWrapper from './components/root/ServiceWorkerWrapper';
 import Startup from './pages/Startup';
+import StudentDetails from './pages/StudentDetails';
 import UserSignOut from './components/root/UserSignOut';
-import ScheduleTemplate from './template/ScheduleTemplate';
-import S89Template from './template/S89Template';
 import {
 	apiHostState,
 	appStageState,
@@ -112,17 +113,19 @@ const App = ({ updatePwa }) => {
 						>
 							<Routes>
 								<Route path='/' element={<Home />} />
-								<Route path='/Students' element={<Students />} />
-								<Route path='/Schedule' element={<Schedule />} />
+								<Route path='/students' element={<Students />} />
+								<Route path='/students/new' element={<StudentDetails />} />
+								<Route path='/students/:id' element={<StudentDetails />} />
+								<Route path='/schedule' element={<Schedule />} />
 								<Route
-									path='/ScheduleTemplate'
+									path='/scheduleTemplate'
 									element={<ScheduleTemplate />}
 								/>
-								<Route path='/S89Template' element={<S89Template />} />
-								<Route path='/SourceMaterial' element={<SourceMaterial />} />
-								<Route path='/Settings' element={<Settings />} />
-								<Route path='/Administration' element={<Administration />} />
-								<Route path='/DBRestore' element={<DBRestore />} />
+								<Route path='/s89template' element={<S89Template />} />
+								<Route path='/sourceMaterial' element={<SourceMaterial />} />
+								<Route path='/settings' element={<Settings />} />
+								<Route path='/administration' element={<Administration />} />
+								<Route path='/dbrestore' element={<DBRestore />} />
 							</Routes>
 						</Layout>
 					</HashRouter>

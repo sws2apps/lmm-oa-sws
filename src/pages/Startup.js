@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 import CongregationRequestSent from '../components/startup/CongregationRequestSent';
 import CongregationSignUp from '../components/startup/CongregationSignUp';
 import CongregationWait from '../components/startup/CongregationWait';
 import EmailBlocked from '../components/startup/EmailBlocked';
 import EmailNotVerified from '../components/startup/EmailNotVerified';
+import LinearProgressWithLabel from '../components/reusable/LinearProgressWithLabel';
 import TermsUse from '../components/startup/TermsUse';
 import UnauthorizedRole from '../components/startup/UnauthorizedRole';
 import UserMfaSetup from '../components/startup/UserMfaSetup';
@@ -26,9 +27,11 @@ import {
 	isUserMfaVerifyState,
 	isUserSignInState,
 	isUserSignUpState,
+	startupProgressState,
 } from '../appStates/appSettings';
 import { dbGetAppSettings } from '../indexedDb/dbAppSettings';
 import { loadApp } from '../utils/app';
+import { runUpdater } from '../utils/updater';
 
 const Startup = () => {
 	const [isSetup, setIsSetup] = useRecoilState(isSetupState);
@@ -46,6 +49,7 @@ const Startup = () => {
 	const isCongWaitRequest = useRecoilValue(isCongWaitRequestState);
 	const isShowTermsUse = useRecoilValue(isShowTermsUseState);
 	const isUnauthorizedRole = useRecoilValue(isUnauthorizedRoleState);
+	const startupProgress = useRecoilValue(startupProgressState);
 
 	useEffect(() => {
 		const checkLoginState = async () => {
@@ -54,10 +58,11 @@ const Startup = () => {
 			isLoggedOut = isLoggedOut === undefined ? true : isLoggedOut;
 
 			if (!isLoggedOut && userPass?.length > 0 && username?.length > 0) {
-				setTimeout(async () => {
-					await loadApp();
+				await loadApp();
+				await runUpdater();
+				setTimeout(() => {
 					setIsAppLoad(false);
-				}, [2000]);
+				}, [1000]);
 			} else {
 				setIsSetup(true);
 			}
@@ -93,7 +98,9 @@ const Startup = () => {
 			<div className='app-logo-container'>
 				<img src='/img/appLogo.png' alt='App logo' className='appLogo' />
 			</div>
-			<CircularProgress />
+			<Box sx={{ width: '280px', marginTop: '10px' }}>
+				<LinearProgressWithLabel value={startupProgress} />
+			</Box>
 		</div>
 	);
 };

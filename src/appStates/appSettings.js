@@ -303,3 +303,8 @@ export const currentNotificationState = atom({
 	key: 'currentNotification',
 	default: {},
 });
+
+export const startupProgressState = atom({
+	key: 'startupProgress',
+	default: 0,
+});

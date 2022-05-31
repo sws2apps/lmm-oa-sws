@@ -3,21 +3,22 @@ import { dbGetAppSettings } from './dbAppSettings';
 import { dbGetSourceMaterial } from './dbSourceMaterial';
 import { getI18n } from 'react-i18next';
 import appDb from './mainDb';
+import { sortHistoricalDateDesc } from '../utils/app';
 
 const { t } = getI18n();
 
 export const dbGetStudents = async () => {
-	var appData = [];
-	var allStudents = [];
+	let allStudents = [];
 
-	appData = await appDb
+	const appData = await appDb
 		.table('persons')
 		.reverse()
 		.reverse()
 		.sortBy('person_name');
 
 	for (let i = 0; i < appData.length; i++) {
-		var person = {};
+		let person = {};
+		person.id = appData[i].id;
 		person.person_uid = appData[i].person_uid;
 		person.person_name = appData[i].person_name;
 		person.person_displayName = appData[i].person_displayName;
@@ -38,8 +39,43 @@ export const dbGetStudents = async () => {
 		person.lastReturnVisit = appData[i].lastReturnVisit || '';
 		person.lastBibleStudy = appData[i].lastBibleStudy || '';
 		person.lastTalk = appData[i].lastTalk || '';
+		person.isMoved = appData[i].isMoved || false;
+		let assignments = appData[i].assignments || [];
+		person.assignments = sortHistoricalDateDesc(assignments);
+
+		let timeAway = appData[i].timeAway || [];
+		person.timeAway = sortHistoricalDateDesc(timeAway);
 
 		allStudents.push(person);
+	}
+	return allStudents;
+};
+
+export const dbGetStudentsMini = async () => {
+	let allStudents = [];
+
+	const appData = await appDb
+		.table('persons')
+		.reverse()
+		.reverse()
+		.sortBy('person_name');
+
+	for (let i = 0; i < appData.length; i++) {
+		if (!appData[i].isMoved) {
+			let person = {};
+			person.id = appData[i].id;
+			person.person_uid = appData[i].person_uid;
+			person.person_name = appData[i].person_name;
+			person.isMale = appData[i].isMale;
+			person.isFemale = appData[i].isFemale;
+
+			let assignments = appData[i].assignments.filter(
+				(assignment) => assignment.endDate === null
+			);
+			person.assignments = assignments;
+
+			allStudents.push(person);
+		}
 	}
 	return allStudents;
 };
@@ -71,6 +107,7 @@ export const dbSavePersonData = async (personData) => {
 		viewOnlineSchedule: personData.viewOnlineSchedule,
 		student_PIN: personData.student_PIN,
 		viewStudent_Part: personData.viewStudent_Part,
+		assignments: personData.assignments,
 	});
 };
 
@@ -102,31 +139,10 @@ export const dbGetStudentUidById = async (id) => {
 };
 
 export const dbGetStudentDetails = async (uid) => {
-	const appData = await appDb.table('persons').get({ person_uid: uid });
-	var person = {};
-	person.id = appData.id;
-	person.person_uid = appData.person_uid;
-	person.person_name = appData.person_name;
-	person.person_displayName = appData.person_displayName;
-	person.isMale = appData.isMale;
-	person.isFemale = appData.isFemale;
-	person.isBRead = appData.isBRead;
-	person.isInitialCall = appData.isInitialCall;
-	person.isReturnVisit = appData.isReturnVisit;
-	person.isBibleStudy = appData.isBibleStudy;
-	person.isTalk = appData.isTalk;
-	person.isUnavailable = appData.isUnavailable;
-	person.forLivePart = appData.forLivePart;
-	person.viewOnlineSchedule = appData.viewOnlineSchedule || false;
-	person.student_PIN = appData.student_PIN || '';
-	person.viewStudent_Part = appData.viewStudent_Part | [];
-	person.lastBRead = appData.lastBRead || '';
-	person.lastInitialCall = appData.lastInitialCall || '';
-	person.lastReturnVisit = appData.lastReturnVisit || '';
-	person.lastBibleStudy = appData.lastBibleStudy || '';
-	person.lastTalk = appData.lastTalk || '';
+	const students = await dbGetStudents();
+	const student = students.find((student) => student.person_uid === uid);
 
-	return person;
+	return student;
 };
 
 export const dbGetPersonsByAssType = async (assType) => {

@@ -10,7 +10,7 @@ import {
 	dbGetYearList,
 } from '../indexedDb/dbSourceMaterial';
 import { dbGetListAssType } from '../indexedDb/dbAssignment';
-import { dbGetStudents } from '../indexedDb/dbPersons';
+import { dbGetStudents, dbGetStudentsMini } from '../indexedDb/dbPersons';
 import { initAppDb } from '../indexedDb/dbUtility';
 import {
 	dbGetNotifications,
@@ -40,6 +40,7 @@ import {
 import {
 	allStudentsState,
 	filteredStudentsState,
+	studentsAllState,
 } from '../appStates/appStudents';
 
 export const loadApp = async () => {
@@ -79,6 +80,9 @@ export const loadApp = async () => {
 	await promiseSetRecoil(allStudentsState, data);
 	await promiseSetRecoil(filteredStudentsState, data);
 
+	const miniData = await dbGetStudentsMini();
+	await promiseSetRecoil(studentsAllState, miniData);
+
 	const years = await dbGetYearList();
 	await promiseSetRecoil(yearsListState, years);
 
@@ -100,4 +104,25 @@ export const fetchNotifications = async () => {
 			await dbSaveNotifications(data);
 		}
 	} catch {}
+};
+
+export const sortHistoricalDateDesc = (data) => {
+	data.sort((a, b) => {
+		if (a.startDate === b.startDate) return 0;
+		var dateA =
+			a.startDate.split('/')[2] +
+			'/' +
+			a.startDate.split('/')[0] +
+			'/' +
+			a.startDate.split('/')[1];
+		var dateB =
+			b.startDate.split('/')[2] +
+			'/' +
+			b.startDate.split('/')[0] +
+			'/' +
+			b.startDate.split('/')[1];
+		return dateA > dateB ? 1 : -1;
+	});
+
+	return data;
 };

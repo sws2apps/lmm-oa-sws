@@ -9,3 +9,8 @@ export const filteredStudentsState = atom({
 	key: 'filteredStudents',
 	default: [],
 });
+
+export const studentsAllState = atom({
+	key: 'studentsAll',
+	default: [],
+});

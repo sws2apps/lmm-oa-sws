@@ -23,31 +23,31 @@ const AppDrawer = () => {
 					</ListItemIcon>
 					<ListItemText primary={t('global.home')} />
 				</ListItem>
-				<ListItem button component={Link} to='/Students'>
+				<ListItem button component={Link} to='/students'>
 					<ListItemIcon>
 						<PeopleIcon />
 					</ListItemIcon>
 					<ListItemText primary={t('global.students')} />
 				</ListItem>
-				<ListItem button component={Link} to='/Schedule'>
+				<ListItem button component={Link} to='/schedule'>
 					<ListItemIcon>
 						<ScheduleIcon />
 					</ListItemIcon>
 					<ListItemText primary={t('global.schedule')} />
 				</ListItem>
-				<ListItem button component={Link} to='/SourceMaterial'>
+				<ListItem button component={Link} to='/sourceMaterial'>
 					<ListItemIcon>
 						<LibraryBooksIcon />
 					</ListItemIcon>
 					<ListItemText primary={t('global.sourceMaterial')} />
 				</ListItem>
-				<ListItem button component={Link} to='/Settings'>
+				<ListItem button component={Link} to='/settings'>
 					<ListItemIcon>
 						<SettingsIcon />
 					</ListItemIcon>
 					<ListItemText primary={t('global.settings')} />
 				</ListItem>
-				<ListItem button component={Link} to='/Administration'>
+				<ListItem button component={Link} to='/administration'>
 					<ListItemIcon>
 						<AdminPanelSettingsIcon />
 					</ListItemIcon>

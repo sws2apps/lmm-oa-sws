@@ -1,11 +1,8 @@
 import Dexie from 'dexie';
 import { getI18n } from 'react-i18next';
 import { langList } from '../locales/langList';
-import { dbGetAppSettings, dbUpdateAppSettings } from './dbAppSettings';
-import { dbGetStudentUidById } from './dbPersons';
-import { dbSaveScheduleByAss } from './dbSchedule';
 
-var appDb = new Dexie('lmm_oa');
+let appDb = new Dexie('lmm_oa');
 appDb.version(1).stores({
 	app_settings: '++id, cong_number, cong_name, class_count, meeting_day',
 	ass_type_MG: '&id_type, ass_type_name',
@@ -122,6 +119,26 @@ appDb.version(24).stores({
 appDb.version(25).stores({
 	notifications: '++id, notification_id, isRead, content',
 });
+appDb.version(26).stores({
+	persons:
+		'++id, person_name, person_displayName, isMale, isFemale, isBRead, isInitialCall, isReturnVisit, isBibleStudy, isTalk, forLivePart, isUnavailable, lastBRead, lastInitialCall, lastReturnVisit, lastBibleStudy, lastTalk, lastAssistant, lastAssignment, viewOnlineSchedule, student_PIN, viewStudent_Part, person_uid, assignments',
+	app_settings:
+		'++id, username, cong_number, cong_name, class_count, meeting_day, userPass, isLoggedOut, isScheduleConverted, isCongVerified, isAssignmentsConverted',
+});
+appDb.version(27).stores({
+	ass_type: '&id_type, code, ass_type_name',
+});
+appDb.version(28).stores({
+	ass_type: '&id_type, code, assignable, linkTo, ass_type_name',
+});
+appDb.version(29).stores({
+	persons:
+		'++id, person_name, person_displayName, isMale, isFemale, isBRead, isInitialCall, isReturnVisit, isBibleStudy, isTalk, forLivePart, isUnavailable, lastBRead, lastInitialCall, lastReturnVisit, lastBibleStudy, lastTalk, lastAssistant, lastAssignment, viewOnlineSchedule, student_PIN, viewStudent_Part, person_uid, assignments, timeAway',
+});
+appDb.version(30).stores({
+	persons:
+		'++id, person_name, person_displayName, isMale, isFemale, isBRead, isInitialCall, isReturnVisit, isBibleStudy, isTalk, forLivePart, isUnavailable, lastBRead, lastInitialCall, lastReturnVisit, lastBibleStudy, lastTalk, lastAssistant, lastAssignment, viewOnlineSchedule, student_PIN, viewStudent_Part, person_uid, assignments, timeAway, isMoved',
+});
 
 appDb.on('populate', function () {
 	appDb.app_settings.add({
@@ -133,43 +150,11 @@ appDb.on('populate', function () {
 		app_lang: 'e',
 	});
 
-	let initCallObj = {};
-	let rvObj = {};
-	let bsObj = {};
-	let talkObj = {};
-	let icVideoObj = {};
-	let rvVideoObj = {};
-	let otherObj = {};
-	let memorialObj = {};
 	let normWeekObj = {};
 	let coWeekObj = {};
 	let convWeekObj = {};
 
 	langList.forEach((lang) => {
-		initCallObj[lang.code.toUpperCase()] = getI18n().getDataByLanguage(
-			lang.code
-		).translation['global.initialCall'];
-		rvObj[lang.code.toUpperCase()] = getI18n().getDataByLanguage(
-			lang.code
-		).translation['global.returnVisit'];
-		bsObj[lang.code.toUpperCase()] = getI18n().getDataByLanguage(
-			lang.code
-		).translation['global.bibleStudy'];
-		talkObj[lang.code.toUpperCase()] = getI18n().getDataByLanguage(
-			lang.code
-		).translation['global.talk'];
-		otherObj[lang.code.toUpperCase()] = getI18n().getDataByLanguage(
-			lang.code
-		).translation['global.otherPart'];
-		icVideoObj[lang.code.toUpperCase()] = getI18n().getDataByLanguage(
-			lang.code
-		).translation['global.initialCallVideo'];
-		rvVideoObj[lang.code.toUpperCase()] = getI18n().getDataByLanguage(
-			lang.code
-		).translation['global.returnVisitVideo'];
-		memorialObj[lang.code.toUpperCase()] = getI18n().getDataByLanguage(
-			lang.code
-		).translation['global.memorialInvite'];
 		normWeekObj[lang.code.toUpperCase()] = getI18n().getDataByLanguage(
 			lang.code
 		).translation['global.normalWeek'];
@@ -180,51 +165,6 @@ appDb.on('populate', function () {
 			lang.code
 		).translation['global.conventionWeek'];
 	});
-
-	appDb.ass_type.bulkAdd([
-		{
-			id_type: 1,
-			ass_type_name: {
-				...initCallObj,
-			},
-		},
-		{
-			id_type: 2,
-			ass_type_name: {
-				...rvObj,
-			},
-		},
-		{
-			id_type: 3,
-			ass_type_name: {
-				...bsObj,
-			},
-		},
-		{
-			id_type: 4,
-			ass_type_name: {
-				...talkObj,
-			},
-		},
-		{
-			id_type: 5,
-			ass_type_name: {
-				...icVideoObj,
-			},
-		},
-		{
-			id_type: 6,
-			ass_type_name: {
-				...rvVideoObj,
-			},
-		},
-		{
-			id_type: 7,
-			ass_type_name: {
-				...otherObj,
-			},
-		},
-	]);
 
 	appDb.week_type.bulkAdd([
 		{
@@ -246,90 +186,6 @@ appDb.on('populate', function () {
 			},
 		},
 	]);
-});
-
-appDb.on('ready', async () => {
-	// adding memorial part
-	const memorialObj = await appDb.table('ass_type').get({ id_type: 20 });
-	if (!memorialObj) {
-		let obj = {};
-
-		langList.forEach((lang) => {
-			obj[lang.code.toUpperCase()] = getI18n().getDataByLanguage(
-				lang.code
-			).translation['global.memorialInvite'];
-		});
-
-		let data = {};
-		data.id_type = 20;
-		data.ass_type_name = obj;
-
-		await appDb.table('ass_type').add(data);
-	}
-
-	// updating schedule assignment to use uid
-	let appSettings = await dbGetAppSettings();
-	if (!appSettings.isScheduleConverted) {
-		var scheduleData = await appDb.table('sched_MM').toArray();
-
-		for (let i = 0; i < scheduleData.length; i++) {
-			const schedule = scheduleData[i];
-			if (schedule.bRead_stu_A !== undefined) {
-				const uid = await dbGetStudentUidById(schedule.bRead_stu_A);
-
-				await dbSaveScheduleByAss('bRead_stu_A', uid, schedule.weekOf);
-			}
-			if (schedule.bRead_stu_B !== undefined) {
-				const uid = await dbGetStudentUidById(schedule.bRead_stu_B);
-				await dbSaveScheduleByAss('bRead_stu_B', uid, schedule.weekOf);
-			}
-			for (let i = 1; i <= 4; i++) {
-				const fldNameA = `ass${i}_stu_A`;
-				if (schedule[fldNameA] !== undefined) {
-					const uid = await dbGetStudentUidById(schedule[fldNameA]);
-					await dbSaveScheduleByAss(fldNameA, uid, schedule.weekOf);
-				}
-
-				const fldNameAssA = `ass${i}_ass_A`;
-				if (schedule[fldNameAssA] !== undefined) {
-					const uid = await dbGetStudentUidById(schedule[fldNameAssA]);
-					await dbSaveScheduleByAss(fldNameAssA, uid, schedule.weekOf);
-				}
-
-				const fldNameB = `ass${i}_stu_B`;
-				if (schedule[fldNameB] !== undefined) {
-					const uid = await dbGetStudentUidById(schedule[fldNameB]);
-					await dbSaveScheduleByAss(fldNameB, uid, schedule.weekOf);
-				}
-
-				const fldNameAssB = `ass${i}_ass_B`;
-				if (schedule[fldNameAssB] !== undefined) {
-					const uid = await dbGetStudentUidById(schedule[fldNameAssB]);
-					await dbSaveScheduleByAss(fldNameAssB, uid, schedule.weekOf);
-				}
-			}
-		}
-
-		// save settings
-		let obj = {};
-		obj.isScheduleConverted = true;
-		await dbUpdateAppSettings(obj);
-	}
-
-	// remove trailing, pwd and userMe settings props
-	appSettings = await dbGetAppSettings();
-	if (appSettings.crd) {
-		delete appSettings.crd;
-		await dbUpdateAppSettings({ ...appSettings }, true);
-	}
-	if (appSettings.pwd) {
-		delete appSettings.pwd;
-		await dbUpdateAppSettings({ ...appSettings }, true);
-	}
-	if (appSettings.userMe) {
-		delete appSettings.userMe;
-		await dbUpdateAppSettings({ ...appSettings }, true);
-	}
 });
 
 export default appDb;
