@@ -1,3 +1,13 @@
+# [1.0.0-alpha.134](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.133...v1.0.0-alpha.134) (2022-06-01)
+
+
+### Features
+
+* **deps:** bump @fingerprintjs/fingerprintjs-pro from 3.6.2 to 3.6.3 ([57c6667](https://github.com/sws2apps/lmm-oa-sws/commit/57c6667c76c3f1c0a3521af70d5260bb36512cdc))
+* **deps:** bump @mui/icons-material from 5.8.0 to 5.8.2 ([b162467](https://github.com/sws2apps/lmm-oa-sws/commit/b1624673239ac9c95ebf6b0c13b08890396aa428))
+* **deps:** bump @mui/lab from 5.0.0-alpha.83 to 5.0.0-alpha.84 ([1c38b2d](https://github.com/sws2apps/lmm-oa-sws/commit/1c38b2debe36f3293308725c9e86dee83724ae87))
+* **deps:** bump @mui/material from 5.8.1 to 5.8.2 ([502eb64](https://github.com/sws2apps/lmm-oa-sws/commit/502eb64a10321976316c524b5b171f4938f25e19))
+
 # [1.0.0-alpha.133](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.132...v1.0.0-alpha.133) (2022-05-31)
 
 
