@@ -75,7 +75,7 @@ const UserMfaVerify = () => {
 
 					const data = await res.json();
 					if (res.status === 200) {
-						if (data.congregation) {
+						if (data.congregation.cong_name.length > 0) {
 							if (data.congregation.cong_role.length > 0) {
 								if (
 									data.congregation.cong_role.includes('lmmo') ||

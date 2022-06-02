@@ -59,7 +59,7 @@ const CongregationRequestSent = () => {
 				/>
 			</Box>
 
-			<Typography sx={{ lineHeight: 1.2, textAlign: 'justify' }}>
+			<Typography sx={{ lineHeight: 1.2 }}>
 				{t('login.requestAccountSent')}
 			</Typography>
 
