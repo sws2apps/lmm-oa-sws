@@ -1,10 +1,12 @@
 import { promiseGetRecoil, promiseSetRecoil } from 'recoil-outside';
 import dateFormat from 'dateformat';
-import { dbGetAppSettings } from './dbAppSettings';
 import { dbGetSourceMaterial } from './dbSourceMaterial';
 import { getI18n } from 'react-i18next';
 import appDb from './mainDb';
-import { allStudentsState } from '../appStates/appStudents';
+import {
+	allStudentsState,
+	filteredStudentsState,
+} from '../appStates/appStudents';
 import { sortHistoricalDateDesc } from '../utils/app';
 import { dbStudentAssignmentsHistory } from './dbAssignment';
 
@@ -13,11 +15,13 @@ const { t } = getI18n();
 export const dbGetStudents = async () => {
 	let allStudents = [];
 
-	const appData = await appDb
+	const data = await appDb
 		.table('persons')
 		.reverse()
 		.reverse()
 		.sortBy('person_name');
+
+	const appData = data.filter((student) => student.isMoved === false);
 
 	for (let i = 0; i < appData.length; i++) {
 		let person = {};
@@ -58,28 +62,36 @@ export const dbGetStudents = async () => {
 export const dbGetStudentsMini = async () => {
 	let allStudents = [];
 
-	const appData = await appDb
+	const data = await appDb
 		.table('persons')
 		.reverse()
 		.reverse()
 		.sortBy('person_name');
 
+	const appData = data.filter((student) => student.isMoved === false);
+
 	for (let i = 0; i < appData.length; i++) {
-		if (!appData[i].isMoved) {
-			let person = {};
-			person.id = appData[i].id;
-			person.person_uid = appData[i].person_uid;
-			person.person_name = appData[i].person_name;
-			person.isMale = appData[i].isMale;
-			person.isFemale = appData[i].isFemale;
+		let person = {};
+		person.id = appData[i].id;
+		person.person_uid = appData[i].person_uid;
+		person.person_name = appData[i].person_name;
+		person.person_displayName = appData[i].person_displayName;
+		person.isMale = appData[i].isMale;
+		person.isFemale = appData[i].isFemale;
+		person.isDisqualified = appData[i].isDisqualified || false;
+		person.lastAssignment = appData[i].lastAssignment;
 
-			let assignments = appData[i].assignments.filter(
-				(assignment) => assignment.endDate === null
-			);
-			person.assignments = assignments;
+		let assignments = appData[i].assignments.map((assignment) =>
+			assignment.endDate === null
+				? { ...assignment, isActive: true }
+				: { ...assignment, isActive: false }
+		);
+		person.assignments = sortHistoricalDateDesc(assignments);
 
-			allStudents.push(person);
-		}
+		let timeAway = appData[i].timeAway || [];
+		person.timeAway = sortHistoricalDateDesc(timeAway);
+
+		allStudents.push(person);
 	}
 	return allStudents;
 };
@@ -160,50 +172,39 @@ export const dbGetStudentDetails = async (uid) => {
 
 export const dbGetStudentDetailsMini = async (uid) => {
 	const students = await promiseGetRecoil(allStudentsState);
-
 	let student = { ...students.find((student) => student.person_uid === uid) };
-
 	return student;
 };
 
 export const dbGetPersonsByAssType = async (assType) => {
-	const appData = await appDb.table('persons').toArray();
-	const appSettings = await dbGetAppSettings();
-	const isLiveClass = appSettings.liveEventClass;
-	var dbPersons = [];
-	if (isLiveClass === true) {
-		if (assType === 'isAssistant') {
-			dbPersons = appData.filter(
-				(person) =>
-					(person.isInitialCall === true ||
-						person.isReturnVisit === true ||
-						person.isBibleStudy === true) &
-					(person.isUnavailable === false) &
-					(person.forLivePart === true)
-			);
-		} else {
-			dbPersons = appData.filter(
-				(person) =>
-					(person[assType] === true) &
-					(person.isUnavailable === false) &
-					(person.forLivePart === true)
-			);
-		}
+	const data = await promiseGetRecoil(allStudentsState);
+	// remove disqualified students
+	const appData = data.filter((person) => person.isDisqualified === false);
+
+	let dbPersons = [];
+	if (assType === 'isAssistant') {
+		dbPersons = appData.filter(
+			(person) =>
+				person.assignments.find(
+					(assignment) =>
+						assignment.isActive === true && assignment.code === 101
+				) ||
+				person.assignments.find(
+					(assignment) =>
+						assignment.isActive === true && assignment.code === 102
+				) ||
+				person.assignments.find(
+					(assignment) =>
+						assignment.isActive === true && assignment.code === 103
+				)
+		);
 	} else {
-		if (assType === 'isAssistant') {
-			dbPersons = appData.filter(
-				(person) =>
-					(person.isInitialCall === true ||
-						person.isReturnVisit === true ||
-						person.isBibleStudy === true) &
-					(person.isUnavailable === false)
-			);
-		} else {
-			dbPersons = appData.filter(
-				(person) =>
-					(person[assType] === true) & (person.isUnavailable === false)
-			);
-		}
+		dbPersons = appData.filter((person) =>
+			person.assignments.find(
+				(assignment) =>
+					assignment.isActive === true && assignment.code === assType
+			)
+		);
 	}
 	var persons = [];
 
@@ -221,6 +222,7 @@ export const dbGetPersonsByAssType = async (assType) => {
 			person.lastAssignmentFormat = dateFormatted;
 		}
 		person.person_displayName = dbPersons[i].person_displayName;
+		person.timeAway = dbPersons[i].timeAway;
 		persons.push(person);
 	}
 
@@ -372,7 +374,12 @@ export const dbHistoryAssistant = async (mainStuID) => {
 			var weekFld = 'ass' + cnAss[b].iAss + '_type';
 			const assType = weekData[weekFld];
 
-			if (assType === 1 || assType === 2 || assType === 3 || assType === 20) {
+			if (
+				assType === 101 ||
+				assType === 102 ||
+				assType === 103 ||
+				assType === 108
+			) {
 				for (let a = 0; a < varClasses.length; a++) {
 					const fldName =
 						'ass' + cnAss[b].iAss + '_stu_' + varClasses[a].classLabel;
@@ -400,6 +407,7 @@ export const dbHistoryAssistant = async (mainStuID) => {
 			}
 		}
 	}
+
 	return dbHistory;
 };
 
@@ -446,13 +454,16 @@ export const dbSavePersonExp = async (data) => {
 		} else {
 			let obj = {
 				person_uid: window.crypto.randomUUID(),
+				isMoved: false,
+				isDisqualified: false,
 				...data,
 			};
 			await appDb.persons.add(obj);
 		}
 
-		const students = await dbGetStudents();
+		const students = await dbGetStudentsMini();
 		await promiseSetRecoil(allStudentsState, students);
+		await promiseSetRecoil(filteredStudentsState, students);
 		return true;
 	} else {
 		return false;

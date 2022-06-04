@@ -13,7 +13,7 @@ import {
 	dbGetListAssType,
 	dbHistoryAssignment,
 } from '../indexedDb/dbAssignment';
-import { dbGetStudents, dbGetStudentsMini } from '../indexedDb/dbPersons';
+import { dbGetStudentsMini } from '../indexedDb/dbPersons';
 import { initAppDb } from '../indexedDb/dbUtility';
 import {
 	dbGetNotifications,
@@ -43,7 +43,6 @@ import {
 import {
 	allStudentsState,
 	filteredStudentsState,
-	studentsAllState,
 	studentsAssignmentHistoryState,
 } from '../appStates/appStudents';
 
@@ -80,15 +79,12 @@ export const loadApp = async () => {
 	const assTypeList = await dbGetListAssType();
 	await promiseSetRecoil(assTypeListState, assTypeList);
 
-	const history = await dbHistoryAssignment();
-	await promiseSetRecoil(studentsAssignmentHistoryState, history);
-
-	const data = await dbGetStudents();
+	const data = await dbGetStudentsMini();
 	await promiseSetRecoil(allStudentsState, data);
 	await promiseSetRecoil(filteredStudentsState, data);
 
-	const miniData = await dbGetStudentsMini();
-	await promiseSetRecoil(studentsAllState, miniData);
+	const history = await dbHistoryAssignment();
+	await promiseSetRecoil(studentsAssignmentHistoryState, history);
 
 	const years = await dbGetYearList();
 	await promiseSetRecoil(yearsListState, years);
@@ -132,4 +128,8 @@ export const sortHistoricalDateDesc = (data) => {
 	});
 
 	return data;
+};
+
+export const formatDateForCompare = (date) => {
+	return new Date(date);
 };

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { useTranslation } from 'react-i18next';
+import { format } from 'date-fns';
 import { useTheme } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import maleIcon from '../img/student_male.svg';
@@ -10,14 +11,16 @@ import { styled } from '@mui/material/styles';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
+import Chip from '@mui/material/Chip';
 import CircularProgress from '@mui/material/CircularProgress';
-import DeleteIcon from '@mui/icons-material/Delete';
+import HandshakeIcon from '@mui/icons-material/Handshake';
 import IconButton from '@mui/material/IconButton';
 import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import SaveIcon from '@mui/icons-material/Save';
+import Tooltip from '@mui/material/Tooltip';
 import TransferWithinAStationIcon from '@mui/icons-material/TransferWithinAStation';
 import Typography from '@mui/material/Typography';
 import StudentAssignments from '../components/students/StudentAssignments';
@@ -100,8 +103,6 @@ const StudentDetails = () => {
 
 	const [isProcessing, setIsProcessing] = useState(true);
 	const [isEdit, setIsEdit] = useState(false);
-	const [isMoved, setIsMoved] = useState(false);
-	const [isDisqualified, setIsDisqualified] = useState(false);
 	const [name, setName] = useState('');
 	const [isMale, setIsMale] = useState(true);
 	const [isFemale, setIsFemale] = useState(false);
@@ -116,12 +117,67 @@ const StudentDetails = () => {
 		setExpanded(newExpanded ? panel : false);
 	};
 
+	const handlePersonMove = async () => {
+		setRootModalOpen(true);
+		const obj = { ...student, isMoved: true };
+		const result = await dbSavePersonExp(obj);
+		if (result) {
+			navigate('/students');
+			setRootModalOpen(false);
+		} else {
+			setRootModalOpen(false);
+			setAppMessage(t('students.missingInfo'));
+			setAppSeverity('warning');
+			setAppSnackOpen(true);
+		}
+	};
+
+	const handlePersonEnabled = async () => {
+		setRootModalOpen(true);
+		const data = { ...student, isDisqualified: false };
+		const result = await dbSavePersonExp(data);
+		if (result) {
+			navigate('/students');
+			setRootModalOpen(false);
+		} else {
+			setRootModalOpen(false);
+			setAppMessage(t('students.missingInfo'));
+			setAppSeverity('warning');
+			setAppSnackOpen(true);
+		}
+	};
+
+	const handlePersonDisqualified = async () => {
+		const obj = assignments.map((assignment) =>
+			assignment.endDate === null
+				? {
+						...assignment,
+						endDate: format(new Date(), 'MM/dd/yyy'),
+						comments: t('global.disqualified'),
+				  }
+				: assignment
+		);
+
+		setRootModalOpen(true);
+		const data = { ...student, isDisqualified: true, assignments: obj };
+		const result = await dbSavePersonExp(data);
+		if (result) {
+			navigate('/students');
+			setRootModalOpen(false);
+		} else {
+			setRootModalOpen(false);
+			setAppMessage(t('students.missingInfo'));
+			setAppSeverity('warning');
+			setAppSnackOpen(true);
+		}
+	};
+
 	const handleSavePerson = async () => {
 		setRootModalOpen(true);
 		const result = await dbSavePersonExp(student);
 		if (result) {
-			setRootModalOpen(false);
 			navigate('/students');
+			setRootModalOpen(false);
 		} else {
 			setRootModalOpen(false);
 			setAppMessage(t('students.missingInfo'));
@@ -171,8 +227,6 @@ const StudentDetails = () => {
 			if (id) {
 				const data = await dbGetStudentDetails(id);
 				setStudent(data);
-				setIsMoved(data.isMoved || false);
-				setIsDisqualified(data.isDisqualified || false);
 				setName(data.person_name);
 				setDisplayName(data.person_displayName);
 				setIsMale(data.isMale);
@@ -232,64 +286,75 @@ const StudentDetails = () => {
 									marginBottom: '10px',
 								}}
 							>
+								{isEdit && student.isDisqualified === false && (
+									<Tooltip title={lgUp ? '' : t('students.markDisqualified')}>
+										<IconButton
+											edge='start'
+											color='inherit'
+											sx={iconButtonStyles}
+											onClick={handlePersonDisqualified}
+										>
+											<RemoveCircleIcon color='error' />
+											{lgUp && (
+												<Typography sx={txtButtonStyles}>
+													{t('students.markDisqualified')}
+												</Typography>
+											)}
+										</IconButton>
+									</Tooltip>
+								)}
+
+								{isEdit && student.isDisqualified === true && (
+									<Tooltip title={lgUp ? '' : t('students.enable')}>
+										<IconButton
+											edge='start'
+											color='inherit'
+											sx={iconButtonStyles}
+											onClick={handlePersonEnabled}
+										>
+											<HandshakeIcon color='success' />
+											{lgUp && (
+												<Typography sx={txtButtonStyles}>
+													{t('students.enable')}
+												</Typography>
+											)}
+										</IconButton>
+									</Tooltip>
+								)}
+
 								{isEdit && (
+									<Tooltip title={lgUp ? '' : t('students.markTransfer')}>
+										<IconButton
+											edge='start'
+											color='inherit'
+											sx={iconButtonStyles}
+											onClick={handlePersonMove}
+										>
+											<TransferWithinAStationIcon sx={{ color: '#6C3483' }} />
+											{lgUp && (
+												<Typography sx={txtButtonStyles}>
+													{t('students.markTransfer')}
+												</Typography>
+											)}
+										</IconButton>
+									</Tooltip>
+								)}
+
+								<Tooltip title={lgUp ? '' : t('global.save')}>
 									<IconButton
 										edge='start'
 										color='inherit'
 										sx={iconButtonStyles}
+										onClick={handleSavePerson}
 									>
-										<RemoveCircleIcon color='error' />
+										<SaveIcon sx={{ color: '#3498DB' }} />
 										{lgUp && (
 											<Typography sx={txtButtonStyles}>
-												{t('students.markDisqualified')}
+												{t('global.save')}
 											</Typography>
 										)}
 									</IconButton>
-								)}
-
-								{isEdit && (
-									<IconButton
-										edge='start'
-										color='inherit'
-										sx={iconButtonStyles}
-									>
-										<TransferWithinAStationIcon sx={{ color: '#6C3483' }} />
-										{lgUp && (
-											<Typography sx={txtButtonStyles}>
-												{t('students.markTransfer')}
-											</Typography>
-										)}
-									</IconButton>
-								)}
-
-								<IconButton
-									edge='start'
-									color='inherit'
-									sx={iconButtonStyles}
-									onClick={handleSavePerson}
-								>
-									<SaveIcon sx={{ color: '#3498DB' }} />
-									{lgUp && (
-										<Typography sx={txtButtonStyles}>
-											{t('global.save')}
-										</Typography>
-									)}
-								</IconButton>
-
-								{isEdit && (
-									<IconButton
-										edge='start'
-										color='inherit'
-										sx={iconButtonStyles}
-									>
-										<DeleteIcon color='error' />
-										{lgUp && (
-											<Typography sx={txtButtonStyles}>
-												{t('global.delete')}
-											</Typography>
-										)}
-									</IconButton>
-								)}
+								</Tooltip>
 							</Box>
 						</Box>
 					</Box>
@@ -318,11 +383,20 @@ const StudentDetails = () => {
 								alt='Student icon'
 								src={isMale ? maleIcon : femaleIcon}
 							/>
-							<Typography
-								sx={{ fontWeight: 'bold', fontSize: '16px', lineHeight: 1.2 }}
-							>
-								{name}
-							</Typography>
+							<Box>
+								<Typography
+									sx={{ fontWeight: 'bold', fontSize: '16px', lineHeight: 1.2 }}
+								>
+									{name}
+								</Typography>
+								{student.isDisqualified && (
+									<Chip
+										label={t('students.disqualifiedLabel')}
+										size='small'
+										sx={{ backgroundColor: 'red', color: 'white' }}
+									/>
+								)}
+							</Box>
 						</Box>
 						<Accordion
 							expanded={expanded === 'panel1'}

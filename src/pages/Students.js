@@ -32,13 +32,13 @@ import {
 import {
 	allStudentsState,
 	filteredStudentsState,
-	studentsAllState,
 } from '../appStates/appStudents';
 import {
 	currentStudentState,
 	isStudentDeleteState,
 	isStudentDetailsOpenState,
 } from '../appStates/appStudent';
+
 const Search = styled('div')(({ theme }) => ({
 	position: 'relative',
 	borderRadius: theme.shape.borderRadius,
@@ -93,7 +93,6 @@ const Students = () => {
 	const setAppSeverity = useSetRecoilState(appSeverityState);
 	const setAppMessage = useSetRecoilState(appMessageState);
 
-	const dbMiniStudents = useRecoilValue(studentsAllState);
 	const currentStudent = useRecoilValue(currentStudentState);
 	const isStudentDetailsOpen = useRecoilValue(isStudentDetailsOpenState);
 
@@ -565,9 +564,9 @@ const Students = () => {
 			</Box>
 			{isStudentDetailsOpen && <StudentDetails />}
 			<Box sx={{ marginBottom: '10px', marginRight: '5px' }}>
-				{dbMiniStudents.length > 0 && (
+				{dbStudents.length > 0 && (
 					<Grid container>
-						{dbMiniStudents.map((student) => (
+						{dbStudents.map((student) => (
 							<StudentCard key={student.person_uid} student={student} />
 						))}
 					</Grid>

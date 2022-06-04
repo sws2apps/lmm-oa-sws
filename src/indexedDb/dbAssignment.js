@@ -1,14 +1,22 @@
 import { getI18n } from 'react-i18next';
-import { promiseGetRecoil } from 'recoil-outside';
+import { promiseGetRecoil, promiseSetRecoil } from 'recoil-outside';
 import dateFormat from 'dateformat';
 import { dbGetAppSettings } from './dbAppSettings';
-import { dbGetStudentByUid, dbGetStudentDetails } from './dbPersons';
+import {
+	dbGetStudentByUid,
+	dbGetStudentDetails,
+	dbGetStudentsMini,
+} from './dbPersons';
 import { dbGetScheduleData } from './dbSchedule';
 import { dbGetSourceMaterial, dbGetWeekListBySched } from './dbSourceMaterial';
 import appDb from './mainDb';
 import { shortDateFormatState } from '../appStates/appSettings';
 import { assTypeLocalState } from '../appStates/appSourceMaterial';
-import { studentsAssignmentHistoryState } from '../appStates/appStudents';
+import {
+	allStudentsState,
+	filteredStudentsState,
+	studentsAssignmentHistoryState,
+} from '../appStates/appStudents';
 
 const { t } = getI18n();
 
@@ -61,7 +69,7 @@ export const dbGetListAssType = async () => {
 	return assType;
 };
 
-export const dbSaveAss = async (weekOf, stuID, varSave, idAss) => {
+export const dbSaveAss = async (weekOf, stuID, varSave) => {
 	const appData = await appDb.table('sched_MM').get({ weekOf: weekOf });
 	const stuPrev = appData[varSave];
 
@@ -69,7 +77,11 @@ export const dbSaveAss = async (weekOf, stuID, varSave, idAss) => {
 	obj[varSave] = stuID;
 
 	await appDb.table('sched_MM').update(weekOf, { ...obj });
-	await dbRefreshStudentHistory(stuPrev, stuID, idAss);
+
+	const history = await dbHistoryAssignment();
+	await promiseSetRecoil(studentsAssignmentHistoryState, history);
+
+	await dbRefreshStudentHistory(stuPrev, stuID);
 };
 
 export const dbHistoryAssignment = async () => {
@@ -180,7 +192,7 @@ export const dbStudentAssignmentsHistory = async (stuID) => {
 };
 
 export const dbLastBRead = async (stuID) => {
-	const appData = await dbHistoryAssignment();
+	const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
 	const lastBRead = appData.filter(
 		(data) => (data.assignmentID === 100) & (data.studentID === stuID)
 	);
@@ -206,7 +218,7 @@ export const dbFirstBRead = async (stuID) => {
 };
 
 export const dbLastIniCall = async (stuID) => {
-	const appData = await dbHistoryAssignment();
+	const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
 	const lastIniCall = appData.filter(
 		(data) => (data.assignmentID === 101) & (data.studentID === stuID)
 	);
@@ -232,7 +244,7 @@ export const dbFirstIniCall = async (stuID) => {
 };
 
 export const dbLastRV = async (stuID) => {
-	const appData = await dbHistoryAssignment();
+	const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
 	const lastRV = appData.filter(
 		(data) => (data.assignmentID === 102) & (data.studentID === stuID)
 	);
@@ -258,7 +270,7 @@ export const dbFirstRV = async (stuID) => {
 };
 
 export const dbLastBibleStudy = async (stuID) => {
-	const appData = await dbHistoryAssignment();
+	const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
 	const lastBibleStudy = appData.filter(
 		(data) => (data.assignmentID === 103) & (data.studentID === stuID)
 	);
@@ -284,7 +296,7 @@ export const dbFirstBibleStudy = async (stuID) => {
 };
 
 export const dbLastTalk = async (stuID) => {
-	const appData = await dbHistoryAssignment();
+	const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
 	const lastTalk = appData.filter(
 		(data) => (data.assignmentID === 104) & (data.studentID === stuID)
 	);
@@ -310,7 +322,7 @@ export const dbFirstTalk = async (stuID) => {
 };
 
 export const dbLastAssistant = async (stuID) => {
-	const appData = await dbHistoryAssignment();
+	const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
 	const lastAssistant = appData.filter(
 		(data) => (data.assignmentID === 109) & (data.studentID === stuID)
 	);
@@ -322,7 +334,7 @@ export const dbLastAssistant = async (stuID) => {
 };
 
 export const dbLastAssignment = async (stuID) => {
-	const appData = await dbHistoryAssignment();
+	const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
 	const lastAssignment = appData.filter((data) => data.studentID === stuID);
 	var dLast;
 	if (lastAssignment.length > 0) {
@@ -331,7 +343,7 @@ export const dbLastAssignment = async (stuID) => {
 	return dLast;
 };
 
-export const dbRefreshStudentHistory = async (varPrev, varNew, varAss) => {
+export const dbRefreshStudentHistory = async (varPrev, varNew) => {
 	let varPers;
 	for (let a = 1; a <= 2; a++) {
 		if (a === 1) {
@@ -341,43 +353,19 @@ export const dbRefreshStudentHistory = async (varPrev, varNew, varAss) => {
 		}
 
 		if ((typeof varPers !== 'undefined') & (varPers !== '')) {
-			const stuBRead = await dbLastBRead(varPers);
-			const stuIniCall = await dbLastIniCall(varPers);
-			const stuRV = await dbLastRV(varPers);
-			const stuBS = await dbLastBibleStudy(varPers);
-			const stuAssistant = await dbLastAssistant(varPers);
-			const stuTalk = await dbLastTalk(varPers);
 			const stuAssignment = await dbLastAssignment(varPers);
-
-			var fldToUpdate;
-			var newValue;
-
-			if (varAss === 0) {
-				fldToUpdate = 'lastBRead';
-				newValue = stuBRead;
-			} else if (varAss === 1) {
-				fldToUpdate = 'lastInitialCall';
-				newValue = stuIniCall;
-			} else if (varAss === 2) {
-				fldToUpdate = 'lastReturnVisit';
-				newValue = stuRV;
-			} else if (varAss === 3) {
-				fldToUpdate = 'lastBibleStudy';
-				newValue = stuBS;
-			} else if (varAss === 4) {
-				fldToUpdate = 'lastTalk';
-				newValue = stuTalk;
-			} else if (varAss === 8) {
-				fldToUpdate = 'lastAssistant';
-				newValue = stuAssistant;
-			}
-
 			const student = await dbGetStudentDetails(varPers);
 
 			var obj = {};
-			obj[fldToUpdate] = newValue;
 			obj.lastAssignment = stuAssignment;
 			await appDb.table('persons').update(student.id, { ...obj });
+
+			const students = await dbGetStudentsMini();
+			await promiseSetRecoil(allStudentsState, students);
+			await promiseSetRecoil(filteredStudentsState, students);
+
+			const history = await dbHistoryAssignment();
+			await promiseSetRecoil(studentsAssignmentHistoryState, history);
 		}
 	}
 };

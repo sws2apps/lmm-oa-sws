@@ -22,7 +22,6 @@ import { dbSaveAss } from '../../indexedDb/dbAssignment';
 import {
 	isS89OpenState,
 	currentScheduleState,
-	currentWeekSchedState,
 	isReloadScheduleState,
 } from '../../appStates/appSchedule';
 import { classCountState } from '../../appStates/appCongregation';
@@ -126,7 +125,7 @@ const boxStudentSelector = {
 	},
 };
 
-const ScheduleDetails = (props) => {
+const ScheduleDetails = ({ week }) => {
 	const { t } = useTranslation();
 
 	const [bibleReadingSrc, setBibleReadingSrc] = useState('');
@@ -191,7 +190,6 @@ const ScheduleDetails = (props) => {
 	const [isReload, setIsReload] = useRecoilState(isReloadScheduleState);
 
 	const classCount = useRecoilValue(classCountState);
-	const week = useRecoilValue(currentWeekSchedState);
 	const currentSchedule = useRecoilValue(currentScheduleState);
 
 	const theme = useTheme();
@@ -221,7 +219,6 @@ const ScheduleDetails = (props) => {
 
 	const setSelectedStudent = async (selectedStudent) => {
 		const assID = selectedStudent.assID;
-		const assType = selectedStudent.assType;
 		var studentID = undefined;
 		if (typeof selectedStudent.studentId !== 'undefined') {
 			studentID = selectedStudent.studentId;
@@ -230,92 +227,92 @@ const ScheduleDetails = (props) => {
 
 		if (assID === 0) {
 			setIsStuBReadA(true);
-			await dbSaveAss(week, studentID, 'bRead_stu_A', 0);
+			await dbSaveAss(week, studentID, 'bRead_stu_A');
 			setStuBReadA(studentName);
 			setIsStuBReadA(false);
 		} else if (assID === 1) {
 			setIsStuBReadB(true);
-			await dbSaveAss(week, studentID, 'bRead_stu_B', 0);
+			await dbSaveAss(week, studentID, 'bRead_stu_B');
 			setStuBReadB(studentName);
 			setIsStuBReadB(false);
 		} else if (assID === 2) {
 			setIsStu1A(true);
-			await dbSaveAss(week, studentID, 'ass1_stu_A', assType);
+			await dbSaveAss(week, studentID, 'ass1_stu_A');
 			setStu1A(studentName);
 			setIsStu1A(false);
 		} else if (assID === 3) {
 			setIsAss1A(true);
-			await dbSaveAss(week, studentID, 'ass1_ass_A', 8);
+			await dbSaveAss(week, studentID, 'ass1_ass_A');
 			setAss1A(studentName);
 			setIsAss1A(false);
 		} else if (assID === 4) {
 			setIsStu1B(true);
-			await dbSaveAss(week, studentID, 'ass1_stu_B', assType);
+			await dbSaveAss(week, studentID, 'ass1_stu_B');
 			setStu1B(studentName);
 			setIsStu1B(false);
 		} else if (assID === 5) {
 			setIsAss1B(true);
-			await dbSaveAss(week, studentID, 'ass1_ass_B', 8);
+			await dbSaveAss(week, studentID, 'ass1_ass_B');
 			setAss1B(studentName);
 			setIsAss1B(false);
 		} else if (assID === 6) {
 			setIsStu2A(true);
-			await dbSaveAss(week, studentID, 'ass2_stu_A', assType);
+			await dbSaveAss(week, studentID, 'ass2_stu_A');
 			setStu2A(studentName);
 			setIsStu2A(false);
 		} else if (assID === 7) {
 			setIsAss2A(true);
-			await dbSaveAss(week, studentID, 'ass2_ass_A', 8);
+			await dbSaveAss(week, studentID, 'ass2_ass_A');
 			setAss2A(studentName);
 			setIsAss2A(false);
 		} else if (assID === 8) {
 			setIsStu2B(true);
-			await dbSaveAss(week, studentID, 'ass2_stu_B', assType);
+			await dbSaveAss(week, studentID, 'ass2_stu_B');
 			setStu2B(studentName);
 			setIsStu2B(false);
 		} else if (assID === 9) {
 			setIsAss2B(false);
-			await dbSaveAss(week, studentID, 'ass2_ass_B', 8);
+			await dbSaveAss(week, studentID, 'ass2_ass_B');
 			setAss2B(studentName);
 			setIsAss2B(true);
 		} else if (assID === 10) {
 			setIsStu3A(true);
-			await dbSaveAss(week, studentID, 'ass3_stu_A', assType);
+			await dbSaveAss(week, studentID, 'ass3_stu_A');
 			setStu3A(studentName);
 			setIsStu3A(false);
 		} else if (assID === 11) {
 			setIsAss3A(true);
-			await dbSaveAss(week, studentID, 'ass3_ass_A', 8);
+			await dbSaveAss(week, studentID, 'ass3_ass_A');
 			setAss3A(studentName);
 			setIsAss3A(false);
 		} else if (assID === 12) {
 			setIsStu3B(true);
-			await dbSaveAss(week, studentID, 'ass3_stu_B', assType);
+			await dbSaveAss(week, studentID, 'ass3_stu_B');
 			setStu3B(studentName);
 			setIsStu3B(false);
 		} else if (assID === 13) {
 			setIsAss3B(true);
-			await dbSaveAss(week, studentID, 'ass3_ass_B', 8);
+			await dbSaveAss(week, studentID, 'ass3_ass_B');
 			setAss3B(studentName);
 			setIsAss3B(false);
 		} else if (assID === 14) {
 			setIsStu4A(true);
-			await dbSaveAss(week, studentID, 'ass4_stu_A', assType);
+			await dbSaveAss(week, studentID, 'ass4_stu_A');
 			setStu4A(studentName);
 			setIsStu4A(false);
 		} else if (assID === 15) {
 			setIsAss4A(true);
-			await dbSaveAss(week, studentID, 'ass4_ass_A', 8);
+			await dbSaveAss(week, studentID, 'ass4_ass_A');
 			setAss4A(studentName);
 			setIsAss4A(false);
 		} else if (assID === 16) {
 			setIsStu4B(true);
-			await dbSaveAss(week, studentID, 'ass4_stu_B', assType);
+			await dbSaveAss(week, studentID, 'ass4_stu_B');
 			setStu4B(studentName);
 			setIsStu4B(false);
 		} else if (assID === 17) {
 			setIsAss4B(true);
-			await dbSaveAss(week, studentID, 'ass4_ass_B', 8);
+			await dbSaveAss(week, studentID, 'ass4_ass_B');
 			setAss4B(studentName);
 			setIsAss4B(false);
 		}
@@ -325,6 +322,8 @@ const ScheduleDetails = (props) => {
 		const loadCurrentWeekData = async () => {
 			const scheduleData = await dbGetScheduleData(week);
 			const sourceData = await dbGetSourceMaterial(week);
+
+			console.log(week, scheduleData, sourceData);
 
 			setBibleReadingSrc(sourceData.bibleReading_src);
 			setStuBReadA(scheduleData.bRead_stu_A_dispName);
@@ -421,6 +420,7 @@ const ScheduleDetails = (props) => {
 							setIsAssign={(value) => setIsAssign(value)}
 							setSelectedStudent={(value) => setSelectedStudent(value)}
 							deleteStudent={(value) => deleteStudent(value)}
+							currentWeek={week}
 						/>
 					</DialogContent>
 				</Dialog>
@@ -506,7 +506,7 @@ const ScheduleDetails = (props) => {
 									onClick={() =>
 										loadStudentPicker({
 											assID: 0,
-											assType: 0,
+											assType: 100,
 											assTypeName: t('global.bibleReading'),
 											currentStudent: stuBReadA,
 										})
@@ -535,7 +535,7 @@ const ScheduleDetails = (props) => {
 										onClick={() =>
 											loadStudentPicker({
 												assID: 1,
-												assType: 0,
+												assType: 100,
 												assTypeName: t('global.bibleReading'),
 												currentStudent: stuBReadB,
 											})

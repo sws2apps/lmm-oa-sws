@@ -35,7 +35,7 @@ const AppDrawer = () => {
 					</ListItemIcon>
 					<ListItemText primary={t('global.schedule')} />
 				</ListItem>
-				<ListItem button component={Link} to='/sourceMaterial'>
+				<ListItem button component={Link} to='/source-material'>
 					<ListItemIcon>
 						<LibraryBooksIcon />
 					</ListItemIcon>

@@ -182,8 +182,8 @@ const Schedule = () => {
 				obj.label = dateFormatted;
 				newData.push(obj);
 			}
+			setCurrentWeek('');
 			setWeeks(newData);
-
 			setCurrentWeek(newData[0].value);
 		};
 
@@ -191,6 +191,14 @@ const Schedule = () => {
 			getWeekBySchedule();
 		}
 	}, [currentSchedule, shortDateFormat, setCurrentWeek, setWeeks]);
+
+	useEffect(() => {
+		return () => {
+			setCurrentWeek('');
+			setWeeks('');
+			setCurrentSchedule('');
+		};
+	}, [setCurrentSchedule, setCurrentWeek, setWeeks]);
 
 	const renderYearList = (year) => {
 		return (
@@ -357,7 +365,11 @@ const Schedule = () => {
 							</Button>
 						</Box>
 					</Box>
-					<Box>{currentWeek.length === 10 && <ScheduleDetails />}</Box>
+					<Box>
+						{currentWeek.length === 10 && (
+							<ScheduleDetails week={currentWeek} />
+						)}
+					</Box>
 				</>
 			)}
 		</Box>

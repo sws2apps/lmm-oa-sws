@@ -144,7 +144,7 @@ const StudentAYF = (props) => {
 								: studentPartWrapper2Styles
 						}
 					>
-						{assType !== 7 && (
+						{assType !== 107 && (
 							<Typography
 								variant='body1'
 								sx={{ fontWeight: 'bold', fontSize: '16px' }}
@@ -154,7 +154,7 @@ const StudentAYF = (props) => {
 						)}
 						<Typography variant='body1'>{assSrc}</Typography>
 					</Grid>
-					{assType !== 5 && assType !== 6 && assType !== 7 && (
+					{assType !== 105 && assType !== 106 && assType !== 107 && (
 						<Grid
 							item
 							sx={
@@ -187,7 +187,7 @@ const StudentAYF = (props) => {
 										</IconButton>
 									)}
 								</Box>
-								{assType !== 4 && (
+								{assType !== 104 && (
 									<Box sx={boxStudentFldContainer}>
 										<Typography sx={typoStudentField} variant='body1'>
 											{assA}
@@ -245,7 +245,7 @@ const StudentAYF = (props) => {
 											</IconButton>
 										)}
 									</Box>
-									{assType !== 4 && (
+									{assType !== 104 && (
 										<Box sx={boxStudentFldContainer}>
 											<Typography sx={typoStudentField} variant='body1'>
 												{assB}

@@ -122,6 +122,7 @@
     "global.startDate": "Nanomboka",
     "global.endDate": "Nifarana",
     "global.comments": "Fanamarihana",
+    "global.disqualified": "Nofaranana satria tsy mahafeno fepetra",
 
     "startup.welcomeTitle": "Tongasoa eto amin’ny LMM-OA",
     "startup.welcomeDescription": "Programa natao ho ampiasain’ny Mpiandraikitra ny Fivoriana Momba ny Fiainantsika sy ny Fanompoana ny LMM-OA (na Life and Ministry Meeting Overseer Assistant).",
@@ -256,9 +257,11 @@
     "students.addAssignment": "Hanampy anjara",
     "students.addTimeAway": "Hampiditra",
     "students.markDisqualified": "Tsy mahafeno fepetra",
+    "students.enable": "Omena anjara",
     "students.markTransfer": "Nifindra fiangonana",
     "students.edit": "Hanova mpianatra",
     "students.missingInfo": "Tsy feno tsara ny fanazavana momba ny mpianatra",
+    "students.disqualifiedLabel": "Tsy mahafeno fepetra",
 
     "sourceMaterial.weekAdded": "Tafiditra ny herinandro vaovao",
     "sourceMaterial.weekSaved": "Vita ny fitehirizana ny loharanon-kevitra",

@@ -10,12 +10,12 @@ export const filteredStudentsState = atom({
 	default: [],
 });
 
-export const studentsAllState = atom({
-	key: 'studentsAll',
+export const studentsAssignmentHistoryState = atom({
+	key: 'studentsAssignmentHistory',
 	default: [],
 });
 
-export const studentsAssignmentHistoryState = atom({
-	key: 'studentsAssignmentHistory',
+export const assistantsHistoryState = atom({
+	key: 'assistantsHistory',
 	default: [],
 });

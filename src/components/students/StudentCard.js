@@ -81,7 +81,7 @@ const StudentCard = ({ student }) => {
 		<Grid item sx={{ marginBottom: '5px' }} xs={12} sm={6} md={6} lg={4}>
 			<Card
 				sx={
-					student.isUnavailable
+					student.isDisqualified
 						? sharedStyles.rootUnavailable
 						: sharedStyles.root
 				}
@@ -116,6 +116,7 @@ const StudentCard = ({ student }) => {
 							</Tooltip>
 							<Tooltip title={t('global.delete')}>
 								<IconButton
+									sx={{ marginRight: '5px' }}
 									onClick={() =>
 										handleDelete(student.person_uid, student.person_name)
 									}
@@ -137,7 +138,8 @@ const StudentCard = ({ student }) => {
 					}}
 				>
 					{student.assignments.find(
-						(assignment) => assignment.code === 100
+						(assignment) =>
+							assignment.code === 100 && assignment.isActive === true
 					) && (
 						<Chip
 							label={t('global.abbrBibleReading')}
@@ -146,7 +148,8 @@ const StudentCard = ({ student }) => {
 						/>
 					)}
 					{student.assignments.find(
-						(assignment) => assignment.code === 101
+						(assignment) =>
+							assignment.code === 101 && assignment.isActive === true
 					) && (
 						<Chip
 							label={t('global.abbrInitialCall')}
@@ -155,7 +158,8 @@ const StudentCard = ({ student }) => {
 						/>
 					)}
 					{student.assignments.find(
-						(assignment) => assignment.code === 102
+						(assignment) =>
+							assignment.code === 102 && assignment.isActive === true
 					) && (
 						<Chip
 							label={t('global.abbrReturnVisit')}
@@ -164,7 +168,8 @@ const StudentCard = ({ student }) => {
 						/>
 					)}
 					{student.assignments.find(
-						(assignment) => assignment.code === 103
+						(assignment) =>
+							assignment.code === 103 && assignment.isActive === true
 					) && (
 						<Chip
 							label={t('global.abbrBibleStudy')}
@@ -173,7 +178,8 @@ const StudentCard = ({ student }) => {
 						/>
 					)}
 					{student.assignments.find(
-						(assignment) => assignment.code === 104
+						(assignment) =>
+							assignment.code === 104 && assignment.isActive === true
 					) && (
 						<Chip
 							label={t('global.abbrTalk')}

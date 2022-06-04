@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import { format } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -8,6 +9,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import ClearIcon from '@mui/icons-material/Clear';
 import TextField from '@mui/material/TextField';
+import { shortDatePickerFormatState } from '../../appStates/appSettings';
 
 const datePicker = {
 	marginTop: '25px',
@@ -26,10 +28,10 @@ const StudentTimeAwayItem = ({ timeAway, timeAways, setTimeAway }) => {
 
 	const { timeAwayId } = timeAway;
 
-	const [startedDate, setStartedDate] = useState(
-		format(new Date(), 'MM/dd/yyyy')
-	);
-	const [expiredDate, setExpiredDate] = useState(null);
+	const shortDatePickerFormat = useRecoilValue(shortDatePickerFormatState);
+
+	const [startedDate, setStartedDate] = useState(timeAway.startDate);
+	const [expiredDate, setExpiredDate] = useState(timeAway.endDate);
 	const [comments, setComments] = useState('');
 
 	const handleInfoChange = (startDate, endDate, comments) => {
@@ -104,7 +106,7 @@ const StudentTimeAwayItem = ({ timeAway, timeAways, setTimeAway }) => {
 						<DesktopDatePicker
 							id='start-date-time-away-picker'
 							label={t('global.startDate')}
-							inputFormat='MM/dd/yyyy'
+							inputFormat={shortDatePickerFormat}
 							value={startedDate}
 							onChange={handleStartedChange}
 							renderInput={(params) => (
@@ -116,7 +118,7 @@ const StudentTimeAwayItem = ({ timeAway, timeAways, setTimeAway }) => {
 						<DesktopDatePicker
 							id='end-date-time-away-picker'
 							label={t('global.endDate')}
-							inputFormat='MM/dd/yyyy'
+							inputFormat={shortDatePickerFormat}
 							value={expiredDate}
 							onChange={handleExpiredChange}
 							renderInput={(params) => (

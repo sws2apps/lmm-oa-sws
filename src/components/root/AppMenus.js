@@ -184,7 +184,7 @@ const AppMenus = ({ enabledInstall, isLoading, installPwa }) => {
 			setAppBarTitle(t('global.students'));
 		} else if (currentPath === '/schedule') {
 			setAppBarTitle(t('global.schedule'));
-		} else if (currentPath === '/sourceMaterial') {
+		} else if (currentPath === '/source-material') {
 			setAppBarTitle(t('global.sourceMaterial'));
 		} else if (currentPath === '/settings') {
 			setAppBarTitle(t('global.settings'));

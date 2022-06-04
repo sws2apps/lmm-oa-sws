@@ -121,6 +121,7 @@
     "global.startDate": "Start date",
     "global.endDate": "End date",
     "global.comments": "Comments",
+    "global.disqualified": "Assignment ended because of disqualification",
 
     "startup.welcomeTitle": "Welcome to LMM-OA",
     "startup.welcomeDescription": "LMM-OA (or Life and Ministry Meeting Overseer Assistant) is an application designed for the Life and Ministry Meeting Overseer.",
@@ -254,10 +255,12 @@
     "students.otherActions": "Other actions",
     "students.addAssignment": "Add assignment",
     "students.addTimeAway": "Add time away",
+    "students.enable": "Enable",
     "students.markDisqualified": "Mark Disqualified",
     "students.markTransfer": "Mark Moved",
     "students.edit": "Edit Student",
     "students.missingInfo": "Some student’s information are missing",
+    "students.disqualifiedLabel": "Disqualified",
 
     "sourceMaterial.weekAdded": "New week has been added",
     "sourceMaterial.weekSaved": "Source material for this week has been saved",

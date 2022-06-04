@@ -121,8 +121,8 @@ const App = ({ updatePwa }) => {
 									path='/scheduleTemplate'
 									element={<ScheduleTemplate />}
 								/>
-								<Route path='/s89template' element={<S89Template />} />
-								<Route path='/sourceMaterial' element={<SourceMaterial />} />
+								<Route path='/s89-template' element={<S89Template />} />
+								<Route path='/source-material' element={<SourceMaterial />} />
 								<Route path='/settings' element={<Settings />} />
 								<Route path='/administration' element={<Administration />} />
 								<Route path='/dbrestore' element={<DBRestore />} />
