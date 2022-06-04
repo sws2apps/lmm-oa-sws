@@ -192,6 +192,14 @@ const Schedule = () => {
 		}
 	}, [currentSchedule, shortDateFormat, setCurrentWeek, setWeeks]);
 
+	useEffect(() => {
+		return () => {
+			setCurrentWeek('');
+			setWeeks([]);
+			setCurrentSchedule('');
+		};
+	}, [setCurrentSchedule, setCurrentWeek, setWeeks]);
+
 	const renderYearList = (year) => {
 		return (
 			<MenuItem key={year.value} value={year.value}>
