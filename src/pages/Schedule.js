@@ -195,7 +195,7 @@ const Schedule = () => {
 	useEffect(() => {
 		return () => {
 			setCurrentWeek('');
-			setWeeks('');
+			setWeeks([]);
 			setCurrentSchedule('');
 		};
 	}, [setCurrentSchedule, setCurrentWeek, setWeeks]);
