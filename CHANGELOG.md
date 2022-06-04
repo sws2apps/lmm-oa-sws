@@ -1,3 +1,11 @@
+# [1.0.0-alpha.135](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.134...v1.0.0-alpha.135) (2022-06-03)
+
+
+### Features
+
+* **deps:** bump i18next from 21.8.5 to 21.8.7 ([0dac157](https://github.com/sws2apps/lmm-oa-sws/commit/0dac157a097a8ad25eb2424c64df8629c15ce14b))
+* **deps:** bump react-i18next from 11.16.9 to 11.16.10 ([65a4d85](https://github.com/sws2apps/lmm-oa-sws/commit/65a4d8543e81a6e7167d985c4565077272441aac))
+
 # [1.0.0-alpha.134](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.133...v1.0.0-alpha.134) (2022-06-01)
 
 
