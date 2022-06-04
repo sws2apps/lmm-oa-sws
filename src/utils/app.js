@@ -9,7 +9,10 @@ import {
 	dbGetListWeekType,
 	dbGetYearList,
 } from '../indexedDb/dbSourceMaterial';
-import { dbGetListAssType } from '../indexedDb/dbAssignment';
+import {
+	dbGetListAssType,
+	dbHistoryAssignment,
+} from '../indexedDb/dbAssignment';
 import { dbGetStudents, dbGetStudentsMini } from '../indexedDb/dbPersons';
 import { initAppDb } from '../indexedDb/dbUtility';
 import {
@@ -41,6 +44,7 @@ import {
 	allStudentsState,
 	filteredStudentsState,
 	studentsAllState,
+	studentsAssignmentHistoryState,
 } from '../appStates/appStudents';
 
 export const loadApp = async () => {
@@ -75,6 +79,9 @@ export const loadApp = async () => {
 
 	const assTypeList = await dbGetListAssType();
 	await promiseSetRecoil(assTypeListState, assTypeList);
+
+	const history = await dbHistoryAssignment();
+	await promiseSetRecoil(studentsAssignmentHistoryState, history);
 
 	const data = await dbGetStudents();
 	await promiseSetRecoil(allStudentsState, data);

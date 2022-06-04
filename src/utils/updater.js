@@ -20,7 +20,13 @@ import {
 	dbFirstIniCall,
 	dbFirstRV,
 	dbFirstTalk,
+	dbHistoryAssignment,
 } from '../indexedDb/dbAssignment';
+import {
+	dbGetAllSourceMaterials,
+	dbMigrateSrcData,
+} from '../indexedDb/dbSourceMaterial';
+import { studentsAssignmentHistoryState } from '../appStates/appStudents';
 
 let i = 0;
 
@@ -113,6 +119,37 @@ const builtHistoricalAssignment = async (step) => {
 	let appSettings = await dbGetAppSettings();
 	appSettings = await dbGetAppSettings();
 	if (!appSettings.isAssignmentsConverted) {
+		const allSources = await dbGetAllSourceMaterials();
+		for (let s = 0; s < allSources.length; s++) {
+			const source = allSources[s];
+			let obj = { ...source };
+			for (let t = 1; t < 5; t++) {
+				const fldName = `ass${t}_type`;
+				if (source[fldName] === 1) {
+					obj[fldName] = 101;
+				} else if (source[fldName] === 2) {
+					obj[fldName] = 102;
+				} else if (source[fldName] === 3) {
+					obj[fldName] = 103;
+				} else if (source[fldName] === 4) {
+					obj[fldName] = 104;
+				} else if (source[fldName] === 5) {
+					obj[fldName] = 105;
+				} else if (source[fldName] === 6) {
+					obj[fldName] = 106;
+				} else if (source[fldName] === 7) {
+					obj[fldName] = 107;
+				} else if (source[fldName] === 20) {
+					obj[fldName] = 108;
+				}
+			}
+
+			await dbMigrateSrcData(obj);
+		}
+
+		const history = await dbHistoryAssignment();
+		await promiseSetRecoil(studentsAssignmentHistoryState, history);
+
 		const students = await dbGetStudents();
 		if (students.length > 0) {
 			const a = step / students.length;
@@ -129,31 +166,64 @@ const builtHistoricalAssignment = async (step) => {
 				student.assignments = [];
 
 				if (student.isBRead) {
-					let obj = { code: 100, startDate: firstBRead, endDate: null };
+					const assignmentId = window.crypto.randomUUID();
+					let obj = {
+						assignmentId: assignmentId,
+						code: 100,
+						startDate: firstBRead,
+						endDate: null,
+						comments: '',
+					};
 					student.assignments.push(obj);
 				}
 
 				if (student.isInitialCall) {
-					let obj = { code: 101, startDate: firstIniCall, endDate: null };
+					const assignmentId = window.crypto.randomUUID();
+					let obj = {
+						assignmentId: assignmentId,
+						code: 101,
+						startDate: firstIniCall,
+						endDate: null,
+						comments: '',
+					};
 					student.assignments.push(obj);
 				}
 
 				if (student.isReturnVisit) {
-					let obj = { code: 102, startDate: firstRV, endDate: null };
+					const assignmentId = window.crypto.randomUUID();
+					let obj = {
+						assignmentId: assignmentId,
+						code: 102,
+						startDate: firstRV,
+						endDate: null,
+						comments: '',
+					};
 					student.assignments.push(obj);
 				}
 
 				if (student.isBibleStudy) {
-					let obj = { code: 103, startDate: firstBibleStudy, endDate: null };
+					const assignmentId = window.crypto.randomUUID();
+					let obj = {
+						assignmentId: assignmentId,
+						code: 103,
+						startDate: firstBibleStudy,
+						endDate: null,
+						comments: '',
+					};
 					student.assignments.push(obj);
 				}
 
 				if (student.isTalk) {
-					let obj = { code: 104, startDate: firstTalk, endDate: null };
+					const assignmentId = window.crypto.randomUUID();
+					let obj = {
+						assignmentId: assignmentId,
+						code: 104,
+						startDate: firstTalk,
+						endDate: null,
+						comments: '',
+					};
 					student.assignments.push(obj);
 				}
-
-				console.log(student);
 
 				await dbSavePerson(student.person_uid, student);
 

@@ -42,6 +42,7 @@
     "global.returnVisitVideo": "Video Fiverenana Mitsidika",
     "global.otherPart": "Hafa",
     "global.shortDateFormat": "dd/mm/yyyy",
+    "global.shortDatePickerFormat": "dd/MM/yyyy",
     "global.treasuresPart": "HARENA AVY AO AMIN’NY TENIN’ANDRIAMANITRA",
     "global.applyFieldMinistryPart": "FAMPIOFANANA AMIN’NY FANOMPOANA",
     "global.bibleReadingText": "Famakiana Baiboly (4 min.)",
@@ -257,6 +258,7 @@
     "students.markDisqualified": "Tsy mahafeno fepetra",
     "students.markTransfer": "Nifindra fiangonana",
     "students.edit": "Hanova mpianatra",
+    "students.missingInfo": "Tsy feno tsara ny fanazavana momba ny mpianatra",
 
     "sourceMaterial.weekAdded": "Tafiditra ny herinandro vaovao",
     "sourceMaterial.weekSaved": "Vita ny fitehirizana ny loharanon-kevitra",

@@ -41,6 +41,7 @@
     "global.returnVisitVideo": "Return Visit Video",
     "global.otherPart": "Other",
     "global.shortDateFormat": "mm/dd/yyyy",
+    "global.shortDatePickerFormat": "MM/dd/yyyy",
     "global.treasuresPart": "TREASURES FROM GOD’S WORD",
     "global.applyFieldMinistryPart": "APPLY YOURSELF TO THE FIELD MINISTRY",
     "global.bibleReadingText": "Bible Reading (4 min.)",
@@ -256,6 +257,7 @@
     "students.markDisqualified": "Mark Disqualified",
     "students.markTransfer": "Mark Moved",
     "students.edit": "Edit Student",
+    "students.missingInfo": "Some student’s information are missing",
 
     "sourceMaterial.weekAdded": "New week has been added",
     "sourceMaterial.weekSaved": "Source material for this week has been saved",

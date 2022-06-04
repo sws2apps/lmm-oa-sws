@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import dateFormat from 'dateformat';
@@ -35,11 +36,9 @@ import {
 } from '../appStates/appStudents';
 import {
 	currentStudentState,
-	isStudentAddState,
 	isStudentDeleteState,
 	isStudentDetailsOpenState,
 } from '../appStates/appStudent';
-
 const Search = styled('div')(({ theme }) => ({
 	position: 'relative',
 	borderRadius: theme.shape.borderRadius,
@@ -79,6 +78,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const Students = () => {
 	const { t } = useTranslation();
+	const navigate = useNavigate();
 
 	const [genderValue, setGenderValue] = useState('genderAll');
 	const [toSearch, setToSearch] = useState('');
@@ -92,16 +92,13 @@ const Students = () => {
 	const setAppSnackOpen = useSetRecoilState(appSnackOpenState);
 	const setAppSeverity = useSetRecoilState(appSeverityState);
 	const setAppMessage = useSetRecoilState(appMessageState);
-	const setIsStudentAdd = useSetRecoilState(isStudentAddState);
-	const setCurrentStudent = useSetRecoilState(currentStudentState);
 
 	const dbMiniStudents = useRecoilValue(studentsAllState);
 	const currentStudent = useRecoilValue(currentStudentState);
 	const isStudentDetailsOpen = useRecoilValue(isStudentDetailsOpenState);
 
 	const handleAddStudent = () => {
-		setCurrentStudent({});
-		setIsStudentAdd(true);
+		navigate('/students/new');
 	};
 
 	const handleClose = () => {

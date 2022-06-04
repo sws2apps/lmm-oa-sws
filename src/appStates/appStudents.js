@@ -14,3 +14,8 @@ export const studentsAllState = atom({
 	key: 'studentsAll',
 	default: [],
 });
+
+export const studentsAssignmentHistoryState = atom({
+	key: 'studentsAssignmentHistory',
+	default: [],
+});

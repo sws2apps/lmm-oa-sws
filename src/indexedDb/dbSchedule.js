@@ -1,6 +1,6 @@
 import { dbGetAppSettings } from './dbAppSettings';
 import { dbSaveAss } from './dbAssignment';
-import { dbGetPersonsByAssType, dbGetStudentDetails } from './dbPersons';
+import { dbGetPersonsByAssType, dbGetStudentByUid } from './dbPersons';
 import {
 	dbGetSourceMaterial,
 	dbGetWeekListBySched,
@@ -18,7 +18,7 @@ export const dbGetScheduleData = async (weekValue) => {
 		schedule.bRead_stu_A_dispName = '';
 	} else {
 		schedule.bRead_stu_A = appData.bRead_stu_A;
-		student = await dbGetStudentDetails(schedule.bRead_stu_A);
+		student = await dbGetStudentByUid(schedule.bRead_stu_A);
 		schedule.bRead_stu_A_dispName = student.person_displayName;
 	}
 	if (typeof appData.bRead_stu_B === 'undefined') {
@@ -26,7 +26,7 @@ export const dbGetScheduleData = async (weekValue) => {
 		schedule.bRead_stu_B_dispName = '';
 	} else {
 		schedule.bRead_stu_B = appData.bRead_stu_B;
-		student = await dbGetStudentDetails(schedule.bRead_stu_B);
+		student = await dbGetStudentByUid(schedule.bRead_stu_B);
 		schedule.bRead_stu_B_dispName = student.person_displayName;
 	}
 	if (typeof appData.ass1_stu_A === 'undefined') {
@@ -34,7 +34,7 @@ export const dbGetScheduleData = async (weekValue) => {
 		schedule.ass1_stu_A_dispName = '';
 	} else {
 		schedule.ass1_stu_A = appData.ass1_stu_A;
-		student = await dbGetStudentDetails(schedule.ass1_stu_A);
+		student = await dbGetStudentByUid(schedule.ass1_stu_A);
 		schedule.ass1_stu_A_dispName = student.person_displayName;
 	}
 	if (typeof appData.ass1_ass_A === 'undefined') {
@@ -42,7 +42,7 @@ export const dbGetScheduleData = async (weekValue) => {
 		schedule.ass1_ass_A_dispName = '';
 	} else {
 		schedule.ass1_ass_A = appData.ass1_ass_A;
-		student = await dbGetStudentDetails(schedule.ass1_ass_A);
+		student = await dbGetStudentByUid(schedule.ass1_ass_A);
 		schedule.ass1_ass_A_dispName = student.person_displayName;
 	}
 	if (typeof appData.ass1_stu_B === 'undefined') {
@@ -50,7 +50,7 @@ export const dbGetScheduleData = async (weekValue) => {
 		schedule.ass1_stu_B_dispName = '';
 	} else {
 		schedule.ass1_stu_B = appData.ass1_stu_B;
-		student = await dbGetStudentDetails(schedule.ass1_stu_B);
+		student = await dbGetStudentByUid(schedule.ass1_stu_B);
 		schedule.ass1_stu_B_dispName = student.person_displayName;
 	}
 	if (typeof appData.ass1_ass_B === 'undefined') {
@@ -58,7 +58,7 @@ export const dbGetScheduleData = async (weekValue) => {
 		schedule.ass1_ass_B_dispName = '';
 	} else {
 		schedule.ass1_ass_B = appData.ass1_ass_B;
-		student = await dbGetStudentDetails(schedule.ass1_ass_B);
+		student = await dbGetStudentByUid(schedule.ass1_ass_B);
 		schedule.ass1_ass_B_dispName = student.person_displayName;
 	}
 	if (typeof appData.ass2_stu_A === 'undefined') {
@@ -66,7 +66,7 @@ export const dbGetScheduleData = async (weekValue) => {
 		schedule.ass2_stu_A_dispName = '';
 	} else {
 		schedule.ass2_stu_A = appData.ass2_stu_A;
-		student = await dbGetStudentDetails(schedule.ass2_stu_A);
+		student = await dbGetStudentByUid(schedule.ass2_stu_A);
 		schedule.ass2_stu_A_dispName = student.person_displayName;
 	}
 	if (typeof appData.ass2_ass_A === 'undefined') {
@@ -74,7 +74,7 @@ export const dbGetScheduleData = async (weekValue) => {
 		schedule.ass2_ass_A_dispName = '';
 	} else {
 		schedule.ass2_ass_A = appData.ass2_ass_A;
-		student = await dbGetStudentDetails(schedule.ass2_ass_A);
+		student = await dbGetStudentByUid(schedule.ass2_ass_A);
 		schedule.ass2_ass_A_dispName = student.person_displayName;
 	}
 	if (typeof appData.ass2_stu_B === 'undefined') {
@@ -82,7 +82,7 @@ export const dbGetScheduleData = async (weekValue) => {
 		schedule.ass2_stu_B_dispName = '';
 	} else {
 		schedule.ass2_stu_B = appData.ass2_stu_B;
-		student = await dbGetStudentDetails(schedule.ass2_stu_B);
+		student = await dbGetStudentByUid(schedule.ass2_stu_B);
 		schedule.ass2_stu_B_dispName = student.person_displayName;
 	}
 	if (typeof appData.ass2_ass_B === 'undefined') {
@@ -90,7 +90,7 @@ export const dbGetScheduleData = async (weekValue) => {
 		schedule.ass2_ass_B_dispName = '';
 	} else {
 		schedule.ass2_ass_B = appData.ass2_ass_B;
-		student = await dbGetStudentDetails(schedule.ass2_ass_B);
+		student = await dbGetStudentByUid(schedule.ass2_ass_B);
 		schedule.ass2_ass_B_dispName = student.person_displayName;
 	}
 	if (typeof appData.ass3_stu_A === 'undefined') {
@@ -98,7 +98,7 @@ export const dbGetScheduleData = async (weekValue) => {
 		schedule.ass3_stu_A_dispName = '';
 	} else {
 		schedule.ass3_stu_A = appData.ass3_stu_A;
-		student = await dbGetStudentDetails(schedule.ass3_stu_A);
+		student = await dbGetStudentByUid(schedule.ass3_stu_A);
 		schedule.ass3_stu_A_dispName = student.person_displayName;
 	}
 	if (typeof appData.ass3_ass_A === 'undefined') {
@@ -106,7 +106,7 @@ export const dbGetScheduleData = async (weekValue) => {
 		schedule.ass3_ass_A_dispName = '';
 	} else {
 		schedule.ass3_ass_A = appData.ass3_ass_A;
-		student = await dbGetStudentDetails(schedule.ass3_ass_A);
+		student = await dbGetStudentByUid(schedule.ass3_ass_A);
 		schedule.ass3_ass_A_dispName = student.person_displayName;
 	}
 	if (typeof appData.ass3_stu_B === 'undefined') {
@@ -114,7 +114,7 @@ export const dbGetScheduleData = async (weekValue) => {
 		schedule.ass3_stu_B_dispName = '';
 	} else {
 		schedule.ass3_stu_B = appData.ass3_stu_B;
-		student = await dbGetStudentDetails(schedule.ass3_stu_B);
+		student = await dbGetStudentByUid(schedule.ass3_stu_B);
 		schedule.ass3_stu_B_dispName = student.person_displayName;
 	}
 	if (typeof appData.ass3_ass_B === 'undefined') {
@@ -122,7 +122,7 @@ export const dbGetScheduleData = async (weekValue) => {
 		schedule.ass3_ass_B_dispName = '';
 	} else {
 		schedule.ass3_ass_B = appData.ass3_ass_B;
-		student = await dbGetStudentDetails(schedule.ass3_ass_B);
+		student = await dbGetStudentByUid(schedule.ass3_ass_B);
 		schedule.ass3_ass_B_dispName = student.person_displayName;
 	}
 	if (typeof appData.ass4_stu_A === 'undefined') {
@@ -130,7 +130,7 @@ export const dbGetScheduleData = async (weekValue) => {
 		schedule.ass4_stu_A_dispName = '';
 	} else {
 		schedule.ass4_stu_A = appData.ass4_stu_A;
-		student = await dbGetStudentDetails(schedule.ass4_stu_A);
+		student = await dbGetStudentByUid(schedule.ass4_stu_A);
 		schedule.ass4_stu_A_dispName = student.person_displayName;
 	}
 	if (typeof appData.ass4_ass_A === 'undefined') {
@@ -138,7 +138,7 @@ export const dbGetScheduleData = async (weekValue) => {
 		schedule.ass4_ass_A_dispName = '';
 	} else {
 		schedule.ass4_ass_A = appData.ass4_ass_A;
-		student = await dbGetStudentDetails(schedule.ass4_ass_A);
+		student = await dbGetStudentByUid(schedule.ass4_ass_A);
 		schedule.ass4_ass_A_dispName = student.person_displayName;
 	}
 	if (typeof appData.ass4_stu_B === 'undefined') {
@@ -146,7 +146,7 @@ export const dbGetScheduleData = async (weekValue) => {
 		schedule.ass4_stu_B_dispName = '';
 	} else {
 		schedule.ass4_stu_B = appData.ass4_stu_B;
-		student = await dbGetStudentDetails(schedule.ass4_stu_B);
+		student = await dbGetStudentByUid(schedule.ass4_stu_B);
 		schedule.ass4_stu_B_dispName = student.person_displayName;
 	}
 	if (typeof appData.ass4_ass_B === 'undefined') {
@@ -154,12 +154,13 @@ export const dbGetScheduleData = async (weekValue) => {
 		schedule.ass4_ass_B_dispName = '';
 	} else {
 		schedule.ass4_ass_B = appData.ass4_ass_B;
-		student = await dbGetStudentDetails(schedule.ass4_ass_B);
+		student = await dbGetStudentByUid(schedule.ass4_ass_B);
 		schedule.ass4_ass_B_dispName = student.person_displayName;
 	}
-	schedule.week_type = parseInt(appData.week_type, 10);
+	schedule.week_type = parseInt(appData.week_type, 10) || 1;
+
 	schedule.week_type_name = await dbGetWeekTypeName(schedule.week_type);
-	schedule.noMeeting = appData.noMeeting;
+	schedule.noMeeting = appData.noMeeting || false;
 	return schedule;
 };
 

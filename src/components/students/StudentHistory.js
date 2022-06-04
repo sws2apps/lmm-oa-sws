@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 
-const StudentHistory = () => {
+const StudentHistory = ({ history }) => {
 	const { t } = useTranslation();
 
 	return (
@@ -39,36 +39,48 @@ const StudentHistory = () => {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{[1, 2, 3, 4, 5].map((a, i) => (
-							<TableRow key={i} hover role='checkbox' tabIndex={-1}>
-								<TableCell
-									align='center'
-									style={{ width: '60px' }}
-									sx={{
-										'& .MuiTableCell-sizeSmall': { padding: '6px 3px 6px 3px' },
-									}}
+						{history?.length > 0 &&
+							history.map((item) => (
+								<TableRow
+									key={`${item.ID}-${item.assignmentID}`}
+									hover
+									role='checkbox'
+									tabIndex={-1}
 								>
-									05/31/2022
-								</TableCell>
-								<TableCell
-									style={{ width: '250px' }}
-									sx={{
-										'& .MuiTableCell-sizeSmall': { padding: '6px 3px 6px 3px' },
-									}}
-								>
-									Bible Reading
-								</TableCell>
-								<TableCell
-									style={{ width: '60px' }}
-									sx={{
-										'& .MuiTableCell-sizeSmall': { padding: '6px 3px 6px 3px' },
-									}}
-									align='center'
-								>
-									A
-								</TableCell>
-							</TableRow>
-						))}
+									<TableCell
+										align='center'
+										style={{ width: '60px' }}
+										sx={{
+											'& .MuiTableCell-sizeSmall': {
+												padding: '6px 3px 6px 3px',
+											},
+										}}
+									>
+										{item.weekOfFormatted}
+									</TableCell>
+									<TableCell
+										style={{ width: '250px' }}
+										sx={{
+											'& .MuiTableCell-sizeSmall': {
+												padding: '6px 3px 6px 3px',
+											},
+										}}
+									>
+										{item.assignmentName}
+									</TableCell>
+									<TableCell
+										style={{ width: '60px' }}
+										sx={{
+											'& .MuiTableCell-sizeSmall': {
+												padding: '6px 3px 6px 3px',
+											},
+										}}
+										align='center'
+									>
+										{item.class}
+									</TableCell>
+								</TableRow>
+							))}
 					</TableBody>
 				</Table>
 			</TableContainer>

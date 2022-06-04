@@ -139,6 +139,10 @@ appDb.version(30).stores({
 	persons:
 		'++id, person_name, person_displayName, isMale, isFemale, isBRead, isInitialCall, isReturnVisit, isBibleStudy, isTalk, forLivePart, isUnavailable, lastBRead, lastInitialCall, lastReturnVisit, lastBibleStudy, lastTalk, lastAssistant, lastAssignment, viewOnlineSchedule, student_PIN, viewStudent_Part, person_uid, assignments, timeAway, isMoved',
 });
+appDb.version(31).stores({
+	persons:
+		'++id, person_name, person_displayName, isMale, isFemale, isBRead, isInitialCall, isReturnVisit, isBibleStudy, isTalk, forLivePart, isUnavailable, lastBRead, lastInitialCall, lastReturnVisit, lastBibleStudy, lastTalk, lastAssistant, lastAssignment, viewOnlineSchedule, student_PIN, viewStudent_Part, person_uid, assignments, timeAway, isMoved, isDisqualified',
+});
 
 appDb.on('populate', function () {
 	appDb.app_settings.add({

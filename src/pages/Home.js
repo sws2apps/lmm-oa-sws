@@ -185,6 +185,7 @@ const Home = () => {
 			let previousWeek = dateFormat(result, 'mm/dd/yyyy');
 
 			let hasPrevious = await dbIsWeekExist(previousWeek);
+
 			if (!hasPrevious) {
 				result.setDate(result.getDate() - 7);
 				previousWeek = dateFormat(result, 'mm/dd/yyyy');

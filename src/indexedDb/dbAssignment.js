@@ -2,11 +2,13 @@ import { getI18n } from 'react-i18next';
 import { promiseGetRecoil } from 'recoil-outside';
 import dateFormat from 'dateformat';
 import { dbGetAppSettings } from './dbAppSettings';
-import { dbGetStudentDetails } from './dbPersons';
+import { dbGetStudentByUid, dbGetStudentDetails } from './dbPersons';
 import { dbGetScheduleData } from './dbSchedule';
 import { dbGetSourceMaterial, dbGetWeekListBySched } from './dbSourceMaterial';
 import appDb from './mainDb';
+import { shortDateFormatState } from '../appStates/appSettings';
 import { assTypeLocalState } from '../appStates/appSourceMaterial';
+import { studentsAssignmentHistoryState } from '../appStates/appStudents';
 
 const { t } = getI18n();
 
@@ -80,7 +82,8 @@ export const dbHistoryAssignment = async () => {
 		const weekData = await dbGetSourceMaterial(appData[i].weekOf);
 		const [varMonth, varDay, varYear] = appData[i].weekOf.split('/');
 		const lDate = new Date(varYear, varMonth - 1, varDay);
-		const dateFormatted = dateFormat(lDate, 'dd/mm/yyyy');
+		const shortDateFormat = await promiseGetRecoil(shortDateFormatState);
+		const dateFormatted = dateFormat(lDate, shortDateFormat);
 		const cnAss = [{ iAss: 1 }, { iAss: 2 }, { iAss: 3 }, { iAss: 4 }];
 		const varClasses = [{ classLabel: 'A' }, { classLabel: 'B' }];
 
@@ -92,11 +95,10 @@ export const dbHistoryAssignment = async () => {
 				person.weekOf = appData[i].weekOf;
 				person.weekOfFormatted = dateFormatted;
 				person.studentID = appData[i][fldName];
-
-				const stuDetails = await dbGetStudentDetails(person.studentID);
+				const stuDetails = await dbGetStudentByUid(person.studentID);
 				person.studentName = stuDetails.person_displayName;
-				person.assignmentID = 0;
-				person.assignmentName = 'Famakiana Baiboly';
+				person.assignmentID = 100;
+				person.assignmentName = t('global.bibleReading');
 				person.class = varClasses[a].classLabel;
 				dbHistory.push(person);
 				person = {};
@@ -117,16 +119,16 @@ export const dbHistoryAssignment = async () => {
 					person.weekOf = appData[i].weekOf;
 					person.weekOfFormatted = dateFormatted;
 					person.studentID = appData[i][fldName];
-					const stuDetails = await dbGetStudentDetails(person.studentID);
+					const stuDetails = await dbGetStudentByUid(person.studentID);
 					person.studentName = stuDetails.person_displayName;
 					person.assignmentID = assType;
-					if (assType === 1 || assType === 20) {
+					if (assType === 101 || assType === 108) {
 						person.assignmentName = t('global.initialCall');
-					} else if (assType === 2) {
+					} else if (assType === 102) {
 						person.assignmentName = t('global.returnVisit');
-					} else if (assType === 3) {
+					} else if (assType === 103) {
 						person.assignmentName = t('global.bibleStudy');
-					} else if (assType === 4) {
+					} else if (assType === 104) {
 						person.assignmentName = t('global.talk');
 					}
 					person.class = varClasses[a].classLabel;
@@ -141,10 +143,10 @@ export const dbHistoryAssignment = async () => {
 					person.weekOf = appData[i].weekOf;
 					person.weekOfFormatted = dateFormatted;
 					person.studentID = appData[i][fldName];
-					const stuDetails = await dbGetStudentDetails(person.studentID);
+					const stuDetails = await dbGetStudentByUid(person.studentID);
 					person.studentName = stuDetails.person_displayName;
-					person.assignmentID = 8;
-					person.assignmentName = 'Mpanampy';
+					person.assignmentID = 109;
+					person.assignmentName = t('global.assistant');
 					person.class = varClasses[a].classLabel;
 					dbHistory.push(person);
 					person = {};
@@ -171,10 +173,16 @@ export const dbHistoryAssignment = async () => {
 	return dbHistory;
 };
 
+export const dbStudentAssignmentsHistory = async (stuID) => {
+	const appData = await dbHistoryAssignment();
+	const history = appData.filter((data) => data.studentID === stuID);
+	return history;
+};
+
 export const dbLastBRead = async (stuID) => {
 	const appData = await dbHistoryAssignment();
 	const lastBRead = appData.filter(
-		(data) => (data.assignmentID === 0) & (data.studentID === stuID)
+		(data) => (data.assignmentID === 100) & (data.studentID === stuID)
 	);
 
 	var dLast;
@@ -185,9 +193,9 @@ export const dbLastBRead = async (stuID) => {
 };
 
 export const dbFirstBRead = async (stuID) => {
-	const appData = await dbHistoryAssignment();
+	const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
 	const lastBRead = appData.filter(
-		(data) => (data.assignmentID === 0) & (data.studentID === stuID)
+		(data) => (data.assignmentID === 100) & (data.studentID === stuID)
 	);
 
 	var dLast;
@@ -200,7 +208,7 @@ export const dbFirstBRead = async (stuID) => {
 export const dbLastIniCall = async (stuID) => {
 	const appData = await dbHistoryAssignment();
 	const lastIniCall = appData.filter(
-		(data) => (data.assignmentID === 1) & (data.studentID === stuID)
+		(data) => (data.assignmentID === 101) & (data.studentID === stuID)
 	);
 
 	var dLast;
@@ -211,9 +219,9 @@ export const dbLastIniCall = async (stuID) => {
 };
 
 export const dbFirstIniCall = async (stuID) => {
-	const appData = await dbHistoryAssignment();
+	const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
 	const lastIniCall = appData.filter(
-		(data) => (data.assignmentID === 1) & (data.studentID === stuID)
+		(data) => (data.assignmentID === 101) & (data.studentID === stuID)
 	);
 
 	var dLast;
@@ -226,7 +234,7 @@ export const dbFirstIniCall = async (stuID) => {
 export const dbLastRV = async (stuID) => {
 	const appData = await dbHistoryAssignment();
 	const lastRV = appData.filter(
-		(data) => (data.assignmentID === 2) & (data.studentID === stuID)
+		(data) => (data.assignmentID === 102) & (data.studentID === stuID)
 	);
 
 	var dLast;
@@ -237,9 +245,9 @@ export const dbLastRV = async (stuID) => {
 };
 
 export const dbFirstRV = async (stuID) => {
-	const appData = await dbHistoryAssignment();
+	const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
 	const lastRV = appData.filter(
-		(data) => (data.assignmentID === 2) & (data.studentID === stuID)
+		(data) => (data.assignmentID === 102) & (data.studentID === stuID)
 	);
 
 	var dLast;
@@ -252,7 +260,7 @@ export const dbFirstRV = async (stuID) => {
 export const dbLastBibleStudy = async (stuID) => {
 	const appData = await dbHistoryAssignment();
 	const lastBibleStudy = appData.filter(
-		(data) => (data.assignmentID === 3) & (data.studentID === stuID)
+		(data) => (data.assignmentID === 103) & (data.studentID === stuID)
 	);
 
 	var dLast;
@@ -263,9 +271,9 @@ export const dbLastBibleStudy = async (stuID) => {
 };
 
 export const dbFirstBibleStudy = async (stuID) => {
-	const appData = await dbHistoryAssignment();
+	const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
 	const lastBibleStudy = appData.filter(
-		(data) => (data.assignmentID === 3) & (data.studentID === stuID)
+		(data) => (data.assignmentID === 103) & (data.studentID === stuID)
 	);
 
 	var dLast;
@@ -278,7 +286,7 @@ export const dbFirstBibleStudy = async (stuID) => {
 export const dbLastTalk = async (stuID) => {
 	const appData = await dbHistoryAssignment();
 	const lastTalk = appData.filter(
-		(data) => (data.assignmentID === 4) & (data.studentID === stuID)
+		(data) => (data.assignmentID === 104) & (data.studentID === stuID)
 	);
 
 	var dLast;
@@ -289,9 +297,9 @@ export const dbLastTalk = async (stuID) => {
 };
 
 export const dbFirstTalk = async (stuID) => {
-	const appData = await dbHistoryAssignment();
+	const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
 	const lastTalk = appData.filter(
-		(data) => (data.assignmentID === 4) & (data.studentID === stuID)
+		(data) => (data.assignmentID === 104) & (data.studentID === stuID)
 	);
 
 	var dLast;
@@ -304,7 +312,7 @@ export const dbFirstTalk = async (stuID) => {
 export const dbLastAssistant = async (stuID) => {
 	const appData = await dbHistoryAssignment();
 	const lastAssistant = appData.filter(
-		(data) => (data.assignmentID === 8) & (data.studentID === stuID)
+		(data) => (data.assignmentID === 109) & (data.studentID === stuID)
 	);
 	var dLast;
 	if (lastAssistant.length > 0) {

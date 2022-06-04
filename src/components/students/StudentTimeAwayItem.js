@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
-import { useTranslation } from 'react-i18next';
+import { useState } from 'react';
 import { format } from 'date-fns';
+import { useTranslation } from 'react-i18next';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -9,8 +8,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import ClearIcon from '@mui/icons-material/Clear';
 import TextField from '@mui/material/TextField';
-import AssignmentType from '../reusable/AssignmentType';
-import { shortDatePickerFormatState } from '../../appStates/appSettings';
 
 const datePicker = {
 	marginTop: '25px',
@@ -24,31 +21,30 @@ const datePicker = {
 	},
 };
 
-const StudentAssignmentItem = ({ assignment, assignments, setAssignments }) => {
+const StudentTimeAwayItem = ({ timeAway, timeAways, setTimeAway }) => {
 	const { t } = useTranslation();
-	const { assignmentId } = assignment;
-	const shortDatePickerFormat = useRecoilValue(shortDatePickerFormatState);
 
-	const [startedDate, setStartedDate] = useState(assignment.startDate);
-	const [expiredDate, setExpiredDate] = useState(assignment.endDate);
-	const [comments, setComments] = useState(assignment.comments || '');
-	const [assignmentType, setAssignmentType] = useState(assignment.code);
-	const [isActive, setIsActive] = useState(true);
+	const { timeAwayId } = timeAway;
 
-	const handleInfoChange = (assignmentType, startDate, endDate, comments) => {
-		if (assignmentId) {
-			let obj = assignments.map((assignment) =>
-				assignment.assignmentId === assignmentId
+	const [startedDate, setStartedDate] = useState(
+		format(new Date(), 'MM/dd/yyyy')
+	);
+	const [expiredDate, setExpiredDate] = useState(null);
+	const [comments, setComments] = useState('');
+
+	const handleInfoChange = (startDate, endDate, comments) => {
+		if (timeAwayId) {
+			let obj = timeAways.map((timeAway) =>
+				timeAway.timeAwayId === timeAwayId
 					? {
-							assignmentId: assignmentId,
-							code: assignmentType,
+							timeAwayId: timeAwayId,
 							startDate: startDate,
 							endDate: endDate,
 							comments: comments,
 					  }
-					: assignment
+					: timeAway
 			);
-			setAssignments(obj);
+			setTimeAway(obj);
 		}
 	};
 
@@ -56,7 +52,7 @@ const StudentAssignmentItem = ({ assignment, assignments, setAssignments }) => {
 		if (newValue instanceof Date && !isNaN(newValue)) {
 			const d = format(newValue, 'MM/dd/yyyy');
 			setStartedDate(d);
-			handleInfoChange(assignmentType, d, expiredDate, comments);
+			handleInfoChange(d, expiredDate, comments);
 		}
 	};
 
@@ -64,41 +60,30 @@ const StudentAssignmentItem = ({ assignment, assignments, setAssignments }) => {
 		if (newValue instanceof Date && !isNaN(newValue)) {
 			const d = format(newValue, 'MM/dd/yyyy');
 			setExpiredDate(d);
-			handleInfoChange(assignmentType, startedDate, d, comments);
+			handleInfoChange(startedDate, d, comments);
 		}
-	};
-
-	const handleAssignmentChange = (value) => {
-		setAssignmentType(value);
-		handleInfoChange(value, startedDate, expiredDate, comments);
 	};
 
 	const handleCommentsChange = (value) => {
 		setComments(value);
-		handleInfoChange(assignmentType, startedDate, expiredDate, value);
+		handleInfoChange(startedDate, expiredDate, value);
 	};
 
-	const handleRemoveAssignment = () => {
-		let obj = assignments.filter(
-			(assignment) => assignment.assignmentId !== assignmentId
+	const handleRemoveTimeAway = () => {
+		let obj = timeAways.filter(
+			(timeAway) => timeAway.timeAwayId !== timeAwayId
 		);
-		setAssignments(obj);
+		setTimeAway(obj);
 	};
-
-	useEffect(() => {
-		setIsActive(assignment.endDate === null);
-	}, [assignment]);
 
 	return (
 		<Box
-			id='assignment-item'
+			id='time-away-item'
 			sx={{
 				border: '1px outset',
 				width: '100%',
 				borderRadius: '8px',
 				paddingBottom: '10px',
-				marginBottom: '10px',
-				backgroundColor: `${isActive ? '#D5F5E3' : null}`,
 			}}
 		>
 			<Box
@@ -109,13 +94,6 @@ const StudentAssignmentItem = ({ assignment, assignments, setAssignments }) => {
 					marginTop: '-5px',
 				}}
 			>
-				<Box sx={{ width: '250px', marginLeft: '10px', marginTop: '25px' }}>
-					<AssignmentType
-						assignable={true}
-						currentType={assignmentType}
-						handleChangeType={(value) => handleAssignmentChange(value)}
-					/>
-				</Box>
 				<Box
 					sx={{
 						display: 'flex',
@@ -124,9 +102,9 @@ const StudentAssignmentItem = ({ assignment, assignments, setAssignments }) => {
 				>
 					<LocalizationProvider dateAdapter={AdapterDateFns}>
 						<DesktopDatePicker
-							id='start-date-assignment-picker'
+							id='start-date-time-away-picker'
 							label={t('global.startDate')}
-							inputFormat={shortDatePickerFormat}
+							inputFormat='MM/dd/yyyy'
 							value={startedDate}
 							onChange={handleStartedChange}
 							renderInput={(params) => (
@@ -136,9 +114,9 @@ const StudentAssignmentItem = ({ assignment, assignments, setAssignments }) => {
 					</LocalizationProvider>
 					<LocalizationProvider dateAdapter={AdapterDateFns}>
 						<DesktopDatePicker
-							id='end-date-assignment-picker'
+							id='end-date-time-away-picker'
 							label={t('global.endDate')}
-							inputFormat={shortDatePickerFormat}
+							inputFormat='MM/dd/yyyy'
 							value={expiredDate}
 							onChange={handleExpiredChange}
 							renderInput={(params) => (
@@ -175,7 +153,7 @@ const StudentAssignmentItem = ({ assignment, assignments, setAssignments }) => {
 					variant='outlined'
 					color='error'
 					startIcon={<ClearIcon />}
-					onClick={handleRemoveAssignment}
+					onClick={handleRemoveTimeAway}
 				>
 					{t('global.delete')}
 				</Button>
@@ -184,4 +162,4 @@ const StudentAssignmentItem = ({ assignment, assignments, setAssignments }) => {
 	);
 };
 
-export default StudentAssignmentItem;
+export default StudentTimeAwayItem;

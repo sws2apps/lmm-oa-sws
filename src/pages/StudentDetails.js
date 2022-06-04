@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -23,7 +24,13 @@ import StudentAssignments from '../components/students/StudentAssignments';
 import StudentBasic from '../components/students/StudentBasic';
 import StudentHistory from '../components/students/StudentHistory';
 import StudentTimeAway from '../components/students/StudentTimeAway';
-import { dbGetStudentDetails } from '../indexedDb/dbPersons';
+import { dbGetStudentDetails, dbSavePersonExp } from '../indexedDb/dbPersons';
+import {
+	appMessageState,
+	appSeverityState,
+	appSnackOpenState,
+} from '../appStates/appNotification';
+import { rootModalOpenState } from '../appStates/appSettings';
 
 const Accordion = styled((props) => (
 	<MuiAccordion disableGutters elevation={0} square {...props} />
@@ -80,34 +87,99 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 
 const StudentDetails = () => {
 	const { id } = useParams();
+	const navigate = useNavigate();
 	const { t } = useTranslation();
 
 	const theme = useTheme();
 	const lgUp = useMediaQuery(theme.breakpoints.up('lg'), { noSsr: true });
 
+	const setAppSnackOpen = useSetRecoilState(appSnackOpenState);
+	const setAppSeverity = useSetRecoilState(appSeverityState);
+	const setAppMessage = useSetRecoilState(appMessageState);
+	const setRootModalOpen = useSetRecoilState(rootModalOpenState);
+
 	const [isProcessing, setIsProcessing] = useState(true);
 	const [isEdit, setIsEdit] = useState(false);
+	const [isMoved, setIsMoved] = useState(false);
+	const [isDisqualified, setIsDisqualified] = useState(false);
 	const [name, setName] = useState('');
 	const [isMale, setIsMale] = useState(true);
 	const [isFemale, setIsFemale] = useState(false);
 	const [displayName, setDisplayName] = useState('');
 	const [assignments, setAssignments] = useState([]);
+	const [historyAssignments, setHistoryAssignments] = useState([]);
+	const [timeAway, setTimeAway] = useState([]);
 	const [expanded, setExpanded] = useState('panel1');
+	const [student, setStudent] = useState({});
 
 	const handleChange = (panel) => (event, newExpanded) => {
 		setExpanded(newExpanded ? panel : false);
 	};
 
+	const handleSavePerson = async () => {
+		setRootModalOpen(true);
+		const result = await dbSavePersonExp(student);
+		if (result) {
+			setRootModalOpen(false);
+			navigate('/students');
+		} else {
+			setRootModalOpen(false);
+			setAppMessage(t('students.missingInfo'));
+			setAppSeverity('warning');
+			setAppSnackOpen(true);
+		}
+	};
+
+	useEffect(() => {
+		setStudent((prev) => {
+			return { ...prev, person_name: name };
+		});
+	}, [name]);
+
+	useEffect(() => {
+		setStudent((prev) => {
+			return { ...prev, person_displayName: displayName };
+		});
+	}, [displayName]);
+
+	useEffect(() => {
+		setStudent((prev) => {
+			return { ...prev, isMale: isMale };
+		});
+	}, [isMale]);
+
+	useEffect(() => {
+		setStudent((prev) => {
+			return { ...prev, isFemale: isFemale };
+		});
+	}, [isFemale]);
+
+	useEffect(() => {
+		setStudent((prev) => {
+			return { ...prev, assignments: assignments };
+		});
+	}, [assignments]);
+
+	useEffect(() => {
+		setStudent((prev) => {
+			return { ...prev, timeAway: timeAway };
+		});
+	}, [timeAway]);
+
 	useEffect(() => {
 		const init = async () => {
 			if (id) {
 				const data = await dbGetStudentDetails(id);
-				console.log(data);
+				setStudent(data);
+				setIsMoved(data.isMoved || false);
+				setIsDisqualified(data.isDisqualified || false);
 				setName(data.person_name);
 				setDisplayName(data.person_displayName);
 				setIsMale(data.isMale);
 				setIsFemale(data.isFemale);
 				setAssignments(data.assignments);
+				setHistoryAssignments(data.historyAssignments);
+				setTimeAway(data.timeAway);
 				setIsEdit(true);
 			} else {
 				setIsEdit(false);
@@ -116,7 +188,7 @@ const StudentDetails = () => {
 		};
 
 		init();
-	}, [id]);
+	}, [id, t]);
 
 	return (
 		<Box sx={{ padding: '10px' }}>
@@ -190,7 +262,12 @@ const StudentDetails = () => {
 									</IconButton>
 								)}
 
-								<IconButton edge='start' color='inherit' sx={iconButtonStyles}>
+								<IconButton
+									edge='start'
+									color='inherit'
+									sx={iconButtonStyles}
+									onClick={handleSavePerson}
+								>
 									<SaveIcon sx={{ color: '#3498DB' }} />
 									{lgUp && (
 										<Typography sx={txtButtonStyles}>
@@ -298,7 +375,7 @@ const StudentDetails = () => {
 								<Typography>{t('students.assignmentsHistory')}</Typography>
 							</AccordionSummary>
 							<AccordionDetails>
-								<StudentHistory />
+								<StudentHistory history={historyAssignments} />
 							</AccordionDetails>
 						</Accordion>
 						<Accordion
@@ -312,7 +389,10 @@ const StudentDetails = () => {
 								<Typography>{t('students.timeAway')}</Typography>
 							</AccordionSummary>
 							<AccordionDetails>
-								<StudentTimeAway />
+								<StudentTimeAway
+									timeAway={timeAway}
+									setTimeAway={(value) => setTimeAway(value)}
+								/>
 							</AccordionDetails>
 						</Accordion>
 					</Box>

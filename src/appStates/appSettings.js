@@ -108,6 +108,18 @@ export const shortDateFormatState = selector({
 	},
 });
 
+export const shortDatePickerFormatState = selector({
+	key: 'shortDatePickerFormat',
+	get: ({ get }) => {
+		const appLang = get(appLangState);
+		const format =
+			getI18n().getDataByLanguage(appLang).translation[
+				'global.shortDatePickerFormat'
+			];
+		return format;
+	},
+});
+
 export const isDeleteDbOpenState = atom({
 	key: 'isDeleteDbOpen',
 	default: false,
@@ -307,4 +319,9 @@ export const currentNotificationState = atom({
 export const startupProgressState = atom({
 	key: 'startupProgress',
 	default: 0,
+});
+
+export const rootModalOpenState = atom({
+	key: 'rootModalOpen',
+	default: false,
 });

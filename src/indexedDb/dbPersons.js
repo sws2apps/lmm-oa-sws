@@ -1,9 +1,12 @@
+import { promiseGetRecoil, promiseSetRecoil } from 'recoil-outside';
 import dateFormat from 'dateformat';
 import { dbGetAppSettings } from './dbAppSettings';
 import { dbGetSourceMaterial } from './dbSourceMaterial';
 import { getI18n } from 'react-i18next';
 import appDb from './mainDb';
+import { allStudentsState } from '../appStates/appStudents';
 import { sortHistoricalDateDesc } from '../utils/app';
+import { dbStudentAssignmentsHistory } from './dbAssignment';
 
 const { t } = getI18n();
 
@@ -40,6 +43,7 @@ export const dbGetStudents = async () => {
 		person.lastBibleStudy = appData[i].lastBibleStudy || '';
 		person.lastTalk = appData[i].lastTalk || '';
 		person.isMoved = appData[i].isMoved || false;
+		person.isDisqualified = appData[i].isDisqualified || false;
 		let assignments = appData[i].assignments || [];
 		person.assignments = sortHistoricalDateDesc(assignments);
 
@@ -138,9 +142,26 @@ export const dbGetStudentUidById = async (id) => {
 	return appData.person_uid;
 };
 
+export const dbGetStudentByUid = async (uid) => {
+	const appData = await appDb.table('persons').get({ person_uid: uid });
+	return appData;
+};
+
 export const dbGetStudentDetails = async (uid) => {
-	const students = await dbGetStudents();
-	const student = students.find((student) => student.person_uid === uid);
+	const students = await promiseGetRecoil(allStudentsState);
+
+	let student = { ...students.find((student) => student.person_uid === uid) };
+
+	let assignments = await dbStudentAssignmentsHistory(uid);
+	student.historyAssignments = assignments;
+
+	return student;
+};
+
+export const dbGetStudentDetailsMini = async (uid) => {
+	const students = await promiseGetRecoil(allStudentsState);
+
+	let student = { ...students.find((student) => student.person_uid === uid) };
 
 	return student;
 };
@@ -414,4 +435,26 @@ export const dbBuildPocketUsers = async () => {
 	}
 
 	return data;
+};
+
+export const dbSavePersonExp = async (data) => {
+	const { id, person_name, person_displayName } = data;
+	if (person_name && person_displayName) {
+		if (id) {
+			if (data.historyAssignments) delete data.historyAssignments;
+			await appDb.table('persons').update(id, data);
+		} else {
+			let obj = {
+				person_uid: window.crypto.randomUUID(),
+				...data,
+			};
+			await appDb.persons.add(obj);
+		}
+
+		const students = await dbGetStudents();
+		await promiseSetRecoil(allStudentsState, students);
+		return true;
+	} else {
+		return false;
+	}
 };
