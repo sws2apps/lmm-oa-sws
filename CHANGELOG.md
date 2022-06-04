@@ -1,3 +1,10 @@
+# [1.0.0-alpha.136](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.135...v1.0.0-alpha.136) (2022-06-04)
+
+
+### Bug Fixes
+
+* **schedule:** invalid week being assigned on first load ([b463d0b](https://github.com/sws2apps/lmm-oa-sws/commit/b463d0b3ce1e56e53be2ca551a6015f8fd4399ca))
+
 # [1.0.0-alpha.135](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.134...v1.0.0-alpha.135) (2022-06-03)
 
 
