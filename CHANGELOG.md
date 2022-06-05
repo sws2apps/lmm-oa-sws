@@ -1,3 +1,10 @@
+# [1.0.0-alpha.137](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.136...v1.0.0-alpha.137) (2022-06-05)
+
+
+### Features
+
+* **students:** new design for the students page ([8f56677](https://github.com/sws2apps/lmm-oa-sws/commit/8f5667769bdcb118f6c56ab6bd895f05536301e8))
+
 # [1.0.0-alpha.136](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.135...v1.0.0-alpha.136) (2022-06-04)
 
 
