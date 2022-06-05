@@ -176,17 +176,19 @@ const AppMenus = ({ enabledInstall, isLoading, installPwa }) => {
 	};
 
 	useEffect(() => {
-		if (location.pathname === '/') {
+		const currentPath = location.pathname.toLowerCase();
+
+		if (currentPath === '/') {
 			setAppBarTitle(t('global.home'));
-		} else if (location.pathname === '/Students') {
+		} else if (currentPath.startsWith('/students')) {
 			setAppBarTitle(t('global.students'));
-		} else if (location.pathname === '/Schedule') {
+		} else if (currentPath === '/schedule') {
 			setAppBarTitle(t('global.schedule'));
-		} else if (location.pathname === '/SourceMaterial') {
+		} else if (currentPath === '/source-material') {
 			setAppBarTitle(t('global.sourceMaterial'));
-		} else if (location.pathname === '/Settings') {
+		} else if (currentPath === '/settings') {
 			setAppBarTitle(t('global.settings'));
-		} else if (location.pathname === '/Administration') {
+		} else if (currentPath === '/sdministration') {
 			setAppBarTitle(t('global.administration'));
 		}
 		fetchNotifications();

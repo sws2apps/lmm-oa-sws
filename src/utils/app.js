@@ -9,8 +9,11 @@ import {
 	dbGetListWeekType,
 	dbGetYearList,
 } from '../indexedDb/dbSourceMaterial';
-import { dbGetListAssType } from '../indexedDb/dbAssignment';
-import { dbGetStudents } from '../indexedDb/dbPersons';
+import {
+	dbGetListAssType,
+	dbHistoryAssignment,
+} from '../indexedDb/dbAssignment';
+import { dbGetStudentsMini } from '../indexedDb/dbPersons';
 import { initAppDb } from '../indexedDb/dbUtility';
 import {
 	dbGetNotifications,
@@ -40,6 +43,7 @@ import {
 import {
 	allStudentsState,
 	filteredStudentsState,
+	studentsAssignmentHistoryState,
 } from '../appStates/appStudents';
 
 export const loadApp = async () => {
@@ -75,9 +79,12 @@ export const loadApp = async () => {
 	const assTypeList = await dbGetListAssType();
 	await promiseSetRecoil(assTypeListState, assTypeList);
 
-	const data = await dbGetStudents();
+	const data = await dbGetStudentsMini();
 	await promiseSetRecoil(allStudentsState, data);
 	await promiseSetRecoil(filteredStudentsState, data);
+
+	const history = await dbHistoryAssignment();
+	await promiseSetRecoil(studentsAssignmentHistoryState, history);
 
 	const years = await dbGetYearList();
 	await promiseSetRecoil(yearsListState, years);
@@ -100,4 +107,29 @@ export const fetchNotifications = async () => {
 			await dbSaveNotifications(data);
 		}
 	} catch {}
+};
+
+export const sortHistoricalDateDesc = (data) => {
+	data.sort((a, b) => {
+		if (a.startDate === b.startDate) return 0;
+		var dateA =
+			a.startDate.split('/')[2] +
+			'/' +
+			a.startDate.split('/')[0] +
+			'/' +
+			a.startDate.split('/')[1];
+		var dateB =
+			b.startDate.split('/')[2] +
+			'/' +
+			b.startDate.split('/')[0] +
+			'/' +
+			b.startDate.split('/')[1];
+		return dateA > dateB ? 1 : -1;
+	});
+
+	return data;
+};
+
+export const formatDateForCompare = (date) => {
+	return new Date(date);
 };

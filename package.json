@@ -3,6 +3,7 @@
   "version": "1.0.0-alpha.136",
   "private": true,
   "dependencies": {
+    "@date-io/date-fns": "^2.14.0",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@fingerprintjs/fingerprintjs-pro": "^3.6.3",
@@ -10,7 +11,9 @@
     "@mui/icons-material": "^5.8.2",
     "@mui/lab": "^5.0.0-alpha.84",
     "@mui/material": "^5.8.2",
+    "@mui/x-date-pickers": "^5.0.0-alpha.4",
     "@sws2apps/react-sw-helper": "^1.0.0",
+    "date-fns": "^2.28.0",
     "dateformat": "^5.0.3",
     "dexie": "^3.2.2",
     "dexie-export-import": "^1.0.3",

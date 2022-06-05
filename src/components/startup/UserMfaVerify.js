@@ -8,6 +8,7 @@ import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import StartupHeader from './StartupHeader';
+import { runUpdater } from '../../utils/updater';
 import { encryptString } from '../../utils/sws-encryption';
 import {
 	appMessageState,
@@ -101,6 +102,8 @@ const UserMfaVerify = () => {
 									await loadApp();
 
 									setIsSetup(false);
+
+									await runUpdater();
 									setTimeout(() => {
 										setIsAppLoad(false);
 									}, [2000]);

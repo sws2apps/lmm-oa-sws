@@ -13,6 +13,7 @@ import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import StartupHeader from './StartupHeader';
+import { runUpdater } from '../../utils/updater';
 import { encryptString } from '../../utils/sws-encryption';
 import {
 	appMessageState,
@@ -122,6 +123,8 @@ const UserMfaSetup = () => {
 									await loadApp();
 
 									setIsSetup(false);
+
+									await runUpdater();
 									setTimeout(() => {
 										setIsAppLoad(false);
 									}, [2000]);

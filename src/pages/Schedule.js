@@ -116,7 +116,7 @@ const Schedule = () => {
 	};
 
 	const handlePreviewSchedule = () => {
-		navigate('/ScheduleTemplate', { state: { currentSchedule } });
+		navigate('/schedule-template');
 	};
 
 	const handleShareSchedule = async () => {
@@ -182,8 +182,8 @@ const Schedule = () => {
 				obj.label = dateFormatted;
 				newData.push(obj);
 			}
+			setCurrentWeek('');
 			setWeeks(newData);
-
 			setCurrentWeek(newData[0].value);
 		};
 
@@ -365,7 +365,11 @@ const Schedule = () => {
 							</Button>
 						</Box>
 					</Box>
-					<Box>{currentWeek.length === 10 && <ScheduleDetails />}</Box>
+					<Box>
+						{currentWeek.length === 10 && (
+							<ScheduleDetails week={currentWeek} />
+						)}
+					</Box>
 				</>
 			)}
 		</Box>
