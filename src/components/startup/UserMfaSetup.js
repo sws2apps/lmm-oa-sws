@@ -13,6 +13,7 @@ import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import StartupHeader from './StartupHeader';
+import { runUpdater } from '../../utils/updater';
 import { encryptString } from '../../utils/sws-encryption';
 import {
 	appMessageState,
@@ -92,7 +93,7 @@ const UserMfaSetup = () => {
 
 					const data = await res.json();
 					if (res.status === 200) {
-						if (data.congregation) {
+						if (data.congregation.cong_name.length > 0) {
 							if (data.congregation.cong_role.length > 0) {
 								if (
 									data.congregation.cong_role.includes('lmmo') ||
@@ -122,6 +123,8 @@ const UserMfaSetup = () => {
 									await loadApp();
 
 									setIsSetup(false);
+
+									await runUpdater();
 									setTimeout(() => {
 										setIsAppLoad(false);
 									}, [2000]);

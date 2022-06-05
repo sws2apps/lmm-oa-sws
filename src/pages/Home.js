@@ -185,6 +185,7 @@ const Home = () => {
 			let previousWeek = dateFormat(result, 'mm/dd/yyyy');
 
 			let hasPrevious = await dbIsWeekExist(previousWeek);
+
 			if (!hasPrevious) {
 				result.setDate(result.getDate() - 7);
 				previousWeek = dateFormat(result, 'mm/dd/yyyy');
@@ -392,7 +393,7 @@ const Home = () => {
 										</Typography>
 										<Typography variant='body1'>{ass1Src}</Typography>
 									</Grid>
-									{ass1Type !== 5 && ass1Type !== 6 && ass1Type !== 7 && (
+									{ass1Type !== 105 && ass1Type !== 106 && ass1Type !== 107 && (
 										<Grid
 											item
 											sx={
@@ -407,7 +408,7 @@ const Home = () => {
 														{stu1A}
 													</Typography>
 												</Box>
-												{ass1Type !== 4 && (
+												{ass1Type !== 104 && (
 													<Box sx={boxStudentFldContainer}>
 														<Typography sx={typoStudentField} variant='body1'>
 															{ass1A}
@@ -422,7 +423,7 @@ const Home = () => {
 															{stu1B}
 														</Typography>
 													</Box>
-													{ass1Type !== 4 && (
+													{ass1Type !== 104 && (
 														<Box sx={boxStudentFldContainer}>
 															<Typography sx={typoStudentField} variant='body1'>
 																{ass1B}
@@ -450,7 +451,7 @@ const Home = () => {
 										</Typography>
 										<Typography variant='body1'>{ass2Src}</Typography>
 									</Grid>
-									{ass2Type !== 5 && ass2Type !== 6 && ass2Type !== 7 && (
+									{ass2Type !== 105 && ass2Type !== 106 && ass2Type !== 107 && (
 										<Grid
 											item
 											sx={
@@ -465,7 +466,7 @@ const Home = () => {
 														{stu2A}
 													</Typography>
 												</Box>
-												{ass2Type !== 4 && (
+												{ass2Type !== 104 && (
 													<Box sx={boxStudentFldContainer}>
 														<Typography sx={typoStudentField} variant='body1'>
 															{ass2A}
@@ -480,7 +481,7 @@ const Home = () => {
 															{stu2B}
 														</Typography>
 													</Box>
-													{ass2Type !== 4 && (
+													{ass2Type !== 104 && (
 														<Box sx={boxStudentFldContainer}>
 															<Typography sx={typoStudentField} variant='body1'>
 																{ass2B}
@@ -508,7 +509,7 @@ const Home = () => {
 										</Typography>
 										<Typography variant='body1'>{ass3Src}</Typography>
 									</Grid>
-									{ass3Type !== 5 && ass3Type !== 6 && ass3Type !== 7 && (
+									{ass3Type !== 105 && ass3Type !== 106 && ass3Type !== 107 && (
 										<Grid
 											item
 											sx={
@@ -523,7 +524,7 @@ const Home = () => {
 														{stu3A}
 													</Typography>
 												</Box>
-												{ass3Type !== 4 && (
+												{ass3Type !== 104 && (
 													<Box sx={boxStudentFldContainer}>
 														<Typography sx={typoStudentField} variant='body1'>
 															{ass3A}
@@ -538,7 +539,7 @@ const Home = () => {
 															{stu3B}
 														</Typography>
 													</Box>
-													{ass3Type !== 4 && (
+													{ass3Type !== 104 && (
 														<Box sx={boxStudentFldContainer}>
 															<Typography sx={typoStudentField} variant='body1'>
 																{ass3B}
@@ -566,7 +567,7 @@ const Home = () => {
 										</Typography>
 										<Typography variant='body1'>{ass4Src}</Typography>
 									</Grid>
-									{ass4Type !== 5 && ass4Type !== 6 && ass4Type !== 7 && (
+									{ass4Type !== 105 && ass4Type !== 106 && ass4Type !== 107 && (
 										<Grid
 											item
 											sx={
@@ -581,7 +582,7 @@ const Home = () => {
 														{stu4A}
 													</Typography>
 												</Box>
-												{ass4Type !== 4 && (
+												{ass4Type !== 104 && (
 													<Box sx={boxStudentFldContainer}>
 														<Typography sx={typoStudentField} variant='body1'>
 															{ass4A}
@@ -596,7 +597,7 @@ const Home = () => {
 															{stu4B}
 														</Typography>
 													</Box>
-													{ass4Type !== 4 && (
+													{ass4Type !== 104 && (
 														<Box sx={boxStudentFldContainer}>
 															<Typography sx={typoStudentField} variant='body1'>
 																{ass4B}

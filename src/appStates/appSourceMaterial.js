@@ -50,7 +50,26 @@ export const assTypeLocalState = selector({
 		let newList = [];
 		for (let i = 0; i < assTypeList.length; i++) {
 			let obj = {};
-			obj.value = assTypeList[i].id_type;
+			obj.value = assTypeList[i].code;
+			obj.label = assTypeList[i].ass_type_name[appLang.toUpperCase()];
+			newList.push(obj);
+		}
+
+		return newList;
+	},
+});
+
+export const assTypeLocalNewState = selector({
+	key: 'assTypeLocalNew',
+	get: ({ get }) => {
+		const appLang = get(appLangState);
+		const assTypeList = get(assTypeListState);
+
+		let newList = [];
+		for (let i = 0; i < assTypeList.length; i++) {
+			let obj = {};
+			obj.value = assTypeList[i].code;
+			obj.assignable = assTypeList[i].assignable;
 			obj.label = assTypeList[i].ass_type_name[appLang.toUpperCase()];
 			newList.push(obj);
 		}

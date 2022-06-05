@@ -4,6 +4,7 @@ import About from './About';
 import AppMenus from './AppMenus';
 import DialogDbBackup from '../settings/DialogDbBackup';
 import Login from './Login';
+import RootModal from './RootModal';
 import WhatsNew from './WhatsNew';
 import {
 	isAboutOpenState,
@@ -21,27 +22,29 @@ const Layout = (props) => {
 	const isBackupDb = useRecoilValue(isBackupDbOpenState);
 
 	return (
-		<Box sx={{ display: 'flex' }}>
-			{isOpenAbout && <About />}
-			{isBackupDb && <DialogDbBackup />}
-			{isOpenLogin && <Login />}
-			{isOpenWhatsNew && <WhatsNew />}
+		<RootModal>
+			<Box sx={{ display: 'flex' }}>
+				{isOpenAbout && <About />}
+				{isBackupDb && <DialogDbBackup />}
+				{isOpenLogin && <Login />}
+				{isOpenWhatsNew && <WhatsNew />}
 
-			<AppMenus
-				enabledInstall={enabledInstall}
-				isLoading={isLoading}
-				installPwa={installPwa}
-			/>
-			<Box
-				sx={{
-					flexGrow: 1,
-					paddingTop: '60px',
-					paddingLeft: '5px',
-				}}
-			>
-				{props.children}
+				<AppMenus
+					enabledInstall={enabledInstall}
+					isLoading={isLoading}
+					installPwa={installPwa}
+				/>
+				<Box
+					sx={{
+						flexGrow: 1,
+						paddingTop: '60px',
+						paddingLeft: '5px',
+					}}
+				>
+					{props.children}
+				</Box>
 			</Box>
-		</Box>
+		</RootModal>
 	);
 };
 

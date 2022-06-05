@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import html2pdf from 'html2pdf.js';
 import Box from '@mui/material/Box';
@@ -14,20 +14,23 @@ import {
 	congNumberState,
 } from '../appStates/appCongregation';
 import { currentScheduleState } from '../appStates/appSchedule';
-import { monthNamesState } from '../appStates/appSettings';
+import { monthNamesState, rootModalOpenState } from '../appStates/appSettings';
 
 const ScheduleTemplate = () => {
 	let navigate = useNavigate();
 	const { t } = useTranslation();
 
-	const [data, setData] = useState([]);
-	const [month, setMonth] = useState('');
+	const setRootModalOpen = useSetRecoilState(rootModalOpenState);
 
 	const currentSchedule = useRecoilValue(currentScheduleState);
 	const classCount = useRecoilValue(classCountState);
 	const congName = useRecoilValue(congNameState);
 	const congNumber = useRecoilValue(congNumberState);
 	const monthNames = useRecoilValue(monthNamesState);
+
+	const [data, setData] = useState([]);
+	const [month, setMonth] = useState('');
+	const [schedule] = useState(currentSchedule);
 
 	const savePDF = () => {
 		const element = document.getElementById('schedule_template');
@@ -43,21 +46,23 @@ const ScheduleTemplate = () => {
 
 	useEffect(() => {
 		const getData = async () => {
-			const month = currentSchedule.split('/')[0];
+			setRootModalOpen(true);
+			const month = schedule.split('/')[0];
 
 			const monthName = monthNames[+month - 1];
 			setMonth(monthName);
 
-			const data = await dbGetScheduleForPrint(currentSchedule);
+			const data = await dbGetScheduleForPrint(schedule);
 			setData(data);
+			setRootModalOpen(false);
 		};
 
-		if (currentSchedule === '') {
-			navigate('/Schedule');
+		if (schedule === '') {
+			navigate('/schedule');
 		} else {
 			getData();
 		}
-	}, [navigate, currentSchedule, monthNames]);
+	}, [navigate, schedule, monthNames, setRootModalOpen]);
 
 	return (
 		<>
@@ -348,7 +353,7 @@ const ScheduleTemplate = () => {
 																							}}
 																						>
 																							{weekItem.sourceData[fldType] ===
-																							7
+																							107
 																								? weekItem.sourceData[fldSrc]
 																								: weekItem.sourceData[
 																										fldTypeName
@@ -356,13 +361,13 @@ const ScheduleTemplate = () => {
 																							<span className='student-part-duration'>
 																								{(weekItem.sourceData[
 																									fldType
-																								] === 5 ||
+																								] === 105 ||
 																									weekItem.sourceData[
 																										fldType
-																									] === 6 ||
+																									] === 106 ||
 																									weekItem.sourceData[
 																										fldType
-																									] === 7) && (
+																									] === 107) && (
 																									<>
 																										(
 																										{
@@ -375,16 +380,16 @@ const ScheduleTemplate = () => {
 																								)}
 																								{(weekItem.sourceData[
 																									fldType
-																								] === 1 ||
+																								] === 101 ||
 																									weekItem.sourceData[
 																										fldType
-																									] === 2 ||
+																									] === 102 ||
 																									weekItem.sourceData[
 																										fldType
-																									] === 3 ||
+																									] === 103 ||
 																									weekItem.sourceData[
 																										fldType
-																									] === 4) && (
+																									] === 104) && (
 																									<>
 																										(
 																										{t('global.partLessTime', {
@@ -401,9 +406,10 @@ const ScheduleTemplate = () => {
 																					</li>
 																				</ul>
 																			</Box>
-																			{(weekItem.sourceData[fldType] === 1 ||
-																				weekItem.sourceData[fldType] === 2 ||
-																				weekItem.sourceData[fldType] === 3) && (
+																			{(weekItem.sourceData[fldType] === 101 ||
+																				weekItem.sourceData[fldType] === 102 ||
+																				weekItem.sourceData[fldType] ===
+																					103) && (
 																				<Typography
 																					sx={{
 																						color: 'gray',
@@ -418,7 +424,7 @@ const ScheduleTemplate = () => {
 																					)}
 																				</Typography>
 																			)}
-																			{weekItem.sourceData[fldType] === 4 && (
+																			{weekItem.sourceData[fldType] === 104 && (
 																				<Typography
 																					sx={{
 																						color: 'gray',
@@ -444,13 +450,13 @@ const ScheduleTemplate = () => {
 																			{classCount === 2 && (
 																				<>
 																					{(weekItem.sourceData[fldType] ===
-																						1 ||
+																						101 ||
 																						weekItem.sourceData[fldType] ===
-																							2 ||
+																							102 ||
 																						weekItem.sourceData[fldType] ===
-																							3 ||
+																							103 ||
 																						weekItem.sourceData[fldType] ===
-																							4) && (
+																							104) && (
 																						<>
 																							{weekItem.scheduleData[fldStuB]}
 																							{weekItem.scheduleData[
@@ -473,11 +479,14 @@ const ScheduleTemplate = () => {
 																			}}
 																		>
 																			<>
-																				{(weekItem.sourceData[fldType] === 1 ||
-																					weekItem.sourceData[fldType] === 2 ||
-																					weekItem.sourceData[fldType] === 3 ||
+																				{(weekItem.sourceData[fldType] ===
+																					101 ||
 																					weekItem.sourceData[fldType] ===
-																						4) && (
+																						102 ||
+																					weekItem.sourceData[fldType] ===
+																						103 ||
+																					weekItem.sourceData[fldType] ===
+																						104) && (
 																					<>
 																						{weekItem.scheduleData[fldStuA]}
 																						{weekItem.scheduleData[fldAssA] ===
