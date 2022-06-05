@@ -120,6 +120,9 @@ const BasicSettings = () => {
 				}}
 				value={tempCongName}
 				onChange={(e) => handleCongNameChange(e.target.value)}
+				InputProps={{
+					readOnly: true,
+				}}
 			/>
 			<TextField
 				id='outlined-basic'
@@ -134,6 +137,9 @@ const BasicSettings = () => {
 				sx={{ width: '120px' }}
 				value={tempCongNumber}
 				onChange={(e) => handleCongNumberChange(e.target.value)}
+				InputProps={{
+					readOnly: true,
+				}}
 			/>
 			<Box
 				sx={{

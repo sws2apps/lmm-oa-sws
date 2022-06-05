@@ -116,11 +116,11 @@ const App = ({ updatePwa }) => {
 								<Route path='/students' element={<Students />} />
 								<Route path='/students/new' element={<StudentDetails />} />
 								<Route path='/students/:id' element={<StudentDetails />} />
-								<Route path='/schedule' element={<Schedule />} />
 								<Route
-									path='/scheduleTemplate'
+									path='/schedule-template'
 									element={<ScheduleTemplate />}
 								/>
+								<Route path='/schedule' element={<Schedule />} />
 								<Route path='/s89-template' element={<S89Template />} />
 								<Route path='/source-material' element={<SourceMaterial />} />
 								<Route path='/settings' element={<Settings />} />

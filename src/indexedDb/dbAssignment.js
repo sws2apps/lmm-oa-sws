@@ -512,7 +512,12 @@ export const dbGetS89ItemData = async (week, assName, classLabel) => {
 		assName === 'ass4'
 	) {
 		const assType = sourceData[assTypeFld];
-		if (assType === 1 || assType === 2 || assType === 3 || assType === 20) {
+		if (
+			assType === 101 ||
+			assType === 102 ||
+			assType === 103 ||
+			assType === 108
+		) {
 			const assID = scheduleData[assFld];
 			if (typeof assID !== 'undefined' && assID !== '') {
 				const assInfo = await dbGetStudentDetails(assID);
@@ -526,7 +531,7 @@ export const dbGetS89ItemData = async (week, assName, classLabel) => {
 		const ass4Type = sourceData['ass4_type'];
 		const assTime = sourceData[assTimeFld];
 
-		if (assType === 1 || assType === 20) {
+		if (assType === 101 || assType === 108) {
 			s89Data.isInitialCall = true;
 			if (assName === 'ass1') {
 				if (
@@ -573,7 +578,7 @@ export const dbGetS89ItemData = async (week, assName, classLabel) => {
 					});
 				}
 			}
-		} else if (assType === 2) {
+		} else if (assType === 102) {
 			s89Data.isReturnVisit = true;
 			if (assName === 'ass1') {
 				if (
@@ -620,9 +625,9 @@ export const dbGetS89ItemData = async (week, assName, classLabel) => {
 					});
 				}
 			}
-		} else if (assType === 3) {
+		} else if (assType === 103) {
 			s89Data.isBibleStudy = true;
-		} else if (assType === 4) {
+		} else if (assType === 104) {
 			s89Data.isTalk = true;
 		}
 	} else {

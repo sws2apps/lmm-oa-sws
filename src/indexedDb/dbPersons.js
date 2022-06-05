@@ -21,7 +21,9 @@ export const dbGetStudents = async () => {
 		.reverse()
 		.sortBy('person_name');
 
-	const appData = data.filter((student) => student.isMoved === false);
+	const appData = data.filter(
+		(student) => student.isMoved === undefined || student.isMoved === false
+	);
 
 	for (let i = 0; i < appData.length; i++) {
 		let person = {};
@@ -412,8 +414,15 @@ export const dbHistoryAssistant = async (mainStuID) => {
 };
 
 export const dbSavePerson = async (uid, data) => {
+	console.log(uid, data);
 	const person = await dbGetStudentDetails(uid);
 	await appDb.table('persons').update(person.id, {
+		...data,
+	});
+};
+
+export const dbSavePersonMigration = async (data) => {
+	await appDb.table('persons').update(data.id, {
 		...data,
 	});
 };
@@ -468,4 +477,48 @@ export const dbSavePersonExp = async (data) => {
 	} else {
 		return false;
 	}
+};
+
+export const dbFilterStudents = async (data) => {
+	const { txtSearch, isMale, isFemale, assTypes } = data;
+
+	const dbStudents = await promiseGetRecoil(allStudentsState);
+
+	let firstPassFiltered = [];
+	for (let i = 0; i < dbStudents.length; i++) {
+		const student = dbStudents[i];
+
+		if (student.person_name.toLowerCase().includes(txtSearch)) {
+			if (isMale === isFemale) {
+				firstPassFiltered.push(student);
+			} else if (isMale !== isFemale) {
+				if (student.isMale === isMale && student.isFemale === isFemale) {
+					firstPassFiltered.push(student);
+				}
+			}
+		}
+	}
+
+	let secondPassFiltered = [];
+	for (let i = 0; i < firstPassFiltered.length; i++) {
+		const student = firstPassFiltered[i];
+		const assignments = student.assignments;
+
+		let passed = true;
+
+		for (let a = 0; a < assTypes.length; a++) {
+			const found = assignments.find(
+				(assignment) =>
+					assignment.code === assTypes[a] && assignment.isActive === true
+			);
+			if (!found) {
+				passed = false;
+				break;
+			}
+		}
+
+		if (passed) secondPassFiltered.push(student);
+	}
+
+	return secondPassFiltered;
 };

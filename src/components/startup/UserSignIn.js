@@ -99,6 +99,9 @@ const UserSignIn = () => {
 					await dbUpdateAppSettings({ isLoggedOut: false });
 
 					setIsSetup(false);
+
+					await runUpdater();
+
 					setTimeout(() => {
 						setIsAppLoad(false);
 					}, [2000]);

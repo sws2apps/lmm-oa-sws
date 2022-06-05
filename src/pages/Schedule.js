@@ -116,7 +116,7 @@ const Schedule = () => {
 	};
 
 	const handlePreviewSchedule = () => {
-		navigate('/ScheduleTemplate', { state: { currentSchedule } });
+		navigate('/schedule-template');
 	};
 
 	const handleShareSchedule = async () => {

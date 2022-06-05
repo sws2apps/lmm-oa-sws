@@ -122,6 +122,8 @@
     "global.endDate": "End date",
     "global.comments": "Comments",
     "global.disqualified": "Assignment ended because of disqualification",
+    "global.advancedSearch": "Advanced search",
+    "global.hideAvancedSearch": "Hide advanced search",
 
     "startup.welcomeTitle": "Welcome to LMM-OA",
     "startup.welcomeDescription": "LMM-OA (or Life and Ministry Meeting Overseer Assistant) is an application designed for the Life and Ministry Meeting Overseer.",

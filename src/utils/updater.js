@@ -10,7 +10,7 @@ import {
 import {
 	dbGetStudents,
 	dbGetStudentUidById,
-	dbSavePerson,
+	dbSavePersonMigration,
 } from '../indexedDb/dbPersons';
 import { dbSaveScheduleByAss } from '../indexedDb/dbSchedule';
 import { startupProgressState } from '../appStates/appSettings';
@@ -27,6 +27,7 @@ import {
 	dbMigrateSrcData,
 } from '../indexedDb/dbSourceMaterial';
 import { studentsAssignmentHistoryState } from '../appStates/appStudents';
+import { loadApp } from './app';
 
 let i = 0;
 
@@ -37,6 +38,8 @@ export const runUpdater = async () => {
 	await updateScheduleToId(step);
 	await removeOutdatedSettings(step);
 	await builtHistoricalAssignment(step);
+
+	await loadApp();
 };
 
 const updateScheduleToId = async (step) => {
@@ -117,8 +120,10 @@ const removeOutdatedSettings = async (step) => {
 
 const builtHistoricalAssignment = async (step) => {
 	let appSettings = await dbGetAppSettings();
-	appSettings = await dbGetAppSettings();
-	if (!appSettings.isAssignmentsConverted) {
+	if (
+		appSettings.isAssignmentsConverted === undefined ||
+		!appSettings.isAssignmentsConverted
+	) {
 		const allSources = await dbGetAllSourceMaterials();
 		for (let s = 0; s < allSources.length; s++) {
 			const source = allSources[s];
@@ -225,7 +230,7 @@ const builtHistoricalAssignment = async (step) => {
 					student.assignments.push(obj);
 				}
 
-				await dbSavePerson(student.person_uid, student);
+				await dbSavePersonMigration(student);
 
 				i = i + a;
 				promiseSetRecoil(startupProgressState, i);
