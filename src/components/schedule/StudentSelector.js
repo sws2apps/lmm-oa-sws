@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Box from '@mui/material/Box';
@@ -14,11 +15,12 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import { green, grey } from '@mui/material/colors';
+import { studentsAssignmentHistoryState } from '../../appStates/appStudents';
 import {
 	dbGetPersonsByAssType,
-	dbHistoryAssignment,
 	dbHistoryAssistant,
 } from '../../indexedDb/dbPersons';
+import { formatDateForCompare } from '../../utils/app';
 
 const sharedStyles = {
 	tblContainer: {
@@ -45,7 +47,10 @@ const sharedStyles = {
 const StudentSelector = (props) => {
 	const { t } = useTranslation();
 
-	const assInfo = props.assInfo;
+	const dbHistory = useRecoilValue(studentsAssignmentHistoryState);
+
+	const { assInfo, currentWeek } = props;
+
 	const [assID, setAssID] = useState('');
 	const [assType, setAssType] = useState('');
 	const [assTypeName, setAssTypeName] = useState('');
@@ -116,26 +121,47 @@ const StudentSelector = (props) => {
 			) {
 				students = await dbGetPersonsByAssType('isAssistant');
 			} else {
-				if (assType === 0) {
-					students = await dbGetPersonsByAssType('isBRead');
-				}
-				if (assType === 1 || assType === 20) {
-					students = await dbGetPersonsByAssType('isInitialCall');
-				}
-				if (assType === 2) {
-					students = await dbGetPersonsByAssType('isReturnVisit');
-				}
-				if (assType === 3) {
-					students = await dbGetPersonsByAssType('isBibleStudy');
-				}
-				if (assType === 4) {
-					students = await dbGetPersonsByAssType('isTalk');
+				students = await dbGetPersonsByAssType(assType);
+			}
+
+			// remove unavailable students based on time away
+			let available = [];
+			for (let a = 0; a < students.length; a++) {
+				const student = students[a];
+				if (student.timeAway.length === 0) {
+					available.push(student);
+				} else {
+					const timeAways = student.timeAway;
+					for (let b = 0; b < timeAways.length; b++) {
+						const timeAway = timeAways[b];
+
+						if (timeAway.endDate === null) {
+							const dateA = formatDateForCompare(currentWeek);
+							const dateB = formatDateForCompare(timeAway.startDate);
+							if (dateA < dateB) {
+								available.push(student);
+								break;
+							}
+						} else {
+							const dateA = formatDateForCompare(currentWeek);
+							const dateB = formatDateForCompare(timeAway.startDate);
+							const dateC = formatDateForCompare(timeAway.endDate);
+
+							if (dateA < dateB) {
+								available.push(student);
+								break;
+							} else if (dateA > dateB && dateA > dateC) {
+								available.push(student);
+								break;
+							}
+						}
+					}
 				}
 			}
-			setPickStudents(students);
+
+			setPickStudents(available);
 			setIsLoadingStudent(false);
 
-			const history = await dbHistoryAssignment();
 			var filteredHistory = [];
 			if (
 				assID === 3 ||
@@ -147,9 +173,9 @@ const StudentSelector = (props) => {
 				assID === 15 ||
 				assID === 17
 			) {
-				filteredHistory = history.filter((item) => item.assignmentID === 8);
+				filteredHistory = dbHistory.filter((item) => item.assignmentID === 8);
 			} else {
-				filteredHistory = history.filter(
+				filteredHistory = dbHistory.filter(
 					(item) => item.assignmentID === assType
 				);
 			}
@@ -165,12 +191,11 @@ const StudentSelector = (props) => {
 		return () => {
 			isSubscribed = false;
 		};
-	}, [isLoadingStudent, assID, assType]);
+	}, [currentWeek, dbHistory, isLoadingStudent, assID, assType]);
 
 	useEffect(() => {
 		let isSubscribed = true;
 		const loadStudentHistory = async () => {
-			const dbHistory = await dbHistoryAssignment();
 			let dbStuHistory = dbHistory.filter(
 				(history) => history.studentID === selectedStuID
 			);
@@ -187,7 +212,7 @@ const StudentSelector = (props) => {
 		return () => {
 			isSubscribed = false;
 		};
-	}, [selectedStuID]);
+	}, [dbHistory, selectedStuID]);
 
 	useEffect(() => {
 		let isSubscribed = true;

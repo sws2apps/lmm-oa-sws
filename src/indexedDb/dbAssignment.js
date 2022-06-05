@@ -1,12 +1,22 @@
 import { getI18n } from 'react-i18next';
-import { promiseGetRecoil } from 'recoil-outside';
+import { promiseGetRecoil, promiseSetRecoil } from 'recoil-outside';
 import dateFormat from 'dateformat';
 import { dbGetAppSettings } from './dbAppSettings';
-import { dbGetStudentDetails } from './dbPersons';
+import {
+	dbGetStudentByUid,
+	dbGetStudentDetails,
+	dbGetStudentsMini,
+} from './dbPersons';
 import { dbGetScheduleData } from './dbSchedule';
 import { dbGetSourceMaterial, dbGetWeekListBySched } from './dbSourceMaterial';
 import appDb from './mainDb';
+import { shortDateFormatState } from '../appStates/appSettings';
 import { assTypeLocalState } from '../appStates/appSourceMaterial';
+import {
+	allStudentsState,
+	filteredStudentsState,
+	studentsAssignmentHistoryState,
+} from '../appStates/appStudents';
 
 const { t } = getI18n();
 
@@ -46,18 +56,20 @@ export const dbGetListAssType = async () => {
 		.table('ass_type')
 		.reverse()
 		.reverse()
-		.sortBy('id_type');
+		.sortBy('code');
 
 	for (let i = 0; i < appData.length; i++) {
 		obj = {};
 		obj.id_type = appData[i].id_type;
+		obj.code = appData[i].code;
+		obj.assignable = appData[i].assignable;
 		obj.ass_type_name = appData[i].ass_type_name;
 		assType.push(obj);
 	}
 	return assType;
 };
 
-export const dbSaveAss = async (weekOf, stuID, varSave, idAss) => {
+export const dbSaveAss = async (weekOf, stuID, varSave) => {
 	const appData = await appDb.table('sched_MM').get({ weekOf: weekOf });
 	const stuPrev = appData[varSave];
 
@@ -65,7 +77,11 @@ export const dbSaveAss = async (weekOf, stuID, varSave, idAss) => {
 	obj[varSave] = stuID;
 
 	await appDb.table('sched_MM').update(weekOf, { ...obj });
-	await dbRefreshStudentHistory(stuPrev, stuID, idAss);
+
+	const history = await dbHistoryAssignment();
+	await promiseSetRecoil(studentsAssignmentHistoryState, history);
+
+	await dbRefreshStudentHistory(stuPrev, stuID);
 };
 
 export const dbHistoryAssignment = async () => {
@@ -78,7 +94,8 @@ export const dbHistoryAssignment = async () => {
 		const weekData = await dbGetSourceMaterial(appData[i].weekOf);
 		const [varMonth, varDay, varYear] = appData[i].weekOf.split('/');
 		const lDate = new Date(varYear, varMonth - 1, varDay);
-		const dateFormatted = dateFormat(lDate, 'dd/mm/yyyy');
+		const shortDateFormat = await promiseGetRecoil(shortDateFormatState);
+		const dateFormatted = dateFormat(lDate, shortDateFormat);
 		const cnAss = [{ iAss: 1 }, { iAss: 2 }, { iAss: 3 }, { iAss: 4 }];
 		const varClasses = [{ classLabel: 'A' }, { classLabel: 'B' }];
 
@@ -90,10 +107,10 @@ export const dbHistoryAssignment = async () => {
 				person.weekOf = appData[i].weekOf;
 				person.weekOfFormatted = dateFormatted;
 				person.studentID = appData[i][fldName];
-				const stuDetails = await dbGetStudentDetails(person.studentID);
+				const stuDetails = await dbGetStudentByUid(person.studentID);
 				person.studentName = stuDetails.person_displayName;
-				person.assignmentID = 0;
-				person.assignmentName = 'Famakiana Baiboly';
+				person.assignmentID = 100;
+				person.assignmentName = t('global.bibleReading');
 				person.class = varClasses[a].classLabel;
 				dbHistory.push(person);
 				person = {};
@@ -114,16 +131,16 @@ export const dbHistoryAssignment = async () => {
 					person.weekOf = appData[i].weekOf;
 					person.weekOfFormatted = dateFormatted;
 					person.studentID = appData[i][fldName];
-					const stuDetails = await dbGetStudentDetails(person.studentID);
+					const stuDetails = await dbGetStudentByUid(person.studentID);
 					person.studentName = stuDetails.person_displayName;
 					person.assignmentID = assType;
-					if (assType === 1 || assType === 20) {
+					if (assType === 101 || assType === 108) {
 						person.assignmentName = t('global.initialCall');
-					} else if (assType === 2) {
+					} else if (assType === 102) {
 						person.assignmentName = t('global.returnVisit');
-					} else if (assType === 3) {
+					} else if (assType === 103) {
 						person.assignmentName = t('global.bibleStudy');
-					} else if (assType === 4) {
+					} else if (assType === 104) {
 						person.assignmentName = t('global.talk');
 					}
 					person.class = varClasses[a].classLabel;
@@ -138,10 +155,10 @@ export const dbHistoryAssignment = async () => {
 					person.weekOf = appData[i].weekOf;
 					person.weekOfFormatted = dateFormatted;
 					person.studentID = appData[i][fldName];
-					const stuDetails = await dbGetStudentDetails(person.studentID);
+					const stuDetails = await dbGetStudentByUid(person.studentID);
 					person.studentName = stuDetails.person_displayName;
-					person.assignmentID = 8;
-					person.assignmentName = 'Mpanampy';
+					person.assignmentID = 109;
+					person.assignmentName = t('global.assistant');
 					person.class = varClasses[a].classLabel;
 					dbHistory.push(person);
 					person = {};
@@ -168,10 +185,16 @@ export const dbHistoryAssignment = async () => {
 	return dbHistory;
 };
 
-export const dbLastBRead = async (stuID) => {
+export const dbStudentAssignmentsHistory = async (stuID) => {
 	const appData = await dbHistoryAssignment();
+	const history = appData.filter((data) => data.studentID === stuID);
+	return history;
+};
+
+export const dbLastBRead = async (stuID) => {
+	const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
 	const lastBRead = appData.filter(
-		(data) => (data.assignmentID === 0) & (data.studentID === stuID)
+		(data) => (data.assignmentID === 100) & (data.studentID === stuID)
 	);
 
 	var dLast;
@@ -181,10 +204,23 @@ export const dbLastBRead = async (stuID) => {
 	return dLast;
 };
 
+export const dbFirstBRead = async (stuID) => {
+	const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
+	const lastBRead = appData.filter(
+		(data) => (data.assignmentID === 100) & (data.studentID === stuID)
+	);
+
+	var dLast;
+	if (lastBRead.length > 0) {
+		dLast = lastBRead[lastBRead.length - 1].weekOf;
+	}
+	return dLast;
+};
+
 export const dbLastIniCall = async (stuID) => {
-	const appData = await dbHistoryAssignment();
+	const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
 	const lastIniCall = appData.filter(
-		(data) => (data.assignmentID === 1) & (data.studentID === stuID)
+		(data) => (data.assignmentID === 101) & (data.studentID === stuID)
 	);
 
 	var dLast;
@@ -194,10 +230,23 @@ export const dbLastIniCall = async (stuID) => {
 	return dLast;
 };
 
+export const dbFirstIniCall = async (stuID) => {
+	const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
+	const lastIniCall = appData.filter(
+		(data) => (data.assignmentID === 101) & (data.studentID === stuID)
+	);
+
+	var dLast;
+	if (lastIniCall.length > 0) {
+		dLast = lastIniCall[lastIniCall.length - 1].weekOf;
+	}
+	return dLast;
+};
+
 export const dbLastRV = async (stuID) => {
-	const appData = await dbHistoryAssignment();
+	const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
 	const lastRV = appData.filter(
-		(data) => (data.assignmentID === 2) & (data.studentID === stuID)
+		(data) => (data.assignmentID === 102) & (data.studentID === stuID)
 	);
 
 	var dLast;
@@ -207,10 +256,23 @@ export const dbLastRV = async (stuID) => {
 	return dLast;
 };
 
+export const dbFirstRV = async (stuID) => {
+	const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
+	const lastRV = appData.filter(
+		(data) => (data.assignmentID === 102) & (data.studentID === stuID)
+	);
+
+	var dLast;
+	if (lastRV.length > 0) {
+		dLast = lastRV[lastRV.length - 1].weekOf;
+	}
+	return dLast;
+};
+
 export const dbLastBibleStudy = async (stuID) => {
-	const appData = await dbHistoryAssignment();
+	const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
 	const lastBibleStudy = appData.filter(
-		(data) => (data.assignmentID === 3) & (data.studentID === stuID)
+		(data) => (data.assignmentID === 103) & (data.studentID === stuID)
 	);
 
 	var dLast;
@@ -220,10 +282,23 @@ export const dbLastBibleStudy = async (stuID) => {
 	return dLast;
 };
 
+export const dbFirstBibleStudy = async (stuID) => {
+	const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
+	const lastBibleStudy = appData.filter(
+		(data) => (data.assignmentID === 103) & (data.studentID === stuID)
+	);
+
+	var dLast;
+	if (lastBibleStudy.length > 0) {
+		dLast = lastBibleStudy[lastBibleStudy.length - 1].weekOf;
+	}
+	return dLast;
+};
+
 export const dbLastTalk = async (stuID) => {
-	const appData = await dbHistoryAssignment();
+	const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
 	const lastTalk = appData.filter(
-		(data) => (data.assignmentID === 4) & (data.studentID === stuID)
+		(data) => (data.assignmentID === 104) & (data.studentID === stuID)
 	);
 
 	var dLast;
@@ -233,10 +308,23 @@ export const dbLastTalk = async (stuID) => {
 	return dLast;
 };
 
+export const dbFirstTalk = async (stuID) => {
+	const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
+	const lastTalk = appData.filter(
+		(data) => (data.assignmentID === 104) & (data.studentID === stuID)
+	);
+
+	var dLast;
+	if (lastTalk.length > 0) {
+		dLast = lastTalk[lastTalk.length - 1].weekOf;
+	}
+	return dLast;
+};
+
 export const dbLastAssistant = async (stuID) => {
-	const appData = await dbHistoryAssignment();
+	const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
 	const lastAssistant = appData.filter(
-		(data) => (data.assignmentID === 8) & (data.studentID === stuID)
+		(data) => (data.assignmentID === 109) & (data.studentID === stuID)
 	);
 	var dLast;
 	if (lastAssistant.length > 0) {
@@ -246,7 +334,7 @@ export const dbLastAssistant = async (stuID) => {
 };
 
 export const dbLastAssignment = async (stuID) => {
-	const appData = await dbHistoryAssignment();
+	const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
 	const lastAssignment = appData.filter((data) => data.studentID === stuID);
 	var dLast;
 	if (lastAssignment.length > 0) {
@@ -255,7 +343,7 @@ export const dbLastAssignment = async (stuID) => {
 	return dLast;
 };
 
-export const dbRefreshStudentHistory = async (varPrev, varNew, varAss) => {
+export const dbRefreshStudentHistory = async (varPrev, varNew) => {
 	let varPers;
 	for (let a = 1; a <= 2; a++) {
 		if (a === 1) {
@@ -265,43 +353,19 @@ export const dbRefreshStudentHistory = async (varPrev, varNew, varAss) => {
 		}
 
 		if ((typeof varPers !== 'undefined') & (varPers !== '')) {
-			const stuBRead = await dbLastBRead(varPers);
-			const stuIniCall = await dbLastIniCall(varPers);
-			const stuRV = await dbLastRV(varPers);
-			const stuBS = await dbLastBibleStudy(varPers);
-			const stuAssistant = await dbLastAssistant(varPers);
-			const stuTalk = await dbLastTalk(varPers);
 			const stuAssignment = await dbLastAssignment(varPers);
-
-			var fldToUpdate;
-			var newValue;
-
-			if (varAss === 0) {
-				fldToUpdate = 'lastBRead';
-				newValue = stuBRead;
-			} else if (varAss === 1) {
-				fldToUpdate = 'lastInitialCall';
-				newValue = stuIniCall;
-			} else if (varAss === 2) {
-				fldToUpdate = 'lastReturnVisit';
-				newValue = stuRV;
-			} else if (varAss === 3) {
-				fldToUpdate = 'lastBibleStudy';
-				newValue = stuBS;
-			} else if (varAss === 4) {
-				fldToUpdate = 'lastTalk';
-				newValue = stuTalk;
-			} else if (varAss === 8) {
-				fldToUpdate = 'lastAssistant';
-				newValue = stuAssistant;
-			}
-
 			const student = await dbGetStudentDetails(varPers);
 
 			var obj = {};
-			obj[fldToUpdate] = newValue;
 			obj.lastAssignment = stuAssignment;
 			await appDb.table('persons').update(student.id, { ...obj });
+
+			const students = await dbGetStudentsMini();
+			await promiseSetRecoil(allStudentsState, students);
+			await promiseSetRecoil(filteredStudentsState, students);
+
+			const history = await dbHistoryAssignment();
+			await promiseSetRecoil(studentsAssignmentHistoryState, history);
 		}
 	}
 };
@@ -448,7 +512,12 @@ export const dbGetS89ItemData = async (week, assName, classLabel) => {
 		assName === 'ass4'
 	) {
 		const assType = sourceData[assTypeFld];
-		if (assType === 1 || assType === 2 || assType === 3 || assType === 20) {
+		if (
+			assType === 101 ||
+			assType === 102 ||
+			assType === 103 ||
+			assType === 108
+		) {
 			const assID = scheduleData[assFld];
 			if (typeof assID !== 'undefined' && assID !== '') {
 				const assInfo = await dbGetStudentDetails(assID);
@@ -462,7 +531,7 @@ export const dbGetS89ItemData = async (week, assName, classLabel) => {
 		const ass4Type = sourceData['ass4_type'];
 		const assTime = sourceData[assTimeFld];
 
-		if (assType === 1 || assType === 20) {
+		if (assType === 101 || assType === 108) {
 			s89Data.isInitialCall = true;
 			if (assName === 'ass1') {
 				if (
@@ -509,7 +578,7 @@ export const dbGetS89ItemData = async (week, assName, classLabel) => {
 					});
 				}
 			}
-		} else if (assType === 2) {
+		} else if (assType === 102) {
 			s89Data.isReturnVisit = true;
 			if (assName === 'ass1') {
 				if (
@@ -556,9 +625,9 @@ export const dbGetS89ItemData = async (week, assName, classLabel) => {
 					});
 				}
 			}
-		} else if (assType === 3) {
+		} else if (assType === 103) {
 			s89Data.isBibleStudy = true;
-		} else if (assType === 4) {
+		} else if (assType === 104) {
 			s89Data.isTalk = true;
 		}
 	} else {
@@ -591,3 +660,5 @@ export const dbGetScheduleForPrint = async (scheduleName) => {
 	}
 	return data;
 };
+
+export const dbBuildNewAssignmentsFormat = async () => {};

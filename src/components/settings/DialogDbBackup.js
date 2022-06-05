@@ -167,7 +167,7 @@ const DialogDbBackup = () => {
 				.then((res) => res.blob())
 				.then((blob) => {
 					setJsonData(blob);
-					navigate('/DBRestore');
+					navigate('/dbrestore');
 					handleClose();
 				});
 		} catch (error) {
@@ -196,7 +196,7 @@ const DialogDbBackup = () => {
 				.then((res) => res.blob())
 				.then((blob) => {
 					setJsonData(blob);
-					navigate('/DBRestore');
+					navigate('/dbrestore');
 					handleClose();
 				});
 		} catch (error) {

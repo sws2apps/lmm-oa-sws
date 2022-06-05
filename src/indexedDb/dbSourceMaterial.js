@@ -24,13 +24,13 @@ export const dbGetListWeekType = async () => {
 export const dbGetScheduleWeekInfo = async (weekOf) => {
 	const appData = await appDb.table('sched_MM').get({ weekOf: weekOf });
 	var obj = {};
-	obj.week_type = appData.week_type;
-	obj.noMeeting = appData.noMeeting;
+	obj.week_type = appData.week_type || 1;
+	obj.noMeeting = appData.noMeeting || false;
 	return obj;
 };
 
 export const dbGetWeekTypeName = async (weekType) => {
-	const appLang = await promiseGetRecoil(appLangState) || 'e';
+	const appLang = (await promiseGetRecoil(appLangState)) || 'e';
 	const lang = appLang.toUpperCase();
 
 	var srcWeekType = '';
@@ -44,13 +44,17 @@ export const dbGetWeekTypeName = async (weekType) => {
 	}
 };
 
+export const dbGetAllSourceMaterials = async () => {
+	const appData = await appDb.table('src').toArray();
+	return appData;
+};
+
 export const dbGetSourceMaterial = async (weekOf) => {
 	const appLang = (await promiseGetRecoil(appLangState)) || 'e';
 	const lang = appLang.toUpperCase();
 	const assTypeList = await promiseGetRecoil(assTypeLocalState);
 
 	const appData = await appDb.table('src').get({ weekOf: weekOf });
-
 	let obj = {};
 	let indexType;
 
@@ -62,7 +66,6 @@ export const dbGetSourceMaterial = async (weekOf) => {
 
 	indexType = assTypeList.findIndex((type) => type.value === obj.ass1_type);
 	obj.ass1_type_name = indexType >= 0 ? assTypeList[indexType].label : '';
-
 	obj.ass1_time = appData.ass1_time || '';
 	obj.ass1_src = appData.ass1_src ? appData.ass1_src[lang] || '' : '';
 	obj.ass2_type = +appData.ass2_type || '';
@@ -94,7 +97,6 @@ export const dbGetSourceMaterial = async (weekOf) => {
 	const weekSchedInfo = await dbGetScheduleWeekInfo(weekOf);
 	obj.week_type = weekSchedInfo.week_type;
 	obj.noMeeting = weekSchedInfo.noMeeting;
-
 	return obj;
 };
 
@@ -151,6 +153,57 @@ export const dbSaveSrcData = async (srcData) => {
 				ass4_src: {
 					...ass4_src,
 					[lang]: srcData.ass4_src || '',
+				},
+			},
+			srcData.weekOf
+		)
+		.then(async () => {
+			const isSub = await dbSaveSchedData(
+				srcData.weekOf,
+				srcData.week_type,
+				srcData.noMeeting,
+				srcData.isOverride
+			);
+			if (isSub === true) {
+				isSuccess = true;
+			}
+		})
+		.catch(() => {
+			isSuccess = false;
+		});
+	return isSuccess;
+};
+
+export const dbMigrateSrcData = async (srcData) => {
+	var isSuccess = false;
+
+	await appDb
+		.table('src')
+		.put(
+			{
+				weekOf: srcData.weekOf,
+				bibleReading_src: {
+					...srcData.bibleReading_src,
+				},
+				ass1_type: srcData.ass1_type,
+				ass1_time: srcData.ass1_time,
+				ass1_src: {
+					...srcData.ass1_src,
+				},
+				ass2_type: srcData.ass2_type,
+				ass2_time: srcData.ass2_time,
+				ass2_src: {
+					...srcData.ass2_src,
+				},
+				ass3_type: srcData.ass3_type,
+				ass3_time: srcData.ass3_time,
+				ass3_src: {
+					...srcData.ass3_src,
+				},
+				ass4_type: srcData.ass4_type,
+				ass4_time: srcData.ass4_time,
+				ass4_src: {
+					...srcData.ass4_src,
 				},
 			},
 			srcData.weekOf

@@ -18,6 +18,7 @@ import {
 	currentScheduleState,
 	s89DataState,
 } from '../../appStates/appSchedule';
+import { rootModalOpenState } from '../../appStates/appSettings';
 
 const S89 = () => {
 	const { t } = useTranslation();
@@ -29,6 +30,7 @@ const S89 = () => {
 	const [disablePDF, setDisablePDF] = useState(false);
 
 	const setS89Data = useSetRecoilState(s89DataState);
+	const setRootModalOpen = useSetRecoilState(rootModalOpenState);
 
 	const currentSchedule = useRecoilValue(currentScheduleState);
 
@@ -44,6 +46,7 @@ const S89 = () => {
 	}, [currentSchedule]);
 
 	const handlePreviewS89 = async () => {
+		setRootModalOpen(true);
 		const realData = selected.filter((item) => item.length > 10);
 		realData.sort((a, b) => {
 			return a > b ? 1 : -1;
@@ -66,7 +69,8 @@ const S89 = () => {
 
 		setS89Data(s89Data);
 
-		navigate('/S89Template');
+		navigate('/s89-template');
+		setRootModalOpen(false);
 	};
 
 	useEffect(() => {

@@ -1,5 +1,6 @@
 import maleIcon from '../../img/student_male.svg';
 import femaleIcon from '../../img/student_female.svg';
+import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import {
@@ -23,7 +24,6 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import {
 	currentStudentState,
-	isStudentEditState,
 	isStudentDeleteState,
 } from '../../appStates/appStudent';
 
@@ -59,15 +59,14 @@ const sharedStyles = {
 };
 
 const StudentCard = ({ student }) => {
+	const navigate = useNavigate();
 	const { t } = useTranslation();
 
 	const setCurrentStudent = useSetRecoilState(currentStudentState);
 	const setIsStudentDelete = useSetRecoilState(isStudentDeleteState);
-	const setIsStudentEdit = useSetRecoilState(isStudentEditState);
 
 	const handleClickOpen = () => {
-		setCurrentStudent(student);
-		setIsStudentEdit(true);
+		navigate(`/students/${student.person_uid}`);
 	};
 
 	const handleDelete = (uid, name) => {
@@ -82,7 +81,7 @@ const StudentCard = ({ student }) => {
 		<Grid item sx={{ marginBottom: '5px' }} xs={12} sm={6} md={6} lg={4}>
 			<Card
 				sx={
-					student.isUnavailable
+					student.isDisqualified
 						? sharedStyles.rootUnavailable
 						: sharedStyles.root
 				}
@@ -117,6 +116,7 @@ const StudentCard = ({ student }) => {
 							</Tooltip>
 							<Tooltip title={t('global.delete')}>
 								<IconButton
+									sx={{ marginRight: '5px' }}
 									onClick={() =>
 										handleDelete(student.person_uid, student.person_name)
 									}
@@ -137,35 +137,50 @@ const StudentCard = ({ student }) => {
 						},
 					}}
 				>
-					{student.isBRead && (
+					{student.assignments.find(
+						(assignment) =>
+							assignment.code === 100 && assignment.isActive === true
+					) && (
 						<Chip
 							label={t('global.abbrBibleReading')}
 							size='small'
 							sx={{ ...sharedStyles.chip, ...sharedStyles.chipBRead }}
 						/>
 					)}
-					{student.isInitialCall && (
+					{student.assignments.find(
+						(assignment) =>
+							assignment.code === 101 && assignment.isActive === true
+					) && (
 						<Chip
 							label={t('global.abbrInitialCall')}
 							size='small'
 							sx={{ ...sharedStyles.chip, ...sharedStyles.chipIniCall }}
 						/>
 					)}
-					{student.isReturnVisit && (
+					{student.assignments.find(
+						(assignment) =>
+							assignment.code === 102 && assignment.isActive === true
+					) && (
 						<Chip
 							label={t('global.abbrReturnVisit')}
 							size='small'
 							sx={{ ...sharedStyles.chip, ...sharedStyles.chipRV }}
 						/>
 					)}
-					{student.isBibleStudy && (
+					{student.assignments.find(
+						(assignment) =>
+							assignment.code === 103 && assignment.isActive === true
+					) && (
 						<Chip
 							label={t('global.abbrBibleStudy')}
 							size='small'
 							sx={{ ...sharedStyles.chip, ...sharedStyles.chipBS }}
 						/>
 					)}
-					{student.isTalk && (
+					{student.assignments.find(
+						(assignment) =>
+							assignment.code === 104 && assignment.isActive === true
+					) && (
 						<Chip
 							label={t('global.abbrTalk')}
 							size='small'

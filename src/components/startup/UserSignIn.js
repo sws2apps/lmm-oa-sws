@@ -11,6 +11,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import StartupHeader from './StartupHeader';
 import { loadApp } from '../../utils/app';
+import { runUpdater } from '../../utils/updater';
 import { isEmailValid } from '../../utils/emailValid';
 import { decryptString } from '../../utils/sws-encryption';
 import {
@@ -99,6 +100,9 @@ const UserSignIn = () => {
 					await dbUpdateAppSettings({ isLoggedOut: false });
 
 					setIsSetup(false);
+
+					await runUpdater();
+
 					setTimeout(() => {
 						setIsAppLoad(false);
 					}, [2000]);
