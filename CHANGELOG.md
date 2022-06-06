@@ -1,3 +1,10 @@
+# [1.0.0-alpha.139](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.138...v1.0.0-alpha.139) (2022-06-06)
+
+
+### Features
+
+* **students:** add end date and comments when student moved to another congregation ([54643fa](https://github.com/sws2apps/lmm-oa-sws/commit/54643fad687cdeb3f7b80a6574f69e7f8ba3d1c8))
+
 # [1.0.0-alpha.138](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.137...v1.0.0-alpha.138) (2022-06-06)
 
 
