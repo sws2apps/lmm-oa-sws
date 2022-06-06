@@ -1,3 +1,18 @@
+# [1.0.0-alpha.138](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.137...v1.0.0-alpha.138) (2022-06-06)
+
+
+### Bug Fixes
+
+* **students:** fix case sensitive issue when searching students ([2e07463](https://github.com/sws2apps/lmm-oa-sws/commit/2e07463299ffc94e6b5c90a1706c09cd79c7e987))
+
+
+### Features
+
+* **deps:** bump @mui/x-date-pickers from 5.0.0-alpha.4 to 5.0.0-alpha.5 ([2b65ea0](https://github.com/sws2apps/lmm-oa-sws/commit/2b65ea095503461b28f12fb4f8e4ec313a309f11))
+* **deps:** bump i18next from 21.8.7 to 21.8.8 ([1335593](https://github.com/sws2apps/lmm-oa-sws/commit/1335593105ff54cb6517650de7feef78077a8455))
+* **deps:** bump jw-epub-parser from 1.11.0 to 1.12.0 ([ad25aa6](https://github.com/sws2apps/lmm-oa-sws/commit/ad25aa640d9d9a671bc04efbc45eb6892e3cfd29))
+* **deps:** bump react-i18next from 11.16.10 to 11.17.0 ([a5d5647](https://github.com/sws2apps/lmm-oa-sws/commit/a5d5647142b68871683dd34518d87da606a921ee))
+
 # [1.0.0-alpha.137](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.136...v1.0.0-alpha.137) (2022-06-05)
 
 
