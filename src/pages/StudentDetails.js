@@ -118,9 +118,19 @@ const StudentDetails = () => {
 	};
 
 	const handlePersonMove = async () => {
+		const obj = assignments.map((assignment) =>
+			assignment.endDate === null
+				? {
+						...assignment,
+						endDate: format(new Date(), 'MM/dd/yyy'),
+						comments: t('global.endMoved'),
+				  }
+				: assignment
+		);
+
 		setRootModalOpen(true);
-		const obj = { ...student, isMoved: true };
-		const result = await dbSavePersonExp(obj);
+		const data = { ...student, isMoved: true, assignments: obj };
+		const result = await dbSavePersonExp(data);
 		if (result) {
 			navigate('/students');
 			setRootModalOpen(false);
