@@ -488,7 +488,7 @@ export const dbFilterStudents = async (data) => {
 	for (let i = 0; i < dbStudents.length; i++) {
 		const student = dbStudents[i];
 
-		if (student.person_name.toLowerCase().includes(txtSearch)) {
+		if (student.person_name.toLowerCase().includes(txtSearch.toLowerCase())) {
 			if (isMale === isFemale) {
 				firstPassFiltered.push(student);
 			} else if (isMale !== isFemale) {
