@@ -18,6 +18,7 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import GetApp from '@mui/icons-material/GetApp';
 import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
+import KeyIcon from '@mui/icons-material/Key';
 import List from '@mui/material/List';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -36,8 +37,10 @@ import AppLanguage from './AppLanguage';
 import NotificationContent from './NotificationContent';
 import { fetchNotifications } from '../../utils/app';
 import {
+	congAccountConnectedState,
 	congInfoFormattedState,
 	usernameState,
+	offlineOverrideState,
 } from '../../appStates/appCongregation';
 import {
 	appStageState,
@@ -45,9 +48,11 @@ import {
 	countNotificationsState,
 	isAboutOpenState,
 	isAppClosingState,
+	isAppLoadState,
 	isBackupDbOpenState,
 	isBackupOfflineState,
 	isBackupOnlineState,
+	isOnlineState,
 	isRestoreOfflineState,
 	isRestoreOnlineState,
 } from '../../appStates/appSettings';
@@ -80,11 +85,15 @@ const AppMenus = ({ enabledInstall, isLoading, installPwa }) => {
 	const setRestoreOnline = useSetRecoilState(isRestoreOnlineState);
 	const setIsBackupDb = useSetRecoilState(isBackupDbOpenState);
 	const setBackupFile = useSetRecoilState(backupEncryptedState);
+	const setOfflineOverride = useSetRecoilState(offlineOverrideState);
+	const setIsAppLoad = useSetRecoilState(isAppLoadState);
 
 	const appStage = useRecoilValue(appStageState);
 	const congInfo = useRecoilValue(congInfoFormattedState);
 	const username = useRecoilValue(usernameState);
 	const cnNews = useRecoilValue(countNotificationsState);
+	const isOnline = useRecoilValue(isOnlineState);
+	const congAccountConnected = useRecoilValue(congAccountConnectedState);
 
 	const [mobileOpen, setMobileOpen] = useState(false);
 	const [appBarTitle, setAppBarTitle] = useState('');
@@ -164,6 +173,12 @@ const AppMenus = ({ enabledInstall, isLoading, installPwa }) => {
 	const handleLogout = async () => {
 		handleClose();
 		setIsAppClosing(true);
+	};
+
+	const handleUseOnlineAccount = () => {
+		handleClose();
+		setOfflineOverride(true);
+		setIsAppLoad(true);
 	};
 
 	const checkPwaUpdate = () => {
@@ -391,6 +406,14 @@ const AppMenus = ({ enabledInstall, isLoading, installPwa }) => {
 						open={Boolean(anchorEl)}
 						onClose={handleClose}
 					>
+						{isOnline && !congAccountConnected && (
+							<MenuItem onClick={handleUseOnlineAccount}>
+								<ListItemIcon>
+									<KeyIcon fontSize='medium' sx={{ color: '#DC7633' }} />
+								</ListItemIcon>
+								<ListItemText>{t('global.useOnlineAccount')}</ListItemText>
+							</MenuItem>
+						)}
 						<MenuItem onClick={handleBackupClick} sx={{ width: '320px' }}>
 							<ListItemIcon>
 								<TopicIcon />

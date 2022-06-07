@@ -25,7 +25,12 @@ import {
 	userEmailState,
 	userPasswordState,
 	visitorIDState,
+	startupProgressState,
 } from '../../appStates/appSettings';
+import {
+	congAccountConnectedState,
+	offlineOverrideState,
+} from '../../appStates/appCongregation';
 import { loadApp } from '../../utils/app';
 import { dbUpdateAppSettings } from '../../indexedDb/dbAppSettings';
 
@@ -46,6 +51,9 @@ const UserMfaVerify = () => {
 	const setIsUnauthorizedRole = useSetRecoilState(isUnauthorizedRoleState);
 	const setIsSetup = useSetRecoilState(isSetupState);
 	const setIsAppLoad = useSetRecoilState(isAppLoadState);
+	const setStartupProgress = useSetRecoilState(startupProgressState);
+	const setCongAccountConnected = useSetRecoilState(congAccountConnectedState);
+	const setOfflineOverride = useSetRecoilState(offlineOverrideState);
 
 	const apiHost = useRecoilValue(apiHostState);
 	const userEmail = useRecoilValue(userEmailState);
@@ -105,6 +113,9 @@ const UserMfaVerify = () => {
 
 									await runUpdater();
 									setTimeout(() => {
+										setStartupProgress(0);
+										setOfflineOverride(false);
+										setCongAccountConnected(true);
 										setIsAppLoad(false);
 									}, [2000]);
 								} else {

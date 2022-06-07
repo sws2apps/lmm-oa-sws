@@ -29,12 +29,15 @@ import {
 	isUserSignUpState,
 	startupProgressState,
 } from '../appStates/appSettings';
+import { offlineOverrideState } from '../appStates/appCongregation';
 import { dbGetAppSettings } from '../indexedDb/dbAppSettings';
 import { loadApp } from '../utils/app';
 import { runUpdater } from '../utils/updater';
 
 const Startup = () => {
 	const [isSetup, setIsSetup] = useRecoilState(isSetupState);
+	const [startupProgress, setStartupProgress] =
+		useRecoilState(startupProgressState);
 
 	const setIsAppLoad = useSetRecoilState(isAppLoadState);
 
@@ -49,27 +52,32 @@ const Startup = () => {
 	const isCongWaitRequest = useRecoilValue(isCongWaitRequestState);
 	const isShowTermsUse = useRecoilValue(isShowTermsUseState);
 	const isUnauthorizedRole = useRecoilValue(isUnauthorizedRoleState);
-	const startupProgress = useRecoilValue(startupProgressState);
+	const offlineOverride = useRecoilValue(offlineOverrideState);
 
 	useEffect(() => {
 		const checkLoginState = async () => {
-			let { isLoggedOut, userPass, username } = await dbGetAppSettings();
-
-			isLoggedOut = isLoggedOut === undefined ? true : isLoggedOut;
-
-			if (!isLoggedOut && userPass?.length > 0 && username?.length > 0) {
-				await loadApp();
-				await runUpdater();
-				setTimeout(() => {
-					setIsAppLoad(false);
-				}, [1000]);
-			} else {
+			if (offlineOverride) {
 				setIsSetup(true);
+			} else {
+				let { isLoggedOut, userPass, username } = await dbGetAppSettings();
+
+				isLoggedOut = isLoggedOut === undefined ? true : isLoggedOut;
+
+				if (!isLoggedOut && userPass?.length > 0 && username?.length > 0) {
+					await loadApp();
+					await runUpdater();
+					setTimeout(() => {
+						setIsAppLoad(false);
+						setStartupProgress(0);
+					}, [1000]);
+				} else {
+					setIsSetup(true);
+				}
 			}
 		};
 
 		checkLoginState();
-	}, [setIsAppLoad, setIsSetup]);
+	}, [offlineOverride, setIsAppLoad, setIsSetup, setStartupProgress]);
 
 	if (isSetup) {
 		return (

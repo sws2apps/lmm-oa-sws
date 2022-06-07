@@ -64,3 +64,13 @@ export const congInfoFormattedState = selector({
 		return formatted;
 	},
 });
+
+export const offlineOverrideState = atom({
+	key: 'offlineOverride',
+	default: false,
+});
+
+export const congAccountConnectedState = atom({
+	key: 'congAccountConnected',
+	default: false,
+});
