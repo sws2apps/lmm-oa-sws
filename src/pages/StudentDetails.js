@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useSetRecoilState } from 'recoil';
+import { createSearchParams, useNavigate, useParams } from 'react-router-dom';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import { format } from 'date-fns';
 import { useTheme } from '@mui/material';
@@ -34,6 +34,7 @@ import {
 	appSnackOpenState,
 } from '../appStates/appNotification';
 import { rootModalOpenState } from '../appStates/appSettings';
+import { studentsQueryState } from '../appStates/appStudents';
 
 const Accordion = styled((props) => (
 	<MuiAccordion disableGutters elevation={0} square {...props} />
@@ -101,6 +102,8 @@ const StudentDetails = () => {
 	const setAppMessage = useSetRecoilState(appMessageState);
 	const setRootModalOpen = useSetRecoilState(rootModalOpenState);
 
+	const studentsQuery = useRecoilValue(studentsQueryState);
+
 	const [isProcessing, setIsProcessing] = useState(true);
 	const [isEdit, setIsEdit] = useState(false);
 	const [name, setName] = useState('');
@@ -132,7 +135,10 @@ const StudentDetails = () => {
 		const data = { ...student, isMoved: true, assignments: obj };
 		const result = await dbSavePersonExp(data);
 		if (result) {
-			navigate('/students');
+			navigate({
+				pathname: '/students',
+				search: `${createSearchParams(studentsQuery)}`,
+			});
 			setRootModalOpen(false);
 		} else {
 			setRootModalOpen(false);
@@ -147,7 +153,10 @@ const StudentDetails = () => {
 		const data = { ...student, isDisqualified: false };
 		const result = await dbSavePersonExp(data);
 		if (result) {
-			navigate('/students');
+			navigate({
+				pathname: '/students',
+				search: `${createSearchParams(studentsQuery)}`,
+			});
 			setRootModalOpen(false);
 		} else {
 			setRootModalOpen(false);
@@ -172,7 +181,10 @@ const StudentDetails = () => {
 		const data = { ...student, isDisqualified: true, assignments: obj };
 		const result = await dbSavePersonExp(data);
 		if (result) {
-			navigate('/students');
+			navigate({
+				pathname: '/students',
+				search: `${createSearchParams(studentsQuery)}`,
+			});
 			setRootModalOpen(false);
 		} else {
 			setRootModalOpen(false);
@@ -186,7 +198,10 @@ const StudentDetails = () => {
 		setRootModalOpen(true);
 		const result = await dbSavePersonExp(student);
 		if (result) {
-			navigate('/students');
+			navigate({
+				pathname: '/students',
+				search: `${createSearchParams(studentsQuery)}`,
+			});
 			setRootModalOpen(false);
 		} else {
 			setRootModalOpen(false);

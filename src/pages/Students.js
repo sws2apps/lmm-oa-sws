@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useCallback, useEffect, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import { styled, alpha } from '@mui/material/styles';
@@ -34,7 +34,7 @@ import {
 	appSeverityState,
 	appSnackOpenState,
 } from '../appStates/appNotification';
-import { allStudentsState } from '../appStates/appStudents';
+import { allStudentsState, studentsQueryState } from '../appStates/appStudents';
 import {
 	currentStudentState,
 	isStudentDeleteState,
@@ -84,6 +84,8 @@ const Students = () => {
 	const theme = useTheme();
 	const xsUp = useMediaQuery(theme.breakpoints.up(510), { noSsr: true });
 
+	const [searchParams, setSearchParams] = useSearchParams();
+
 	const [advancedOpen, setAdvancedOpen] = useState(false);
 	const [students, setStudents] = useState([]);
 	const [anchorElMenuSmall, setAnchorElMenuSmall] = useState(null);
@@ -100,6 +102,7 @@ const Students = () => {
 	const setAppSnackOpen = useSetRecoilState(appSnackOpenState);
 	const setAppSeverity = useSetRecoilState(appSeverityState);
 	const setAppMessage = useSetRecoilState(appMessageState);
+	const setStudentsQuery = useSetRecoilState(studentsQueryState);
 
 	const currentStudent = useRecoilValue(currentStudentState);
 
@@ -126,17 +129,35 @@ const Students = () => {
 		setIsStudentDelete(false);
 	};
 
-	const handleSearchStudent = async () => {
-		handleCloseMenuSmall();
-		setIsSearch(true);
-		setTimeout(async () => {
-			let obj = { txtSearch, isMale, isFemale, assTypes };
-			const data = await dbFilterStudents(obj);
-			setAdvancedOpen(false);
-			setStudents(data);
-			setIsSearch(false);
-		}, [1000]);
-	};
+	const handleSearchStudent = useCallback(
+		async (txtSearch, isMale, isFemale, assTypes) => {
+			handleCloseMenuSmall();
+
+			if (
+				txtSearch.length === 0 &&
+				!isMale &&
+				!isFemale &&
+				assTypes.length === 0
+			) {
+				setStudentsQuery([]);
+				setSearchParams('');
+			} else {
+				const query = { search: txtSearch, isMale, isFemale, type: assTypes };
+				setStudentsQuery(query);
+				setSearchParams(query);
+			}
+
+			setIsSearch(true);
+			setTimeout(async () => {
+				let obj = { txtSearch, isMale, isFemale, assTypes };
+				const data = await dbFilterStudents(obj);
+				setAdvancedOpen(false);
+				setStudents(data);
+				setIsSearch(false);
+			}, [1000]);
+		},
+		[setSearchParams, setStudentsQuery]
+	);
 
 	const handleDelete = async () => {
 		const varID = currentStudent.person_uid;
@@ -153,6 +174,26 @@ const Students = () => {
 		setAppSeverity('success');
 		setAppMessage(t('students.deleteSucess'));
 	};
+
+	useEffect(() => {
+		const getQuery = async () => {
+			const search = searchParams.get('search') || '';
+			setTxtSearch(search);
+			const isMale = searchParams.get('isMale') === 'true' ? true : false;
+			setIsMale(isMale);
+			const isFemale = searchParams.get('isFemale') === 'true' ? true : false;
+			setIsFemale(isFemale);
+			const types = searchParams.getAll('type') || [];
+			const assTypes = types.map((type) => +type);
+			setAssTypes(assTypes);
+
+			if (search?.length > 0 || isMale || isFemale || assTypes.length > 0) {
+				await handleSearchStudent(search, isMale, isFemale, assTypes);
+			}
+		};
+
+		getQuery();
+	}, [handleSearchStudent, searchParams]);
 
 	useEffect(() => {
 		if (!xsUp) setAnchorElMenuSmall(null);
@@ -236,7 +277,9 @@ const Students = () => {
 								marginTop: '-5px',
 								marginRight: '5px',
 							}}
-							onClick={handleSearchStudent}
+							onClick={() =>
+								handleSearchStudent(txtSearch, isMale, isFemale, assTypes)
+							}
 						>
 							<PersonSearchIcon
 								sx={{
