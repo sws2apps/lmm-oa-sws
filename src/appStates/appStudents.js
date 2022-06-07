@@ -19,3 +19,8 @@ export const assistantsHistoryState = atom({
 	key: 'assistantsHistory',
 	default: [],
 });
+
+export const studentsQueryState = atom({
+	key: 'studentsQuery',
+	default: '',
+});

@@ -38,7 +38,9 @@ import {
 	userEmailState,
 	userPasswordState,
 	visitorIDState,
+	startupProgressState,
 } from '../../appStates/appSettings';
+import { offlineOverrideState } from '../../appStates/appCongregation';
 
 const UserSignIn = () => {
 	const { t } = useTranslation();
@@ -68,9 +70,11 @@ const UserSignIn = () => {
 	const setSecretTokenPath = useSetRecoilState(secretTokenPathState);
 	const setIsSetup = useSetRecoilState(isSetupState);
 	const setIsAppLoad = useSetRecoilState(isAppLoadState);
+	const setStartupProgress = useSetRecoilState(startupProgressState);
 
 	const apiHost = useRecoilValue(apiHostState);
 	const isOnline = useRecoilValue(isOnlineState);
+	const offlineOverride = useRecoilValue(offlineOverrideState);
 
 	const handleSignUp = () => {
 		setUserSignUp(true);
@@ -105,6 +109,7 @@ const UserSignIn = () => {
 
 					setTimeout(() => {
 						setIsAppLoad(false);
+						setStartupProgress(0);
 					}, [2000]);
 				} else {
 					setAppMessage(t('login.incorrectInfo'));
@@ -216,16 +221,20 @@ const UserSignIn = () => {
 
 	useEffect(() => {
 		const checkDbs = async () => {
-			const { username, userPass } = await dbGetAppSettings();
-			if (!username || !userPass) {
+			if (offlineOverride) {
 				setIsInternetNeeded(true);
 			} else {
-				setIsInternetNeeded(false);
+				const { username, userPass } = await dbGetAppSettings();
+				if (!username || !userPass) {
+					setIsInternetNeeded(true);
+				} else {
+					setIsInternetNeeded(false);
+				}
 			}
 		};
 
 		checkDbs();
-	}, []);
+	}, [offlineOverride]);
 
 	useEffect(() => {
 		// get visitor ID and check if there is an active connection

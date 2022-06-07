@@ -124,6 +124,7 @@
     "global.disqualified": "Assignment ended because of disqualification",
     "global.advancedSearch": "Advanced search",
     "global.hideAvancedSearch": "Hide advanced search",
+    "global.useOnlineAccount": "Use online account",
     "global.endMoved": "Assignment ended because the student moved to another congregation",
 
     "startup.welcomeTitle": "Welcome to LMM-OA",

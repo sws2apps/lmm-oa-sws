@@ -40,6 +40,7 @@ export const runUpdater = async () => {
 	await builtHistoricalAssignment(step);
 
 	await loadApp();
+	i = 0;
 };
 
 const updateScheduleToId = async (step) => {
