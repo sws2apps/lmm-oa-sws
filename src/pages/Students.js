@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import { styled, alpha } from '@mui/material/styles';
@@ -140,11 +140,11 @@ const Students = () => {
 				assTypes.length === 0
 			) {
 				setStudentsQuery({});
-				setSearchParams(createSearchParams(''));
+				setSearchParams('');
 			} else {
 				const query = { search: txtSearch, isMale, isFemale, type: assTypes };
 				setStudentsQuery(query);
-				setSearchParams(createSearchParams(query));
+				setSearchParams(query);
 			}
 
 			setIsSearch(true);
@@ -353,7 +353,11 @@ const Students = () => {
 										: t('global.advancedSearch')}
 								</ListItemText>
 							</MenuItem>
-							<MenuItem onClick={handleSearchStudent}>
+							<MenuItem
+								onClick={() =>
+									handleSearchStudent(txtSearch, isMale, isFemale, assTypes)
+								}
+							>
 								<ListItemIcon>
 									<PersonSearchIcon
 										sx={{
