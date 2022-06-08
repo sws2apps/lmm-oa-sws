@@ -1,3 +1,14 @@
+# [1.0.0-alpha.140](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.139...v1.0.0-alpha.140) (2022-06-08)
+
+
+### Features
+
+* **deps:** bump @mui/icons-material from 5.8.2 to 5.8.3 ([0f110a8](https://github.com/sws2apps/lmm-oa-sws/commit/0f110a8a47e0966f70d597b7ae692e23f052616f))
+* **deps:** bump @mui/lab from 5.0.0-alpha.84 to 5.0.0-alpha.85 ([a33eb28](https://github.com/sws2apps/lmm-oa-sws/commit/a33eb28625ee3b03c4043ce56b164564d710adce))
+* **deps:** bump @mui/material from 5.8.2 to 5.8.3 ([cc15d8c](https://github.com/sws2apps/lmm-oa-sws/commit/cc15d8c2c65edf2f9e05a44aa56667e7db2495a6))
+* **deps:** bump i18next from 21.8.8 to 21.8.9 ([a72cbe2](https://github.com/sws2apps/lmm-oa-sws/commit/a72cbe2dac4e17ee096a23bd8273712c36cb5d64))
+* **students:** use url search parameters to preserve search state ([0cc1f07](https://github.com/sws2apps/lmm-oa-sws/commit/0cc1f0790850f515fd60c2c10b1a7cf062948777))
+
 # [1.0.0-alpha.139](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.138...v1.0.0-alpha.139) (2022-06-06)
 
 
