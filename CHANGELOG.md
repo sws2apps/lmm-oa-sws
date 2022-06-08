@@ -1,3 +1,10 @@
+# [1.0.0-alpha.142](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.141...v1.0.0-alpha.142) (2022-06-08)
+
+
+### Bug Fixes
+
+* **students:** fix invalid search parameters with smaller devices ([391245f](https://github.com/sws2apps/lmm-oa-sws/commit/391245f8dc14a1b25c43a67d52d64ab9d8801c1b))
+
 # [1.0.0-alpha.141](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.140...v1.0.0-alpha.141) (2022-06-08)
 
 
