@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import { styled, alpha } from '@mui/material/styles';
@@ -139,12 +139,12 @@ const Students = () => {
 				!isFemale &&
 				assTypes.length === 0
 			) {
-				setStudentsQuery([]);
-				setSearchParams('');
+				setStudentsQuery({});
+				setSearchParams(createSearchParams(''));
 			} else {
 				const query = { search: txtSearch, isMale, isFemale, type: assTypes };
 				setStudentsQuery(query);
-				setSearchParams(query);
+				setSearchParams(createSearchParams(query));
 			}
 
 			setIsSearch(true);
