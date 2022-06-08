@@ -1,3 +1,10 @@
+# [1.0.0-alpha.141](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.140...v1.0.0-alpha.141) (2022-06-08)
+
+
+### Bug Fixes
+
+* **students:** fix issue where search parameters is incorrectly set ([fdaa5fe](https://github.com/sws2apps/lmm-oa-sws/commit/fdaa5fefca933ef856a413aa497a4ac83e2303d2))
+
 # [1.0.0-alpha.140](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.139...v1.0.0-alpha.140) (2022-06-08)
 
 
