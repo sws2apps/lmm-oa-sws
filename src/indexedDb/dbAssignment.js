@@ -353,19 +353,22 @@ export const dbRefreshStudentHistory = async (varPrev, varNew) => {
 		}
 
 		if ((typeof varPers !== 'undefined') & (varPers !== '')) {
-			const stuAssignment = await dbLastAssignment(varPers);
 			const student = await dbGetStudentDetails(varPers);
 
-			var obj = {};
-			obj.lastAssignment = stuAssignment;
-			await appDb.table('persons').update(student.id, { ...obj });
+			if (student) {
+				const stuAssignment = await dbLastAssignment(varPers);
 
-			const students = await dbGetStudentsMini();
-			await promiseSetRecoil(allStudentsState, students);
-			await promiseSetRecoil(filteredStudentsState, students);
+				var obj = {};
+				obj.lastAssignment = stuAssignment;
+				await appDb.table('persons').update(student.id, { ...obj });
 
-			const history = await dbHistoryAssignment();
-			await promiseSetRecoil(studentsAssignmentHistoryState, history);
+				const students = await dbGetStudentsMini();
+				await promiseSetRecoil(allStudentsState, students);
+				await promiseSetRecoil(filteredStudentsState, students);
+
+				const history = await dbHistoryAssignment();
+				await promiseSetRecoil(studentsAssignmentHistoryState, history);
+			}
 		}
 	}
 };
