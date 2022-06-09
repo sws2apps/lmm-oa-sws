@@ -1,3 +1,10 @@
+# [1.0.0-alpha.144](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.143...v1.0.0-alpha.144) (2022-06-09)
+
+
+### Bug Fixes
+
+* **schedule:** history of assistant assignments not being shown ([81c51e0](https://github.com/sws2apps/lmm-oa-sws/commit/81c51e027b49aa99330136499d2b862e7b2bf7cc))
+
 # [1.0.0-alpha.143](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.142...v1.0.0-alpha.143) (2022-06-09)
 
 
