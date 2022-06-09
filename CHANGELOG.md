@@ -1,3 +1,10 @@
+# [1.0.0-alpha.143](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.142...v1.0.0-alpha.143) (2022-06-09)
+
+
+### Bug Fixes
+
+* **schedule:** remove inactive students from schedule ([dcc1734](https://github.com/sws2apps/lmm-oa-sws/commit/dcc1734ef38b1e493c77d447eb07569452290557))
+
 # [1.0.0-alpha.142](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.141...v1.0.0-alpha.142) (2022-06-08)
 
 
