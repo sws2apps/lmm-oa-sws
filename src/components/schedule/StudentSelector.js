@@ -173,7 +173,7 @@ const StudentSelector = (props) => {
 				assID === 15 ||
 				assID === 17
 			) {
-				filteredHistory = dbHistory.filter((item) => item.assignmentID === 8);
+				filteredHistory = dbHistory.filter((item) => item.assignmentID === 109);
 			} else {
 				filteredHistory = dbHistory.filter(
 					(item) => item.assignmentID === assType
