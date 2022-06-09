@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
       - name: Cypress Run E2E Tests and record
-        uses: cypress-io/github-action@f9e9419e05e5b83168d397d9c1d8d40ea179901e
+        uses: cypress-io/github-action@5c469cf61cd0dc0de6731461dc65a01e707c9c85
         with:
           build: npm run build
           start: npm run preview
