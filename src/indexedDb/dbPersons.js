@@ -164,10 +164,12 @@ export const dbGetStudentByUid = async (uid) => {
 export const dbGetStudentDetails = async (uid) => {
 	const students = await promiseGetRecoil(allStudentsState);
 
-	let student = { ...students.find((student) => student.person_uid === uid) };
+	let student = students.find((student) => student.person_uid === uid);
 
-	let assignments = await dbStudentAssignmentsHistory(uid);
-	student.historyAssignments = assignments;
+	if (student) {
+		let assignments = await dbStudentAssignmentsHistory(uid);
+		student = { ...student, historyAssignments: assignments };
+	}
 
 	return student;
 };
