@@ -1,3 +1,10 @@
+# [1.0.0-alpha.147](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.146...v1.0.0-alpha.147) (2022-06-10)
+
+
+### Bug Fixes
+
+* **startup:** send visitor id when requesting congregation ([b5a643c](https://github.com/sws2apps/lmm-oa-sws/commit/b5a643c38d95542898ff20259dc1004de84f2bb4))
+
 # [1.0.0-alpha.146](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.145...v1.0.0-alpha.146) (2022-06-10)
 
 
