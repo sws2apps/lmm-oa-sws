@@ -105,7 +105,7 @@ const DialogDbBackup = () => {
 		setBackupConfirmPwd('');
 		dbExportJsonDb(backupConfirmPwd)
 			.then((data) => {
-				fetch(`${apiHost}api/user/send-backup`, {
+				fetch(`${apiHost}api/users/send-backup`, {
 					signal: abortCont.signal,
 					method: 'POST',
 					headers: {
@@ -274,7 +274,7 @@ const DialogDbBackup = () => {
 			const getOnlineBackup = async () => {
 				if (apiHost !== '') {
 					try {
-						const result = await fetch(`${apiHost}api/user/get-backup`, {
+						const result = await fetch(`${apiHost}api/users/get-backup`, {
 							signal: abortCont.signal,
 							method: 'GET',
 							headers: {
@@ -343,7 +343,7 @@ const DialogDbBackup = () => {
 			const getOnlineBackup = async () => {
 				if (apiHost !== '') {
 					try {
-						const result = await fetch(`${apiHost}api/user/get-backup`, {
+						const result = await fetch(`${apiHost}api/users/get-backup`, {
 							signal: abortCont.signal,
 							method: 'GET',
 							headers: {
