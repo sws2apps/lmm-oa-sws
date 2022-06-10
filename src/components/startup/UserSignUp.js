@@ -73,7 +73,7 @@ const UserSignUp = () => {
 			};
 
 			if (apiHost !== '') {
-				fetch(`${apiHost}api/user/create-account`, {
+				fetch(`${apiHost}api/users/create-account`, {
 					signal: abortCont.signal,
 					method: 'POST',
 					headers: {

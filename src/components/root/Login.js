@@ -72,7 +72,7 @@ const Login = () => {
 		};
 
 		if (apiHost !== '') {
-			fetch(`${apiHost}api/user/login`, {
+			fetch(`${apiHost}api/users/login`, {
 				signal: abortCont.signal,
 				method: 'POST',
 				headers: {
@@ -137,7 +137,7 @@ const Login = () => {
 		};
 
 		if (apiHost !== '') {
-			fetch(`${apiHost}api/user/create-account`, {
+			fetch(`${apiHost}api/users/create-account`, {
 				signal: abortCont.signal,
 				method: 'POST',
 				headers: {
@@ -183,7 +183,7 @@ const Login = () => {
 		};
 
 		if (apiHost !== '') {
-			fetch(`${apiHost}api/user/resend-verification`, {
+			fetch(`${apiHost}api/users/resend-verification`, {
 				signal: abortCont.signal,
 				method: 'POST',
 				headers: {

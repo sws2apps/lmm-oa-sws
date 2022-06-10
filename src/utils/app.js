@@ -99,7 +99,7 @@ export const fetchNotifications = async () => {
 		const apiHost = await promiseGetRecoil(apiHostState);
 
 		if (isOnline && apiHost !== '') {
-			const res = await fetch(`${apiHost}api/user/announcement`, {
+			const res = await fetch(`${apiHost}api/users/announcement`, {
 				method: 'GET',
 			});
 
