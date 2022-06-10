@@ -63,9 +63,9 @@ const CongregationSignUp = () => {
 			};
 
 			if (apiHost !== '') {
-				fetch(`${apiHost}api/congregation/request-account`, {
+				fetch(`${apiHost}api/congregations/request`, {
 					signal: abortCont.signal,
-					method: 'POST',
+					method: 'PUT',
 					headers: {
 						'Content-Type': 'application/json',
 					},
@@ -77,7 +77,7 @@ const CongregationSignUp = () => {
 							setIsCongRequestSent(true);
 							setIsProcessing(false);
 							setIsCongAccountCreate(false);
-						} else if (res.status === 403) {
+						} else if (res.status === 405) {
 							setIsCongWaitRequest(true);
 							setIsProcessing(false);
 							setIsCongAccountCreate(false);
