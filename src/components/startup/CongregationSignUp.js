@@ -21,6 +21,7 @@ import {
 	isCongAccountCreateState,
 	isCongWaitRequestState,
 	userEmailState,
+	visitorIDState,
 } from '../../appStates/appSettings';
 
 const CongregationSignUp = () => {
@@ -44,6 +45,7 @@ const CongregationSignUp = () => {
 
 	const apiHost = useRecoilValue(apiHostState);
 	const userEmail = useRecoilValue(userEmailState);
+	const visitorID = useRecoilValue(visitorIDState);
 
 	const handleSignIn = () => {
 		setUserSignIn(true);
@@ -68,6 +70,8 @@ const CongregationSignUp = () => {
 					method: 'PUT',
 					headers: {
 						'Content-Type': 'application/json',
+						visitor_id: visitorID,
+						email: userEmail,
 					},
 					body: JSON.stringify(reqPayload),
 				})
