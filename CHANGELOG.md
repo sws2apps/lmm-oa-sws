@@ -1,3 +1,10 @@
+# [1.0.0-alpha.146](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.145...v1.0.0-alpha.146) (2022-06-10)
+
+
+### Bug Fixes
+
+* **startup:** fix invalid route for user actions ([d4bb953](https://github.com/sws2apps/lmm-oa-sws/commit/d4bb9536b55bf481692b4af6382f0ddf0f9d450c))
+
 # [1.0.0-alpha.145](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.144...v1.0.0-alpha.145) (2022-06-10)
 
 
