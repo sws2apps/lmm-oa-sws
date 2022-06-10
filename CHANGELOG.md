@@ -1,3 +1,10 @@
+# [1.0.0-alpha.145](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.144...v1.0.0-alpha.145) (2022-06-10)
+
+
+### Bug Fixes
+
+* **startup:** update congregation request route ([3071fe5](https://github.com/sws2apps/lmm-oa-sws/commit/3071fe5b06d9c923c7d42d901b16bc9502953335))
+
 # [1.0.0-alpha.144](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.143...v1.0.0-alpha.144) (2022-06-09)
 
 
