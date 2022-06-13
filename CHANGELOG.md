@@ -1,3 +1,14 @@
+# [1.0.0-alpha.148](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.147...v1.0.0-alpha.148) (2022-06-13)
+
+
+### Features
+
+* **deps:** bump @emotion/styled from 11.8.1 to 11.9.3 ([b8b6c7b](https://github.com/sws2apps/lmm-oa-sws/commit/b8b6c7b7a6126df4e7d34d851e8b0e66b9d92d6a))
+* **deps:** bump @mui/x-date-pickers from 5.0.0-alpha.5 to 5.0.0-alpha.6 ([a0372e3](https://github.com/sws2apps/lmm-oa-sws/commit/a0372e31a78567a5cf51aba7ebd79610984daa40))
+* **deps:** bump @sws2apps/react-sw-helper from 1.0.0 to 1.1.0 ([fa500c2](https://github.com/sws2apps/lmm-oa-sws/commit/fa500c285e8f9d6d6cbb784d1b8e890a7baff4da))
+* **deps:** bump jw-epub-parser from 1.12.0 to 1.13.0 ([a3aa2a2](https://github.com/sws2apps/lmm-oa-sws/commit/a3aa2a25d1ae997a6b1bf2d2bd7e84aefc8210c1))
+* **deps:** bump react-i18next from 11.17.0 to 11.17.1 ([e806671](https://github.com/sws2apps/lmm-oa-sws/commit/e806671198ec4d6d91ec69e7ea1cfd5bf322d216))
+
 # [1.0.0-alpha.147](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.146...v1.0.0-alpha.147) (2022-06-10)
 
 
