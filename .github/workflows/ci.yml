@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
 
       - name: Cypress run
-        uses: cypress-io/github-action@5c469cf61cd0dc0de6731461dc65a01e707c9c85
+        uses: cypress-io/github-action@be2de7b1fe1cdafb4a3c8da0a3746476ef636b65
         with:
           build: npm run build
           start: npm run preview
