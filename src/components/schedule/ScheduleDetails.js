@@ -367,6 +367,12 @@ const ScheduleDetails = ({ week }) => {
 		}
 	}, [t, week, isReload, setIsReload]);
 
+	useEffect(() => {
+		if (isS89) {
+			setIsAssign(false);
+		}
+	}, [isS89]);
+
 	if (noMeeting) {
 		return (
 			<Container
