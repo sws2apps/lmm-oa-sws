@@ -1,3 +1,16 @@
+# [1.0.0-alpha.149](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.148...v1.0.0-alpha.149) (2022-06-15)
+
+
+### Features
+
+* **deps:** bump @emotion/react from 11.9.0 to 11.9.3 ([9c44a73](https://github.com/sws2apps/lmm-oa-sws/commit/9c44a73d28fb22fdaf5efb1263442565e31c47ec))
+* **deps:** bump @mui/icons-material from 5.8.3 to 5.8.4 ([501a1b3](https://github.com/sws2apps/lmm-oa-sws/commit/501a1b3bd34adf8f1a7e427e9f8cbdec7b6047d3))
+* **deps:** bump @mui/lab from 5.0.0-alpha.85 to 5.0.0-alpha.86 ([3a1e21b](https://github.com/sws2apps/lmm-oa-sws/commit/3a1e21be7b1273a5bf749c40c910c98c2d3504b8))
+* **deps:** bump @mui/material from 5.8.3 to 5.8.4 ([9e555a8](https://github.com/sws2apps/lmm-oa-sws/commit/9e555a82a02874220c5030804ea501efdddf8e95))
+* **deps:** bump react from 18.1.0 to 18.2.0 ([3d31629](https://github.com/sws2apps/lmm-oa-sws/commit/3d3162910e42a720ff5f8af9b988386e19e3470b))
+* **deps:** bump react-dom from 18.1.0 to 18.2.0 ([c72c056](https://github.com/sws2apps/lmm-oa-sws/commit/c72c05625d23734eb38ac23445c415b102f45ce5))
+* **deps:** bump react-i18next from 11.17.1 to 11.17.2 ([ea72b1f](https://github.com/sws2apps/lmm-oa-sws/commit/ea72b1f4aa68347ddf8ec0c382d4e7cdce7b6c42))
+
 # [1.0.0-alpha.148](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.147...v1.0.0-alpha.148) (2022-06-13)
 
 
