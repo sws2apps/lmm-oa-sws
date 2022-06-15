@@ -1,3 +1,10 @@
+# [1.0.0-alpha.150](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.149...v1.0.0-alpha.150) (2022-06-15)
+
+
+### Bug Fixes
+
+* **schedule:** fix s-89 overlapping with student selector ([3fa4f6e](https://github.com/sws2apps/lmm-oa-sws/commit/3fa4f6e8da79e328d859efb722a3921af1da1ff7))
+
 # [1.0.0-alpha.149](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.148...v1.0.0-alpha.149) (2022-06-15)
 
 
