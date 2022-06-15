@@ -1,3 +1,34 @@
+# [1.0.0-alpha.149](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.148...v1.0.0-alpha.149) (2022-06-15)
+
+
+### Features
+
+* **deps:** bump @emotion/react from 11.9.0 to 11.9.3 ([9c44a73](https://github.com/sws2apps/lmm-oa-sws/commit/9c44a73d28fb22fdaf5efb1263442565e31c47ec))
+* **deps:** bump @mui/icons-material from 5.8.3 to 5.8.4 ([501a1b3](https://github.com/sws2apps/lmm-oa-sws/commit/501a1b3bd34adf8f1a7e427e9f8cbdec7b6047d3))
+* **deps:** bump @mui/lab from 5.0.0-alpha.85 to 5.0.0-alpha.86 ([3a1e21b](https://github.com/sws2apps/lmm-oa-sws/commit/3a1e21be7b1273a5bf749c40c910c98c2d3504b8))
+* **deps:** bump @mui/material from 5.8.3 to 5.8.4 ([9e555a8](https://github.com/sws2apps/lmm-oa-sws/commit/9e555a82a02874220c5030804ea501efdddf8e95))
+* **deps:** bump react from 18.1.0 to 18.2.0 ([3d31629](https://github.com/sws2apps/lmm-oa-sws/commit/3d3162910e42a720ff5f8af9b988386e19e3470b))
+* **deps:** bump react-dom from 18.1.0 to 18.2.0 ([c72c056](https://github.com/sws2apps/lmm-oa-sws/commit/c72c05625d23734eb38ac23445c415b102f45ce5))
+* **deps:** bump react-i18next from 11.17.1 to 11.17.2 ([ea72b1f](https://github.com/sws2apps/lmm-oa-sws/commit/ea72b1f4aa68347ddf8ec0c382d4e7cdce7b6c42))
+
+# [1.0.0-alpha.148](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.147...v1.0.0-alpha.148) (2022-06-13)
+
+
+### Features
+
+* **deps:** bump @emotion/styled from 11.8.1 to 11.9.3 ([b8b6c7b](https://github.com/sws2apps/lmm-oa-sws/commit/b8b6c7b7a6126df4e7d34d851e8b0e66b9d92d6a))
+* **deps:** bump @mui/x-date-pickers from 5.0.0-alpha.5 to 5.0.0-alpha.6 ([a0372e3](https://github.com/sws2apps/lmm-oa-sws/commit/a0372e31a78567a5cf51aba7ebd79610984daa40))
+* **deps:** bump @sws2apps/react-sw-helper from 1.0.0 to 1.1.0 ([fa500c2](https://github.com/sws2apps/lmm-oa-sws/commit/fa500c285e8f9d6d6cbb784d1b8e890a7baff4da))
+* **deps:** bump jw-epub-parser from 1.12.0 to 1.13.0 ([a3aa2a2](https://github.com/sws2apps/lmm-oa-sws/commit/a3aa2a25d1ae997a6b1bf2d2bd7e84aefc8210c1))
+* **deps:** bump react-i18next from 11.17.0 to 11.17.1 ([e806671](https://github.com/sws2apps/lmm-oa-sws/commit/e806671198ec4d6d91ec69e7ea1cfd5bf322d216))
+
+# [1.0.0-alpha.147](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.146...v1.0.0-alpha.147) (2022-06-10)
+
+
+### Bug Fixes
+
+* **startup:** send visitor id when requesting congregation ([b5a643c](https://github.com/sws2apps/lmm-oa-sws/commit/b5a643c38d95542898ff20259dc1004de84f2bb4))
+
 # [1.0.0-alpha.146](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.145...v1.0.0-alpha.146) (2022-06-10)
 
 
