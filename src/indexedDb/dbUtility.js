@@ -134,3 +134,16 @@ export const dbExportJsonDb = async (passcode) => {
 	const encryptedData = await encryptString(passcode, data);
 	return encryptedData;
 };
+
+export const dbExportDataOnline = async () => {
+	// get persons
+	const dbPersons = await appDb.persons.toArray();
+
+	// get source materials
+	const dbSourceMaterial = await appDb.src.toArray();
+
+	// get schedules
+	const dbSchedule = await appDb.sched_MM.toArray();
+
+	return { dbPersons, dbSourceMaterial, dbSchedule };
+};

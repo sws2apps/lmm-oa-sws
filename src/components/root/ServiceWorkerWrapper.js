@@ -21,7 +21,6 @@ const ServiceWorkerWrapper = ({ enabledInstall, updatePwa }) => {
 			<Snackbar
 				open={showReload}
 				message={t('global.newVersion')}
-				onClick={reloadPage}
 				anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
 				action={
 					<Button color='inherit' size='small' onClick={reloadPage}>
@@ -32,7 +31,6 @@ const ServiceWorkerWrapper = ({ enabledInstall, updatePwa }) => {
 			<Snackbar
 				open={isPrecached && enabledInstall && !showReload}
 				message={t('global.cacheCompleted')}
-				onClick={() => setIsPrecached(false)}
 				anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
 				action={
 					<Button

@@ -12,6 +12,8 @@ import AppBar from '@mui/material/AppBar';
 import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import Drawer from '@mui/material/Drawer';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
@@ -56,6 +58,7 @@ import {
 	isRestoreOfflineState,
 	isRestoreOnlineState,
 } from '../../appStates/appSettings';
+import { dbExportDataOnline } from '../../indexedDb/dbUtility';
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 const drawerWidth = 240;
@@ -148,6 +151,15 @@ const AppMenus = ({ enabledInstall, isLoading, installPwa }) => {
 		setRestoreOffline(false);
 		setBackupOffline(true);
 		setIsBackupDb(true);
+	};
+
+	const handleCreateOnlineBackup = async () => {
+		handleClose();
+
+		const { dbPersons, dbSourceMaterial, dbSchedule } =
+			await dbExportDataOnline();
+
+		console.log(dbPersons, dbSourceMaterial, dbSchedule);
 	};
 
 	const handleImportBackup = async () => {
@@ -432,6 +444,19 @@ const AppMenus = ({ enabledInstall, isLoading, installPwa }) => {
 									</ListItemIcon>
 									<ListItemText>{t('global.createOfflineBackup')}</ListItemText>
 								</MenuItem>
+								{isOnline && !congAccountConnected && (
+									<MenuItem onClick={handleCreateOnlineBackup}>
+										<ListItemIcon>
+											<CloudUploadIcon
+												fontSize='medium'
+												sx={{ color: '#5499C7' }}
+											/>
+										</ListItemIcon>
+										<ListItemText>
+											{t('global.createOnlineBackup')}
+										</ListItemText>
+									</MenuItem>
+								)}
 								<MenuItem onClick={handleImportBackup}>
 									<ListItemIcon>
 										<RestoreIcon fontSize='medium' sx={{ color: '#5D6D7E' }} />
@@ -440,6 +465,16 @@ const AppMenus = ({ enabledInstall, isLoading, installPwa }) => {
 										{t('global.restoreOfflineBackup')}
 									</ListItemText>
 								</MenuItem>
+								{isOnline && !congAccountConnected && (
+									<MenuItem onClick={handleCreateBackup}>
+										<ListItemIcon>
+											<CloudDownloadIcon fontSize='medium' />
+										</ListItemIcon>
+										<ListItemText>
+											{t('global.restoreOnlineBackup')}
+										</ListItemText>
+									</MenuItem>
+								)}
 							</List>
 						</Collapse>
 						<MenuItem onClick={handleAbout}>
