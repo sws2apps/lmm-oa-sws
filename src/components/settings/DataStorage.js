@@ -3,6 +3,7 @@ import { useSetRecoilState } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Typography from '@mui/material/Typography';
 import DialogDbDeletion from './DialogDbDeletion';
@@ -24,10 +25,11 @@ const DataStorage = () => {
 	return (
 		<>
 			<DialogDbDeletion />
-			<Typography variant='h6' color='primary' className={'settingHeader'}>
-				{t('settings.dataStorage')}
+			<Typography className={'settingHeader'}>
+				{t('settings.offlineDataStorage')}
 			</Typography>
-			<div className={'settingSubItem'}>
+			<Divider />
+			<Box sx={{ marginTop: '10px' }}>
 				<Box>
 					<Typography variant='body2'>{t('settings.eraseDesc')}</Typography>
 				</Box>
@@ -40,7 +42,7 @@ const DataStorage = () => {
 				>
 					{t('global.delete')}
 				</Button>
-			</div>
+			</Box>
 		</>
 	);
 };

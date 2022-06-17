@@ -319,7 +319,7 @@
     "settings.blankRequired": "Please provide input",
     "settings.liveClass": "Students for live meeting only",
     "settings.saved": "Congregation settings updated successfully",
-    "settings.dataStorage": "DATA STORAGE",
+    "settings.offlineDataStorage": "OFFLINE DATA STORAGE",
     "settings.backup": "Backup",
     "settings.createLocalBackup": "Create",
     "settings.createOnlineBackup": "Create online backup",
@@ -343,6 +343,7 @@
     "settings.backupRestoreError": "An error occurred while processing your backup data",
     "settings.backupInvalidFile": "The file selected is not a valid backup for LMM-OA. Please choose the correct file",
     "settings.restoreComplete": "The backup data for LMM-OA has been successfully restored",
+    "settings.onlineDataStorage": "ONLINE DATA STORAGE",
 
     "about.description": "LMM-OA (Life and Ministry Meeting Overseer Assistant) is an application to coordinate and manage students assignment schedule for Midweek Meeting."
 }

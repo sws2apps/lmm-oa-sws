@@ -52,10 +52,9 @@
 }
 
 .settingHeader {
-	background-color: #d5dbdb;
-	margin-bottom: 5px !important;
 	padding: 5px;
-	border-radius: 10px;
+	line-height: 1.2 !important;
+	font-weight: bold !important;
 }
 
 .settingSubItem {

@@ -320,7 +320,7 @@
     "settings.blankRequired": "Mila fenoina",
     "settings.liveClass": "Mpianatra afaka mandray anjara mivantana ihany",
     "settings.saved": "Vita ny fanavaozana ny mombamomba ny fiangonana",
-    "settings.dataStorage": "FITEHIRIZANA",
+    "settings.offlineDataStorage": "FITEHIRIZANA ATO AMIN’NY FITAOVANA AMPIASAINAO",
     "settings.backup": "Rakitra Fiandry",
     "settings.createLocalBackup": "Hamorona",
     "settings.createOnlineBackup": "Hamorona sy alefa internet",
@@ -344,6 +344,7 @@
     "settings.backupRestoreError": "Nisy olana teo am-panokafana ny rakitra fiandry nosafidianao",
     "settings.backupInvalidFile": "Tsy rakitra fiandry ho an’ny LMM-OA io nosafidianao io, fa hamarino indray mandeha.",
     "settings.restoreComplete": "Vita ny famerenana ny rakitra fiandry ho an’ny LMM-OA",
+    "settings.onlineDataStorage": "FITEHIRIZANA ANY AMIN’NY INTERNET",
 
     "about.description": "Programa fandaminana anjaran’ny mpianatra amin’ny fivoriana andavanandro ny LMM-OA (Life and Ministry Meeting Overseer Assistant)."
 }
