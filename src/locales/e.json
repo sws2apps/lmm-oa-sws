@@ -113,10 +113,8 @@
     "global.nothingNew": "There is nothing new at this moment. Come back here later to check again.",
     "global.offlineWhatsNew": "You are currently offline, so what’s new cannot be fetched.",
     "global.backup": "Backup",
-    "global.createOfflineBackup": "Create offline backup",
-    "global.createOnlineBackup": "Send online backup",
-    "global.restoreOfflineBackup": "Import offline backup",
-    "global.restoreOnlineBackup": "Restore online backup",
+    "global.sendBackup": "Create and send backup",
+    "global.restoreBackup": "Restore backup",
     "global.back": "Back",
     "global.startDate": "Start date",
     "global.endDate": "End date",
@@ -126,6 +124,7 @@
     "global.hideAvancedSearch": "Hide advanced search",
     "global.useOnlineAccount": "Use online account",
     "global.endMoved": "Assignment ended because the student moved to another congregation",
+    "global.create": "Create",
 
     "startup.welcomeTitle": "Welcome to LMM-OA",
     "startup.welcomeDescription": "LMM-OA (or Life and Ministry Meeting Overseer Assistant) is an application designed for the Life and Ministry Meeting Overseer.",
@@ -322,7 +321,7 @@
     "settings.offlineDataStorage": "OFFLINE DATA STORAGE",
     "settings.backup": "Backup",
     "settings.createLocalBackup": "Create",
-    "settings.createOnlineBackup": "Create online backup",
+    "settings.createBackup": "Create backup",
     "settings.restoreLocalBackup": "Restore",
     "settings.restoreOnlineBackup": "Restore online backup",
     "settings.eraseDesc": "Erase all data used by LMM-OA.",
@@ -344,6 +343,12 @@
     "settings.backupInvalidFile": "The file selected is not a valid backup for LMM-OA. Please choose the correct file",
     "settings.restoreComplete": "The backup data for LMM-OA has been successfully restored",
     "settings.onlineDataStorage": "ONLINE DATA STORAGE",
+    "settings.sendCongBackup": "Send backup to be saved in your online congregation account",
+    "settings.lastCongBackup": "Last backup made by {{ backup_person }}, on {{ backup_date }}. Please click CREATE if you want to make a new backup.",
+    "settings.sendBackupBtn": "Send",
+    "settings.restoreCongBackup": "Restore backup from your online congregation account",
+    "settings.restoreBackupBtn": "Restore",
+    "settings.noBackupFound": "No backup has not been found yet for your congregation.",
 
     "about.description": "LMM-OA (Life and Ministry Meeting Overseer Assistant) is an application to coordinate and manage students assignment schedule for Midweek Meeting."
 }

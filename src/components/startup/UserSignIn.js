@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useTranslation } from 'react-i18next';
-import FingerprintJS from '@fingerprintjs/fingerprintjs-pro';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -27,7 +26,6 @@ import {
 	apiHostState,
 	isAppLoadState,
 	isEmailNotVerifiedState,
-	isOnlineState,
 	isSetupState,
 	isUserMfaSetupState,
 	isUserMfaVerifyState,
@@ -54,8 +52,6 @@ const UserSignIn = () => {
 	const [isProcessing, setIsProcessing] = useState(false);
 	const [isInternetNeeded, setIsInternetNeeded] = useState(true);
 
-	const [visitorID, setVisitorID] = useRecoilState(visitorIDState);
-
 	const setUserMfaSetup = useSetRecoilState(isUserMfaSetupState);
 	const setUserMfaVerify = useSetRecoilState(isUserMfaVerifyState);
 	const setUserSignIn = useSetRecoilState(isUserSignInState);
@@ -72,8 +68,8 @@ const UserSignIn = () => {
 	const setIsAppLoad = useSetRecoilState(isAppLoadState);
 	const setStartupProgress = useSetRecoilState(startupProgressState);
 
+	const visitorID = useRecoilValue(visitorIDState);
 	const apiHost = useRecoilValue(apiHostState);
-	const isOnline = useRecoilValue(isOnlineState);
 	const offlineOverride = useRecoilValue(offlineOverrideState);
 
 	const handleSignUp = () => {
@@ -102,6 +98,11 @@ const UserSignIn = () => {
 				if (userTmpEmail === crdParse.email && userTmpPwd === crdParse.pwd) {
 					await loadApp();
 					await dbUpdateAppSettings({ isLoggedOut: false });
+
+					setUserEmail(userTmpEmail);
+					localStorage.setItem('email', userTmpEmail);
+
+					setUserPassword(userTmpPwd);
 
 					setIsSetup(false);
 
@@ -157,6 +158,7 @@ const UserSignIn = () => {
 						const data = await res.json();
 						if (res.status === 200) {
 							setUserEmail(userTmpEmail);
+							localStorage.setItem('email', userTmpEmail);
 							setUserPassword(userTmpPwd);
 							setIsProcessing(false);
 							setUserMfaVerify(true);
@@ -164,6 +166,7 @@ const UserSignIn = () => {
 						} else {
 							if (data.secret && data.qrCode) {
 								setUserEmail(userTmpEmail);
+								localStorage.setItem('email', userTmpEmail);
 								setUserPassword(userTmpPwd);
 								setIsProcessing(false);
 								setSecretTokenPath(data.secret);
@@ -172,6 +175,7 @@ const UserSignIn = () => {
 								setUserSignIn(false);
 							} else if (data.message === 'NOT_VERIFIED') {
 								setUserEmail(userTmpEmail);
+								localStorage.setItem('email', userTmpEmail);
 								setIsProcessing(false);
 								setEmailNotVerified(true);
 								setUserSignIn(false);
@@ -235,29 +239,6 @@ const UserSignIn = () => {
 
 		checkDbs();
 	}, [offlineOverride]);
-
-	useEffect(() => {
-		// get visitor ID and check if there is an active connection
-		const getUserID = async () => {
-			const fpPromise = FingerprintJS.load({
-				apiKey: 'XwmESck7zm6PZAfspXbs',
-			});
-
-			let visitorId = '';
-
-			do {
-				const fp = await fpPromise;
-				const result = await fp.get();
-				visitorId = result.visitorId;
-			} while (visitorId.length === 0);
-
-			setVisitorID(visitorId);
-		};
-
-		if (isOnline) {
-			getUserID();
-		}
-	}, [setVisitorID, isOnline]);
 
 	useEffect(() => {
 		return () => abortCont.abort();

@@ -11,6 +11,8 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import AppBar from '@mui/material/AppBar';
 import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import Collapse from '@mui/material/Collapse';
 import Drawer from '@mui/material/Drawer';
 import ExpandLess from '@mui/icons-material/ExpandLess';
@@ -27,8 +29,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
-import RestoreIcon from '@mui/icons-material/Restore';
-import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import Toolbar from '@mui/material/Toolbar';
 import TopicIcon from '@mui/icons-material/Topic';
 import Typography from '@mui/material/Typography';
@@ -44,12 +44,12 @@ import {
 } from '../../appStates/appCongregation';
 import {
 	appStageState,
+	backupDbOpenState,
 	backupEncryptedState,
 	countNotificationsState,
 	isAboutOpenState,
 	isAppClosingState,
 	isAppLoadState,
-	isBackupDbOpenState,
 	isBackupOfflineState,
 	isBackupOnlineState,
 	isOnlineState,
@@ -83,7 +83,7 @@ const AppMenus = ({ enabledInstall, isLoading, installPwa }) => {
 	const setBackupOnline = useSetRecoilState(isBackupOnlineState);
 	const setRestoreOffline = useSetRecoilState(isRestoreOfflineState);
 	const setRestoreOnline = useSetRecoilState(isRestoreOnlineState);
-	const setIsBackupDb = useSetRecoilState(isBackupDbOpenState);
+	const setIsBackupDb = useSetRecoilState(backupDbOpenState);
 	const setBackupFile = useSetRecoilState(backupEncryptedState);
 	const setOfflineOverride = useSetRecoilState(offlineOverrideState);
 	const setIsAppLoad = useSetRecoilState(isAppLoadState);
@@ -143,10 +143,6 @@ const AppMenus = ({ enabledInstall, isLoading, installPwa }) => {
 
 	const handleCreateBackup = () => {
 		handleClose();
-		setBackupOnline(false);
-		setRestoreOnline(false);
-		setRestoreOffline(false);
-		setBackupOffline(true);
 		setIsBackupDb(true);
 	};
 
@@ -414,34 +410,43 @@ const AppMenus = ({ enabledInstall, isLoading, installPwa }) => {
 								<ListItemText>{t('global.useOnlineAccount')}</ListItemText>
 							</MenuItem>
 						)}
-						<MenuItem onClick={handleBackupClick} sx={{ width: '320px' }}>
-							<ListItemIcon>
-								<TopicIcon />
-							</ListItemIcon>
-							<ListItemText
-								primary={t('global.backup')}
-								sx={{ marginRight: '10px' }}
-							/>
-							{backupOpen ? <ExpandLess /> : <ExpandMore />}
-						</MenuItem>
+
+						{isOnline && congAccountConnected && (
+							<MenuItem onClick={handleBackupClick} sx={{ width: '320px' }}>
+								<ListItemIcon>
+									<TopicIcon />
+								</ListItemIcon>
+								<ListItemText
+									primary={t('global.backup')}
+									sx={{ marginRight: '10px' }}
+								/>
+								{backupOpen ? <ExpandLess /> : <ExpandMore />}
+							</MenuItem>
+						)}
+
 						<Collapse in={backupOpen} timeout='auto' unmountOnExit>
 							<List component='div' disablePadding sx={{ paddingLeft: '20px' }}>
 								<MenuItem onClick={handleCreateBackup}>
 									<ListItemIcon>
-										<SaveAltIcon fontSize='medium' sx={{ color: '#2ECC71' }} />
+										<CloudUploadIcon
+											fontSize='medium'
+											sx={{ color: '#2ECC71' }}
+										/>
 									</ListItemIcon>
-									<ListItemText>{t('global.createOfflineBackup')}</ListItemText>
+									<ListItemText>{t('global.sendBackup')}</ListItemText>
 								</MenuItem>
 								<MenuItem onClick={handleImportBackup}>
 									<ListItemIcon>
-										<RestoreIcon fontSize='medium' sx={{ color: '#5D6D7E' }} />
+										<CloudDownloadIcon
+											fontSize='medium'
+											sx={{ color: '#5D6D7E' }}
+										/>
 									</ListItemIcon>
-									<ListItemText>
-										{t('global.restoreOfflineBackup')}
-									</ListItemText>
+									<ListItemText>{t('global.restoreBackup')}</ListItemText>
 								</MenuItem>
 							</List>
 						</Collapse>
+
 						<MenuItem onClick={handleAbout}>
 							<ListItemIcon>
 								<InfoIcon fontSize='medium' sx={{ color: '#3498DB' }} />

@@ -2,13 +2,13 @@ import { useRecoilValue } from 'recoil';
 import Box from '@mui/material/Box';
 import About from './About';
 import AppMenus from './AppMenus';
-import DialogDbBackup from '../settings/DialogDbBackup';
+import BackupDbDialog from '../settings/BackupDbDialog';
 import Login from './Login';
 import RootModal from './RootModal';
 import WhatsNew from './WhatsNew';
 import {
+	backupDbOpenState,
 	isAboutOpenState,
-	isBackupDbOpenState,
 	isLoginOpenState,
 	isWhatsNewOpenState,
 } from '../../appStates/appSettings';
@@ -19,13 +19,13 @@ const Layout = (props) => {
 	const isOpenAbout = useRecoilValue(isAboutOpenState);
 	const isOpenLogin = useRecoilValue(isLoginOpenState);
 	const isOpenWhatsNew = useRecoilValue(isWhatsNewOpenState);
-	const isBackupDb = useRecoilValue(isBackupDbOpenState);
+	const isBackupDb = useRecoilValue(backupDbOpenState);
 
 	return (
 		<RootModal>
 			<Box sx={{ display: 'flex' }}>
 				{isOpenAbout && <About />}
-				{isBackupDb && <DialogDbBackup />}
+				{isBackupDb && <BackupDbDialog />}
 				{isOpenLogin && <Login />}
 				{isOpenWhatsNew && <WhatsNew />}
 

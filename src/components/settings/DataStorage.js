@@ -29,9 +29,9 @@ const DataStorage = () => {
 				{t('settings.offlineDataStorage')}
 			</Typography>
 			<Divider />
-			<Box sx={{ marginTop: '10px' }}>
+			<Box className={'settingSubItem'}>
 				<Box>
-					<Typography variant='body2'>{t('settings.eraseDesc')}</Typography>
+					<Typography>{t('settings.eraseDesc')}</Typography>
 				</Box>
 				<Button
 					variant='contained'

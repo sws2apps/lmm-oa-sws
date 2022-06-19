@@ -74,3 +74,8 @@ export const congAccountConnectedState = atom({
 	key: 'congAccountConnected',
 	default: false,
 });
+
+export const isAdminCongState = atom({
+	key: 'isAdminCong',
+	default: false,
+});
