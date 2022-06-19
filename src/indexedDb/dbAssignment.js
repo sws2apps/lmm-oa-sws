@@ -86,102 +86,107 @@ export const dbSaveAss = async (weekOf, stuID, varSave) => {
 
 export const dbHistoryAssignment = async () => {
 	const appData = await appDb.table('sched_MM').toArray();
-	var dbHistory = [];
-	var histID = 0;
-	for (let i = 0; i < appData.length; i++) {
-		var person = {};
+	const persons = (await appDb.persons.toArray()).length;
+	let dbHistory = [];
 
-		const weekData = await dbGetSourceMaterial(appData[i].weekOf);
-		const [varMonth, varDay, varYear] = appData[i].weekOf.split('/');
-		const lDate = new Date(varYear, varMonth - 1, varDay);
-		const shortDateFormat = await promiseGetRecoil(shortDateFormatState);
-		const dateFormatted = dateFormat(lDate, shortDateFormat);
-		const cnAss = [{ iAss: 1 }, { iAss: 2 }, { iAss: 3 }, { iAss: 4 }];
-		const varClasses = [{ classLabel: 'A' }, { classLabel: 'B' }];
+	if (persons > 0) {
+		let histID = 0;
+		for (let i = 0; i < appData.length; i++) {
+			var person = {};
 
-		//Bible Reading History
-		for (let a = 0; a < varClasses.length; a++) {
-			const fldName = 'bRead_stu_' + varClasses[a].classLabel;
-			if (typeof appData[i][fldName] !== 'undefined') {
-				person.ID = histID;
-				person.weekOf = appData[i].weekOf;
-				person.weekOfFormatted = dateFormatted;
-				person.studentID = appData[i][fldName];
-				const stuDetails = await dbGetStudentByUid(person.studentID);
-				person.studentName = stuDetails.person_displayName;
-				person.assignmentID = 100;
-				person.assignmentName = t('global.bibleReading');
-				person.class = varClasses[a].classLabel;
-				dbHistory.push(person);
-				person = {};
-				histID++;
-			}
-		}
+			const weekData = await dbGetSourceMaterial(appData[i].weekOf);
+			const [varMonth, varDay, varYear] = appData[i].weekOf.split('/');
+			const lDate = new Date(varYear, varMonth - 1, varDay);
+			const shortDateFormat = await promiseGetRecoil(shortDateFormatState);
+			const dateFormatted = dateFormat(lDate, shortDateFormat);
+			const cnAss = [{ iAss: 1 }, { iAss: 2 }, { iAss: 3 }, { iAss: 4 }];
+			const varClasses = [{ classLabel: 'A' }, { classLabel: 'B' }];
 
-		//AYF Assigment History
-		for (let b = 0; b < cnAss.length; b++) {
-			var weekFld = 'ass' + cnAss[b].iAss + '_type';
-			const assType = weekData[weekFld];
-
+			//Bible Reading History
 			for (let a = 0; a < varClasses.length; a++) {
-				var fldName =
-					'ass' + cnAss[b].iAss + '_stu_' + varClasses[a].classLabel;
+				const fldName = 'bRead_stu_' + varClasses[a].classLabel;
 				if (typeof appData[i][fldName] !== 'undefined') {
 					person.ID = histID;
 					person.weekOf = appData[i].weekOf;
 					person.weekOfFormatted = dateFormatted;
 					person.studentID = appData[i][fldName];
 					const stuDetails = await dbGetStudentByUid(person.studentID);
-					person.studentName = stuDetails.person_displayName;
-					person.assignmentID = assType;
-					if (assType === 101 || assType === 108) {
-						person.assignmentName = t('global.initialCall');
-					} else if (assType === 102) {
-						person.assignmentName = t('global.returnVisit');
-					} else if (assType === 103) {
-						person.assignmentName = t('global.bibleStudy');
-					} else if (assType === 104) {
-						person.assignmentName = t('global.talk');
-					}
-					person.class = varClasses[a].classLabel;
-					dbHistory.push(person);
-					person = {};
-					histID++;
-				}
-
-				fldName = 'ass' + cnAss[b].iAss + '_ass_' + varClasses[a].classLabel;
-				if (typeof appData[i][fldName] !== 'undefined') {
-					person.ID = histID;
-					person.weekOf = appData[i].weekOf;
-					person.weekOfFormatted = dateFormatted;
-					person.studentID = appData[i][fldName];
-					const stuDetails = await dbGetStudentByUid(person.studentID);
-					person.studentName = stuDetails.person_displayName;
-					person.assignmentID = 109;
-					person.assignmentName = t('global.assistant');
+					person.studentName = stuDetails?.person_displayName || '';
+					person.assignmentID = 100;
+					person.assignmentName = t('global.bibleReading');
 					person.class = varClasses[a].classLabel;
 					dbHistory.push(person);
 					person = {};
 					histID++;
 				}
 			}
+
+			//AYF Assigment History
+			for (let b = 0; b < cnAss.length; b++) {
+				var weekFld = 'ass' + cnAss[b].iAss + '_type';
+				const assType = weekData[weekFld];
+
+				for (let a = 0; a < varClasses.length; a++) {
+					var fldName =
+						'ass' + cnAss[b].iAss + '_stu_' + varClasses[a].classLabel;
+					if (typeof appData[i][fldName] !== 'undefined') {
+						person.ID = histID;
+						person.weekOf = appData[i].weekOf;
+						person.weekOfFormatted = dateFormatted;
+						person.studentID = appData[i][fldName];
+						const stuDetails = await dbGetStudentByUid(person.studentID);
+						person.studentName = stuDetails?.person_displayName || '';
+						person.assignmentID = assType;
+						if (assType === 101 || assType === 108) {
+							person.assignmentName = t('global.initialCall');
+						} else if (assType === 102) {
+							person.assignmentName = t('global.returnVisit');
+						} else if (assType === 103) {
+							person.assignmentName = t('global.bibleStudy');
+						} else if (assType === 104) {
+							person.assignmentName = t('global.talk');
+						}
+						person.class = varClasses[a].classLabel;
+						dbHistory.push(person);
+						person = {};
+						histID++;
+					}
+
+					fldName = 'ass' + cnAss[b].iAss + '_ass_' + varClasses[a].classLabel;
+					if (typeof appData[i][fldName] !== 'undefined') {
+						person.ID = histID;
+						person.weekOf = appData[i].weekOf;
+						person.weekOfFormatted = dateFormatted;
+						person.studentID = appData[i][fldName];
+						const stuDetails = await dbGetStudentByUid(person.studentID);
+						person.studentName = stuDetails?.person_displayName || '';
+						person.assignmentID = 109;
+						person.assignmentName = t('global.assistant');
+						person.class = varClasses[a].classLabel;
+						dbHistory.push(person);
+						person = {};
+						histID++;
+					}
+				}
+			}
 		}
+		dbHistory.sort((a, b) => {
+			var dateA =
+				a.weekOf.split('/')[2] +
+				'/' +
+				a.weekOf.split('/')[0] +
+				'/' +
+				a.weekOf.split('/')[1];
+			var dateB =
+				b.weekOf.split('/')[2] +
+				'/' +
+				b.weekOf.split('/')[0] +
+				'/' +
+				b.weekOf.split('/')[1];
+			return dateA < dateB ? 1 : -1;
+		});
 	}
-	dbHistory.sort((a, b) => {
-		var dateA =
-			a.weekOf.split('/')[2] +
-			'/' +
-			a.weekOf.split('/')[0] +
-			'/' +
-			a.weekOf.split('/')[1];
-		var dateB =
-			b.weekOf.split('/')[2] +
-			'/' +
-			b.weekOf.split('/')[0] +
-			'/' +
-			b.weekOf.split('/')[1];
-		return dateA < dateB ? 1 : -1;
-	});
+
 	return dbHistory;
 };
 

@@ -29,6 +29,8 @@ import {
 } from '../../appStates/appSettings';
 import {
 	congAccountConnectedState,
+	congIDState,
+	isAdminCongState,
 	offlineOverrideState,
 } from '../../appStates/appCongregation';
 import { loadApp } from '../../utils/app';
@@ -54,6 +56,8 @@ const UserMfaVerify = () => {
 	const setStartupProgress = useSetRecoilState(startupProgressState);
 	const setCongAccountConnected = useSetRecoilState(congAccountConnectedState);
 	const setOfflineOverride = useSetRecoilState(offlineOverrideState);
+	const setIsAdminCong = useSetRecoilState(isAdminCongState);
+	const setCongID = useSetRecoilState(congIDState);
 
 	const apiHost = useRecoilValue(apiHostState);
 	const userEmail = useRecoilValue(userEmailState);
@@ -84,12 +88,21 @@ const UserMfaVerify = () => {
 
 					const data = await res.json();
 					if (res.status === 200) {
-						if (data.congregation.cong_name.length > 0) {
-							if (data.congregation.cong_role.length > 0) {
+						const { cong_id, cong_name, cong_role, cong_number } = data;
+
+						if (cong_name.length > 0) {
+							if (cong_role.length > 0) {
+								// role admin
+								if (cong_role.includes('admin')) {
+									setIsAdminCong(true);
+								}
+
+								// role approved
 								if (
-									data.congregation.cong_role.includes('lmmo') ||
-									data.congregation.cong_role.includes('lmmo-backup')
+									cong_role.includes('lmmo') ||
+									cong_role.includes('lmmo-backup')
 								) {
+									setCongID(cong_id);
 									// encrypt email & pwd
 									const encPwd = await encryptString(
 										userPwd,
@@ -100,8 +113,8 @@ const UserMfaVerify = () => {
 									let obj = {};
 									obj.username = data.username;
 									obj.isCongVerified = true;
-									obj.cong_name = data.congregation.cong_name;
-									obj.cong_number = data.congregation.cong_number;
+									obj.cong_name = cong_name;
+									obj.cong_number = cong_number;
 									obj.userPass = encPwd;
 									obj.isLoggedOut = false;
 
@@ -118,21 +131,20 @@ const UserMfaVerify = () => {
 										setCongAccountConnected(true);
 										setIsAppLoad(false);
 									}, [2000]);
-								} else {
-									setIsProcessing(false);
-									setIsUserMfaVerify(false);
-									setIsUnauthorizedRole(true);
 								}
-							} else {
-								setIsProcessing(false);
-								setIsUserMfaVerify(false);
-								setIsUnauthorizedRole(true);
+								return;
 							}
-						} else {
+
 							setIsProcessing(false);
 							setIsUserMfaVerify(false);
-							setIsCongAccountCreate(true);
+							setIsUnauthorizedRole(true);
+							return;
 						}
+
+						// congregation not assigned
+						setIsProcessing(false);
+						setIsUserMfaVerify(false);
+						setIsCongAccountCreate(true);
 					} else {
 						setIsProcessing(false);
 						setAppMessage(data.message);

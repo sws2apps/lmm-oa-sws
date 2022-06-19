@@ -29,7 +29,10 @@ import {
 	isUserSignUpState,
 	startupProgressState,
 } from '../appStates/appSettings';
-import { offlineOverrideState } from '../appStates/appCongregation';
+import {
+	congAccountConnectedState,
+	offlineOverrideState,
+} from '../appStates/appCongregation';
 import { dbGetAppSettings } from '../indexedDb/dbAppSettings';
 import { loadApp } from '../utils/app';
 import { runUpdater } from '../utils/updater';
@@ -53,6 +56,7 @@ const Startup = () => {
 	const isShowTermsUse = useRecoilValue(isShowTermsUseState);
 	const isUnauthorizedRole = useRecoilValue(isUnauthorizedRoleState);
 	const offlineOverride = useRecoilValue(offlineOverrideState);
+	const congAccountConnected = useRecoilValue(congAccountConnectedState);
 
 	useEffect(() => {
 		const checkLoginState = async () => {
@@ -78,6 +82,22 @@ const Startup = () => {
 
 		checkLoginState();
 	}, [offlineOverride, setIsAppLoad, setIsSetup, setStartupProgress]);
+
+	useEffect(() => {
+		const skipLoad = async () => {
+			setIsSetup(false);
+			await loadApp();
+			await runUpdater();
+			setTimeout(() => {
+				setIsAppLoad(false);
+				setStartupProgress(0);
+			}, [1000]);
+		};
+
+		if (congAccountConnected) {
+			skipLoad();
+		}
+	}, [congAccountConnected, setIsAppLoad, setStartupProgress, setIsSetup]);
 
 	if (isSetup) {
 		return (

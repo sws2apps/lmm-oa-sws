@@ -15,6 +15,7 @@ import {
 	isUserMfaSetupState,
 	isUserMfaVerifyState,
 	isUserSignInState,
+	userEmailState,
 	userPasswordState,
 } from '../../appStates/appSettings';
 
@@ -31,6 +32,7 @@ const UserSignOut = () => {
 	const setUserMfaSetup = useSetRecoilState(isUserMfaSetupState);
 	const setUserMfaVerify = useSetRecoilState(isUserMfaVerifyState);
 	const setUserSignIn = useSetRecoilState(isUserSignInState);
+	const setUserEmail = useSetRecoilState(userEmailState);
 
 	const userPwd = useRecoilValue(userPasswordState);
 
@@ -51,6 +53,7 @@ const UserSignOut = () => {
 			setUserMfaSetup(false);
 			setUserMfaVerify(false);
 			setUserSignIn(true);
+			setUserEmail('');
 		};
 
 		if (open) handleLoggout();
@@ -62,6 +65,7 @@ const UserSignOut = () => {
 		setUserMfaSetup,
 		setUserMfaVerify,
 		setUserSignIn,
+		setUserEmail,
 		userPwd,
 	]);
 

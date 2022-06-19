@@ -134,3 +134,43 @@ export const dbExportJsonDb = async (passcode) => {
 	const encryptedData = await encryptString(passcode, data);
 	return encryptedData;
 };
+
+export const dbExportDataOnline = async () => {
+	// get persons
+	const dbPersons = await appDb.persons.toArray();
+
+	// get source materials
+	const dbSourceMaterial = await appDb.src.toArray();
+
+	// get schedules
+	const dbSchedule = await appDb.sched_MM.toArray();
+
+	return { dbPersons, dbSourceMaterial, dbSchedule };
+};
+
+export const dbRestoreCongregationBackup = async (
+	cong_persons,
+	cong_schedule,
+	cong_sourceMaterial
+) => {
+	// restore persons
+	await appDb.persons.clear();
+	for (let i = 0; i < cong_persons.length; i++) {
+		const person = cong_persons[i];
+		await appDb.persons.add(person, person.id);
+	}
+
+	// restore source materials
+	await appDb.src.clear();
+	for (let i = 0; i < cong_sourceMaterial.length; i++) {
+		const src = cong_sourceMaterial[i];
+		await appDb.src.add(src, src.weekOf);
+	}
+
+	// restore schedule
+	await appDb.sched_MM.clear();
+	for (let i = 0; i < cong_schedule.length; i++) {
+		const schedule = cong_schedule[i];
+		await appDb.sched_MM.add(schedule, schedule.weekOf);
+	}
+};

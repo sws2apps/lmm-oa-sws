@@ -65,7 +65,7 @@ const CongregationSignUp = () => {
 			};
 
 			if (apiHost !== '') {
-				fetch(`${apiHost}api/congregations/request`, {
+				fetch(`${apiHost}api/congregations`, {
 					signal: abortCont.signal,
 					method: 'PUT',
 					headers: {
