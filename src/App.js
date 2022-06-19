@@ -12,7 +12,6 @@ import ScheduleTemplate from './template/ScheduleTemplate';
 import ServiceWorkerWrapper from './components/root/ServiceWorkerWrapper';
 import Startup from './pages/Startup';
 import StudentDetails from './pages/StudentDetails';
-import UserAutoLogin from './components/root/UserAutoLogin';
 import UserSignOut from './components/root/UserSignOut';
 import {
 	apiHostState,
@@ -101,7 +100,6 @@ const App = ({ updatePwa }) => {
 				enabledInstall={enabledInstall}
 				updatePwa={updatePwa}
 			/>
-			<UserAutoLogin />
 			<UserSignOut />
 			{appSnackOpen && <AppNotification />}
 			{isAppLoad && <Startup />}

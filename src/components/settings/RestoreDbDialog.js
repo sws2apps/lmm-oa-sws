@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 import { congIDState } from '../../appStates/appCongregation';
 import {
 	apiHostState,
-	backupDbOpenState,
+	restoreDbOpenState,
 	shortDateFormatState,
 	userEmailState,
 	visitorIDState,
@@ -23,13 +23,13 @@ import {
 	appSeverityState,
 	appSnackOpenState,
 } from '../../appStates/appNotification';
-import { dbExportDataOnline } from '../../indexedDb/dbUtility';
+import { dbRestoreCongregationBackup } from '../../indexedDb/dbUtility';
 
-const BackupDbDialog = () => {
+const RestoreDbDialog = () => {
 	let abortCont = useMemo(() => new AbortController(), []);
 	const { t } = useTranslation();
 
-	const [open, setOpen] = useRecoilState(backupDbOpenState);
+	const [open, setOpen] = useRecoilState(restoreDbOpenState);
 
 	const setAppSnackOpen = useSetRecoilState(appSnackOpenState);
 	const setAppSeverity = useSetRecoilState(appSeverityState);
@@ -112,41 +112,35 @@ const BackupDbDialog = () => {
 		visitorID,
 	]);
 
-	const handleCreateBackup = async () => {
+	const restoreBackup = async () => {
 		try {
-			setIsProcessing(true);
-
 			if (apiHost !== '') {
-				const { dbPersons, dbSourceMaterial, dbSchedule } =
-					await dbExportDataOnline();
-
-				const reqPayload = {
-					cong_persons: dbPersons,
-					cong_schedule: dbSchedule,
-					cong_sourceMaterial: dbSourceMaterial,
-				};
-
+				setIsProcessing(true);
 				const res = await fetch(
 					`${apiHost}api/congregations/${congID}/backup`,
 					{
 						signal: abortCont.signal,
-						method: 'POST',
+						method: 'GET',
 						headers: {
 							'Content-Type': 'application/json',
 							visitor_id: visitorID,
 							email: userEmail,
 						},
-						body: JSON.stringify(reqPayload),
 					}
 				);
 
 				const data = await res.json();
 
 				if (res.status === 200) {
-					setAppMessage(t('settings.backupSuccess'));
-					setAppSeverity('success');
-					setAppSnackOpen(true);
-					setOpen(false);
+					const { cong_persons, cong_schedule, cong_sourceMaterial } = data;
+
+					await dbRestoreCongregationBackup(
+						cong_persons,
+						cong_schedule,
+						cong_sourceMaterial
+					);
+
+					window.location.reload();
 					return;
 				}
 
@@ -182,7 +176,7 @@ const BackupDbDialog = () => {
 				aria-describedby='alert-dialog-description'
 			>
 				<DialogTitle id='alert-dialog-title'>
-					{t('settings.createBackup')}
+					{t('settings.restoreBackup')}
 				</DialogTitle>
 				<DialogContent>
 					{isProcessing && (
@@ -200,7 +194,7 @@ const BackupDbDialog = () => {
 						<>
 							{hasBackup && (
 								<Typography>
-									{t('settings.lastCongBackup', {
+									{t('settings.restoreConfirmation', {
 										backup_person: backup.by,
 										backup_date: dateFormat(
 											new Date(backup.date),
@@ -220,11 +214,11 @@ const BackupDbDialog = () => {
 						{t('global.cancel')}
 					</Button>
 					<Button
-						onClick={handleCreateBackup}
+						onClick={restoreBackup}
 						disabled={isProcessing}
 						color='primary'
 					>
-						{t('global.create')}
+						{t('global.restore')}
 					</Button>
 				</DialogActions>
 			</Dialog>
@@ -232,4 +226,4 @@ const BackupDbDialog = () => {
 	);
 };
 
-export default BackupDbDialog;
+export default RestoreDbDialog;

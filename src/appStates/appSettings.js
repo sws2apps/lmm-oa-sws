@@ -330,3 +330,8 @@ export const backupDbOpenState = atom({
 	key: 'backupDbOpen',
 	default: false,
 });
+
+export const restoreDbOpenState = atom({
+	key: 'restoreDbOpen',
+	default: false,
+});

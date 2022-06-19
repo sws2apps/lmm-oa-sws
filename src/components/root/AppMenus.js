@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { fileDialog } from 'file-select-dialog';
 import styled from '@emotion/styled';
 import { useTheme } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -45,16 +44,12 @@ import {
 import {
 	appStageState,
 	backupDbOpenState,
-	backupEncryptedState,
 	countNotificationsState,
 	isAboutOpenState,
 	isAppClosingState,
 	isAppLoadState,
-	isBackupOfflineState,
-	isBackupOnlineState,
 	isOnlineState,
-	isRestoreOfflineState,
-	isRestoreOnlineState,
+	restoreDbOpenState,
 } from '../../appStates/appSettings';
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
@@ -79,12 +74,8 @@ const AppMenus = ({ enabledInstall, isLoading, installPwa }) => {
 
 	const setIsAboutOpen = useSetRecoilState(isAboutOpenState);
 	const setIsAppClosing = useSetRecoilState(isAppClosingState);
-	const setBackupOffline = useSetRecoilState(isBackupOfflineState);
-	const setBackupOnline = useSetRecoilState(isBackupOnlineState);
-	const setRestoreOffline = useSetRecoilState(isRestoreOfflineState);
-	const setRestoreOnline = useSetRecoilState(isRestoreOnlineState);
 	const setIsBackupDb = useSetRecoilState(backupDbOpenState);
-	const setBackupFile = useSetRecoilState(backupEncryptedState);
+	const setIsRestoreDb = useSetRecoilState(restoreDbOpenState);
 	const setOfflineOverride = useSetRecoilState(offlineOverrideState);
 	const setIsAppLoad = useSetRecoilState(isAppLoadState);
 
@@ -146,19 +137,9 @@ const AppMenus = ({ enabledInstall, isLoading, installPwa }) => {
 		setIsBackupDb(true);
 	};
 
-	const handleImportBackup = async () => {
+	const handleRestoreBackup = () => {
 		handleClose();
-		const file = await fileDialog({
-			accept: '.db',
-			strict: true,
-		});
-
-		setBackupFile(file);
-		setBackupOffline(false);
-		setBackupOnline(false);
-		setRestoreOnline(false);
-		setRestoreOffline(true);
-		setIsBackupDb(true);
+		setIsRestoreDb(true);
 	};
 
 	const handleAbout = () => {
@@ -435,7 +416,7 @@ const AppMenus = ({ enabledInstall, isLoading, installPwa }) => {
 									</ListItemIcon>
 									<ListItemText>{t('global.sendBackup')}</ListItemText>
 								</MenuItem>
-								<MenuItem onClick={handleImportBackup}>
+								<MenuItem onClick={handleRestoreBackup}>
 									<ListItemIcon>
 										<CloudDownloadIcon
 											fontSize='medium'
