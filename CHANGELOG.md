@@ -1,3 +1,11 @@
+# [1.0.0-alpha.151](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.150...v1.0.0-alpha.151) (2022-06-19)
+
+
+### Features
+
+* **backup:** backup and restore from congregation online account ([ae0c80b](https://github.com/sws2apps/lmm-oa-sws/commit/ae0c80bd2828c86a6c09976ebb62452067efb61e))
+* **deps:** bump i18next from 21.8.9 to 21.8.10 ([b485c9f](https://github.com/sws2apps/lmm-oa-sws/commit/b485c9fcaca93d4af07a67054b2c802d7e1e42c9))
+
 # [1.0.0-alpha.150](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.149...v1.0.0-alpha.150) (2022-06-15)
 
 
