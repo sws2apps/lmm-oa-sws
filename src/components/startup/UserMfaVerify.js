@@ -23,6 +23,7 @@ import {
 	isUnauthorizedRoleState,
 	isUserMfaVerifyState,
 	userEmailState,
+	userIDState,
 	userPasswordState,
 	visitorIDState,
 	startupProgressState,
@@ -58,6 +59,7 @@ const UserMfaVerify = () => {
 	const setOfflineOverride = useSetRecoilState(offlineOverrideState);
 	const setIsAdminCong = useSetRecoilState(isAdminCongState);
 	const setCongID = useSetRecoilState(congIDState);
+	const setUserID = useSetRecoilState(userIDState);
 
 	const apiHost = useRecoilValue(apiHostState);
 	const userEmail = useRecoilValue(userEmailState);
@@ -88,7 +90,7 @@ const UserMfaVerify = () => {
 
 					const data = await res.json();
 					if (res.status === 200) {
-						const { cong_id, cong_name, cong_role, cong_number } = data;
+						const { id, cong_id, cong_name, cong_role, cong_number } = data;
 
 						if (cong_name.length > 0) {
 							if (cong_role.length > 0) {
@@ -117,6 +119,7 @@ const UserMfaVerify = () => {
 									obj.cong_number = cong_number;
 									obj.userPass = encPwd;
 									obj.isLoggedOut = false;
+									setUserID(id);
 
 									await dbUpdateAppSettings(obj);
 

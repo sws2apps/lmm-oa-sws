@@ -4,7 +4,6 @@ import { HashRouter, Route, Routes } from 'react-router-dom';
 import usePwa2 from 'use-pwa2/dist/index.js';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AppNotification from './components/root/AppNotification';
-import DBRestore from './pages/DBRestore';
 import InternetChecker from './components/root/InternetChecker';
 import Layout from './components/root/Layout';
 import S89Template from './template/S89Template';
@@ -125,7 +124,6 @@ const App = ({ updatePwa }) => {
 								<Route path='/source-material' element={<SourceMaterial />} />
 								<Route path='/settings' element={<Settings />} />
 								<Route path='/administration' element={<Administration />} />
-								<Route path='/dbrestore' element={<DBRestore />} />
 							</Routes>
 						</Layout>
 					</HashRouter>

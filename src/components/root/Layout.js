@@ -4,14 +4,12 @@ import About from './About';
 import AppMenus from './AppMenus';
 import UserAutoLogin from './UserAutoLogin';
 import BackupDbDialog from '../settings/BackupDbDialog';
-import Login from './Login';
 import RestoreDbDialog from '../settings/RestoreDbDialog';
 import RootModal from './RootModal';
 import WhatsNew from './WhatsNew';
 import {
 	backupDbOpenState,
 	isAboutOpenState,
-	isLoginOpenState,
 	isWhatsNewOpenState,
 	restoreDbOpenState,
 } from '../../appStates/appSettings';
@@ -20,7 +18,6 @@ const Layout = (props) => {
 	const { enabledInstall, isLoading, installPwa } = props;
 
 	const isOpenAbout = useRecoilValue(isAboutOpenState);
-	const isOpenLogin = useRecoilValue(isLoginOpenState);
 	const isOpenWhatsNew = useRecoilValue(isWhatsNewOpenState);
 	const isBackupDb = useRecoilValue(backupDbOpenState);
 	const isRestoreDb = useRecoilValue(restoreDbOpenState);
@@ -33,7 +30,6 @@ const Layout = (props) => {
 				{isOpenAbout && <About />}
 				{isBackupDb && <BackupDbDialog />}
 				{isRestoreDb && <RestoreDbDialog />}
-				{isOpenLogin && <Login />}
 				{isOpenWhatsNew && <WhatsNew />}
 
 				<AppMenus

@@ -12,6 +12,6 @@ export const decryptString = async (secret, payload) => {
 		const decrypted = await simpleCrypto.decrypt(payload);
 		return decrypted;
 	} catch (err) {
-		throw new Error(err);
+		return err.message;
 	}
 };

@@ -30,6 +30,7 @@ import {
 	qrCodePathState,
 	secretTokenPathState,
 	userEmailState,
+	userIDState,
 	userPasswordState,
 	visitorIDState,
 	startupProgressState,
@@ -69,6 +70,7 @@ const UserMfaSetup = () => {
 	const setOfflineOverride = useSetRecoilState(offlineOverrideState);
 	const setIsAdminCong = useSetRecoilState(isAdminCongState);
 	const setCongID = useSetRecoilState(congIDState);
+	const setUserID = useSetRecoilState(userIDState);
 
 	const apiHost = useRecoilValue(apiHostState);
 	const qrCodePath = useRecoilValue(qrCodePathState);
@@ -105,7 +107,7 @@ const UserMfaSetup = () => {
 
 					const data = await res.json();
 					if (res.status === 200) {
-						const { cong_id, cong_name, cong_role, cong_number } = data;
+						const { id, cong_id, cong_name, cong_role, cong_number } = data;
 
 						if (cong_name.length > 0) {
 							if (cong_role.length > 0) {
@@ -141,6 +143,8 @@ const UserMfaSetup = () => {
 									obj.userPass = encPwd;
 									obj.isLoggedOut = false;
 									await dbUpdateAppSettings(obj);
+
+									setUserID(id);
 
 									await loadApp();
 

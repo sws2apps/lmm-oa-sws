@@ -10,6 +10,7 @@ import {
 	apiHostState,
 	isOnlineState,
 	userEmailState,
+	userIDState,
 	visitorIDState,
 } from '../../appStates/appSettings';
 
@@ -22,6 +23,7 @@ const UserAutoLogin = () => {
 	const setCongAccountConnected = useSetRecoilState(congAccountConnectedState);
 	const setIsAdminCong = useSetRecoilState(isAdminCongState);
 	const setCongID = useSetRecoilState(congIDState);
+	const setUserID = useSetRecoilState(userIDState);
 
 	const isOnline = useRecoilValue(isOnlineState);
 	const apiHost = useRecoilValue(apiHostState);
@@ -55,7 +57,7 @@ const UserAutoLogin = () => {
 					) {
 						setCongAccountConnected(true);
 						setCongID(data.cong_id);
-
+						setUserID(data.id);
 						return;
 					}
 
@@ -78,6 +80,7 @@ const UserAutoLogin = () => {
 		setCongAccountConnected,
 		setCongID,
 		setIsAdminCong,
+		setUserID,
 	]);
 
 	useEffect(() => {
