@@ -90,7 +90,7 @@ const BasicSettings = () => {
 			<Typography className={'settingHeader'}>
 				{t('settings.aboutCongregation')}
 			</Typography>
-			<Divider />
+			<Divider sx={{ borderWidth: '5px' }} />
 			<Box sx={{ marginTop: '20px' }}>
 				<TextField
 					id='outlined-basic'

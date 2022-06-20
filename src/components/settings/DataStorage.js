@@ -28,7 +28,7 @@ const DataStorage = () => {
 			<Typography className={'settingHeader'}>
 				{t('settings.offlineDataStorage')}
 			</Typography>
-			<Divider />
+			<Divider sx={{ borderWidth: '5px' }} />
 			<Box className={'settingSubItem'}>
 				<Box>
 					<Typography>{t('settings.eraseDesc')}</Typography>

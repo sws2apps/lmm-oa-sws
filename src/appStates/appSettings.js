@@ -335,3 +335,8 @@ export const restoreDbOpenState = atom({
 	key: 'restoreDbOpen',
 	default: false,
 });
+
+export const userIDState = atom({
+	key: 'userID',
+	default: '',
+});
