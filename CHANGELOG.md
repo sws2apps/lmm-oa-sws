@@ -1,3 +1,22 @@
+# [1.0.0-alpha.153](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.152...v1.0.0-alpha.153) (2022-06-21)
+
+
+### Bug Fixes
+
+* **settings:** localize buttons to update user fullname ([42b7fea](https://github.com/sws2apps/lmm-oa-sws/commit/42b7fea858add5cef192eea9cf576740704be1e5))
+
+
+### Features
+
+* **deps:** bump jw-epub-parser from 1.13.0 to 1.14.0 ([925c269](https://github.com/sws2apps/lmm-oa-sws/commit/925c2690bc242cafb836acdfab38e26f85310af1))
+
+# [1.0.0-alpha.152](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.151...v1.0.0-alpha.152) (2022-06-20)
+
+
+### Features
+
+* **app:** manage user account in application settings ([fb3231a](https://github.com/sws2apps/lmm-oa-sws/commit/fb3231ad47f44bb369286574648fdbba932f4d77))
+
 # [1.0.0-alpha.151](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.150...v1.0.0-alpha.151) (2022-06-19)
 
 
