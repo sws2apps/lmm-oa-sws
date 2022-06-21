@@ -130,14 +130,14 @@ const UserFullname = () => {
 							variant='contained'
 							sx={{ marginRight: '5px' }}
 						>
-							Update
+							{t('global.save')}
 						</Button>
 						<Button
 							onClick={handleCancelChanges}
 							variant='contained'
 							color='secondary'
 						>
-							Cancel
+							{t('global.cancel')}
 						</Button>
 					</Box>
 				)}
