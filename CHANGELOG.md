@@ -1,3 +1,10 @@
+# [1.0.0-alpha.152](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.151...v1.0.0-alpha.152) (2022-06-20)
+
+
+### Features
+
+* **app:** manage user account in application settings ([fb3231a](https://github.com/sws2apps/lmm-oa-sws/commit/fb3231ad47f44bb369286574648fdbba932f4d77))
+
 # [1.0.0-alpha.151](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.150...v1.0.0-alpha.151) (2022-06-19)
 
 
