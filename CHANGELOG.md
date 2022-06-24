@@ -1,3 +1,18 @@
+# [1.0.0-alpha.155](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.154...v1.0.0-alpha.155) (2022-06-22)
+
+
+### Features
+
+* **deps:** bump @mui/lab from 5.0.0-alpha.86 to 5.0.0-alpha.87 ([9f1b1de](https://github.com/sws2apps/lmm-oa-sws/commit/9f1b1de1e50fdc15733f3463b2d8691c09d562f2))
+* **deps:** bump @mui/material from 5.8.4 to 5.8.5 ([bfc6dd3](https://github.com/sws2apps/lmm-oa-sws/commit/bfc6dd350c205143a448eccbe32c60b73f9fbd97))
+
+# [1.0.0-alpha.154](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.153...v1.0.0-alpha.154) (2022-06-21)
+
+
+### Bug Fixes
+
+* **startup:** visitor id not assigned for new user ([5feb1db](https://github.com/sws2apps/lmm-oa-sws/commit/5feb1dbc13aafddcb1262da3f6ab4cd69633ca20))
+
 # [1.0.0-alpha.153](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.152...v1.0.0-alpha.153) (2022-06-21)
 
 
