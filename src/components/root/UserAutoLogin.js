@@ -31,6 +31,13 @@ const UserAutoLogin = () => {
 	const isOnline = useRecoilValue(isOnlineState);
 	const apiHost = useRecoilValue(apiHostState);
 
+	const handleDisapproved = useCallback(async () => {
+		setModalOpen(true);
+		await deleteDb();
+		localStorage.removeItem('email');
+		window.location.href = './';
+	}, [setModalOpen]);
+
 	const checkLogin = useCallback(async () => {
 		try {
 			if (apiHost !== '' && userEmail !== '' && visitorID !== '') {
@@ -48,11 +55,6 @@ const UserAutoLogin = () => {
 
 				// congregation found
 				if (res.status === 200) {
-					// role admin
-					if (data.cong_role.includes('admin')) {
-						setIsAdminCong(true);
-					}
-
 					// role approved
 					if (
 						data.cong_role.includes('lmmo') ||
@@ -61,20 +63,23 @@ const UserAutoLogin = () => {
 						setCongAccountConnected(true);
 						setCongID(data.cong_id);
 						setUserID(data.id);
+
+						// role admin
+						if (data.cong_role.includes('admin')) {
+							setIsAdminCong(true);
+						}
 						return;
 					}
 
 					// role disapproved
+					await handleDisapproved();
 					return;
 				}
 
 				// congregation not found
 				if (res.status === 404) {
 					// user not authorized and delete local data
-					setModalOpen(true);
-					await deleteDb();
-					localStorage.removeItem('email');
-					window.location.href = './';
+					await handleDisapproved();
 					return;
 				}
 			}
@@ -82,12 +87,12 @@ const UserAutoLogin = () => {
 	}, [
 		apiHost,
 		abortCont,
+		handleDisapproved,
 		visitorID,
 		userEmail,
 		setCongAccountConnected,
 		setCongID,
 		setIsAdminCong,
-		setModalOpen,
 		setUserID,
 	]);
 
