@@ -9,10 +9,12 @@ import {
 import {
 	apiHostState,
 	isOnlineState,
+	rootModalOpenState,
 	userEmailState,
 	userIDState,
 	visitorIDState,
 } from '../../appStates/appSettings';
+import { deleteDb } from '../../indexedDb/dbUtility';
 
 const UserAutoLogin = () => {
 	let abortCont = useMemo(() => new AbortController(), []);
@@ -24,6 +26,7 @@ const UserAutoLogin = () => {
 	const setIsAdminCong = useSetRecoilState(isAdminCongState);
 	const setCongID = useSetRecoilState(congIDState);
 	const setUserID = useSetRecoilState(userIDState);
+	const setModalOpen = useSetRecoilState(rootModalOpenState);
 
 	const isOnline = useRecoilValue(isOnlineState);
 	const apiHost = useRecoilValue(apiHostState);
@@ -68,6 +71,10 @@ const UserAutoLogin = () => {
 				// congregation not found
 				if (res.status === 404) {
 					// user not authorized and delete local data
+					setModalOpen(true);
+					await deleteDb();
+					localStorage.removeItem('email');
+					window.location.href = './';
 					return;
 				}
 			}
@@ -80,6 +87,7 @@ const UserAutoLogin = () => {
 		setCongAccountConnected,
 		setCongID,
 		setIsAdminCong,
+		setModalOpen,
 		setUserID,
 	]);
 
