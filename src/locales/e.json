@@ -42,6 +42,7 @@
     "global.otherPart": "Other",
     "global.shortDateFormat": "mm/dd/yyyy",
     "global.shortDatePickerFormat": "MM/dd/yyyy",
+    "global.shortDateTimeFormat": "mm/dd/yyyy HH:MM",
     "global.treasuresPart": "TREASURES FROM GOD’S WORD",
     "global.applyFieldMinistryPart": "APPLY YOURSELF TO THE FIELD MINISTRY",
     "global.bibleReadingText": "Bible Reading (4 min.)",
@@ -373,6 +374,8 @@
     "settings.sessions": "Sessions",
     "settings.sessionsDesc": "This is a list of devices that have logged into your account. Revoke any sessions that you do not recognize.",
     "settings.sessionRevoke": "Revoke",
+    "settings.lastSeen": "Last seen: {{ last_seen }}",
+    "settings.currentSession": "Current session",
 
     "about.description": "LMM-OA (Life and Ministry Meeting Overseer Assistant) is an application to coordinate and manage students assignment schedule for Midweek Meeting."
 }

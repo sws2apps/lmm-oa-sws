@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { useTranslation } from 'react-i18next';
+import dateFormat from 'dateformat';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
@@ -33,6 +34,11 @@ const UserSessionItem = ({ session, setSessions }) => {
 	const apiHost = useRecoilValue(apiHostState);
 	const visitorID = useRecoilValue(visitorIDState);
 	const userID = useRecoilValue(userIDState);
+
+	const lastSeen = dateFormat(
+		new Date(session.last_seen),
+		t('global.shortDateTimeFormat')
+	);
 
 	const handleRevokeSession = async () => {
 		try {
@@ -93,12 +99,12 @@ const UserSessionItem = ({ session, setSessions }) => {
 					<Typography
 						sx={{ fontSize: '14px' }}
 					>{`${session.device.browserName} (${session.device.os} ${session.device.osVersion})`}</Typography>
-					<Typography sx={{ fontSize: '14px' }}>{`${new Date(
-						session.last_seen
-					).toDateString()}`}</Typography>
+					<Typography sx={{ fontSize: '14px' }}>
+						{t('settings.lastSeen', { last_seen: lastSeen })}
+					</Typography>
 					{visitorID === session.visitor_id && (
 						<Chip
-							label='Current session'
+							label={t('settings.currentSession')}
 							sx={{
 								backgroundColor: '#145A32',
 								color: 'white',
