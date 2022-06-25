@@ -145,7 +145,7 @@ const UserFullname = () => {
 			<Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
 				<TextField
 					id='settings-email-address'
-					label='Email address'
+					label={t('login.email')}
 					variant='outlined'
 					size='small'
 					autoComplete='off'

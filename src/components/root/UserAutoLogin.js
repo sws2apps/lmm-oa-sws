@@ -113,8 +113,10 @@ const UserAutoLogin = () => {
 	useEffect(() => {
 		if (isOnline) {
 			checkLogin();
+		} else {
+			setCongAccountConnected(false);
 		}
-	}, [checkLogin, isOnline, userEmail]);
+	}, [checkLogin, isOnline, setCongAccountConnected, userEmail]);
 
 	return <></>;
 };

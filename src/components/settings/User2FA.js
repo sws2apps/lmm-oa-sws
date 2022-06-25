@@ -129,7 +129,6 @@ const User2FA = () => {
 						>
 							<TextField
 								id='outlined-token'
-								label='Token'
 								variant='outlined'
 								size='small'
 								autoComplete='off'
