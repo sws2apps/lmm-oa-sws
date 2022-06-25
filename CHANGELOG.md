@@ -1,3 +1,11 @@
+# [1.0.0-alpha.156](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.155...v1.0.0-alpha.156) (2022-06-25)
+
+
+### Features
+
+* **app:** handle logout when user is connected to congregation account ([60c1286](https://github.com/sws2apps/lmm-oa-sws/commit/60c1286aa174e375001fa5215e9879688658d0df))
+* **deps:** bump recoil from 0.7.3 to 0.7.4 ([a9ca369](https://github.com/sws2apps/lmm-oa-sws/commit/a9ca3699f8f000f42db8e1d3b5c837cfb33db49f))
+
 # [1.0.0-alpha.155](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.154...v1.0.0-alpha.155) (2022-06-22)
 
 
