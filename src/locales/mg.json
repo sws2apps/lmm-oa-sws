@@ -43,6 +43,7 @@
     "global.otherPart": "Hafa",
     "global.shortDateFormat": "dd/mm/yyyy",
     "global.shortDatePickerFormat": "dd/MM/yyyy",
+    "global.shortDateTimeFormat": "dd/mm/yyyy h:MM TT",
     "global.treasuresPart": "HARENA AVY AO AMIN’NY TENIN’ANDRIAMANITRA",
     "global.applyFieldMinistryPart": "FAMPIOFANANA AMIN’NY FANOMPOANA",
     "global.bibleReadingText": "Famakiana Baiboly (4 min.)",
@@ -374,6 +375,8 @@
     "settings.sessions": "Fitaovana mampiasa ny kaontinao",
     "settings.sessionsDesc": "Hitanao eto ambany ny lisitry ny fitaovana rehetra afaka miditra amin’ny kaontinao avy hatrany. Azonao esorina avy hatrany ireo izay tsy fantatrao rehetra.",
     "settings.sessionRevoke": "Esorina",
+    "settings.lastSeen": "Nampiasaina farany tamin’ny: {{ last_seen }}",
+    "settings.currentSession": "Ampiasainao izao",
 
     "about.description": "Programa fandaminana anjaran’ny mpianatra amin’ny fivoriana andavanandro ny LMM-OA (Life and Ministry Meeting Overseer Assistant)."
 }
