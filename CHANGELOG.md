@@ -1,3 +1,10 @@
+# [1.0.0-alpha.157](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.156...v1.0.0-alpha.157) (2022-06-25)
+
+
+### Features
+
+* **settings:** use new last seen field from the database ([7464a47](https://github.com/sws2apps/lmm-oa-sws/commit/7464a475038e9ac971c0a9e18b8faa03299a4279))
+
 # [1.0.0-alpha.156](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.155...v1.0.0-alpha.156) (2022-06-25)
 
 

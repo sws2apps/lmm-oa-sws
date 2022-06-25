@@ -1,6 +1,6 @@
 {
   "name": "lmm-oa-sws",
-  "version": "1.0.0-alpha.156",
+  "version": "1.0.0-alpha.157",
   "private": true,
   "dependencies": {
     "@date-io/date-fns": "^2.14.0",
