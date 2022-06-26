@@ -128,8 +128,15 @@ const UserAutoLogin = () => {
 			checkLogin();
 		} else {
 			setCongAccountConnected(false);
+			setIsAdminCong(false);
 		}
-	}, [checkLogin, isOnline, setCongAccountConnected, userEmail]);
+	}, [
+		checkLogin,
+		isOnline,
+		setCongAccountConnected,
+		setIsAdminCong,
+		userEmail,
+	]);
 
 	return <></>;
 };

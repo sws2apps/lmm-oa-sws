@@ -11,7 +11,10 @@ import ScheduleTemplate from './template/ScheduleTemplate';
 import ServiceWorkerWrapper from './components/root/ServiceWorkerWrapper';
 import Startup from './pages/Startup';
 import StudentDetails from './pages/StudentDetails';
+import PrivateRoute from './components/root/PrivateRoot';
 import UserSignOut from './components/root/UserSignOut';
+import VipUserDetail from './pages/VipUserDetail';
+import { isAdminCongState } from './appStates/appCongregation';
 import {
 	apiHostState,
 	appStageState,
@@ -42,8 +45,10 @@ const theme = createTheme({
 
 const App = ({ updatePwa }) => {
 	const { enabledInstall, installPwa, isLoading } = usePwa2();
+
 	const isAppLoad = useRecoilValue(isAppLoadState);
 	const appSnackOpen = useRecoilValue(appSnackOpenState);
+	const isAdminCong = useRecoilValue(isAdminCongState);
 
 	const setApiHost = useSetRecoilState(apiHostState);
 	const setAppStage = useSetRecoilState(appStageState);
@@ -123,7 +128,17 @@ const App = ({ updatePwa }) => {
 								<Route path='/s89-template' element={<S89Template />} />
 								<Route path='/source-material' element={<SourceMaterial />} />
 								<Route path='/settings' element={<Settings />} />
-								<Route path='/administration' element={<Administration />} />
+								<Route element={<PrivateRoute isAdminCong={isAdminCong} />}>
+									<Route path='/administration' element={<Administration />} />
+									<Route
+										path='/administration/members/new'
+										element={<VipUserDetail />}
+									/>
+									<Route
+										path='/administration/members/:id'
+										element={<VipUserDetail />}
+									/>
+								</Route>
 							</Routes>
 						</Layout>
 					</HashRouter>
