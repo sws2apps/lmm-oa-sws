@@ -118,7 +118,7 @@ const VipUsers = () => {
 					border: '1px outset',
 					borderRadius: '8px',
 					margin: '10px 0',
-					padding: '5px',
+					padding: '10px',
 				}}
 			>
 				{isProcessing && (

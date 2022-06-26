@@ -124,33 +124,42 @@ const VipUser = ({ member, setMembers }) => {
 			<Box
 				sx={{
 					display: 'flex',
-					justifyContent: 'space-between',
 					flexWrap: 'wrap',
 					alignItems: 'flex-start',
 				}}
 			>
 				<Box
-					sx={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}
+					sx={{
+						display: 'flex',
+						alignItems: 'center',
+						marginBottom: '15px',
+						width: '350px',
+					}}
 				>
 					<AccountCircleIcon
 						color='primary'
 						sx={{ fontSize: '40px', marginRight: '10px' }}
 					/>
 					<Box>
-						<Typography sx={{ minWidth: '300px', fontWeight: 'bold' }}>
-							{member.name}
-						</Typography>
+						<Typography sx={{ fontWeight: 'bold' }}>{member.name}</Typography>
 						<Typography sx={{ fontSize: '13px' }}>{member.user_uid}</Typography>
 					</Box>
 				</Box>
-				<Chip
-					label={lastSeen}
+				<Box
 					sx={{
-						margin: '0 40px',
-						backgroundColor: `${member.last_seen ? '#82E0AA' : ''}`,
 						marginBottom: '15px',
+						width: '200px',
+						display: 'flex',
+						justifyContent: 'center',
 					}}
-				/>
+				>
+					<Chip
+						label={lastSeen}
+						sx={{
+							backgroundColor: `${member.last_seen ? '#82E0AA' : ''}`,
+						}}
+					/>
+				</Box>
 				<Box sx={{ paddingLeft: '50px' }}>
 					{member.role.includes('admin') && (
 						<Box sx={{ display: 'flex', alignItems: 'flex-start' }}>
