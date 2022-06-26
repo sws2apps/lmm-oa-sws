@@ -1,11 +1,11 @@
-import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import VipUsers from '../components/administration/VipUsers';
 
 const Administration = () => {
 	return (
-		<Typography>
-			This feature is not yet available. It will be available in a coming
-			version very soon ...
-		</Typography>
+		<Container>
+			<VipUsers />
+		</Container>
 	);
 };
 

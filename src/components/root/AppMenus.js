@@ -180,7 +180,7 @@ const AppMenus = ({ enabledInstall, isLoading, installPwa }) => {
 			setAppBarTitle(t('global.sourceMaterial'));
 		} else if (currentPath === '/settings') {
 			setAppBarTitle(t('global.settings'));
-		} else if (currentPath === '/sdministration') {
+		} else if (currentPath.startsWith('/administration')) {
 			setAppBarTitle(t('global.administration'));
 		}
 		fetchNotifications();
