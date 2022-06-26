@@ -1,3 +1,11 @@
+# [1.0.0-alpha.158](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.157...v1.0.0-alpha.158) (2022-06-26)
+
+
+### Features
+
+* **administration:** manage users who have access to the congregation account ([ddee97b](https://github.com/sws2apps/lmm-oa-sws/commit/ddee97bdc8b7b670c4f7d3989c0ec786aa0f97fa))
+* **app:** remove local data when user does not have congregation ([44c6732](https://github.com/sws2apps/lmm-oa-sws/commit/44c67325c4a3b0090997e7bd2ca7c666cfd67d17))
+
 # [1.0.0-alpha.157](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.156...v1.0.0-alpha.157) (2022-06-25)
 
 
