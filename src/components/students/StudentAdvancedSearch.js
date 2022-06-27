@@ -3,8 +3,11 @@ import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
 import Collapse from '@mui/material/Collapse';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
+import IconButton from '@mui/material/IconButton';
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import Typography from '@mui/material/Typography';
 
 const StudentAdvancedSearch = ({
@@ -12,9 +15,12 @@ const StudentAdvancedSearch = ({
 	isFemale,
 	isMale,
 	assTypes,
+	handleSearchStudent,
+	setAdvancedOpen,
 	setIsFemale,
 	setIsMale,
 	setAssTypes,
+	txtSearch,
 }) => {
 	const { t } = useTranslation();
 
@@ -23,6 +29,10 @@ const StudentAdvancedSearch = ({
 	const [isReturnVisit, setIsReturnVisit] = useState(false);
 	const [isBibleStudy, setIsBibleStudy] = useState(false);
 	const [isTalk, setIsTalk] = useState(false);
+
+	const handleSearchAdvanced = () => {
+		handleSearchStudent(txtSearch, isMale, isFemale, assTypes);
+	};
 
 	const handleCheckBRead = (value) => {
 		if (value) {
@@ -222,6 +232,30 @@ const StudentAdvancedSearch = ({
 							/>
 						</FormGroup>
 					</Box>
+				</Box>
+				<Box sx={{ marginTop: '10px' }}>
+					<IconButton
+						sx={{ backgroundColor: '#A9CCE3', marginRight: '10px' }}
+						onClick={() => setAdvancedOpen(false)}
+					>
+						<ExpandLessIcon
+							sx={{
+								fontSize: '25px',
+								color: 'black',
+							}}
+						/>
+					</IconButton>
+					<IconButton
+						sx={{ backgroundColor: '#A9CCE3' }}
+						onClick={handleSearchAdvanced}
+					>
+						<PersonSearchIcon
+							sx={{
+								fontSize: '25px',
+								color: 'black',
+							}}
+						/>
+					</IconButton>
 				</Box>
 			</Box>
 		</Collapse>
