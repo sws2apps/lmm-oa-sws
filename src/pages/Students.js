@@ -386,12 +386,17 @@ const Students = () => {
 
 			<StudentAdvancedSearch
 				advancedOpen={advancedOpen}
+				setAdvancedOpen={(value) => setAdvancedOpen(value)}
 				isMale={isMale}
 				isFemale={isFemale}
+				handleSearchStudent={(txtSearch, isMale, isFemale, assTypes) =>
+					handleSearchStudent(txtSearch, isMale, isFemale, assTypes)
+				}
 				assTypes={assTypes}
 				setIsMale={(value) => setIsMale(value)}
 				setIsFemale={(value) => setIsFemale(value)}
 				setAssTypes={(value) => setAssTypes(value)}
+				txtSearch={txtSearch}
 			/>
 
 			<Box sx={{ marginBottom: '10px', marginRight: '5px' }}>
