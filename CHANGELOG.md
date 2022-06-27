@@ -1,3 +1,10 @@
+# [1.0.0-alpha.159](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.158...v1.0.0-alpha.159) (2022-06-26)
+
+
+### Bug Fixes
+
+* **administration:** adjust css in viewing vip users ([4f837f7](https://github.com/sws2apps/lmm-oa-sws/commit/4f837f7f31f3c895fa1e9908237c2fc2f8b1cf98))
+
 # [1.0.0-alpha.158](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.157...v1.0.0-alpha.158) (2022-06-26)
 
 
