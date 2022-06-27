@@ -1,3 +1,12 @@
+# [1.0.0-alpha.160](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.159...v1.0.0-alpha.160) (2022-06-27)
+
+
+### Features
+
+* **deps:** bump @mui/x-date-pickers from 5.0.0-alpha.6 to 5.0.0-alpha.7 ([3d603da](https://github.com/sws2apps/lmm-oa-sws/commit/3d603da908e526b6df538fd4b69c328a4537474a))
+* **deps:** bump react-i18next from 11.17.2 to 11.17.3 ([b175141](https://github.com/sws2apps/lmm-oa-sws/commit/b17514176c69efe10f9476cd69975f2b856f3241))
+* **students:** add hide and search button in advanced search collapsible ([808509d](https://github.com/sws2apps/lmm-oa-sws/commit/808509d98ec293bbd73c2b8d5fe742f65d712efb))
+
 # [1.0.0-alpha.159](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.158...v1.0.0-alpha.159) (2022-06-26)
 
 
