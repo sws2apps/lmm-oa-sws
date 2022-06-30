@@ -27,14 +27,16 @@ import StudentAssignments from '../components/students/StudentAssignments';
 import StudentBasic from '../components/students/StudentBasic';
 import StudentHistory from '../components/students/StudentHistory';
 import StudentTimeAway from '../components/students/StudentTimeAway';
+import StudentPocket from '../components/students/StudentPocket';
 import { dbGetStudentDetails, dbSavePersonExp } from '../indexedDb/dbPersons';
 import {
 	appMessageState,
 	appSeverityState,
 	appSnackOpenState,
 } from '../appStates/appNotification';
-import { rootModalOpenState } from '../appStates/appSettings';
+import { isOnlineState, rootModalOpenState } from '../appStates/appSettings';
 import { studentsQueryState } from '../appStates/appStudents';
+import { congAccountConnectedState } from '../appStates/appCongregation';
 
 const Accordion = styled((props) => (
 	<MuiAccordion disableGutters elevation={0} square {...props} />
@@ -103,6 +105,8 @@ const StudentDetails = () => {
 	const setRootModalOpen = useSetRecoilState(rootModalOpenState);
 
 	const studentsQuery = useRecoilValue(studentsQueryState);
+	const congAccountConnected = useRecoilValue(congAccountConnectedState);
+	const isOnline = useRecoilValue(isOnlineState);
 
 	const [isProcessing, setIsProcessing] = useState(true);
 	const [isEdit, setIsEdit] = useState(false);
@@ -494,6 +498,22 @@ const StudentDetails = () => {
 								/>
 							</AccordionDetails>
 						</Accordion>
+						{isOnline && congAccountConnected && (
+							<Accordion
+								expanded={expanded === 'panel5'}
+								onChange={handleChange('panel5')}
+							>
+								<AccordionSummary
+									aria-controls='panel5d-content'
+									id='panel5d-header'
+								>
+									<Typography>{t('students.accessPocketApp')}</Typography>
+								</AccordionSummary>
+								<AccordionDetails>
+									<StudentPocket id={id} name={name}  />
+								</AccordionDetails>
+							</Accordion>
+						)}
 					</Box>
 				</>
 			)}

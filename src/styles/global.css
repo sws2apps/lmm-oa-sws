@@ -2,7 +2,11 @@
 	font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
 	color: red;
 	font-weight: bold;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	text-align: center;
+	padding: 50px;
 }
 
 .appLogo {
