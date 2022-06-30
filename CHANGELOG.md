@@ -1,3 +1,10 @@
+# [1.0.0-alpha.162](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.161...v1.0.0-alpha.162) (2022-06-30)
+
+
+### Features
+
+* **deps:** bump @sws2apps/react-sw-helper from 1.1.0 to 1.2.0 ([df1bb1e](https://github.com/sws2apps/lmm-oa-sws/commit/df1bb1ef9cf3e6cf3dd9c9cb696d1bd4b878fa34))
+
 # [1.0.0-alpha.161](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.160...v1.0.0-alpha.161) (2022-06-28)
 
 
