@@ -6,12 +6,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import Typography from '@mui/material/Typography';
-import {
-	congIDState,
-	congNameState,
-	congNumberState,
-	congPasswordState,
-} from '../../appStates/appCongregation';
+import { congIDState } from '../../appStates/appCongregation';
 import {
 	appMessageState,
 	appSeverityState,
@@ -20,9 +15,12 @@ import {
 import {
 	currentScheduleState,
 	isPublishOpenState,
-	publishSchedTypeState,
 } from '../../appStates/appSchedule';
-import { apiHostState, uidUserState } from '../../appStates/appSettings';
+import {
+	apiHostState,
+	userEmailState,
+	visitorIDState,
+} from '../../appStates/appSettings';
 import { dbBuildScheduleForShare } from '../../indexedDb/dbSchedule';
 
 const SchedulePublish = () => {
@@ -36,14 +34,11 @@ const SchedulePublish = () => {
 	const setAppSeverity = useSetRecoilState(appSeverityState);
 	const setAppMessage = useSetRecoilState(appMessageState);
 
-	const uidUser = useRecoilValue(uidUserState);
+	const visitorID = useRecoilValue(visitorIDState);
+	const userEmail = useRecoilValue(userEmailState);
 	const apiHost = useRecoilValue(apiHostState);
-	const congName = useRecoilValue(congNameState);
-	const congNumber = useRecoilValue(congNumberState);
-	const publishType = useRecoilValue(publishSchedTypeState);
 	const currentSchedule = useRecoilValue(currentScheduleState);
 	const congID = useRecoilValue(congIDState);
-	const congPassword = useRecoilValue(congPasswordState);
 
 	const handleClose = useCallback(
 		(event, reason) => {
@@ -56,72 +51,64 @@ const SchedulePublish = () => {
 	);
 
 	const publishSchedulePocket = useCallback(async () => {
-		const dataPocket = await dbBuildScheduleForShare(currentSchedule);
+		try {
+			const dataPocket = await dbBuildScheduleForShare(currentSchedule);
+			const { cong_schedule, cong_sourceMaterial } = dataPocket;
 
-		const reqPayload = {
-			cong_id: congID,
-			cong_password: congPassword,
-			cong_name: congName,
-			cong_number: congNumber,
-			pocket_data: dataPocket,
-			pocket_schedule: currentSchedule,
-		};
+			if (apiHost !== '') {
+				const res = await fetch(
+					`${apiHost}api/congregations/${congID}/schedule`,
+					{
+						signal: abortCont.signal,
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+							visitor_id: visitorID,
+							email: userEmail,
+						},
+						body: JSON.stringify({ cong_schedule, cong_sourceMaterial }),
+					}
+				);
 
-		fetch(`${apiHost}api/congregation/pocket-send-schedule`, {
-			signal: abortCont.signal,
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				uid: uidUser,
-			},
-			body: JSON.stringify(reqPayload),
-		})
-			.then(async (res) => {
 				const data = await res.json();
+
 				if (res.status === 200) {
 					setAppMessage(t('schedule.publishSuccess'));
 					setAppSeverity('success');
 					setAppSnackOpen(true);
-				} else {
-					let warnMsg;
-					if (data.message === 'WAIT_FOR_REQUEST') {
-						warnMsg = t('global.waitForRequest');
-					} else {
-						warnMsg = t('global.errorTryAgain');
-					}
-					setAppMessage(warnMsg);
-					setAppSeverity('warning');
-					setAppSnackOpen(true);
+					handleClose(false);
+
+					return;
 				}
-				handleClose();
-			})
-			.catch((err) => {
-				setAppMessage(err.message);
-				setAppSeverity('error');
+
+				setAppMessage(data.message);
+				setAppSeverity('warning');
 				setAppSnackOpen(true);
-				handleClose();
-			});
+				handleClose(false);
+			}
+		} catch (err) {
+			setAppMessage(err.message);
+			setAppSeverity('error');
+			setAppSnackOpen(true);
+			handleClose();
+		}
 	}, [
-		currentSchedule,
-		congID,
-		congPassword,
-		handleClose,
 		abortCont,
 		apiHost,
-		congName,
-		congNumber,
+		congID,
+		currentSchedule,
+		handleClose,
 		setAppMessage,
 		setAppSeverity,
 		setAppSnackOpen,
 		t,
-		uidUser,
+		userEmail,
+		visitorID,
 	]);
 
 	useEffect(() => {
-		if (publishType === 'sws-pocket') {
-			publishSchedulePocket();
-		}
-	}, [publishType, publishSchedulePocket]);
+		publishSchedulePocket();
+	}, [publishSchedulePocket]);
 
 	return (
 		<div>
@@ -132,9 +119,7 @@ const SchedulePublish = () => {
 			>
 				<DialogTitle id='dialog-title-publish'>
 					<Typography variant='h6' component='p'>
-						{publishType === 'sws-pocket'
-							? t('schedule.publishPocket')
-							: t('schedule.publishMSC')}
+						{t('schedule.publishPocket')}
 					</Typography>
 				</DialogTitle>
 				<DialogContent>

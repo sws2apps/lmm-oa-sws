@@ -2,7 +2,10 @@ import appDb from './mainDb';
 import { promiseGetRecoil } from 'recoil-outside';
 import dateFormat from 'dateformat';
 import { appLangState } from '../appStates/appSettings';
-import { assTypeLocalState } from '../appStates/appSourceMaterial';
+import {
+	assTypeListState,
+	assTypeLocalState,
+} from '../appStates/appSourceMaterial';
 
 export const dbGetListWeekType = async () => {
 	var weekType = [];
@@ -40,6 +43,18 @@ export const dbGetWeekTypeName = async (weekType) => {
 		var i = parseInt(weekType, 10);
 		const appData = await appDb.table('week_type').get(i);
 		srcWeekType = appData.week_type_name[lang];
+		return srcWeekType;
+	}
+};
+
+export const dbGetWeekTypeNamePocket = async (weekType) => {
+	var srcWeekType = '';
+	if (weekType === '') {
+		return srcWeekType;
+	} else {
+		var i = parseInt(weekType, 10);
+		const appData = await appDb.table('week_type').get(i);
+		srcWeekType = appData.week_type_name;
 		return srcWeekType;
 	}
 };
@@ -93,6 +108,50 @@ export const dbGetSourceMaterial = async (weekOf) => {
 			: appData.ass4_time
 		: '';
 	obj.ass4_src = appData.ass4_src ? appData.ass4_src[lang] || '' : '';
+
+	const weekSchedInfo = await dbGetScheduleWeekInfo(weekOf);
+	obj.week_type = weekSchedInfo.week_type;
+	obj.noMeeting = weekSchedInfo.noMeeting;
+	return obj;
+};
+
+export const dbGetSourceMaterialPocket = async (weekOf) => {
+	const assTypeList = await promiseGetRecoil(assTypeListState);
+
+	const appData = await appDb.table('src').get({ weekOf: weekOf });
+	let obj = {};
+
+	obj.weekOf = appData.weekOf;
+	obj.bibleReading_src = appData.bibleReading_src;
+	obj.ass1_type = +appData.ass1_type || '';
+
+	obj.ass1_type_name =
+		assTypeList.find((type) => type.code === obj.ass1_type).ass_type_name || '';
+	obj.ass1_time = +appData.ass1_time || '';
+	obj.ass1_src = appData.ass1_src;
+
+	obj.ass2_type = +appData.ass2_type || '';
+	obj.ass2_type_name =
+		assTypeList.find((type) => type.code === obj.ass2_type).ass_type_name || '';
+	obj.ass2_time = +appData.ass2_time || '';
+	obj.ass2_src = appData.ass2_src;
+
+	obj.ass3_type = +appData.ass3_type || '';
+	obj.ass3_type_name =
+		assTypeList.find((type) => type.code === obj.ass3_type).ass_type_name || '';
+	obj.ass3_time = +appData.ass3_time || '';
+	obj.ass3_src = appData.ass3_src;
+
+	obj.ass4_type = +appData.ass4_type || '';
+	obj.ass4_type_name =
+		assTypeList.findIndex((type) => type.code === obj.ass4_type)
+			.ass_type_name || '';
+	obj.ass4_time = appData.ass4_time
+		? typeof appData.ass4_time === 'object'
+			? ''
+			: +appData.ass4_time
+		: '';
+	obj.ass4_src = appData.ass4_src;
 
 	const weekSchedInfo = await dbGetScheduleWeekInfo(weekOf);
 	obj.week_type = weekSchedInfo.week_type;

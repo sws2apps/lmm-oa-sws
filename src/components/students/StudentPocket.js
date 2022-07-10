@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useTranslation } from 'react-i18next';
+import Autocomplete from '@mui/material/Autocomplete';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -19,6 +20,8 @@ import {
 	appSnackOpenState,
 } from '../../appStates/appNotification';
 import { congIDState } from '../../appStates/appCongregation';
+import { allStudentsState } from '../../appStates/appStudents';
+import { dbGetStudentDetailsMini } from '../../indexedDb/dbPersons';
 
 const StudentPocket = ({ id, name }) => {
 	let abortCont = useMemo(() => new AbortController(), []);
@@ -33,12 +36,16 @@ const StudentPocket = ({ id, name }) => {
 	const apiHost = useRecoilValue(apiHostState);
 	const visitorID = useRecoilValue(visitorIDState);
 	const congID = useRecoilValue(congIDState);
+	const dbStudents = useRecoilValue(allStudentsState);
 
 	const [isGettingUser, setIsGettingUser] = useState(true);
 	const [devices, setDevices] = useState([]);
 	const [verifyCode, setVerifyCode] = useState('');
 	const [isGenerating, setIsGenerating] = useState(false);
 	const [pocketName, setPocketName] = useState('');
+	const [pocketMembers, setPocketMembers] = useState([]);
+	const [pocketOptions, setPocketOptions] = useState([]);
+	const [value, setValue] = useState([]);
 
 	const handleGenerateOCode = async () => {
 		try {
@@ -103,6 +110,55 @@ const StudentPocket = ({ id, name }) => {
 
 				if (res.status === 200) {
 					setPocketName(data.username);
+					setIsGenerating(false);
+					return;
+				}
+
+				setIsGenerating(false);
+				setAppMessage(data.message);
+				setAppSeverity('warning');
+				setAppSnackOpen(true);
+			}
+		} catch (err) {
+			if (!abortCont.signal.aborted) {
+				setIsGenerating(false);
+				setAppMessage(err.message);
+				setAppSeverity('error');
+				setAppSnackOpen(true);
+			}
+		}
+	};
+
+	const handleUpdatePocketMembers = async () => {
+		try {
+			if (apiHost !== '') {
+				setIsGenerating(true);
+
+				const members = value.map((member) => {
+					return {
+						person_uid: member.person_uid,
+						person_name: member.person_name,
+					};
+				});
+
+				const res = await fetch(
+					`${apiHost}api/congregations/${congID}/pockets/${id}/members`,
+					{
+						signal: abortCont.signal,
+						method: 'PATCH',
+						headers: {
+							'Content-Type': 'application/json',
+							visitor_id: visitorID,
+							email: userEmail,
+						},
+						body: JSON.stringify({ members }),
+					}
+				);
+
+				const data = await res.json();
+
+				if (res.status === 200) {
+					setPocketMembers(data.pocket_members);
 					setIsGenerating(false);
 					return;
 				}
@@ -191,6 +247,7 @@ const StudentPocket = ({ id, name }) => {
 					setDevices(data.pocket_devices);
 					setVerifyCode(data.pocket_oCode);
 					setPocketName(data.username);
+					setPocketMembers(data.pocket_members);
 					setIsGettingUser(false);
 					return;
 				}
@@ -230,6 +287,28 @@ const StudentPocket = ({ id, name }) => {
 	}, [fetchPocketUser]);
 
 	useEffect(() => {
+		const options = dbStudents.filter((student) => student.person_uid !== id);
+		setPocketOptions(options);
+	}, [dbStudents, id]);
+
+	useEffect(() => {
+		const updateValue = async () => {
+			let newValue = [];
+
+			for (let i = 0; i < pocketMembers.length; i++) {
+				const { person_uid } = pocketMembers[i];
+				const person = await dbGetStudentDetailsMini(person_uid);
+
+				newValue.push(person);
+			}
+
+			setValue(newValue);
+		};
+
+		updateValue();
+	}, [pocketMembers]);
+
+	useEffect(() => {
 		return () => abortCont.abort();
 	}, [abortCont]);
 
@@ -246,7 +325,7 @@ const StudentPocket = ({ id, name }) => {
 					}}
 				/>
 			)}
-			{!isGettingUser && (
+			{!isGettingUser && pocketName.length > 0 && (
 				<Box
 					sx={{ marginBottom: '10px', display: 'flex', alignItems: 'center' }}
 				>
@@ -289,8 +368,7 @@ const StudentPocket = ({ id, name }) => {
 					size={30}
 					disableShrink={true}
 					sx={{
-						marginLeft: '10px',
-						marginTop: '10px',
+						margin: '10px 0 20px 10px',
 						display: 'flex',
 						alignItems: 'center',
 					}}
@@ -311,6 +389,37 @@ const StudentPocket = ({ id, name }) => {
 							readOnly: true,
 						}}
 					/>
+				</Box>
+			)}
+			{!isGettingUser && pocketName.length > 0 && (
+				<Box>
+					<Autocomplete
+						multiple
+						id='tags-standard'
+						value={value}
+						onChange={(e, value) => setValue(value)}
+						options={pocketOptions}
+						getOptionLabel={(option) => option.person_name}
+						disabled={isGenerating}
+						isOptionEqualToValue={(option, value) =>
+							option.person_uid === value.person_uid
+						}
+						renderInput={(params) => (
+							<TextField
+								{...params}
+								variant='standard'
+								label={t('students.viewOnBehalf')}
+							/>
+						)}
+					/>
+					<Button
+						sx={{ marginTop: '10px' }}
+						variant='outlined'
+						disabled={isGenerating}
+						onClick={handleUpdatePocketMembers}
+					>
+						{t('global.update')}
+					</Button>
 				</Box>
 			)}
 		</Box>

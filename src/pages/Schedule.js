@@ -8,7 +8,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FlashAutoIcon from '@mui/icons-material/FlashAuto';
-import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import SendIcon from '@mui/icons-material/Send';
@@ -23,7 +22,7 @@ import {
 	dbGetWeekListBySched,
 } from '../indexedDb/dbSourceMaterial';
 import {
-	isCongConnectedState,
+	isOnlineState,
 	monthNamesState,
 	shortDateFormatState,
 } from '../appStates/appSettings';
@@ -37,8 +36,8 @@ import {
 	isPublishOpenState,
 	isS89OpenState,
 	weekListSchedState,
-	publishSchedTypeState,
 } from '../appStates/appSchedule';
+import { congAccountConnectedState } from '../appStates/appCongregation';
 
 const sharedStyles = {
 	btnSchedule: {
@@ -52,7 +51,6 @@ const Schedule = () => {
 
 	const [currentYear, setCurrentYear] = useState('');
 	const [schedules, setSchedules] = useState([]);
-	const [anchorEl, setAnchorEl] = useState(null);
 
 	const [currentWeek, setCurrentWeek] = useRecoilState(currentWeekSchedState);
 	const [dlgAutoFillOpen, setDlgAutoFillOpen] =
@@ -66,23 +64,13 @@ const Schedule = () => {
 	const [publishOpen, setPublishOpen] = useRecoilState(isPublishOpenState);
 
 	const setIsS89 = useSetRecoilState(isS89OpenState);
-	const setPublishType = useSetRecoilState(publishSchedTypeState);
 
 	const years = useRecoilValue(yearsListState);
 	const monthNames = useRecoilValue(monthNamesState);
 	const shortDateFormat = useRecoilValue(shortDateFormatState);
 	const isDlgActionOpen = useRecoilValue(isDlgActionOpenState);
-	const isCongConnected = useRecoilValue(isCongConnectedState);
-
-	let isMenuOpen = Boolean(anchorEl);
-
-	const handleClick = (event) => {
-		setAnchorEl(event.currentTarget);
-	};
-
-	const handleClose = () => {
-		setAnchorEl(null);
-	};
+	const congAccountConnected = useRecoilValue(congAccountConnectedState);
+	const isOnline = useRecoilValue(isOnlineState);
 
 	const handleAutoFill = () => {
 		setDlgAutoFillOpen(true);
@@ -120,9 +108,7 @@ const Schedule = () => {
 	};
 
 	const handleShareSchedule = async () => {
-		setPublishType('sws-pocket');
 		setPublishOpen(true);
-		handleClose();
 	};
 
 	useEffect(() => {
@@ -312,38 +298,16 @@ const Schedule = () => {
 							>
 								PDF
 							</Button>
-							{isCongConnected && (
-								<>
-									<Button
-										variant='contained'
-										color='primary'
-										sx={sharedStyles.btnSchedule}
-										startIcon={<SendIcon />}
-										onClick={handleClick}
-										aria-controls='basic-menu'
-										aria-haspopup='true'
-										aria-expanded={isMenuOpen ? 'true' : undefined}
-									>
-										{t('schedule.send')}
-									</Button>
-									<Menu
-										id='basic-menu'
-										disableScrollLock={true}
-										anchorEl={anchorEl}
-										open={isMenuOpen}
-										onClose={handleClose}
-										MenuListProps={{
-											'aria-labelledby': 'basic-button',
-										}}
-									>
-										{/* <MenuItem onClick={handleSendScheduleToMSC}>
-											{t('schedule.sendToMSC')}
-										</MenuItem> */}
-										<MenuItem onClick={handleShareSchedule}>
-											{t('schedule.sendToStudents')}
-										</MenuItem>
-									</Menu>
-								</>
+							{isOnline && congAccountConnected && (
+								<Button
+									variant='contained'
+									color='primary'
+									sx={sharedStyles.btnSchedule}
+									startIcon={<SendIcon />}
+									onClick={handleShareSchedule}
+								>
+									{t('schedule.send')}
+								</Button>
 							)}
 							<Button
 								variant='contained'

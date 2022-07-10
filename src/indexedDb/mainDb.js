@@ -151,6 +151,12 @@ appDb.version(33).stores({
 	persons:
 		'++id, person_name, person_displayName, isMale, isFemale, isBRead, isInitialCall, isReturnVisit, isBibleStudy, isTalk, forLivePart, isUnavailable, lastBRead, lastInitialCall, lastReturnVisit, lastBibleStudy, lastTalk, lastAssistant, lastAssignment, person_uid, assignments, timeAway, isMoved, isDisqualified',
 });
+appDb.version(34).stores({
+	sws_pocket: '&id, month, year',
+});
+appDb.version(35).stores({
+	sws_pocket: '&id, [month+year]',
+});
 
 appDb.on('populate', function () {
 	appDb.app_settings.add({
