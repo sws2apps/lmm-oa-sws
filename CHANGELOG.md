@@ -1,3 +1,27 @@
+# [1.0.0-alpha.165](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.164...v1.0.0-alpha.165) (2022-07-21)
+
+
+### Features
+
+* **deps:** bump @mui/lab from 5.0.0-alpha.90 to 5.0.0-alpha.91 ([865642c](https://github.com/sws2apps/lmm-oa-sws/commit/865642c0eb4b73dd2a64726c2d0768cdadeb1f23))
+* **deps:** bump @mui/material from 5.9.0 to 5.9.1 ([64e229e](https://github.com/sws2apps/lmm-oa-sws/commit/64e229e95822a8b5a43769534b355a5cff6451a2))
+* **deps:** bump @mui/x-date-pickers from 5.0.0-beta.0 to 5.0.0-beta.1 ([9946e8a](https://github.com/sws2apps/lmm-oa-sws/commit/9946e8a2599684368d5814d763c0f4c85a8c6721))
+
+# [1.0.0-alpha.164](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.163...v1.0.0-alpha.164) (2022-07-14)
+
+
+### Features
+
+* **deps:** bump @mui/lab from 5.0.0-alpha.89 to 5.0.0-alpha.90 ([f249e10](https://github.com/sws2apps/lmm-oa-sws/commit/f249e10587da0b3422445964eb47d57e2e4fcc93))
+* **deps:** bump @mui/material from 5.8.7 to 5.9.0 ([e7665af](https://github.com/sws2apps/lmm-oa-sws/commit/e7665afe1137cb3aa1dd904893392ef907e2caba))
+* **deps:** bump @mui/x-date-pickers from 5.0.0-alpha.7 to 5.0.0-beta.0 ([fa86984](https://github.com/sws2apps/lmm-oa-sws/commit/fa8698424f018afd72109e9baed5e2f5da3444da))
+* **deps:** bump @sws2apps/react-sw-helper from 1.3.0 to 1.3.1 ([220426d](https://github.com/sws2apps/lmm-oa-sws/commit/220426d6f92f3c04ce04d86b5e5cdd30b79cf5a1))
+* **deps:** bump i18next from 21.8.12 to 21.8.13 ([6071add](https://github.com/sws2apps/lmm-oa-sws/commit/6071addb937bde3ac872382ba18773591c697312))
+* **deps:** bump i18next from 21.8.13 to 21.8.14 ([f6f3054](https://github.com/sws2apps/lmm-oa-sws/commit/f6f305431de9787b7c36fa869d115cbea51a0c18))
+* **deps:** bump qrcode from 1.5.0 to 1.5.1 ([31e5a0a](https://github.com/sws2apps/lmm-oa-sws/commit/31e5a0a3dcef8f59fb77174b070f6de4857471c8))
+* **deps:** bump react-i18next from 11.17.4 to 11.18.0 ([72d972a](https://github.com/sws2apps/lmm-oa-sws/commit/72d972a9ce3d785c625773b2438d8c825c59154a))
+* **deps:** bump react-i18next from 11.18.0 to 11.18.1 ([ffe0116](https://github.com/sws2apps/lmm-oa-sws/commit/ffe01166357fe8b4a369c756842cd1bf6722e63b))
+
 # [1.0.0-alpha.163](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.162...v1.0.0-alpha.163) (2022-07-06)
 
 

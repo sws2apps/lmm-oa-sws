@@ -22,7 +22,7 @@ jobs:
           persist-credentials: false
 
       - name: Use Node.js current version
-        uses: actions/setup-node@eeb10cff27034e7acf239c5d29f62154018672fd
+        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
         with:
           node-version: current
 
@@ -40,7 +40,7 @@ jobs:
 
       - name: Deploy to Firebase
         if: ${{ steps.check_build.outputs.files_exists == 'true' }}
-        uses: sws2apps/firebase-deployment@6fab683b9aa7b253ded97cf6ea63b4c77c9afad7
+        uses: sws2apps/firebase-deployment@19bf9f014f46d869ff0cb6b9c7cba29e527f0e61
         with:
           project: dev-lmm-oa-sws
         env:
