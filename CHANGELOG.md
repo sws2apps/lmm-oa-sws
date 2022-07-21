@@ -1,3 +1,12 @@
+# [1.0.0-alpha.165](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.164...v1.0.0-alpha.165) (2022-07-21)
+
+
+### Features
+
+* **deps:** bump @mui/lab from 5.0.0-alpha.90 to 5.0.0-alpha.91 ([865642c](https://github.com/sws2apps/lmm-oa-sws/commit/865642c0eb4b73dd2a64726c2d0768cdadeb1f23))
+* **deps:** bump @mui/material from 5.9.0 to 5.9.1 ([64e229e](https://github.com/sws2apps/lmm-oa-sws/commit/64e229e95822a8b5a43769534b355a5cff6451a2))
+* **deps:** bump @mui/x-date-pickers from 5.0.0-beta.0 to 5.0.0-beta.1 ([9946e8a](https://github.com/sws2apps/lmm-oa-sws/commit/9946e8a2599684368d5814d763c0f4c85a8c6721))
+
 # [1.0.0-alpha.164](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.163...v1.0.0-alpha.164) (2022-07-14)
 
 
