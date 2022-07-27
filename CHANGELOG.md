@@ -1,3 +1,14 @@
+# [1.0.0-alpha.166](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.165...v1.0.0-alpha.166) (2022-07-27)
+
+
+### Features
+
+* **deps:** bump @fingerprintjs/fingerprintjs-pro from 3.6.3 to 3.6.4 ([e74e911](https://github.com/sws2apps/lmm-oa-sws/commit/e74e911e77c722357bcfa80780995175eae9d83e))
+* **deps:** bump @mui/lab from 5.0.0-alpha.91 to 5.0.0-alpha.92 ([eb9fad6](https://github.com/sws2apps/lmm-oa-sws/commit/eb9fad608b92cbd449293c5517884ca66c70b832))
+* **deps:** bump @mui/material from 5.9.1 to 5.9.2 ([bb49820](https://github.com/sws2apps/lmm-oa-sws/commit/bb498202e229d382a586c5f34fa8dac8ddf261a6))
+* **deps:** bump @mui/x-date-pickers from 5.0.0-beta.1 to 5.0.0-beta.2 ([be4869c](https://github.com/sws2apps/lmm-oa-sws/commit/be4869cb55ee3637122c39aa3eb34749198a049b))
+* **deps:** bump date-fns from 2.28.0 to 2.29.1 ([129317a](https://github.com/sws2apps/lmm-oa-sws/commit/129317a1b2431af37c29e0eb5427fd0764005f50))
+
 # [1.0.0-alpha.165](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.164...v1.0.0-alpha.165) (2022-07-21)
 
 
