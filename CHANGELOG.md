@@ -1,3 +1,11 @@
+# [1.0.0-alpha.167](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.166...v1.0.0-alpha.167) (2022-07-29)
+
+
+### Features
+
+* **deps:** bump react-i18next from 11.18.1 to 11.18.3 ([8ccccc6](https://github.com/sws2apps/lmm-oa-sws/commit/8ccccc6dacb78a01ed1daa176151d3229ca0c4a4))
+* **deps:** bump workbox-cli from 6.5.3 to 6.5.4 ([1ab1e7e](https://github.com/sws2apps/lmm-oa-sws/commit/1ab1e7ede5c73934428a8ca4e334bf33035e4ea1))
+
 # [1.0.0-alpha.166](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.165...v1.0.0-alpha.166) (2022-07-27)
 
 
