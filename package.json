@@ -5,7 +5,7 @@
   "dependencies": {
     "@date-io/date-fns": "^2.14.0",
     "@emotion/react": "^11.9.3",
-    "@emotion/styled": "^11.9.3",
+    "@emotion/styled": "^11.10.0",
     "@fingerprintjs/fingerprintjs-pro": "^3.6.4",
     "@fontsource/roboto": "^4.5.7",
     "@mui/icons-material": "^5.8.4",
