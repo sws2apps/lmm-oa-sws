@@ -1,3 +1,16 @@
+# [1.0.0-alpha.168](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.167...v1.0.0-alpha.168) (2022-08-01)
+
+
+### Features
+
+* **deps:** bump @emotion/react from 11.9.3 to 11.10.0 ([dcb890e](https://github.com/sws2apps/lmm-oa-sws/commit/dcb890e755406d0f7ee49a8855ae64ac5142524f))
+* **deps:** bump @emotion/styled from 11.9.3 to 11.10.0 ([0988cab](https://github.com/sws2apps/lmm-oa-sws/commit/0988cab88d48b0aca6737732b46a402955c4675d))
+* **deps:** bump @fingerprintjs/fingerprintjs-pro from 3.6.4 to 3.7.0 ([7f78b3b](https://github.com/sws2apps/lmm-oa-sws/commit/7f78b3b26097b56f40efb4fd0fb79d1be185233a))
+* **deps:** bump @mui/x-date-pickers from 5.0.0-beta.2 to 5.0.0-beta.3 ([562941a](https://github.com/sws2apps/lmm-oa-sws/commit/562941a96487ca4c480f5c3e398ba1d5e3ab0052))
+* **deps:** bump @sws2apps/react-sw-helper from 1.3.1 to 1.4.0 ([08a6895](https://github.com/sws2apps/lmm-oa-sws/commit/08a689528aba43903497dee5fb9dbae2cb188a5d))
+* **deps:** bump i18next from 21.8.14 to 21.8.16 ([52bbc58](https://github.com/sws2apps/lmm-oa-sws/commit/52bbc58afc100e9429432623c187213012bc2430))
+* **deps:** bump jw-epub-parser from 1.15.0 to 1.16.0 ([b64d060](https://github.com/sws2apps/lmm-oa-sws/commit/b64d060f1fdd6583ce1152237b4b2f19a16d3929))
+
 # [1.0.0-alpha.167](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.166...v1.0.0-alpha.167) (2022-07-29)
 
 
