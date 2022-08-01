@@ -6,7 +6,7 @@
     "@date-io/date-fns": "^2.14.0",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
-    "@fingerprintjs/fingerprintjs-pro": "^3.6.4",
+    "@fingerprintjs/fingerprintjs-pro": "^3.7.0",
     "@fontsource/roboto": "^4.5.7",
     "@mui/icons-material": "^5.8.4",
     "@mui/lab": "^5.0.0-alpha.92",
