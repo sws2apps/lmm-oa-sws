@@ -9,7 +9,7 @@
     "@fingerprintjs/fingerprintjs-pro": "^3.7.0",
     "@fontsource/roboto": "^4.5.7",
     "@mui/icons-material": "^5.8.4",
-    "@mui/lab": "^5.0.0-alpha.92",
+    "@mui/lab": "^5.0.0-alpha.93",
     "@mui/material": "^5.9.2",
     "@mui/x-date-pickers": "^5.0.0-beta.3",
     "@sws2apps/react-sw-helper": "^1.4.0",
