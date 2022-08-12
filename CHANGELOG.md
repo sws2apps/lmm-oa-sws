@@ -1,3 +1,22 @@
+# [1.0.0-alpha.170](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.169...v1.0.0-alpha.170) (2022-08-12)
+
+
+### Features
+
+* **deps:** bump @date-io/date-fns from 2.14.0 to 2.15.0 ([c2d0f9a](https://github.com/sws2apps/lmm-oa-sws/commit/c2d0f9a466f3ffd1152209aa9df23f6c98d3913d))
+* **deps:** bump @fontsource/roboto from 4.5.7 to 4.5.8 ([c43e863](https://github.com/sws2apps/lmm-oa-sws/commit/c43e863469847f0d89fff5e9bf06e1475838c564))
+* **deps:** bump @mui/lab from 5.0.0-alpha.93 to 5.0.0-alpha.94 ([9699f45](https://github.com/sws2apps/lmm-oa-sws/commit/9699f45a7b072b335fadb57e4ae9916f0b7639a9))
+* **deps:** bump @mui/material from 5.9.3 to 5.10.0 ([d6f1d5c](https://github.com/sws2apps/lmm-oa-sws/commit/d6f1d5c5568c058c62dcd47757e30749360b4328))
+* **deps:** bump @mui/x-date-pickers from 5.0.0-beta.3 to 5.0.0-beta.4 ([013b054](https://github.com/sws2apps/lmm-oa-sws/commit/013b054c075079638073705d15244f3e1d363318))
+* **deps:** bump @mui/x-date-pickers from 5.0.0-beta.4 to 5.0.0-beta.5 ([7ddfcfd](https://github.com/sws2apps/lmm-oa-sws/commit/7ddfcfd2d0a2aaaacd2b9c78b13c9167a388a8c9))
+* **deps:** bump @sws2apps/react-sw-helper from 1.4.0 to 1.5.0 ([b49527f](https://github.com/sws2apps/lmm-oa-sws/commit/b49527f82d4ea4850fef7228cc6657ad2322b601))
+* **deps:** bump i18next from 21.8.16 to 21.9.0 ([0a6004c](https://github.com/sws2apps/lmm-oa-sws/commit/0a6004c1d648dbedd29658f3a1134fce81af9be0))
+* **deps:** bump jw-epub-parser from 1.16.0 to 1.17.0 ([53c78ad](https://github.com/sws2apps/lmm-oa-sws/commit/53c78adb5b2e84cce2a7b08f3a5d70dae7cfe301))
+* **deps:** bump jw-epub-parser from 1.17.0 to 1.18.0 ([08dacd1](https://github.com/sws2apps/lmm-oa-sws/commit/08dacd1f11083d0a4e87a07751b4d8039d96ea71))
+* **deps:** bump jw-epub-parser from 1.18.0 to 1.19.0 ([39ab25d](https://github.com/sws2apps/lmm-oa-sws/commit/39ab25d16d0d6365228fe6ce6f4a4e19ce298cd0))
+* **deps:** bump jw-epub-parser from 1.19.0 to 1.20.0 ([33dc51c](https://github.com/sws2apps/lmm-oa-sws/commit/33dc51c43c14458b7080cad245cf61e8e701935c))
+* **deps:** bump recoil from 0.7.4 to 0.7.5 ([1048bb6](https://github.com/sws2apps/lmm-oa-sws/commit/1048bb6ba95a012527d4553dd0c44562fcdcf760))
+
 # [1.0.0-alpha.169](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.168...v1.0.0-alpha.169) (2022-08-02)
 
 
