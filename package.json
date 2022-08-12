@@ -3,7 +3,7 @@
   "version": "1.0.0-alpha.169",
   "private": true,
   "dependencies": {
-    "@date-io/date-fns": "^2.14.0",
+    "@date-io/date-fns": "^2.15.0",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@fingerprintjs/fingerprintjs-pro": "^3.7.0",
