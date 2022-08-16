@@ -1,3 +1,62 @@
+# [1.0.0-alpha.170](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.169...v1.0.0-alpha.170) (2022-08-12)
+
+
+### Features
+
+* **deps:** bump @date-io/date-fns from 2.14.0 to 2.15.0 ([c2d0f9a](https://github.com/sws2apps/lmm-oa-sws/commit/c2d0f9a466f3ffd1152209aa9df23f6c98d3913d))
+* **deps:** bump @fontsource/roboto from 4.5.7 to 4.5.8 ([c43e863](https://github.com/sws2apps/lmm-oa-sws/commit/c43e863469847f0d89fff5e9bf06e1475838c564))
+* **deps:** bump @mui/lab from 5.0.0-alpha.93 to 5.0.0-alpha.94 ([9699f45](https://github.com/sws2apps/lmm-oa-sws/commit/9699f45a7b072b335fadb57e4ae9916f0b7639a9))
+* **deps:** bump @mui/material from 5.9.3 to 5.10.0 ([d6f1d5c](https://github.com/sws2apps/lmm-oa-sws/commit/d6f1d5c5568c058c62dcd47757e30749360b4328))
+* **deps:** bump @mui/x-date-pickers from 5.0.0-beta.3 to 5.0.0-beta.4 ([013b054](https://github.com/sws2apps/lmm-oa-sws/commit/013b054c075079638073705d15244f3e1d363318))
+* **deps:** bump @mui/x-date-pickers from 5.0.0-beta.4 to 5.0.0-beta.5 ([7ddfcfd](https://github.com/sws2apps/lmm-oa-sws/commit/7ddfcfd2d0a2aaaacd2b9c78b13c9167a388a8c9))
+* **deps:** bump @sws2apps/react-sw-helper from 1.4.0 to 1.5.0 ([b49527f](https://github.com/sws2apps/lmm-oa-sws/commit/b49527f82d4ea4850fef7228cc6657ad2322b601))
+* **deps:** bump i18next from 21.8.16 to 21.9.0 ([0a6004c](https://github.com/sws2apps/lmm-oa-sws/commit/0a6004c1d648dbedd29658f3a1134fce81af9be0))
+* **deps:** bump jw-epub-parser from 1.16.0 to 1.17.0 ([53c78ad](https://github.com/sws2apps/lmm-oa-sws/commit/53c78adb5b2e84cce2a7b08f3a5d70dae7cfe301))
+* **deps:** bump jw-epub-parser from 1.17.0 to 1.18.0 ([08dacd1](https://github.com/sws2apps/lmm-oa-sws/commit/08dacd1f11083d0a4e87a07751b4d8039d96ea71))
+* **deps:** bump jw-epub-parser from 1.18.0 to 1.19.0 ([39ab25d](https://github.com/sws2apps/lmm-oa-sws/commit/39ab25d16d0d6365228fe6ce6f4a4e19ce298cd0))
+* **deps:** bump jw-epub-parser from 1.19.0 to 1.20.0 ([33dc51c](https://github.com/sws2apps/lmm-oa-sws/commit/33dc51c43c14458b7080cad245cf61e8e701935c))
+* **deps:** bump recoil from 0.7.4 to 0.7.5 ([1048bb6](https://github.com/sws2apps/lmm-oa-sws/commit/1048bb6ba95a012527d4553dd0c44562fcdcf760))
+
+# [1.0.0-alpha.169](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.168...v1.0.0-alpha.169) (2022-08-02)
+
+
+### Features
+
+* **deps:** bump @mui/lab from 5.0.0-alpha.92 to 5.0.0-alpha.93 ([448fdf6](https://github.com/sws2apps/lmm-oa-sws/commit/448fdf6feae87d6de36d22337ec64c3929898c1d))
+* **deps:** bump @mui/material from 5.9.2 to 5.9.3 ([5858675](https://github.com/sws2apps/lmm-oa-sws/commit/5858675f801f31fdf4a0ee2d631dd9c904d691e4))
+
+# [1.0.0-alpha.168](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.167...v1.0.0-alpha.168) (2022-08-01)
+
+
+### Features
+
+* **deps:** bump @emotion/react from 11.9.3 to 11.10.0 ([dcb890e](https://github.com/sws2apps/lmm-oa-sws/commit/dcb890e755406d0f7ee49a8855ae64ac5142524f))
+* **deps:** bump @emotion/styled from 11.9.3 to 11.10.0 ([0988cab](https://github.com/sws2apps/lmm-oa-sws/commit/0988cab88d48b0aca6737732b46a402955c4675d))
+* **deps:** bump @fingerprintjs/fingerprintjs-pro from 3.6.4 to 3.7.0 ([7f78b3b](https://github.com/sws2apps/lmm-oa-sws/commit/7f78b3b26097b56f40efb4fd0fb79d1be185233a))
+* **deps:** bump @mui/x-date-pickers from 5.0.0-beta.2 to 5.0.0-beta.3 ([562941a](https://github.com/sws2apps/lmm-oa-sws/commit/562941a96487ca4c480f5c3e398ba1d5e3ab0052))
+* **deps:** bump @sws2apps/react-sw-helper from 1.3.1 to 1.4.0 ([08a6895](https://github.com/sws2apps/lmm-oa-sws/commit/08a689528aba43903497dee5fb9dbae2cb188a5d))
+* **deps:** bump i18next from 21.8.14 to 21.8.16 ([52bbc58](https://github.com/sws2apps/lmm-oa-sws/commit/52bbc58afc100e9429432623c187213012bc2430))
+* **deps:** bump jw-epub-parser from 1.15.0 to 1.16.0 ([b64d060](https://github.com/sws2apps/lmm-oa-sws/commit/b64d060f1fdd6583ce1152237b4b2f19a16d3929))
+
+# [1.0.0-alpha.167](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.166...v1.0.0-alpha.167) (2022-07-29)
+
+
+### Features
+
+* **deps:** bump react-i18next from 11.18.1 to 11.18.3 ([8ccccc6](https://github.com/sws2apps/lmm-oa-sws/commit/8ccccc6dacb78a01ed1daa176151d3229ca0c4a4))
+* **deps:** bump workbox-cli from 6.5.3 to 6.5.4 ([1ab1e7e](https://github.com/sws2apps/lmm-oa-sws/commit/1ab1e7ede5c73934428a8ca4e334bf33035e4ea1))
+
+# [1.0.0-alpha.166](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.165...v1.0.0-alpha.166) (2022-07-27)
+
+
+### Features
+
+* **deps:** bump @fingerprintjs/fingerprintjs-pro from 3.6.3 to 3.6.4 ([e74e911](https://github.com/sws2apps/lmm-oa-sws/commit/e74e911e77c722357bcfa80780995175eae9d83e))
+* **deps:** bump @mui/lab from 5.0.0-alpha.91 to 5.0.0-alpha.92 ([eb9fad6](https://github.com/sws2apps/lmm-oa-sws/commit/eb9fad608b92cbd449293c5517884ca66c70b832))
+* **deps:** bump @mui/material from 5.9.1 to 5.9.2 ([bb49820](https://github.com/sws2apps/lmm-oa-sws/commit/bb498202e229d382a586c5f34fa8dac8ddf261a6))
+* **deps:** bump @mui/x-date-pickers from 5.0.0-beta.1 to 5.0.0-beta.2 ([be4869c](https://github.com/sws2apps/lmm-oa-sws/commit/be4869cb55ee3637122c39aa3eb34749198a049b))
+* **deps:** bump date-fns from 2.28.0 to 2.29.1 ([129317a](https://github.com/sws2apps/lmm-oa-sws/commit/129317a1b2431af37c29e0eb5427fd0764005f50))
+
 # [1.0.0-alpha.165](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.164...v1.0.0-alpha.165) (2022-07-21)
 
 
