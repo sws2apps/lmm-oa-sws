@@ -3,8 +3,10 @@ import { dbSaveAss } from './dbAssignment';
 import { dbGetPersonsByAssType, dbGetStudentByUid } from './dbPersons';
 import {
 	dbGetSourceMaterial,
+	dbGetSourceMaterialPocket,
 	dbGetWeekListBySched,
 	dbGetWeekTypeName,
+	dbGetWeekTypeNamePocket,
 } from './dbSourceMaterial';
 import appDb from './mainDb';
 
@@ -164,6 +166,162 @@ export const dbGetScheduleData = async (weekValue) => {
 	return schedule;
 };
 
+export const dbGetScheduleDataPocket = async (weekValue) => {
+	const appData = await appDb.table('sched_MM').get({ weekOf: weekValue });
+	var schedule = {};
+	var student = {};
+	schedule.weekOf = appData.weekOf;
+	if (typeof appData.bRead_stu_A === 'undefined') {
+		schedule.bRead_stu_A = '';
+		schedule.bRead_stu_A_dispName = '';
+	} else {
+		schedule.bRead_stu_A = appData.bRead_stu_A;
+		student = await dbGetStudentByUid(schedule.bRead_stu_A);
+		schedule.bRead_stu_A_dispName = student.person_displayName;
+	}
+	if (typeof appData.bRead_stu_B === 'undefined') {
+		schedule.bRead_stu_B = '';
+		schedule.bRead_stu_B_dispName = '';
+	} else {
+		schedule.bRead_stu_B = appData.bRead_stu_B;
+		student = await dbGetStudentByUid(schedule.bRead_stu_B);
+		schedule.bRead_stu_B_dispName = student.person_displayName;
+	}
+	if (typeof appData.ass1_stu_A === 'undefined') {
+		schedule.ass1_stu_A = '';
+		schedule.ass1_stu_A_dispName = '';
+	} else {
+		schedule.ass1_stu_A = appData.ass1_stu_A;
+		student = await dbGetStudentByUid(schedule.ass1_stu_A);
+		schedule.ass1_stu_A_dispName = student.person_displayName;
+	}
+	if (typeof appData.ass1_ass_A === 'undefined') {
+		schedule.ass1_ass_A = '';
+		schedule.ass1_ass_A_dispName = '';
+	} else {
+		schedule.ass1_ass_A = appData.ass1_ass_A;
+		student = await dbGetStudentByUid(schedule.ass1_ass_A);
+		schedule.ass1_ass_A_dispName = student.person_displayName;
+	}
+	if (typeof appData.ass1_stu_B === 'undefined') {
+		schedule.ass1_stu_B = '';
+		schedule.ass1_stu_B_dispName = '';
+	} else {
+		schedule.ass1_stu_B = appData.ass1_stu_B;
+		student = await dbGetStudentByUid(schedule.ass1_stu_B);
+		schedule.ass1_stu_B_dispName = student.person_displayName;
+	}
+	if (typeof appData.ass1_ass_B === 'undefined') {
+		schedule.ass1_ass_B = '';
+		schedule.ass1_ass_B_dispName = '';
+	} else {
+		schedule.ass1_ass_B = appData.ass1_ass_B;
+		student = await dbGetStudentByUid(schedule.ass1_ass_B);
+		schedule.ass1_ass_B_dispName = student.person_displayName;
+	}
+	if (typeof appData.ass2_stu_A === 'undefined') {
+		schedule.ass2_stu_A = '';
+		schedule.ass2_stu_A_dispName = '';
+	} else {
+		schedule.ass2_stu_A = appData.ass2_stu_A;
+		student = await dbGetStudentByUid(schedule.ass2_stu_A);
+		schedule.ass2_stu_A_dispName = student.person_displayName;
+	}
+	if (typeof appData.ass2_ass_A === 'undefined') {
+		schedule.ass2_ass_A = '';
+		schedule.ass2_ass_A_dispName = '';
+	} else {
+		schedule.ass2_ass_A = appData.ass2_ass_A;
+		student = await dbGetStudentByUid(schedule.ass2_ass_A);
+		schedule.ass2_ass_A_dispName = student.person_displayName;
+	}
+	if (typeof appData.ass2_stu_B === 'undefined') {
+		schedule.ass2_stu_B = '';
+		schedule.ass2_stu_B_dispName = '';
+	} else {
+		schedule.ass2_stu_B = appData.ass2_stu_B;
+		student = await dbGetStudentByUid(schedule.ass2_stu_B);
+		schedule.ass2_stu_B_dispName = student.person_displayName;
+	}
+	if (typeof appData.ass2_ass_B === 'undefined') {
+		schedule.ass2_ass_B = '';
+		schedule.ass2_ass_B_dispName = '';
+	} else {
+		schedule.ass2_ass_B = appData.ass2_ass_B;
+		student = await dbGetStudentByUid(schedule.ass2_ass_B);
+		schedule.ass2_ass_B_dispName = student.person_displayName;
+	}
+	if (typeof appData.ass3_stu_A === 'undefined') {
+		schedule.ass3_stu_A = '';
+		schedule.ass3_stu_A_dispName = '';
+	} else {
+		schedule.ass3_stu_A = appData.ass3_stu_A;
+		student = await dbGetStudentByUid(schedule.ass3_stu_A);
+		schedule.ass3_stu_A_dispName = student.person_displayName;
+	}
+	if (typeof appData.ass3_ass_A === 'undefined') {
+		schedule.ass3_ass_A = '';
+		schedule.ass3_ass_A_dispName = '';
+	} else {
+		schedule.ass3_ass_A = appData.ass3_ass_A;
+		student = await dbGetStudentByUid(schedule.ass3_ass_A);
+		schedule.ass3_ass_A_dispName = student.person_displayName;
+	}
+	if (typeof appData.ass3_stu_B === 'undefined') {
+		schedule.ass3_stu_B = '';
+		schedule.ass3_stu_B_dispName = '';
+	} else {
+		schedule.ass3_stu_B = appData.ass3_stu_B;
+		student = await dbGetStudentByUid(schedule.ass3_stu_B);
+		schedule.ass3_stu_B_dispName = student.person_displayName;
+	}
+	if (typeof appData.ass3_ass_B === 'undefined') {
+		schedule.ass3_ass_B = '';
+		schedule.ass3_ass_B_dispName = '';
+	} else {
+		schedule.ass3_ass_B = appData.ass3_ass_B;
+		student = await dbGetStudentByUid(schedule.ass3_ass_B);
+		schedule.ass3_ass_B_dispName = student.person_displayName;
+	}
+	if (typeof appData.ass4_stu_A === 'undefined') {
+		schedule.ass4_stu_A = '';
+		schedule.ass4_stu_A_dispName = '';
+	} else {
+		schedule.ass4_stu_A = appData.ass4_stu_A;
+		student = await dbGetStudentByUid(schedule.ass4_stu_A);
+		schedule.ass4_stu_A_dispName = student.person_displayName;
+	}
+	if (typeof appData.ass4_ass_A === 'undefined') {
+		schedule.ass4_ass_A = '';
+		schedule.ass4_ass_A_dispName = '';
+	} else {
+		schedule.ass4_ass_A = appData.ass4_ass_A;
+		student = await dbGetStudentByUid(schedule.ass4_ass_A);
+		schedule.ass4_ass_A_dispName = student.person_displayName;
+	}
+	if (typeof appData.ass4_stu_B === 'undefined') {
+		schedule.ass4_stu_B = '';
+		schedule.ass4_stu_B_dispName = '';
+	} else {
+		schedule.ass4_stu_B = appData.ass4_stu_B;
+		student = await dbGetStudentByUid(schedule.ass4_stu_B);
+		schedule.ass4_stu_B_dispName = student.person_displayName;
+	}
+	if (typeof appData.ass4_ass_B === 'undefined') {
+		schedule.ass4_ass_B = '';
+		schedule.ass4_ass_B_dispName = '';
+	} else {
+		schedule.ass4_ass_B = appData.ass4_ass_B;
+		student = await dbGetStudentByUid(schedule.ass4_ass_B);
+		schedule.ass4_ass_B_dispName = student.person_displayName;
+	}
+	schedule.week_type = parseInt(appData.week_type, 10) || 1;
+
+	schedule.week_type_name = await dbGetWeekTypeNamePocket(schedule.week_type);
+	schedule.noMeeting = appData.noMeeting || false;
+	return schedule;
+};
+
 export const dbAutoFill = async (schedule) => {
 	const allWeeks = await dbGetWeekListBySched(schedule);
 	const settings = await dbGetAppSettings();
@@ -295,17 +453,53 @@ export const dbDeleteWeekAssignment = async (weekValue) => {
 };
 
 export const dbBuildScheduleForShare = async (scheduleIndex) => {
-	let dataMSC = [];
+	// get current schedule id
+	const month = +scheduleIndex.split('/')[0];
+	const year = +scheduleIndex.split('/')[1];
+
+	let id;
+	const schedule = await appDb.sws_pocket
+		.where('[month+year]')
+		.equals([month, year])
+		.first();
+
+	if (schedule) {
+		id = schedule.id;
+	} else {
+		id = window.crypto.randomUUID();
+		await appDb.sws_pocket.add({
+			id: id,
+			month: month,
+			year: year,
+		});
+	}
+
+	let objSchedule = [];
+	let objSource = [];
 
 	const getWeeks = await dbGetWeekListBySched(scheduleIndex);
 	for (let i = 0; i < getWeeks.length; i++) {
 		const weekValue = getWeeks[i].value;
-		const schedData = await dbGetScheduleData(weekValue);
-		const sourceData = await dbGetSourceMaterial(weekValue);
-		dataMSC.push({ ...schedData, ...sourceData });
+		const schedData = await dbGetScheduleDataPocket(weekValue);
+		const sourceData = await dbGetSourceMaterialPocket(weekValue);
+		objSchedule.push({ ...schedData });
+		objSource.push({ ...sourceData });
 	}
 
-	return JSON.stringify(dataMSC);
+	const dataPocket = {
+		cong_schedule: {
+			schedules: objSchedule,
+			month: month,
+			year: year,
+			id: id,
+		},
+		cong_sourceMaterial: {
+			sources: objSource,
+			id: id,
+		},
+	};
+
+	return dataPocket;
 };
 
 export const dbSaveScheduleByAss = async (field, value, weekOf) => {

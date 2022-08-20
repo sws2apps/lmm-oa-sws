@@ -237,6 +237,12 @@
     "students.edit": "Hanova mpianatra",
     "students.missingInfo": "Tsy feno tsara ny fanazavana momba ny mpianatra",
     "students.disqualifiedLabel": "Tsy mahafeno fepetra",
+    "students.accessPocketApp": "Fandaharana amin’ny internet",
+    "students.setupPocketAccess": "Amboarina",
+    "students.addPocketDevice": "Hanampy fitaovana",
+    "students.setupPocketToken": "Omeo an’ilay mpianatra azafady ny kaody eto ambany mba hahafahany manokatra ny programa SWS Pocket. Indray mandeha ihany no azo ampiasaina ity kaody ity.",
+    "students.viewOnBehalf": "Fandaharan’ny mpianatra azony jerena",
+    "students.pocketSessions": "Lisitry ny fitaovana ampiasain’ilay mpianatra mba hanokafana ny programa SWS Pocket. Azonao esorina eto izay tsy ilaina intsony, raha ilaina.",
 
     "sourceMaterial.weekAdded": "Tafiditra ny herinandro vaovao",
     "sourceMaterial.weekSaved": "Vita ny fitehirizana ny loharanon-kevitra",

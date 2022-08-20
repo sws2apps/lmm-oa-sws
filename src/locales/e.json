@@ -236,6 +236,12 @@
     "students.edit": "Edit Student",
     "students.missingInfo": "Some student’s information are missing",
     "students.disqualifiedLabel": "Disqualified",
+    "students.accessPocketApp": "Online schedule",
+    "students.setupPocketAccess": "Setup",
+    "students.addPocketDevice": "Add device",
+    "students.setupPocketToken": "Please give the following code to the student in order to open the SWS Pocket application. This code can only be used once",
+    "students.viewOnBehalf": "View members schedule",
+    "students.pocketSessions": "This is a list of devices that the student is using for SWS Pocket application. If needed, revoke any session that no longer needed.",
 
     "sourceMaterial.weekAdded": "New week has been added",
     "sourceMaterial.weekSaved": "Source material for this week has been saved",

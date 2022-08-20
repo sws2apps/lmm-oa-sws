@@ -209,6 +209,9 @@ const AppMenus = ({ enabledInstall, isLoading, installPwa }) => {
 					sx={{
 						height: '50px !important',
 						minHeight: '50px !important',
+						'@media screen and (min-width: 960px)': {
+							paddingLeft: '0px !important',
+						},
 					}}
 				>
 					<IconButton
@@ -246,7 +249,8 @@ const AppMenus = ({ enabledInstall, isLoading, installPwa }) => {
 							alt='App Logo'
 							style={{
 								width: 'auto',
-								height: '40px',
+								height: '50px',
+								borderRadius: '4px',
 							}}
 						/>
 						<Typography noWrap sx={{ marginLeft: '10px', fontSize: '18px' }}>
@@ -526,6 +530,7 @@ const AppMenus = ({ enabledInstall, isLoading, installPwa }) => {
 							style={{
 								width: 'auto',
 								height: '40px',
+								borderRadius: '4px',
 							}}
 						/>
 						<Typography sx={{ marginLeft: '10px', fontSize: '18px' }}>
