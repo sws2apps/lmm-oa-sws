@@ -1,11 +1,15 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useTranslation } from 'react-i18next';
+import dateFormat from 'dateformat';
 import Autocomplete from '@mui/material/Autocomplete';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
+import Chip from '@mui/material/Chip';
 import CloudSyncIcon from '@mui/icons-material/CloudSync';
+import DevicesIcon from '@mui/icons-material/Devices';
+import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -221,6 +225,57 @@ const StudentPocket = ({ id, name }) => {
 		}
 	};
 
+	const handleDeleteDevice = async (pocket_visitor_id) => {
+		try {
+			if (apiHost !== '') {
+				setIsGenerating(true);
+				const res = await fetch(
+					`${apiHost}api/congregations/${congID}/pockets/${id}`,
+					{
+						signal: abortCont.signal,
+						method: 'DELETE',
+						headers: {
+							'Content-Type': 'application/json',
+							visitor_id: visitorID,
+							email: userEmail,
+						},
+						body: JSON.stringify({ pocket_visitor_id }),
+					}
+				);
+
+				const data = await res.json();
+
+				if (res.status === 200) {
+					if (data.devices) {
+						setDevices(data.devices);
+					}
+
+					if (data.message === 'POCKET_USER_DELETED') {
+						setPocketName('');
+						setIsGettingUser(false);
+						setDevices([]);
+					}
+
+					setIsGenerating(false);
+
+					return;
+				}
+
+				setIsGenerating(false);
+				setAppMessage(data.message);
+				setAppSeverity('warning');
+				setAppSnackOpen(true);
+			}
+		} catch (err) {
+			if (!abortCont.signal.aborted) {
+				setIsGenerating(false);
+				setAppMessage(err.message);
+				setAppSeverity('error');
+				setAppSnackOpen(true);
+			}
+		}
+	};
+
 	const fetchPocketUser = useCallback(async () => {
 		try {
 			if (apiHost !== '') {
@@ -228,6 +283,7 @@ const StudentPocket = ({ id, name }) => {
 				setIsGettingUser(true);
 				setDevices([]);
 				setVerifyCode('');
+				setPocketName('');
 				const res = await fetch(
 					`${apiHost}api/congregations/${congID}/pockets/${id}`,
 					{
@@ -353,14 +409,89 @@ const StudentPocket = ({ id, name }) => {
 				</Button>
 			)}
 			{!isGettingUser && verifyCode.length === 0 && devices.length > 0 && (
-				<Button
-					variant='contained'
-					sx={{ marginBottom: '15px' }}
-					disabled={isGenerating}
-					onClick={handleGenerateOCode}
-				>
-					{t('students.addPocketDevice')}
-				</Button>
+				<>
+					<Button
+						variant='contained'
+						sx={{ marginBottom: '15px' }}
+						disabled={isGenerating}
+						onClick={handleGenerateOCode}
+					>
+						{t('students.addPocketDevice')}
+					</Button>
+					<Box sx={{ margin: '10px 0 20px 0' }}>
+						<Typography sx={{ fontWeight: 'bold', lineHeight: 1.2 }}>
+							Devices
+						</Typography>
+						<Typography sx={{ lineHeight: 1.2, margin: '10px 0' }}>
+							{t('students.pocketSessions')}
+						</Typography>
+						<Divider />
+						{devices.map((device) => (
+							<Box
+								key={device.visitor_id}
+								sx={{
+									display: 'flex',
+									alignItems: 'center',
+									padding: '10px',
+									borderBottom: '1px outset',
+									justifyContent: 'space-between',
+									flexWrap: 'wrap',
+									maxWidth: '650px',
+								}}
+							>
+								<Box
+									sx={{
+										display: 'flex',
+										alignItems: 'center',
+										marginBottom: '10px',
+									}}
+								>
+									<DevicesIcon
+										sx={{
+											fontSize: '60px',
+											marginRight: '10px',
+											color: '#1976d2',
+										}}
+									/>
+									<Box>
+										<Typography sx={{ fontSize: '14px' }}>
+											{device.name}
+										</Typography>
+										<Chip
+											label={dateFormat(
+												new Date(device.sws_last_seen),
+												t('global.shortDateTimeFormat')
+											)}
+											sx={{
+												backgroundColor: '#1976d2',
+												color: 'white',
+												fontWeight: 'bold',
+											}}
+										/>
+									</Box>
+								</Box>
+
+								<Box
+									sx={{
+										display: 'flex',
+										flexGrow: 1,
+										justifyContent: 'flex-end',
+									}}
+								>
+									<Button
+										variant='outlined'
+										color='error'
+										sx={{ marginBottom: '10px' }}
+										onClick={() => handleDeleteDevice(device.visitor_id)}
+										disabled={isGenerating}
+									>
+										{t('settings.sessionRevoke')}
+									</Button>
+								</Box>
+							</Box>
+						))}
+					</Box>
+				</>
 			)}
 			{isGenerating && (
 				<CircularProgress
