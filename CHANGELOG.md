@@ -1,3 +1,10 @@
+# [1.0.0-alpha.173](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.172...v1.0.0-alpha.173) (2022-09-10)
+
+
+### Bug Fixes
+
+* **app:** change api backend url ([6c4c2b3](https://github.com/sws2apps/lmm-oa-sws/commit/6c4c2b3b758fc395fa122559538a3f041c4a2056))
+
 # [1.0.0-alpha.172](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.171...v1.0.0-alpha.172) (2022-09-10)
 
 
