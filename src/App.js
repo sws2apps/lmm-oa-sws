@@ -66,19 +66,19 @@ const App = ({ updatePwa }) => {
 				appUrl === 'dev-lmm-oa-sws.web.app' ||
 				appUrl === 'dev-lmm-oa-sws.firebaseapp.com'
 			) {
-				setApiHost('https://dev-sws2apps.herokuapp.com/');
+				setApiHost('https://dev-sws2apps-api.onrender.com/');
 				setAppStage('ALPHA Release');
 			} else if (
-				appUrl === 'staging-lmm-oa-sws.web.app' ||
-				appUrl === 'staging-lmm-oa-sws.firebaseapp.com'
+				appUrl === 'beta-lmm-oa-sws.web.app' ||
+				appUrl === 'beta-lmm-oa-sws.firebaseapp.com'
 			) {
-				setApiHost('https://staging-sws2apps.herokuapp.com/');
+				setApiHost('https://beta-sws2apps-api.onrender.com/');
 				setAppStage('BETA Release');
 			} else if (
 				appUrl === 'lmm-oa-sws.web.app' ||
 				appUrl === 'lmm-oa-sws.firebaseapp.com'
 			) {
-				setApiHost('https://dev-sws2apps.herokuapp.com/');
+				setApiHost('https://sws2apps-api.onrender.com/');
 			}
 		}
 	}, [setApiHost, setAppStage]);
