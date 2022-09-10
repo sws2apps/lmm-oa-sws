@@ -1,3 +1,10 @@
+# [1.0.0-alpha.174](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.173...v1.0.0-alpha.174) (2022-09-10)
+
+
+### Bug Fixes
+
+* **firebase:** update csp for render api ([40e7f03](https://github.com/sws2apps/lmm-oa-sws/commit/40e7f03e5505b68da9f61af443d6b4df0a23f38a))
+
 # [1.0.0-alpha.173](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.172...v1.0.0-alpha.173) (2022-09-10)
 
 
