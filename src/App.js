@@ -66,7 +66,7 @@ const App = ({ updatePwa }) => {
 				appUrl === 'dev-lmm-oa-sws.web.app' ||
 				appUrl === 'dev-lmm-oa-sws.firebaseapp.com'
 			) {
-				setApiHost('https://dev-sws2apps-api.onrender.com/');
+				setApiHost('https://alpha-sws2apps-api.onrender.com/');
 				setAppStage('ALPHA Release');
 			} else if (
 				appUrl === 'beta-lmm-oa-sws.web.app' ||
