@@ -1,3 +1,31 @@
+# [1.0.0-alpha.173](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.172...v1.0.0-alpha.173) (2022-09-10)
+
+
+### Bug Fixes
+
+* **app:** change api backend url ([6c4c2b3](https://github.com/sws2apps/lmm-oa-sws/commit/6c4c2b3b758fc395fa122559538a3f041c4a2056))
+
+# [1.0.0-alpha.172](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.171...v1.0.0-alpha.172) (2022-09-10)
+
+
+### Features
+
+* **deps:** bump @emotion/react from 11.10.0 to 11.10.4 ([1ac7013](https://github.com/sws2apps/lmm-oa-sws/commit/1ac70137bf23de69defddc20a339b9e3333bff2c))
+* **deps:** bump @emotion/styled from 11.10.0 to 11.10.4 ([e6b95ae](https://github.com/sws2apps/lmm-oa-sws/commit/e6b95aeb2fd87d266bd71dd8a64e9229f5579b30))
+* **deps:** bump @mui/icons-material from 5.10.2 to 5.10.3 ([aab820a](https://github.com/sws2apps/lmm-oa-sws/commit/aab820a6b4db291f03f6116e2328a4a44fbd0d93))
+* **deps:** bump @mui/icons-material from 5.8.4 to 5.10.2 ([c40e36f](https://github.com/sws2apps/lmm-oa-sws/commit/c40e36f009cc326a10d808cb5f6292caf6338a10))
+* **deps:** bump @mui/lab from 5.0.0-alpha.95 to 5.0.0-alpha.96 ([67145e2](https://github.com/sws2apps/lmm-oa-sws/commit/67145e2d3028474bac8d82525ffa5e97bf1060dd))
+* **deps:** bump @mui/lab from 5.0.0-alpha.96 to 5.0.0-alpha.97 ([b4e3790](https://github.com/sws2apps/lmm-oa-sws/commit/b4e3790e6c58b171a605142cd6d847d382632baf))
+* **deps:** bump @mui/lab from 5.0.0-alpha.97 to 5.0.0-alpha.98 ([c86e8dc](https://github.com/sws2apps/lmm-oa-sws/commit/c86e8dcb07adc54a9de4a18642b6befdd0c5c5fb))
+* **deps:** bump @mui/material from 5.10.1 to 5.10.2 ([63a4163](https://github.com/sws2apps/lmm-oa-sws/commit/63a4163aff664c44fff1cab36cb1495e017a5fd6))
+* **deps:** bump @mui/material from 5.10.2 to 5.10.3 ([b77f362](https://github.com/sws2apps/lmm-oa-sws/commit/b77f362734642c996036d6ff6876b7c5ce73d6a6))
+* **deps:** bump @mui/material from 5.10.3 to 5.10.4 ([ad2a976](https://github.com/sws2apps/lmm-oa-sws/commit/ad2a976f58f9f10b85a86ea47a74ef4be472bc52))
+* **deps:** bump @mui/x-date-pickers from 5.0.0-beta.6 to 5.0.0-beta.7 ([b8fe9e5](https://github.com/sws2apps/lmm-oa-sws/commit/b8fe9e542e0e6998666f9d9a66f246b6ad788349))
+* **deps:** bump @mui/x-date-pickers from 5.0.0-beta.7 to 5.0.0 ([be0e95d](https://github.com/sws2apps/lmm-oa-sws/commit/be0e95d5a74f99be15f4106a06dd877988b91b85))
+* **deps:** bump @sws2apps/react-sw-helper from 1.6.0 to 1.7.0 ([7c31934](https://github.com/sws2apps/lmm-oa-sws/commit/7c319343fdfd7d294761e2caa7d91f871f75ddc3))
+* **deps:** bump jw-epub-parser from 1.20.0 to 1.21.0 ([1965cb2](https://github.com/sws2apps/lmm-oa-sws/commit/1965cb28f3ce597e341b06388094610ada370b91))
+* **deps:** bump react-i18next from 11.18.4 to 11.18.5 ([323f611](https://github.com/sws2apps/lmm-oa-sws/commit/323f611f5875cb62320a49a928294618ca3a5644))
+
 # [1.0.0-alpha.171](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.170...v1.0.0-alpha.171) (2022-08-20)
 
 
