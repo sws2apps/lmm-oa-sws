@@ -1,3 +1,18 @@
+# [1.0.0-alpha.171](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.170...v1.0.0-alpha.171) (2022-08-20)
+
+
+### Features
+
+* **deps:** bump @fingerprintjs/fingerprintjs-pro from 3.7.0 to 3.7.1 ([168feeb](https://github.com/sws2apps/lmm-oa-sws/commit/168feebfb475ab622e996948c6637bb76307ecd8))
+* **deps:** bump @mui/lab from 5.0.0-alpha.94 to 5.0.0-alpha.95 ([8fe1c16](https://github.com/sws2apps/lmm-oa-sws/commit/8fe1c16b6a272be532aa6312a7237212f0a3ea42))
+* **deps:** bump @mui/material from 5.10.0 to 5.10.1 ([7b146a4](https://github.com/sws2apps/lmm-oa-sws/commit/7b146a4b4add4d78ca5d05061e9d9e73b0499d65))
+* **deps:** bump @mui/x-date-pickers from 5.0.0-beta.5 to 5.0.0-beta.6 ([e0d6eb6](https://github.com/sws2apps/lmm-oa-sws/commit/e0d6eb6fb95aabf2b48b7a962be867f55f29cd8e))
+* **deps:** bump @sws2apps/react-sw-helper from 1.5.0 to 1.6.0 ([a873fb4](https://github.com/sws2apps/lmm-oa-sws/commit/a873fb4f188b370b8e540bee497ae09deef0ae4e))
+* **deps:** bump date-fns from 2.29.1 to 2.29.2 ([6d9e9fb](https://github.com/sws2apps/lmm-oa-sws/commit/6d9e9fb78ff59f3d1b1ad7ac39dd2f471128c3a2))
+* **deps:** bump i18next from 21.9.0 to 21.9.1 ([db08527](https://github.com/sws2apps/lmm-oa-sws/commit/db08527cfc50592071f0ef76ccb9e4031890951e))
+* **deps:** bump react-i18next from 11.18.3 to 11.18.4 ([04ea920](https://github.com/sws2apps/lmm-oa-sws/commit/04ea920e46f1bb277ffb8ec011ce7d14da6a7ca5))
+* **students:** handle pocket permission for student ([56b75e3](https://github.com/sws2apps/lmm-oa-sws/commit/56b75e3cefcd71f3e162ba4925a85ee01b5d61b5))
+
 # [1.0.0-alpha.170](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.169...v1.0.0-alpha.170) (2022-08-12)
 
 
