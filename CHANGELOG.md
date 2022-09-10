@@ -1,3 +1,10 @@
+# [1.0.0-alpha.175](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.174...v1.0.0-alpha.175) (2022-09-10)
+
+
+### Bug Fixes
+
+* **firebase:** csp connect-src and prefetch-src udpate ([e95d64c](https://github.com/sws2apps/lmm-oa-sws/commit/e95d64c44edf2c9f85c65e81991c444550dbcce7))
+
 # [1.0.0-alpha.174](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.173...v1.0.0-alpha.174) (2022-09-10)
 
 
