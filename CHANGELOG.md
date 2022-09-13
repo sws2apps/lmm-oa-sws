@@ -1,3 +1,10 @@
+# [1.0.0-alpha.176](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.175...v1.0.0-alpha.176) (2022-09-11)
+
+
+### Bug Fixes
+
+* **startup:** enable resend verification email link ([6ee5793](https://github.com/sws2apps/lmm-oa-sws/commit/6ee57931e28e5e102882751656f295246fffc9ab))
+
 # [1.0.0-alpha.175](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.174...v1.0.0-alpha.175) (2022-09-10)
 
 
