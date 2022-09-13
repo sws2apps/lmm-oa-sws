@@ -1,3 +1,18 @@
+# [1.0.0-alpha.177](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.176...v1.0.0-alpha.177) (2022-09-13)
+
+
+### Bug Fixes
+
+* **backup:** add sws pocket identifier when sending and retrieving backup ([e1e1b1d](https://github.com/sws2apps/lmm-oa-sws/commit/e1e1b1dcab89f4d4b2c58e4ac07158c1390fbce7))
+
+
+### Features
+
+* **deps:** bump @mui/lab from 5.0.0-alpha.98 to 5.0.0-alpha.99 ([93a0a23](https://github.com/sws2apps/lmm-oa-sws/commit/93a0a2354ab0a47aa8de5b731998cca6b0b16346))
+* **deps:** bump @mui/material from 5.10.4 to 5.10.5 ([b44cc97](https://github.com/sws2apps/lmm-oa-sws/commit/b44cc97651ba1f9a18697be730d4378bfa38df0c))
+* **deps:** bump @mui/x-date-pickers from 5.0.0 to 5.0.1 ([1907483](https://github.com/sws2apps/lmm-oa-sws/commit/1907483615734024a7642455a427c7584f5ce8f8))
+* **deps:** bump react-i18next from 11.18.5 to 11.18.6 ([ac0dd1f](https://github.com/sws2apps/lmm-oa-sws/commit/ac0dd1f872461faacd258fcfede2932354d62ce3))
+
 # [1.0.0-alpha.176](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.175...v1.0.0-alpha.176) (2022-09-11)
 
 
