@@ -145,13 +145,17 @@ export const dbExportDataOnline = async () => {
 	// get schedules
 	const dbSchedule = await appDb.sched_MM.toArray();
 
-	return { dbPersons, dbSourceMaterial, dbSchedule };
+	// get sws-pocket schedules
+	const dbPocketTbl = await appDb.sws_pocket.toArray();
+
+	return { dbPersons, dbSourceMaterial, dbSchedule, dbPocketTbl };
 };
 
 export const dbRestoreCongregationBackup = async (
 	cong_persons,
 	cong_schedule,
-	cong_sourceMaterial
+	cong_sourceMaterial,
+	cong_swsPocket
 ) => {
 	// restore persons
 	await appDb.persons.clear();
@@ -172,5 +176,12 @@ export const dbRestoreCongregationBackup = async (
 	for (let i = 0; i < cong_schedule.length; i++) {
 		const schedule = cong_schedule[i];
 		await appDb.sched_MM.add(schedule, schedule.weekOf);
+	}
+
+	// restore sws pocket info
+	await appDb.sws_pocket.clear();
+	for (let i = 0; i < cong_swsPocket.length; i++) {
+		const pocket = cong_swsPocket[i];
+		await appDb.sws_pocket.add(pocket, pocket.id);
 	}
 };
