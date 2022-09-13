@@ -117,13 +117,14 @@ const BackupDbDialog = () => {
 			setIsProcessing(true);
 
 			if (apiHost !== '') {
-				const { dbPersons, dbSourceMaterial, dbSchedule } =
+				const { dbPersons, dbSourceMaterial, dbSchedule, dbPocketTbl } =
 					await dbExportDataOnline();
 
 				const reqPayload = {
 					cong_persons: dbPersons,
 					cong_schedule: dbSchedule,
 					cong_sourceMaterial: dbSourceMaterial,
+					cong_swsPocket: dbPocketTbl,
 				};
 
 				const res = await fetch(
