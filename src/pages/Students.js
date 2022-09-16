@@ -28,6 +28,9 @@ import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import SearchIcon from '@mui/icons-material/Search';
 import StudentCard from '../components/students/StudentCard';
 import StudentAdvancedSearch from '../components/students/StudentAdvancedSearch';
+import StudentRecents from '../components/students/StudentRecents';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 import { dbDeleteStudent, dbFilterStudents } from '../indexedDb/dbPersons';
 import {
 	appMessageState,
@@ -77,6 +80,29 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 	},
 }));
 
+const TabPanel = (props) => {
+	const { children, value, index, ...other } = props;
+
+	return (
+		<div
+			role='tabpanel'
+			hidden={value !== index}
+			id={`simple-tabpanel-${index}`}
+			aria-labelledby={`simple-tab-${index}`}
+			{...other}
+		>
+			{value === index && <Box sx={{ p: 1 }}>{children}</Box>}
+		</div>
+	);
+};
+
+const a11yProps = (index) => {
+	return {
+		id: `simple-tab-${index}`,
+		'aria-controls': `simple-tabpanel-${index}`,
+	};
+};
+
 const Students = () => {
 	const { t } = useTranslation();
 	const navigate = useNavigate();
@@ -94,6 +120,7 @@ const Students = () => {
 	const [isFemale, setIsFemale] = useState(false);
 	const [assTypes, setAssTypes] = useState([]);
 	const [isSearch, setIsSearch] = useState(false);
+	const [tabValue, setTabValue] = useState(0);
 
 	const [isStudentDelete, setIsStudentDelete] =
 		useRecoilState(isStudentDeleteState);
@@ -131,6 +158,8 @@ const Students = () => {
 
 	const handleSearchStudent = useCallback(
 		async (txtSearch, isMale, isFemale, assTypes) => {
+			setTabValue(0);
+
 			handleCloseMenuSmall();
 
 			if (
@@ -173,6 +202,10 @@ const Students = () => {
 		setAppSnackOpen(true);
 		setAppSeverity('success');
 		setAppMessage(t('students.deleteSucess'));
+	};
+
+	const handleTabChange = (event, newValue) => {
+		setTabValue(newValue);
 	};
 
 	useEffect(() => {
@@ -400,28 +433,48 @@ const Students = () => {
 			/>
 
 			<Box sx={{ marginBottom: '10px', marginRight: '5px' }}>
-				{!isSearch && (
-					<>
-						{students.length > 0 && (
-							<Grid container>
-								{students.map((student) => (
-									<StudentCard key={student.person_uid} student={student} />
-								))}
-							</Grid>
-						)}
-					</>
-				)}
-				{isSearch && (
-					<CircularProgress
-						color='secondary'
-						size={80}
-						disableShrink={true}
-						sx={{
-							display: 'flex',
-							margin: '20vh auto',
-						}}
-					/>
-				)}
+				<Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+					<Tabs
+						value={tabValue}
+						onChange={handleTabChange}
+						aria-label='basic tabs example'
+					>
+						<Tab
+							label={`${t('students.searchResult')} (${
+								isSearch ? 0 : students.length
+							})`}
+							{...a11yProps(0)}
+						/>
+						<Tab label={t('students.recentStudents')} {...a11yProps(1)} />
+					</Tabs>
+				</Box>
+				<TabPanel value={tabValue} index={0}>
+					{!isSearch && (
+						<>
+							{students.length > 0 && (
+								<Grid container>
+									{students.map((student) => (
+										<StudentCard key={student.person_uid} student={student} />
+									))}
+								</Grid>
+							)}
+						</>
+					)}
+					{isSearch && (
+						<CircularProgress
+							color='secondary'
+							size={80}
+							disableShrink={true}
+							sx={{
+								display: 'flex',
+								margin: '20vh auto',
+							}}
+						/>
+					)}
+				</TabPanel>
+				<TabPanel value={tabValue} index={1}>
+					<StudentRecents />
+				</TabPanel>
 			</Box>
 		</>
 	);

@@ -254,6 +254,21 @@ const StudentDetails = () => {
 	useEffect(() => {
 		const init = async () => {
 			if (id) {
+				const recentStudents = localStorage.getItem('recentStudents')
+					? JSON.parse(localStorage.getItem('recentStudents'))
+					: [];
+				const isExistRecent = recentStudents.find((student) => student === id)
+					? true
+					: false;
+
+				if (!isExistRecent) {
+					recentStudents.push(id);
+					localStorage.setItem(
+						'recentStudents',
+						JSON.stringify(recentStudents)
+					);
+				}
+
 				const data = await dbGetStudentDetails(id);
 				setStudent(data);
 				setName(data.person_name);
@@ -510,7 +525,7 @@ const StudentDetails = () => {
 									<Typography>{t('students.accessPocketApp')}</Typography>
 								</AccordionSummary>
 								<AccordionDetails>
-									<StudentPocket id={id} name={name}  />
+									<StudentPocket id={id} name={name} />
 								</AccordionDetails>
 							</Accordion>
 						)}
