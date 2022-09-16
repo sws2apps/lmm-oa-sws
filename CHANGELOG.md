@@ -1,3 +1,14 @@
+# [1.0.0-alpha.178](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.177...v1.0.0-alpha.178) (2022-09-16)
+
+
+### Features
+
+* **deps:** bump @sws2apps/react-sw-helper from 1.7.0 to 1.8.0 ([e18e396](https://github.com/sws2apps/lmm-oa-sws/commit/e18e39626942e76e761215ff1a50e445de37c291))
+* **deps:** bump date-fns from 2.29.2 to 2.29.3 ([e6f76cd](https://github.com/sws2apps/lmm-oa-sws/commit/e6f76cdcbceb3012682b66cc02ceee8a4ebaa9bd))
+* **deps:** bump jw-epub-parser from 1.21.0 to 1.22.0 ([5d5c79a](https://github.com/sws2apps/lmm-oa-sws/commit/5d5c79a661b7ca770f9a5ea625f17fa5449185aa))
+* **deps:** bump react-router-dom from 6.3.0 to 6.4.0 ([4917176](https://github.com/sws2apps/lmm-oa-sws/commit/4917176694017eceebec5a56576766c0a4fb6502))
+* **students:** add two views to separate search results and recently viewed students ([832f502](https://github.com/sws2apps/lmm-oa-sws/commit/832f502d47f22d48c4037740a9f271ab10f4ffa6))
+
 # [1.0.0-alpha.177](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.176...v1.0.0-alpha.177) (2022-09-13)
 
 
