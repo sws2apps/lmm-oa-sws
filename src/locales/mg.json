@@ -243,6 +243,9 @@
     "students.setupPocketToken": "Omeo an’ilay mpianatra azafady ny kaody eto ambany mba hahafahany manokatra ny programa SWS Pocket. Indray mandeha ihany no azo ampiasaina ity kaody ity.",
     "students.viewOnBehalf": "Fandaharan’ny mpianatra azony jerena",
     "students.pocketSessions": "Lisitry ny fitaovana ampiasain’ilay mpianatra mba hanokafana ny programa SWS Pocket. Azonao esorina eto izay tsy ilaina intsony, raha ilaina.",
+    "students.searchResult": "Valin’ny fikarohana",
+    "students.recentStudents": "Nojerena farany",
+    "students.clearRecents": "Esorina",
 
     "sourceMaterial.weekAdded": "Tafiditra ny herinandro vaovao",
     "sourceMaterial.weekSaved": "Vita ny fitehirizana ny loharanon-kevitra",

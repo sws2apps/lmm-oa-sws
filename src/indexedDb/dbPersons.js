@@ -524,3 +524,18 @@ export const dbFilterStudents = async (data) => {
 
 	return secondPassFiltered;
 };
+
+export const dbRecentStudents = async (data) => {
+	const recentStudents = data ? JSON.parse(data) : [];
+
+	const dbStudents = await promiseGetRecoil(allStudentsState);
+
+	const builtStudents = recentStudents.map((recent) => {
+		const findStudent = dbStudents.find(
+			(student) => student.person_uid === recent
+		);
+		return findStudent;
+	});
+
+	return builtStudents;
+};
