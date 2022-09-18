@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import dateFormat from 'dateformat';
+import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import {
@@ -142,7 +143,7 @@ const WeekList = () => {
 	}, [isRerender, currentSchedule, shortDateFormat, setCurrentWeek]);
 
 	return (
-		<div>
+		<Box>
 			<TextField
 				id='outlined-select-year'
 				select
@@ -192,7 +193,7 @@ const WeekList = () => {
 					{weeks.map((week) => renderWeekList(week))}
 				</TextField>
 			)}
-		</div>
+		</Box>
 	);
 };
 

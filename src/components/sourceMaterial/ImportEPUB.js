@@ -79,7 +79,7 @@ const ImportEPUB = () => {
 			{open && (
 				<Dialog open={open} onClose={handleDlgClose}>
 					<DialogTitle>
-						<Typography sx={{ lineHeight: 1.2 }}>
+						<Typography sx={{ lineHeight: 1.2, fontSize: '13px' }}>
 							{t('sourceMaterial.importEPUBTitle')}
 						</Typography>
 					</DialogTitle>
@@ -121,7 +121,7 @@ const ImportEPUB = () => {
 											align='center'
 											sx={sharedStyles.textCircular}
 										>
-											{t('importEPUB.completed')}
+											{t('sourceMaterial.importCompleted')}
 										</Typography>
 									</>
 								)}

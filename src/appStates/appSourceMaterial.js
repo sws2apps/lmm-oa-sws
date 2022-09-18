@@ -1,6 +1,11 @@
 import { atom, selector } from 'recoil';
 import { appLangState } from './appSettings';
 
+export const isImportJWOrgState = atom({
+	key: 'isImportJWOrg',
+	default: false,
+});
+
 export const isImportEPUBState = atom({
 	key: 'isImportEPUB',
 	default: false,

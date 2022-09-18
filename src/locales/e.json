@@ -260,10 +260,14 @@
     "sourceMaterial.addWeekTitle": "Add new week",
     "sourceMaterial.invalidFilename": "The EPUB file selected could not be imported",
     "sourceMaterial.importEPUBTitle": "Import Source Material from EPUB",
+    "sourceMaterial.importJw": "JW.ORG Import",
+    "sourceMaterial.importJwTitle": "Import Source Material from JW.ORG",
+    "sourceMaterial.importCompleted": "Source material has been imported successfully",
 
     "importEPUB.invalid": "The EPUB file selected is not a Meeting Workbook file. Please verify it again.",
     "importEPUB.inProgress": "EPUB import in progress. Please wait ...",
-    "importEPUB.completed": "Source material has been imported successfully",
+
+    "importJw.inProgress": "Please wait while downloading source materials from JW.ORG ...",
 
     "schedule.autofill": "Autofill",
     "schedule.send": "Send",

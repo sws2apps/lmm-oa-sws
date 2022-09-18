@@ -6,8 +6,19 @@ import { monthNamesState } from '../appStates/appSettings';
 import { assTypeLocalState } from '../appStates/appSourceMaterial';
 
 export const addEpubDataToDb = async (fileEPUB) => {
+	const data = await loadEPUB(fileEPUB);
+	await addDataToDb(data);
+};
+
+export const addJwDataToDb = async (dataJw) => {
+	for (let i = 0; i < dataJw.length; i++) {
+		const data = dataJw[i];
+		await addDataToDb(data);
+	}
+};
+
+const addDataToDb = async (data) => {
 	try {
-		const data = await loadEPUB(fileEPUB);
 		const monthNames = await promiseGetRecoil(monthNamesState);
 		const assTypeList = await promiseGetRecoil(assTypeLocalState);
 

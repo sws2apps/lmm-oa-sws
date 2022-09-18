@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useTranslation } from 'react-i18next';
+import { fileDialog } from 'file-select-dialog';
 import Box from '@mui/material/Box';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
@@ -8,10 +9,27 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import PartDuration from './PartDuration';
 import PartType from './PartType';
-import SourceMaterialFooter from './SourceMaterialFooter';
+import SourceMaterialMenu from './SourceMaterialMenu';
+import WeekList from './WeekList';
 import WeekType from './WeekType';
-import { dbGetSourceMaterial } from '../../indexedDb/dbSourceMaterial';
+import {
+	dbAddManualSource,
+	dbGetSourceMaterial,
+	dbSaveSrcData,
+} from '../../indexedDb/dbSourceMaterial';
+import {
+	appMessageState,
+	appSeverityState,
+	appSnackOpenState,
+} from '../../appStates/appNotification';
 import { appLangState } from '../../appStates/appSettings';
+import {
+	currentWeekState,
+	epubFileState,
+	isImportEPUBState,
+	isImportJWOrgState,
+	isRerenderSourceState,
+} from '../../appStates/appSourceMaterial';
 
 const sharedStyles = {
 	ayfStuPart: {
@@ -35,6 +53,17 @@ const sharedStyles = {
 const WeekDetails = (props) => {
 	const { t } = useTranslation();
 
+	const currentWeek = useRecoilValue(currentWeekState);
+	const appLang = useRecoilValue(appLangState);
+	const isRerender = useRecoilValue(isRerenderSourceState);
+
+	const setAppSnackOpen = useSetRecoilState(appSnackOpenState);
+	const setAppSeverity = useSetRecoilState(appSeverityState);
+	const setAppMessage = useSetRecoilState(appMessageState);
+	const setEpubFile = useSetRecoilState(epubFileState);
+	const setIsImportEPUB = useSetRecoilState(isImportEPUBState);
+	const setIsImportJW = useSetRecoilState(isImportJWOrgState);
+
 	const [weekOf, setWeekOf] = useState('');
 	const [hasMeeting, setHasMeeting] = useState(true);
 	const [weekType, setWeekType] = useState(1);
@@ -52,18 +81,36 @@ const WeekDetails = (props) => {
 	const [Ass4Time, setAss4Time] = useState('');
 	const [Ass4Src, setAss4Src] = useState('');
 
-	const appLang = useRecoilValue(appLangState);
-
-	const handleWeekAdd = () => {
-		props.handleWeekAdd();
+	const handleWeekAdd = async () => {
+		await dbAddManualSource();
+		setAppSnackOpen(true);
+		setAppSeverity('success');
+		setAppMessage(t('sourceMaterial.weekAdded'));
 	};
 
-	const handleImportEPUB = () => {
-		props.handleImportEPUB();
+	const handleImportJw = async () => {
+		setIsImportJW(true);
+	};
+
+	const handleImportEPUB = async () => {
+		const file = await fileDialog({
+			accept: '.epub',
+			strict: true,
+		});
+
+		const epubLang = file.name.split('_')[1];
+		if (epubLang && epubLang === appLang.toUpperCase()) {
+			setEpubFile(file);
+			setIsImportEPUB(true);
+		} else {
+			setAppSnackOpen(true);
+			setAppSeverity('warning');
+			setAppMessage(t('sourceMaterial.invalidFilename'));
+		}
 	};
 
 	const handleSaveSource = async () => {
-		var obj = {};
+		const obj = {};
 		obj.weekOf = weekOf;
 		obj.bibleReading_src = BRead;
 		obj.ass1_type = Ass1Type;
@@ -82,13 +129,23 @@ const WeekDetails = (props) => {
 		obj.noMeeting = !hasMeeting;
 		obj.isOverride = true;
 
-		props.handleSaveSource(obj);
+		const isSaved = await dbSaveSrcData(obj);
+
+		if (isSaved === true) {
+			setAppSnackOpen(true);
+			setAppSeverity('success');
+			setAppMessage(t('sourceMaterial.weekSaved'));
+		} else {
+			setAppSnackOpen(true);
+			setAppSeverity('error');
+			setAppMessage(t('sourceMaterial.saveError'));
+		}
 	};
 
 	useEffect(() => {
 		let isSubscribed = true;
 		const loadWeekData = async () => {
-			const data = await dbGetSourceMaterial(props.currentWeek);
+			const data = await dbGetSourceMaterial(currentWeek);
 			if (isSubscribed) {
 				setWeekOf(data.weekOf);
 				setHasMeeting(!data.noMeeting);
@@ -109,17 +166,33 @@ const WeekDetails = (props) => {
 			}
 		};
 
-		if (props.currentWeek !== '' && isSubscribed) {
+		if (currentWeek !== '' && isSubscribed) {
 			loadWeekData();
 		}
 
 		return () => {
 			isSubscribed = false;
 		};
-	}, [props.currentWeek, appLang]);
+	}, [currentWeek, appLang, isRerender]);
 
 	return (
-		<>
+		<Box>
+			<Box
+				sx={{
+					display: 'flex',
+					justifyContent: 'space-between',
+					alignItems: 'flex-start',
+				}}
+			>
+				<WeekList />
+				<SourceMaterialMenu
+					currentWeek={currentWeek}
+					handleWeekAdd={handleWeekAdd}
+					handleImportEPUB={handleImportEPUB}
+					handleSaveSource={handleSaveSource}
+					handleImportJw={handleImportJw}
+				/>
+			</Box>
 			<Box
 				sx={{
 					display: 'flex',
@@ -283,13 +356,7 @@ const WeekDetails = (props) => {
 					</Box>
 				</Box>
 			</Box>
-			<SourceMaterialFooter
-				currentWeek={weekOf}
-				handleWeekAdd={handleWeekAdd}
-				handleImportEPUB={handleImportEPUB}
-				handleSaveSource={handleSaveSource}
-			/>
-		</>
+		</Box>
 	);
 };
 
