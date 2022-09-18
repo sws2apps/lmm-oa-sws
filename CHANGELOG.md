@@ -1,3 +1,10 @@
+# [1.0.0-alpha.179](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.178...v1.0.0-alpha.179) (2022-09-18)
+
+
+### Features
+
+* **source-material:** import source material directly from jw.org ([2cee94b](https://github.com/sws2apps/lmm-oa-sws/commit/2cee94b66d0b731d2a80d96e50dd62968ae10db1))
+
 # [1.0.0-alpha.178](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.177...v1.0.0-alpha.178) (2022-09-16)
 
 
