@@ -261,10 +261,14 @@
     "sourceMaterial.addWeekTitle": "Hanampy herinandro vaovao",
     "sourceMaterial.invalidFilename": "Tsy afaka ampidirina io rakitra EPUB nosafidinao io",
     "sourceMaterial.importEPUBTitle": "Hampiditra loharanon-kevitra | EPUB",
+    "sourceMaterial.importJw": "Haka JW.ORG",
+    "sourceMaterial.importJwTitle": "Hampiditra loharanon-kevitra | JW.ORG",
+    "sourceMaterial.importCompleted": "Vita ny fampidirana ny loharanon-kevitra",
 
     "importEPUB.invalid": "Tsy rakitra EPUB misy ny Tari-dalana ho An’ny Fivoriana io nosafidianao io, fa hamarino indray mandeha.",
     "importEPUB.inProgress": "Mampiditra ny rakitra EPUB. Miandrasa kely ...",
-    "importEPUB.completed": "Vita ny fampidirana ny loharanon-kevitra",
+
+    "importJw.inProgress": "Miandrasa kely mandra-pahavitan’ny fakana loharanon-kevitra any amin’ny JW.ORG ...",
 
     "schedule.autofill": "Hameno ho azy",
     "schedule.send": "Alefa",
