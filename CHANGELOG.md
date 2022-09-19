@@ -1,3 +1,19 @@
+# [1.0.0-alpha.180](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.179...v1.0.0-alpha.180) (2022-09-19)
+
+
+### Features
+
+* **deps:** bump @mui/x-date-pickers from 5.0.1 to 5.0.2 ([09e30ab](https://github.com/sws2apps/lmm-oa-sws/commit/09e30ab6f7b26b09bdd9c8aa47ec335ce4cb31b2))
+* **deps:** bump i18next from 21.9.1 to 21.9.2 ([ef5b923](https://github.com/sws2apps/lmm-oa-sws/commit/ef5b92341164099cca305d3a4eb15a2ee92a81f6))
+* **deps:** bump jw-epub-parser from 1.22.0 to 1.23.3 ([8a5f823](https://github.com/sws2apps/lmm-oa-sws/commit/8a5f82304b15bfdb8d59aab9472503ccc0aee930))
+
+# [1.0.0-alpha.179](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.178...v1.0.0-alpha.179) (2022-09-18)
+
+
+### Features
+
+* **source-material:** import source material directly from jw.org ([2cee94b](https://github.com/sws2apps/lmm-oa-sws/commit/2cee94b66d0b731d2a80d96e50dd62968ae10db1))
+
 # [1.0.0-alpha.178](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.177...v1.0.0-alpha.178) (2022-09-16)
 
 

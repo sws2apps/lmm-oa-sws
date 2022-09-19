@@ -1,6 +1,6 @@
 {
   "name": "lmm-oa-sws",
-  "version": "1.0.0-alpha.178",
+  "version": "1.0.0-alpha.180",
   "private": true,
   "dependencies": {
     "@date-io/date-fns": "^2.15.0",
@@ -11,7 +11,7 @@
     "@mui/icons-material": "^5.10.3",
     "@mui/lab": "^5.0.0-alpha.99",
     "@mui/material": "^5.10.5",
-    "@mui/x-date-pickers": "^5.0.1",
+    "@mui/x-date-pickers": "^5.0.2",
     "@sws2apps/react-sw-helper": "^1.8.0",
     "date-fns": "^2.29.3",
     "dateformat": "^5.0.3",
@@ -20,9 +20,9 @@
     "downloadjs": "^1.4.7",
     "file-select-dialog": "^1.5.4",
     "html2pdf.js": "^0.10.1",
-    "i18next": "^21.9.1",
+    "i18next": "^21.9.2",
     "interweave": "^13.0.0",
-    "jw-epub-parser": "^1.22.0",
+    "jw-epub-parser": "^1.23.3",
     "qrcode": "^1.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
