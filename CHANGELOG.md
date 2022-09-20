@@ -1,3 +1,13 @@
+# [1.0.0-alpha.181](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.180...v1.0.0-alpha.181) (2022-09-20)
+
+
+### Features
+
+* **deps:** bump @mui/icons-material from 5.10.3 to 5.10.6 ([997dcc0](https://github.com/sws2apps/lmm-oa-sws/commit/997dcc0fc527f2d09820bea9696f4a946b000d95))
+* **deps:** bump @mui/lab from 5.0.0-alpha.99 to 5.0.0-alpha.100 ([f131609](https://github.com/sws2apps/lmm-oa-sws/commit/f1316096a48ff538bff7eef9fb6476338effd42e))
+* **deps:** bump @mui/material from 5.10.5 to 5.10.6 ([cddb524](https://github.com/sws2apps/lmm-oa-sws/commit/cddb5249a7d5c01efd2b1453e1bdd41acff49777))
+* **schedule:** adjust autofill to assign main students before assistants ([3ace180](https://github.com/sws2apps/lmm-oa-sws/commit/3ace1806b1ebabd30efe904b76fcdc7fef7cc041))
+
 # [1.0.0-alpha.180](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.179...v1.0.0-alpha.180) (2022-09-19)
 
 
