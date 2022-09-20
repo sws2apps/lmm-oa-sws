@@ -349,11 +349,13 @@ export const dbAutoFill = async (schedule) => {
 				}
 			}
 
-			//Assign AYF
+			//Assign AYF Main Student
+			let fldName = '';
+			let fldType = '';
+
 			for (let a = 1; a <= 3; a++) {
-				const fldType = 'ass' + a + '_type';
+				fldType = 'ass' + a + '_type';
 				const assType = sourceData[fldType];
-				var fldName = '';
 
 				//Assign AYF A
 				fldName = 'ass' + a + '_stu_A';
@@ -368,21 +370,6 @@ export const dbAutoFill = async (schedule) => {
 					if (students.length > 0) {
 						const stuA = students[0].person_uid;
 						await dbSaveAss(weekValue, stuA, fldName);
-					}
-				}
-
-				//Assign AYF A Assistant
-				if (
-					assType === 101 ||
-					assType === 102 ||
-					assType === 103 ||
-					assType === 108
-				) {
-					fldName = 'ass' + a + '_ass_A';
-					students = await dbGetPersonsByAssType('isAssistant');
-					if (students.length > 0) {
-						const assA = students[0].person_uid;
-						await dbSaveAss(weekValue, assA, fldName);
 					}
 				}
 
@@ -402,8 +389,31 @@ export const dbAutoFill = async (schedule) => {
 							await dbSaveAss(weekValue, stuB, fldName);
 						}
 					}
+				}
+			}
 
-					//Assign AYF B Assistant
+			//Assign AYF Assistant
+			for (let a = 1; a <= 3; a++) {
+				fldType = 'ass' + a + '_type';
+				const assType = sourceData[fldType];
+
+				//Assign AYF A Assistant
+				if (
+					assType === 101 ||
+					assType === 102 ||
+					assType === 103 ||
+					assType === 108
+				) {
+					fldName = 'ass' + a + '_ass_A';
+					students = await dbGetPersonsByAssType('isAssistant');
+					if (students.length > 0) {
+						const assA = students[0].person_uid;
+						await dbSaveAss(weekValue, assA, fldName);
+					}
+				}
+
+				//Assign AYF B Assistant
+				if (settings.class_count === 2 && scheduleData.week_type === 1) {
 					if (
 						assType === 101 ||
 						assType === 102 ||
