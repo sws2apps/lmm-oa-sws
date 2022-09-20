@@ -55,7 +55,7 @@ const SourceMaterialMenu = (props) => {
 	};
 
 	const theme = useTheme();
-	const largeMenu = useMediaQuery(theme.breakpoints.up(1250), {
+	const largeMenu = useMediaQuery(theme.breakpoints.up(1300), {
 		noSsr: true,
 	});
 	const miniMenu = useMediaQuery(theme.breakpoints.up(630), {
