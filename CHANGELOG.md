@@ -1,3 +1,11 @@
+# [1.0.0-alpha.182](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.181...v1.0.0-alpha.182) (2022-09-24)
+
+
+### Features
+
+* **deps:** bump @date-io/date-fns from 2.15.0 to 2.16.0 ([aaa4718](https://github.com/sws2apps/lmm-oa-sws/commit/aaa4718fa087e74bc7b59fa69db0bd06223a3531))
+* **deps:** bump react-router-dom from 6.4.0 to 6.4.1 ([100f9a5](https://github.com/sws2apps/lmm-oa-sws/commit/100f9a5c871ffcfd33febd8615de5b57e18af537))
+
 # [1.0.0-alpha.181](https://github.com/sws2apps/lmm-oa-sws/compare/v1.0.0-alpha.180...v1.0.0-alpha.181) (2022-09-20)
 
 
