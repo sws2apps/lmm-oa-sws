@@ -381,177 +381,188 @@ const StudentPocket = ({ id, name }) => {
 					}}
 				/>
 			)}
-			{!isGettingUser && pocketName.length > 0 && (
-				<Box
-					sx={{ marginBottom: '10px', display: 'flex', alignItems: 'center' }}
-				>
-					<Typography sx={{ fontWeight: 'bold', marginRight: '5px' }}>
-						{pocketName}
-					</Typography>
-					{name !== pocketName && (
-						<IconButton
-							onClick={handleUpdatePocketUsername}
-							disabled={isGenerating}
-						>
-							<CloudSyncIcon color='primary' />
-						</IconButton>
-					)}
-				</Box>
-			)}
-			{!isGettingUser && verifyCode.length === 0 && devices.length === 0 && (
-				<Button
-					variant='contained'
-					sx={{ marginBottom: '15px' }}
-					disabled={isGenerating}
-					onClick={handleSetupPocket}
-				>
-					{t('students.setupPocketAccess')}
-				</Button>
-			)}
-			{!isGettingUser && verifyCode.length === 0 && devices.length > 0 && (
+			{!isGettingUser && (
 				<>
-					<Button
-						variant='contained'
-						sx={{ marginBottom: '15px' }}
-						disabled={isGenerating}
-						onClick={handleGenerateOCode}
-					>
-						{t('students.addPocketDevice')}
-					</Button>
-					<Box sx={{ margin: '10px 0 20px 0' }}>
-						<Typography sx={{ fontWeight: 'bold', lineHeight: 1.2 }}>
-							Devices
-						</Typography>
-						<Typography sx={{ lineHeight: 1.2, margin: '10px 0' }}>
-							{t('students.pocketSessions')}
-						</Typography>
-						<Divider />
-						{devices.map((device) => (
-							<Box
-								key={device.visitor_id}
-								sx={{
-									display: 'flex',
-									alignItems: 'center',
-									padding: '10px',
-									borderBottom: '1px outset',
-									justifyContent: 'space-between',
-									flexWrap: 'wrap',
-									maxWidth: '650px',
-								}}
-							>
-								<Box
-									sx={{
-										display: 'flex',
-										alignItems: 'center',
-										marginBottom: '10px',
-									}}
+					{pocketName.length > 0 && (
+						<Box
+							sx={{
+								marginBottom: '10px',
+								display: 'flex',
+								alignItems: 'center',
+							}}
+						>
+							<Typography sx={{ fontWeight: 'bold', marginRight: '5px' }}>
+								{pocketName}
+							</Typography>
+							{name !== pocketName && (
+								<IconButton
+									onClick={handleUpdatePocketUsername}
+									disabled={isGenerating}
 								>
-									<DevicesIcon
-										sx={{
-											fontSize: '60px',
-											marginRight: '10px',
-											color: '#1976d2',
-										}}
-									/>
-									<Box>
-										<Typography sx={{ fontSize: '14px' }}>
-											{device.name}
-										</Typography>
-										<Chip
-											label={dateFormat(
-												new Date(device.sws_last_seen),
-												t('global.shortDateTimeFormat')
-											)}
-											sx={{
-												backgroundColor: '#1976d2',
-												color: 'white',
-												fontWeight: 'bold',
-											}}
-										/>
-									</Box>
-								</Box>
-
-								<Box
-									sx={{
-										display: 'flex',
-										flexGrow: 1,
-										justifyContent: 'flex-end',
-									}}
-								>
-									<Button
-										variant='outlined'
-										color='error'
-										sx={{ marginBottom: '10px' }}
-										onClick={() => handleDeleteDevice(device.visitor_id)}
-										disabled={isGenerating}
-									>
-										{t('settings.sessionRevoke')}
-									</Button>
-								</Box>
-							</Box>
-						))}
-					</Box>
-				</>
-			)}
-			{isGenerating && (
-				<CircularProgress
-					color='secondary'
-					size={30}
-					disableShrink={true}
-					sx={{
-						margin: '10px 0 20px 10px',
-						display: 'flex',
-						alignItems: 'center',
-					}}
-				/>
-			)}
-			{!isGettingUser && verifyCode.length > 0 && (
-				<Box sx={{ marginBottom: '15px', marginTop: '10px' }}>
-					<Typography>{t('students.setupPocketToken')}</Typography>
-					<TextField
-						id='outlined-token'
-						variant='outlined'
-						size='small'
-						autoComplete='off'
-						value={verifyCode}
-						multiline
-						sx={{ width: '150px', marginTop: '5px' }}
-						InputProps={{
-							readOnly: true,
-						}}
-					/>
-				</Box>
-			)}
-			{!isGettingUser && pocketName.length > 0 && (
-				<Box>
-					<Autocomplete
-						multiple
-						id='tags-standard'
-						value={value}
-						onChange={(e, value) => setValue(value)}
-						options={pocketOptions}
-						getOptionLabel={(option) => option.person_name}
-						disabled={isGenerating}
-						isOptionEqualToValue={(option, value) =>
-							option.person_uid === value.person_uid
-						}
-						renderInput={(params) => (
+									<CloudSyncIcon color='primary' />
+								</IconButton>
+							)}
+						</Box>
+					)}
+					{verifyCode.length === 0 && devices.length === 0 && (
+						<Button
+							variant='contained'
+							sx={{ marginBottom: '15px' }}
+							disabled={isGenerating}
+							onClick={handleSetupPocket}
+						>
+							{t('students.setupPocketAccess')}
+						</Button>
+					)}
+					{verifyCode.length === 0 && devices.length > 0 && (
+						<Button
+							variant='contained'
+							sx={{ marginBottom: '15px' }}
+							disabled={isGenerating}
+							onClick={handleGenerateOCode}
+						>
+							{t('students.addPocketDevice')}
+						</Button>
+					)}
+					{!isGettingUser && verifyCode.length > 0 && (
+						<Box sx={{ marginBottom: '15px', marginTop: '10px' }}>
+							<Typography>{t('students.setupPocketToken')}</Typography>
 							<TextField
-								{...params}
-								variant='standard'
-								label={t('students.viewOnBehalf')}
+								id='outlined-token'
+								variant='outlined'
+								size='small'
+								autoComplete='off'
+								value={verifyCode}
+								multiline
+								sx={{ width: '150px', marginTop: '5px' }}
+								InputProps={{
+									readOnly: true,
+								}}
 							/>
-						)}
-					/>
-					<Button
-						sx={{ marginTop: '10px' }}
-						variant='outlined'
-						disabled={isGenerating}
-						onClick={handleUpdatePocketMembers}
-					>
-						{t('global.update')}
-					</Button>
-				</Box>
+						</Box>
+					)}
+					{devices.length > 0 && (
+						<>
+							<Box sx={{ margin: '10px 0 20px 0' }}>
+								<Typography sx={{ fontWeight: 'bold', lineHeight: 1.2 }}>
+									{t('students.pocketDevices')}
+								</Typography>
+								<Typography sx={{ lineHeight: 1.2, margin: '10px 0' }}>
+									{t('students.pocketSessions')}
+								</Typography>
+								<Divider />
+								{devices.map((device) => (
+									<Box
+										key={device.visitor_id}
+										sx={{
+											display: 'flex',
+											alignItems: 'center',
+											padding: '10px',
+											borderBottom: '1px outset',
+											justifyContent: 'space-between',
+											flexWrap: 'wrap',
+											maxWidth: '650px',
+										}}
+									>
+										<Box
+											sx={{
+												display: 'flex',
+												alignItems: 'center',
+												marginBottom: '10px',
+											}}
+										>
+											<DevicesIcon
+												sx={{
+													fontSize: '60px',
+													marginRight: '10px',
+													color: '#1976d2',
+												}}
+											/>
+											<Box>
+												<Typography sx={{ fontSize: '14px' }}>
+													{device.name}
+												</Typography>
+												<Chip
+													label={dateFormat(
+														new Date(device.sws_last_seen),
+														t('global.shortDateTimeFormat')
+													)}
+													sx={{
+														backgroundColor: '#1976d2',
+														color: 'white',
+														fontWeight: 'bold',
+													}}
+												/>
+											</Box>
+										</Box>
+
+										<Box
+											sx={{
+												display: 'flex',
+												flexGrow: 1,
+												justifyContent: 'flex-end',
+											}}
+										>
+											<Button
+												variant='outlined'
+												color='error'
+												sx={{ marginBottom: '10px' }}
+												onClick={() => handleDeleteDevice(device.visitor_id)}
+												disabled={isGenerating}
+											>
+												{t('settings.sessionRevoke')}
+											</Button>
+										</Box>
+									</Box>
+								))}
+							</Box>
+						</>
+					)}
+					{isGenerating && (
+						<CircularProgress
+							color='secondary'
+							size={30}
+							disableShrink={true}
+							sx={{
+								margin: '10px 0 20px 10px',
+								display: 'flex',
+								alignItems: 'center',
+							}}
+						/>
+					)}
+
+					{pocketName.length > 0 && (
+						<Box>
+							<Autocomplete
+								multiple
+								id='tags-standard'
+								value={value}
+								onChange={(e, value) => setValue(value)}
+								options={pocketOptions}
+								getOptionLabel={(option) => option.person_name}
+								disabled={isGenerating}
+								isOptionEqualToValue={(option, value) =>
+									option.person_uid === value.person_uid
+								}
+								renderInput={(params) => (
+									<TextField
+										{...params}
+										variant='standard'
+										label={t('students.viewOnBehalf')}
+									/>
+								)}
+							/>
+							<Button
+								sx={{ marginTop: '10px' }}
+								variant='outlined'
+								disabled={isGenerating}
+								onClick={handleUpdatePocketMembers}
+							>
+								{t('global.update')}
+							</Button>
+						</Box>
+					)}
+				</>
 			)}
 		</Box>
 	);
