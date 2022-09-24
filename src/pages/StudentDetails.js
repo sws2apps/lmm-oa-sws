@@ -477,6 +477,7 @@ const StudentDetails = () => {
 							</AccordionSummary>
 							<AccordionDetails>
 								<StudentAssignments
+									student={student}
 									assignments={assignments}
 									setAssignments={(value) => setAssignments(value)}
 								/>

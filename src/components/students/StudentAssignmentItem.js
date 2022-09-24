@@ -24,7 +24,12 @@ const datePicker = {
 	},
 };
 
-const StudentAssignmentItem = ({ assignment, assignments, setAssignments }) => {
+const StudentAssignmentItem = ({
+	student,
+	assignment,
+	assignments,
+	setAssignments,
+}) => {
 	const { t } = useTranslation();
 	const { assignmentId } = assignment;
 	const shortDatePickerFormat = useRecoilValue(shortDatePickerFormatState);
@@ -114,6 +119,7 @@ const StudentAssignmentItem = ({ assignment, assignments, setAssignments }) => {
 						assignable={true}
 						currentType={assignmentType}
 						handleChangeType={(value) => handleAssignmentChange(value)}
+						student={student}
 					/>
 				</Box>
 				<Box

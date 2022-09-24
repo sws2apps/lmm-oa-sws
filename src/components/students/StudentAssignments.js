@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import StudentAssignmentItem from './StudentAssignmentItem';
 
-const StudentAssignments = ({ assignments, setAssignments }) => {
+const StudentAssignments = ({ student, assignments, setAssignments }) => {
 	const { t } = useTranslation();
 
 	const handleAssignmentAdd = () => {
@@ -42,6 +42,7 @@ const StudentAssignments = ({ assignments, setAssignments }) => {
 				assignments.map((assignment) => (
 					<StudentAssignmentItem
 						key={assignment.assignmentId}
+						student={student}
 						assignment={assignment}
 						assignments={assignments}
 						setAssignments={(value) => setAssignments(value)}

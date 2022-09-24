@@ -295,6 +295,7 @@ const updateAssignmentType = async (step) => {
 		{
 			id_type: 8,
 			code: 100,
+			maleOnly: true,
 			assignable: true,
 			ass_type_name: {
 				...bReadObj,
@@ -327,6 +328,7 @@ const updateAssignmentType = async (step) => {
 		{
 			id_type: 4,
 			code: 104,
+			maleOnly: true,
 			assignable: true,
 			ass_type_name: {
 				...talkObj,

@@ -5,20 +5,35 @@ import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import { assTypeLocalNewState } from '../../appStates/appSourceMaterial';
 
-const AssignmentType = ({ assignable, currentType, handleChangeType }) => {
+const AssignmentType = ({
+	student,
+	assignable,
+	currentType,
+	handleChangeType,
+}) => {
 	const { t } = useTranslation();
 
 	const assTypeList = useRecoilValue(assTypeLocalNewState);
 	const [localList, setLocalList] = useState([]);
+	const [isFemale, setIsFemale] = useState(false);
+
+	useEffect(() => {
+		setIsFemale(student.isFemale);
+	}, [student.isFemale]);
 
 	useEffect(() => {
 		if (assignable) {
-			const data = assTypeList.filter((assType) => assType.assignable === true);
+			let data = assTypeList.filter((assType) => assType.assignable === true);
+
+			if (isFemale) {
+				data = data.filter((assType) => assType.maleOnly !== true);
+			}
+
 			setLocalList(data);
 		} else {
 			setLocalList(assTypeList);
 		}
-	}, [assTypeList, assignable]);
+	}, [assTypeList, assignable, isFemale]);
 
 	const renderPartType = (type) => {
 		return (
