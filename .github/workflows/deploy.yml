@@ -42,7 +42,7 @@ jobs:
 
       - name: Deploy to Firebase
         if: ${{ steps.check_build.outputs.files_exists == 'true' }}
-        uses: sws2apps/firebase-deployment@e5c084532942c819b8c9dcee3d014137cf4a2861
+        uses: sws2apps/firebase-deployment@8bd00ef2c7fb6feb0c092f38287f00a652e0ee34
         with:
           project: dev-lmm-oa-sws
         env:
