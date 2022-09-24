@@ -64,6 +64,7 @@ export const dbGetListAssType = async () => {
 		obj.code = appData[i].code;
 		obj.assignable = appData[i].assignable;
 		obj.ass_type_name = appData[i].ass_type_name;
+		obj.maleOnly = appData[i].maleOnly || false;
 		assType.push(obj);
 	}
 	return assType;
