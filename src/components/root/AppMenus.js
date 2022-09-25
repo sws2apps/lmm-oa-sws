@@ -102,10 +102,6 @@ const AppMenus = ({ enabledInstall, isLoading, installPwa }) => {
 		setAnchorPopoverEl(null);
 	};
 
-	const miniView = useMediaQuery(theme.breakpoints.down('sm'), {
-		noSsr: true,
-	});
-
 	const largeView = useMediaQuery(theme.breakpoints.up('md'), {
 		noSsr: true,
 	});
