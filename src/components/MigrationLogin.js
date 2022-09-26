@@ -10,6 +10,7 @@ import { isEmailValid } from '../utils/emailValid';
 import {
 	apiHostState,
 	isOnlineState,
+	userEmailState,
 	visitorIDState,
 } from '../appStates/appSettings';
 import { dbUpdateAppSettings } from '../indexedDb/dbAppSettings';
@@ -21,6 +22,7 @@ const MigrationLogin = ({ handleSkipStep, handleNext }) => {
 	let abortCont = useMemo(() => new AbortController(), []);
 
 	const setCongID = useSetRecoilState(congIDState);
+	const setUserEmail = useSetRecoilState(userEmailState);
 
 	const isOnline = useRecoilValue(isOnlineState);
 	const visitorID = useRecoilValue(visitorIDState);
@@ -68,6 +70,7 @@ const MigrationLogin = ({ handleSkipStep, handleNext }) => {
 					const data = await res.json();
 					if (res.status === 200) {
 						setIsProcessing(false);
+						setUserEmail(userTmpEmail);
 						setIsMfaCheck(true);
 					} else {
 						if (data.secret && data.qrCode) {
