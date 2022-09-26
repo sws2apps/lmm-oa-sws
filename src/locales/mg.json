@@ -384,5 +384,8 @@
     "migration.btnNewData": "Vaovao",
     "migration.btnMigrateData": "Afindra",
     "migration.btnReset": "Averina",
-    "migration.btnSkip": "Ajanona"
+    "migration.btnSkip": "Ajanona",
+    "migration.noData": "Tsy mbola misy rakitra azo afindra nampiasainao tamin’ny LMM-OA",
+    "migration.sendBackupDesc": "Tsy maintsy mandefa rakitra fiandry any amin’ny internet ianao, raha tianao ho hita any amin’ilay LMM-OA vaovao ny fitehirizana rehetra. Rehefa tafiditra ao amin’ilay programa dia safidio ilay hoe Hamerina rakitra fiandry.",
+    "migration.btnBackup": "Handefa rakitra fiandry"
 }

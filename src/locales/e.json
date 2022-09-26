@@ -383,5 +383,8 @@
     "migration.btnNewData": "New",
     "migration.btnMigrateData": "Migrate",
     "migration.btnReset": "Reset",
-    "migration.btnSkip": "Skip"
+    "migration.btnSkip": "Skip",
+    "migration.noData": "We have noticed that you do not have yet any data to be migrated",
+    "migration.sendBackupDesc": "In order to use your data to the new LMM-OA website, you have to create and send backup online. When logged in, click Restore backup.",
+    "migration.btnBackup": "Send backup"
 }

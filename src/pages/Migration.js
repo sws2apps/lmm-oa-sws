@@ -11,6 +11,7 @@ import AppLanguage from '../components/root/AppLanguage';
 import StartMigration from '../components/StartMigration';
 import MigrationComplete from '../components/MigrationComplete';
 import MigrationLogin from '../components/MigrationLogin';
+import MigrationBackup from '../components/MigrationBackup';
 
 const Migration = () => {
 	const { t } = useTranslation();
@@ -20,10 +21,6 @@ const Migration = () => {
 
 	const handleNext = () => {
 		setActiveStep((prevActiveStep) => prevActiveStep + 1);
-	};
-
-	const handleBack = () => {
-		setActiveStep((prevActiveStep) => prevActiveStep - 1);
 	};
 
 	const handleReset = () => {
@@ -57,7 +54,12 @@ const Migration = () => {
 		},
 		{
 			label: t('migration.sendBackup'),
-			content: <></>,
+			content: (
+				<MigrationBackup
+					handleSkipStep={handleSkipStep}
+					handleNext={handleNext}
+				/>
+			),
 		},
 	];
 

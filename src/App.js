@@ -1,10 +1,16 @@
 import { useEffect } from 'react';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import FingerprintJS from '@fingerprintjs/fingerprintjs-pro';
 import usePwa2 from 'use-pwa2/dist/index.js';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import InternetChecker from './components/root/InternetChecker';
 import ServiceWorkerWrapper from './components/root/ServiceWorkerWrapper';
-import { apiHostState, appStageState } from './appStates/appSettings';
+import {
+	apiHostState,
+	appStageState,
+	isOnlineState,
+	visitorIDState,
+} from './appStates/appSettings';
 import Migration from './pages/Migration';
 
 const theme = createTheme({
@@ -26,6 +32,9 @@ const App = ({ updatePwa }) => {
 
 	const setApiHost = useSetRecoilState(apiHostState);
 	const setAppStage = useSetRecoilState(appStageState);
+	const setVisitorID = useSetRecoilState(visitorIDState);
+
+	const isOnline = useRecoilValue(isOnlineState);
 
 	useEffect(() => {
 		if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
@@ -42,6 +51,29 @@ const App = ({ updatePwa }) => {
 			}
 		}
 	}, [setApiHost, setAppStage]);
+
+	useEffect(() => {
+		// get visitor ID and check if there is an active connection
+		const getUserID = async () => {
+			const fpPromise = FingerprintJS.load({
+				apiKey: 'XwmESck7zm6PZAfspXbs',
+			});
+
+			let visitorId = '';
+
+			do {
+				const fp = await fpPromise;
+				const result = await fp.get();
+				visitorId = result.visitorId;
+			} while (visitorId.length === 0);
+
+			setVisitorID(visitorId);
+		};
+
+		if (isOnline) {
+			getUserID();
+		}
+	}, [setVisitorID, isOnline]);
 
 	useEffect(() => {
 		if (!indexedDB) {
