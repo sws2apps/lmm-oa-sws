@@ -89,6 +89,9 @@ const AppLanguage = (props) => {
 							borderRadius: 0,
 							backgroundColor: 'rgba(23, 32, 42, .3)',
 						},
+						position: 'fixed',
+						right: 10,
+						top: 10,
 					}}
 					onClick={handleClick}
 				>

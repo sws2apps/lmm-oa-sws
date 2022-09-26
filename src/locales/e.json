@@ -372,5 +372,16 @@
     "administration.roleLMMO": "Life and Ministry Meeting Overseer",
     "administration.roleLMMOAssistant": "Life and Ministry Meeting Overseer - Assistant",
 
-    "about.description": "LMM-OA (Life and Ministry Meeting Overseer Assistant) is an application to coordinate and manage students assignment schedule for Midweek Meeting."
+    "about.description": "LMM-OA (Life and Ministry Meeting Overseer Assistant) is an application to coordinate and manage students assignment schedule for Midweek Meeting.",
+
+    "migration.intro": "LMM-OA has been migrated to a new website. If you have installed the application on your device, we recommend that you uninstall it first.",
+    "migration.openNew": "Open new website",
+    "migration.migrateData": "Data migration",
+    "migration.login": "Login to your account",
+    "migration.sendBackup": "Send backup online",
+    "migration.startBackupDesc": "Do you want to migrate your existing data, or start with a new one?",
+    "migration.btnNewData": "New",
+    "migration.btnMigrateData": "Migrate",
+    "migration.btnReset": "Reset",
+    "migration.btnSkip": "Skip"
 }

@@ -373,5 +373,16 @@
     "administration.roleLMMO": "Mpiandraikitra ny Fivoriana Momba ny Fiainanantsika sy ny Fanompoana",
     "administration.roleLMMOAssistant": "Mpiandraikitra ny Fivoriana Momba ny Fiainanantsika sy ny Fanompoana - Mpanampy",
 
-    "about.description": "Programa fandaminana anjaran’ny mpianatra amin’ny fivoriana andavanandro ny LMM-OA (Life and Ministry Meeting Overseer Assistant)."
+    "about.description": "Programa fandaminana anjaran’ny mpianatra amin’ny fivoriana andavanandro ny LMM-OA (Life and Ministry Meeting Overseer Assistant).",
+
+    "migration.intro": "Niova ny adiresy misy ny programa LMM-OA. Raha efa nampidirinao ao amin’ny fitaovana nampiasainao ity programa ity, dia azonao esorina aloha izany.",
+    "migration.openNew": "Tranokala vaovao",
+    "migration.migrateData": "Famindrana rakitra",
+    "migration.login": "Hiditra ao amin’ny kaontinao",
+    "migration.sendBackup": "Handefa rakitra fiandry",
+    "migration.startBackupDesc": "Tianao ho afindra ve ny rakitra nampiasainao taloha, sa hanomboka amina rakitra vaovao mihitsy?",
+    "migration.btnNewData": "Vaovao",
+    "migration.btnMigrateData": "Afindra",
+    "migration.btnReset": "Averina",
+    "migration.btnSkip": "Ajanona"
 }
