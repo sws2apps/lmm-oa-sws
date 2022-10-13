@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "default": "st-ro-sws",
+    "production": "st-ro-sws"
+  },
+  "targets": {}
+}

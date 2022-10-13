@@ -1,10 +1,10 @@
-# Secretary Tools - Report Organizer (ST-RO)
+# Secretary Tools - Report Organizaer (ST-RO)
 
-ST-RO is a web application that will allow you to schedule students assignment for Midweek Meeting for Jehovah’s Witnesses. Currently, it is still under its initial development phase.
+ST-RO is a web application that will allow you to organize and manage various reports for Jehovah’s Witnesses congregations.
 
-## Who should use ST-RO?
+## Who should use MSC?
 
-ST-RO is designed for use by the Secretary.
+ST-RO is designed for use by the congregation secretary.
 
 ## What are the device requirements to open ST-RO?
 

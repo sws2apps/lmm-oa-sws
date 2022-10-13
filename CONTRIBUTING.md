@@ -10,13 +10,7 @@ ST-RO follows semantic versioning. We release patch versions for bugfixes, minor
 
 ## Branch Organization
 
-We used three different branches to make production, beta and alpha releases of ST-RO:
-
-| branch | whats for                                                                                          |
-| :----- | :------------------------------------------------------------------------------------------------- |
-| main   | production release: bug fix for the current version will be queued in this branch                  |
-| beta   | beta release, available on staging environment: new feature will be queued in this branch          |
-| alpha  | alpha release, available on development environment: breaking change will be queued in this branch |
+We only use the `main` branch. For new features and breaking changes, feature flags are used.
 
 ## Bugs
 
@@ -30,7 +24,7 @@ Please do not report security bugs in the public issues; go through the process 
 
 ## Proposing a Change
 
-If you intend to add new features or suggest major changes to ST-RO, check first that your idea is not yet in our tracking issues list. If not, we recommend creating a new [discussion first](https://github.com/sws2apps/st-ro-sws/discussions/categories/ideas). This lets us reach an agreement on your proposal before you put significant effort into it. After it has been approved, please create [new issue](https://github.com/sws2apps/st-ro-sws/issues), and choose the correct template.
+If you intend to add new features or suggest major changes to MSC, check first that your idea is not yet in our tracking issues list. If not, we recommend creating a new [discussion first](https://github.com/sws2apps/st-ro-sws/discussions/categories/ideas). This lets us reach an agreement on your proposal before you put significant effort into it. After it has been approved, please create [new issue](https://github.com/sws2apps/st-ro-sws/issues), and choose the correct template.
 
 If you’re only fixing a bug, it’s fine to submit a pull request right away but we still recommend to file an issue detailing what you’re fixing. This is helpful in case we don’t accept that specific fix but want to keep track of the issue.
 
@@ -48,7 +42,7 @@ We are monitoring for pull requests. We will review your pull request and either
 
 **Before submitting a PR**, please make sure the following is done:
 
-- Run `npm start`, and test if the changes you are proposing are working correctly.
+- Run `npm dev`, and test if the changes you are proposing are working correctly.
 - Run `npm build`, to check if the application build correctly.
 
 **When commiting your changes**, we recommend the following command to be run:
