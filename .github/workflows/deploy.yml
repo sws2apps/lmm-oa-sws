@@ -8,10 +8,10 @@ permissions: read-all
 jobs:
   dev_deploy:
     name: Build and Deploy to Production
-    if: ${{ github.repository == 'sws2apps/st-ro-sws' && github.ref == 'refs/heads/main' }}
+    if: ${{ github.repository == 'sws2apps/lmm-oa-sws' && github.ref == 'refs/heads/main' }}
     environment:
       name: Prod.env
-      url: https://st-ro-sws.web.app
+      url: https://lmm-oa-sws.web.app
     runs-on: ubuntu-latest
 
     permissions:
@@ -42,7 +42,7 @@ jobs:
         id: check_build
         uses: andstor/file-existence-action@f02338908d150e00a4b8bebc2dad18bd9e5229b0
         with:
-          files: 'dist'
+          files: 'build'
 
       - name: Deploy to Firebase
         if: ${{ steps.check_build.outputs.files_exists == 'true' }}
@@ -50,4 +50,4 @@ jobs:
         with:
           workloadIdentityProvider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
           serviceAccount: ${{ secrets.SERVICE_ACCOUNT }}
-          project: st-ro-sws
+          project: lmm-oa-sws

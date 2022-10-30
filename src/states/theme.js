@@ -7,8 +7,12 @@ export const themeOptionsState = selector({
 		const isLight = get(isLightThemeState);
 
 		return {
-			navBar: '#3f51b5 !important',
+			mainColor: '#3f51b5 !important',
             textNotImportant: isLight ? '#707B7C' : '#D0D3D4',
+			reportIconColor: isLight ? '#CB4335' : '#FDFEFE',
+			redNoteBg: isLight ? '#F5B7B1' : '#E74C3C',
+			whatsNewBg: isLight ? '#AEB6BF' : '#2C3E50',
+			btnProgress: isLight ? '#212F3D' : '#FBFCFC',
 		};
 	},
 });

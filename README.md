@@ -1,14 +1,20 @@
-# Secretary Tools - Report Organizaer (ST-RO)
+# Life and Ministry Meeting Overseer Assistant (LMM-OA)
 
-ST-RO is a web application that will allow you to organize and manage various reports for Jehovah’s Witnesses congregations.
+[![lmm-oa-sws](https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/simple/rfu8xk&style=plastic&logo=cypress)](https://dashboard.cypress.io/projects/rfu8xk/runs)
 
-## Who should use MSC?
+LMM-OA is a web application that will allow you to schedule students assignment for Midweek Meeting for Jehovah’s Witnesses.
 
-ST-RO is designed for use by the congregation secretary.
+## Preview
 
-## What are the device requirements to open ST-RO?
+![LMM-OA](https://user-images.githubusercontent.com/26148770/178285310-fb3e4965-270e-468d-b08d-81951b406f6a.png)
 
-ST-RO is a web application, and it is also PWA capable. All devices that have up to date browser, depending on which platform it is running can use this web application.
+## Who should use LMM-OA?
+
+LMM-OA is designed for use by the Life and Ministry Meeting Overseer.
+
+## What are the device requirements to open LMM-OA?
+
+LMM-OA is a web application, and it is also PWA capable. All devices that have up to date browser, depending on which platform it is running can use this web application.
 
 ## May I contribute?
 

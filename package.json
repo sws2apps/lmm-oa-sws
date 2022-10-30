@@ -1,11 +1,11 @@
 {
-  "name": "st-ro-sws",
+  "name": "lmm-oa-sws",
   "private": true,
   "version": "1.0.0",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sws2apps/st-ro-sws.git"
+    "url": "https://github.com/sws2apps/lmm-oa-sws.git"
   },
   "scripts": {
     "dev": "vite",
@@ -25,13 +25,20 @@
     "@mui/icons-material": "^5.10.9",
     "@mui/material": "^5.10.10",
     "@sws2apps/react-sw-helper": "^1.9.0",
+    "dateformat": "^5.0.3",
+    "dexie": "^3.2.2",
+    "dexie-export-import": "^1.0.3",
+    "downloadjs": "^1.4.7",
     "i18next": "^21.10.0",
+    "interweave": "^13.0.0",
+    "qrcode": "^1.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-i18next": "^11.18.6",
+    "react-i18next": "^12.0.0",
     "react-router-dom": "^6.4.2",
     "recoil": "^0.7.6",
     "recoil-outside": "^0.1.1",
+    "simple-crypto-js": "^3.0.1",
     "use-pwa2": "^0.2.0",
     "workbox-cli": "^6.5.4"
   },
@@ -42,6 +49,7 @@
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "@vitejs/plugin-react": "^2.1.0",
+    "cypress": "^10.10.0",
     "eslint": "^8.25.0",
     "eslint-config-react-app": "^7.0.1",
     "vite": "^3.1.7",

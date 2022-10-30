@@ -5,9 +5,9 @@
     "scope": "/",
     "start_url": "/",
     "id": "/",
-    "name": "Secretary Tools Report Organizer",
-    "short_name": "ST-RO Apps",
-    "description": "Application to organize and manage various reports for Jehovah’s Witnesses congregations",
+    "name": "Life and Ministry Meeting Overseer Assistant",
+    "short_name": "LMM-OA",
+    "description": "Coordinate and schedule students assignment schedule for Midweek Meeting of Jehovah’s Witnesses",
     "icons": [
         {
             "src": "/img/icon-192x192.png",
