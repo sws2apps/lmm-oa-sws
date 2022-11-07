@@ -24,7 +24,9 @@
     "@fontsource/roboto": "^4.5.8",
     "@mui/icons-material": "^5.10.9",
     "@mui/material": "^5.10.10",
+    "@mui/x-date-pickers": "^5.0.7",
     "@sws2apps/react-sw-helper": "^1.9.0",
+    "date-fns": "^2.29.3",
     "dateformat": "^5.0.3",
     "dexie": "^3.2.2",
     "dexie-export-import": "^1.0.3",
@@ -40,6 +42,7 @@
     "recoil-outside": "^0.1.1",
     "simple-crypto-js": "^3.0.1",
     "use-pwa2": "^0.2.0",
+    "vite-plugin-package-version": "^1.0.2",
     "workbox-cli": "^6.5.4"
   },
   "devDependencies": {

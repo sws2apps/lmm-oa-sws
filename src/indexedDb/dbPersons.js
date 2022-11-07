@@ -3,7 +3,7 @@ import dateFormat from 'dateformat';
 import { dbGetSourceMaterial } from './dbSourceMaterial';
 import { getI18n } from 'react-i18next';
 import appDb from './mainDb';
-import { allStudentsState, filteredStudentsState } from '../states/students';
+import { allStudentsState, filteredStudentsState } from '../states/persons';
 import { sortHistoricalDateDesc } from '../utils/app';
 import { dbStudentAssignmentsHistory } from './dbAssignment';
 

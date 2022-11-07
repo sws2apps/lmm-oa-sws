@@ -20,7 +20,7 @@ import {
 } from '../../../states/main';
 
 const CongregationSignUp = () => {
-  const abortCont = useRef();
+  const cancel = useRef();
 
   const { t } = useTranslation();
 
@@ -48,71 +48,72 @@ const CongregationSignUp = () => {
   };
 
   const handleSignUp = async () => {
-    abortCont.current = new AbortController();
+    try {
+      cancel.current = false;
 
-    setHasErrorCongName(false);
-    setHasErrorCongNumber(false);
-    if (userTmpCongName.length > 0 && userTmpCongNumber.length > 0) {
-      setIsProcessing(true);
-      const reqPayload = {
-        email: userEmail,
-        cong_name: userTmpCongName,
-        cong_number: userTmpCongNumber,
-        app_requestor: 'lmmo',
-      };
+      setHasErrorCongName(false);
+      setHasErrorCongNumber(false);
+      if (userTmpCongName.length > 0 && userTmpCongNumber.length > 0) {
+        setIsProcessing(true);
+        const reqPayload = {
+          email: userEmail,
+          cong_name: userTmpCongName,
+          cong_number: userTmpCongNumber,
+          app_requestor: 'lmmo',
+        };
 
-      if (apiHost !== '') {
-        fetch(`${apiHost}api/congregations`, {
-          signal: abortCont.signal,
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            visitorid: visitorID,
-            email: userEmail,
-          },
-          body: JSON.stringify(reqPayload),
-        })
-          .then(async (res) => {
-            const data = await res.json();
-            if (res.status === 200) {
-              setIsCongRequestSent(true);
-              setIsProcessing(false);
-              setIsCongAccountCreate(false);
-            } else if (res.status === 405) {
-              setIsCongWaitRequest(true);
-              setIsProcessing(false);
-              setIsCongAccountCreate(false);
-            } else {
-              setIsProcessing(false);
-              setAppMessage(data.message);
-              setAppSeverity('warning');
-              setAppSnackOpen(true);
-            }
+        if (apiHost !== '') {
+          const res = await fetch(`${apiHost}api/congregations`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              visitorid: visitorID,
+              email: userEmail,
+            },
+            body: JSON.stringify(reqPayload),
           })
-          .catch(() => {
-            setIsProcessing(false);
-            setAppMessage(t('login.createFailed'));
-            setAppSeverity('error');
-            setAppSnackOpen(true);
-          });
+
+          if (!cancel.current) {
+            const data = await res.json();
+              if (res.status === 200) {
+                setIsCongRequestSent(true);
+                setIsProcessing(false);
+                setIsCongAccountCreate(false);
+              } else if (res.status === 405) {
+                setIsCongWaitRequest(true);
+                setIsProcessing(false);
+                setIsCongAccountCreate(false);
+              } else {
+                setIsProcessing(false);
+                setAppMessage(data.message);
+                setAppSeverity('warning');
+                setAppSnackOpen(true);
+              }
+          }
+        }
+      } else {
+        if (userTmpCongName.length === 0) {
+          setHasErrorCongName(true);
+        }
+        if (userTmpCongNumber.length === 0) {
+          setHasErrorCongNumber(true);
+        }
       }
-    } else {
-      if (userTmpCongName.length === 0) {
-        setHasErrorCongName(true);
-      }
-      if (userTmpCongNumber.length === 0) {
-        setHasErrorCongNumber(true);
+    } catch (err) {
+      if (!cancel.current) {
+        setIsProcessing(false);
+              setAppMessage(t('login.createFailed'));
+              setAppSeverity('error');
+              setAppSnackOpen(true);
       }
     }
   };
 
   useEffect(() => {
     return () => {
-      if (abortCont.current) {
-        abortCont.current.abort();
-      }
+      cancel.current = true;
     };
-  }, [abortCont]);
+  }, []);
 
   return (
     <Container sx={{ marginTop: '20px' }}>

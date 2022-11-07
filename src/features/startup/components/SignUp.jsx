@@ -22,7 +22,7 @@ import {
 import { appMessageState, appSeverityState, appSnackOpenState } from '../../../states/notification';
 
 const SignUp = () => {
-  const abortCont = useRef();
+  const cancel = useRef();
 
   const { t } = useTranslation();
 
@@ -60,34 +60,35 @@ const SignUp = () => {
   };
 
   const handleSignUp = async () => {
-    abortCont.current = new AbortController();
+    try {
+      cancel.current = false;
 
-    setHasErrorEmail(false);
-    setHasErrorPwd(false);
-    setHasErrorConfirmPwd(false);
-    if (
-      userTmpFullname.length >= 3 &&
-      isEmailValid(userTmpEmail) &&
-      userTmpPwd.length >= 10 &&
-      userTmpPwd === userTmpConfirmPwd
-    ) {
-      setIsProcessing(true);
-      const reqPayload = {
-        email: userTmpEmail,
-        password: userTmpPwd,
-        fullname: userTmpFullname,
-      };
+      setHasErrorEmail(false);
+      setHasErrorPwd(false);
+      setHasErrorConfirmPwd(false);
+      if (
+        userTmpFullname.length >= 3 &&
+        isEmailValid(userTmpEmail) &&
+        userTmpPwd.length >= 10 &&
+        userTmpPwd === userTmpConfirmPwd
+      ) {
+        setIsProcessing(true);
+        const reqPayload = {
+          email: userTmpEmail,
+          password: userTmpPwd,
+          fullname: userTmpFullname,
+        };
 
-      if (apiHost !== '') {
-        fetch(`${apiHost}api/users/create-account`, {
-          signal: abortCont.signal,
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(reqPayload),
-        })
-          .then(async (res) => {
+        if (apiHost !== '') {
+          const res = await fetch(`${apiHost}api/users/create-account`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(reqPayload),
+          });
+
+          if (!cancel.current) {
             const data = await res.json();
             if (res.status === 200) {
               setEmailNotVerified(true);
@@ -105,37 +106,37 @@ const SignUp = () => {
               setAppSeverity('warning');
               setAppSnackOpen(true);
             }
-          })
-          .catch(() => {
-            setIsProcessing(false);
-            setAppMessage(t('login.createFailed'));
-            setAppSeverity('error');
-            setAppSnackOpen(true);
-          });
+          }
+        }
+      } else {
+        if (userTmpFullname.length < 3) {
+          setHasErrorFullname(true);
+        }
+        if (!isEmailValid(userTmpEmail)) {
+          setHasErrorEmail(true);
+        }
+        if (userTmpPwd.length < 10) {
+          setHasErrorPwd(true);
+        }
+        if (userTmpConfirmPwd.length < 10 || userTmpPwd !== userTmpConfirmPwd) {
+          setHasErrorConfirmPwd(true);
+        }
       }
-    } else {
-      if (userTmpFullname.length < 3) {
-        setHasErrorFullname(true);
-      }
-      if (!isEmailValid(userTmpEmail)) {
-        setHasErrorEmail(true);
-      }
-      if (userTmpPwd.length < 10) {
-        setHasErrorPwd(true);
-      }
-      if (userTmpConfirmPwd.length < 10 || userTmpPwd !== userTmpConfirmPwd) {
-        setHasErrorConfirmPwd(true);
+    } catch (err) {
+      if (!cancel.current) {
+        setIsProcessing(false);
+        setAppMessage(t('login.createFailed'));
+        setAppSeverity('error');
+        setAppSnackOpen(true);
       }
     }
   };
 
   useEffect(() => {
-		return () => {
-			if (abortCont.current) {
-				abortCont.current.abort();
-			}
-		};
-	}, [abortCont]);
+    return () => {
+      cancel.current = true;
+    };
+  }, []);
 
   return (
     <Container sx={{ marginTop: '20px' }}>

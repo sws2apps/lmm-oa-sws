@@ -36,7 +36,7 @@ import { loadApp } from '../../../utils/app';
 import { runUpdater } from '../../../utils/updater';
 
 const SignIn = () => {
-  const abortCont = useRef();
+  const cancel = useRef();
 
   const { t } = useTranslation();
 
@@ -137,29 +137,31 @@ const SignIn = () => {
     }
   };
 
-  const handleSignIn = () => {
-    abortCont.current = new AbortController();
+  const handleSignIn = async () => {
+    try {
+      cancel.current = false;
 
-    setHasErrorEmail(false);
-    setHasErrorPwd(false);
-    if (isEmailValid(userTmpEmail) && userTmpPwd.length >= 10) {
-      setIsProcessing(true);
-      const reqPayload = {
-        email: userTmpEmail,
-        password: userTmpPwd,
-        visitorid: visitorID,
-      };
-
-      if (apiHost !== '') {
-        fetch(`${apiHost}user-login`, {
-          signal: abortCont.signal,
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(reqPayload),
-        })
-          .then(async (res) => {
+      setHasErrorEmail(false);
+      setHasErrorPwd(false);
+      if (isEmailValid(userTmpEmail) && userTmpPwd.length >= 10) {
+        setIsProcessing(true);
+        
+        const reqPayload = {
+          email: userTmpEmail,
+          password: userTmpPwd,
+          visitorid: visitorID,
+        };
+  
+        if (apiHost !== '') {
+          const res = await fetch(`${apiHost}user-login`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(reqPayload),
+          })
+  
+          if (!cancel.current) {
             const data = await res.json();
             if (res.status === 200) {
               setUserEmail(userTmpEmail);
@@ -207,21 +209,24 @@ const SignIn = () => {
                 setAppSnackOpen(true);
               }
             }
-          })
-          .catch((err) => {
-            setIsProcessing(false);
-            setAppMessage(err.message);
-            setAppSeverity('error');
-            setAppSnackOpen(true);
-          });
+          }
+        }
+      } else {
+        if (!isEmailValid(userTmpEmail)) {
+          setHasErrorEmail(true);
+        }
+        if (userTmpPwd.length < 10) {
+          setHasErrorPwd(true);
+        }
       }
-    } else {
-      if (!isEmailValid(userTmpEmail)) {
-        setHasErrorEmail(true);
+    } catch (err) {
+      if (!cancel.current) {
+        setIsProcessing(false);
+        setAppMessage(err.message);
+        setAppSeverity('error');
+        setAppSnackOpen(true);
       }
-      if (userTmpPwd.length < 10) {
-        setHasErrorPwd(true);
-      }
+      
     }
   };
 
@@ -244,11 +249,9 @@ const SignIn = () => {
 
   useEffect(() => {
     return () => {
-      if (abortCont.current) {
-        abortCont.current.abort();
-      }
+      cancel.current = true;
     };
-  }, [abortCont]);
+  }, [])
 
   return (
     <Container sx={{ marginTop: '20px' }}>

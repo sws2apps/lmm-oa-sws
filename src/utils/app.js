@@ -16,7 +16,7 @@ import {
 } from '../states/congregation';
 import { apiHostState, appLangState, appNotificationsState, isOnlineState } from '../states/main';
 import { assTypeListState, weekTypeListState, yearsListState } from '../states/sourceMaterial';
-import { allStudentsState, filteredStudentsState, studentsAssignmentHistoryState } from '../states/students';
+import { allStudentsState, filteredStudentsState, studentsAssignmentHistoryState } from '../states/persons';
 
 export const loadApp = async () => {
   const I18n = getI18n();
@@ -88,3 +88,4 @@ export const sortHistoricalDateDesc = (data) => {
 export const formatDateForCompare = (date) => {
   return new Date(date);
 };
+

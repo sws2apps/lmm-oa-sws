@@ -8,7 +8,7 @@ import { dbGetSourceMaterial, dbGetWeekListBySched } from './dbSourceMaterial';
 import appDb from './mainDb';
 import { shortDateFormatState } from '../states/main';
 import { assTypeLocalState } from '../states/sourceMaterial';
-import { allStudentsState, filteredStudentsState, studentsAssignmentHistoryState } from '../states/students';
+import { allStudentsState, filteredStudentsState, studentsAssignmentHistoryState } from '../states/persons';
 
 export const dbGetAssType = async (assType, appLang) => {
   var srcAssType = '';

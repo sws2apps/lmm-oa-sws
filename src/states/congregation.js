@@ -1,76 +1,76 @@
 import { atom, selector } from 'recoil';
 
 export const congNameState = atom({
-	key: 'congName',
-	default: '',
+  key: 'congName',
+  default: '',
 });
 
 export const congNumberState = atom({
-	key: 'congNumber',
-	default: '',
+  key: 'congNumber',
+  default: '',
 });
 
 export const congIDState = atom({
-	key: 'congID',
-	default: '',
+  key: 'congID',
+  default: '',
 });
 
 export const congPasswordState = atom({
-	key: 'congPassword',
-	default: '',
+  key: 'congPassword',
+  default: '',
 });
 
 export const isErrorCongNameState = atom({
-	key: 'isErrorCongName',
-	default: false,
+  key: 'isErrorCongName',
+  default: false,
 });
 
 export const isErrorCongNumberState = atom({
-	key: 'isErrorCongNumber',
-	default: false,
+  key: 'isErrorCongNumber',
+  default: false,
 });
 
 export const meetingDayState = atom({
-	key: 'meetingDay',
-	default: 3,
+  key: 'meetingDay',
+  default: 3,
 });
 
 export const classCountState = atom({
-	key: 'classCount',
-	default: 1,
+  key: 'classCount',
+  default: 1,
 });
 
 export const liveClassState = atom({
-	key: 'liveClass',
-	default: false,
+  key: 'liveClass',
+  default: false,
 });
 
 export const usernameState = atom({
-	key: 'username',
-	default: '',
+  key: 'username',
+  default: '',
 });
 
 export const congInfoFormattedState = selector({
-	key: 'congInforFormattedState',
-	get: ({ get }) => {
-		const congName = get(congNameState);
-		const congNumber = get(congNumberState);
+  key: 'congInforFormattedState',
+  get: ({ get }) => {
+    const congName = get(congNameState);
+    const congNumber = get(congNumberState);
 
-		let formatted = '';
-		if (congName !== '' && congNumber !== '') {
-			formatted = `${congName} (${congNumber})`;
-		}
+    let formatted = '';
+    if (congName !== '' && congNumber !== '') {
+      formatted = `${congName} (${congNumber})`;
+    }
 
-		return formatted;
-	},
+    return formatted;
+  },
 });
 
 export const congAccountConnectedState = atom({
-	key: 'congAccountConnected',
-	default: false,
+  key: 'congAccountConnected',
+  default: false,
 });
 
 export const isAdminCongState = atom({
-	key: 'isAdminCong',
-	default: false,
+  key: 'isAdminCong',
+  default: false,
 });

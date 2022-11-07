@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { deleteDb } from '../../indexedDb/dbUtility';
 import { congAccountConnectedState, congIDState, isAdminCongState } from '../../states/congregation';
@@ -12,9 +12,10 @@ import {
 } from '../../states/main';
 
 const UserAutoLogin = () => {
-  const abortCont = useRef();
+  let abortCont = useMemo(() => new AbortController(), []);
 
   const [userEmail, setUserEmail] = useRecoilState(userEmailState);
+  const [visitorID, setVisitorID] = useRecoilState(visitorIDState);
 
   const setCongAccountConnected = useSetRecoilState(congAccountConnectedState);
   const setIsAdminCong = useSetRecoilState(isAdminCongState);
@@ -24,7 +25,6 @@ const UserAutoLogin = () => {
 
   const isOnline = useRecoilValue(isOnlineState);
   const apiHost = useRecoilValue(apiHostState);
-  const visitorID = useRecoilValue(visitorIDState);
 
   const handleDisapproved = useCallback(async () => {
     setModalOpen(true);
@@ -36,8 +36,6 @@ const UserAutoLogin = () => {
   const checkLogin = useCallback(async () => {
     try {
       if (apiHost !== '' && userEmail !== '' && visitorID !== '') {
-        abortCont.current = new AbortController();
-        
         const res = await fetch(`${apiHost}api/users/validate-me`, {
           signal: abortCont.signal,
           method: 'GET',
@@ -102,14 +100,6 @@ const UserAutoLogin = () => {
       setIsAdminCong(false);
     }
   }, [checkLogin, isOnline, setCongAccountConnected, setIsAdminCong, userEmail]);
-
-  useEffect(() => {
-    return () => {
-      if (abortCont.current) {
-        abortCont.current.abort();
-      }
-    };
-  }, [abortCont]);
 
   return <></>;
 };

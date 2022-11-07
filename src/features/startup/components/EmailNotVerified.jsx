@@ -45,7 +45,7 @@ const EmailNotVerified = () => {
 
       if (apiHost !== '') {
         const res = await fetch(`${apiHost}api/users/resend-verification`, {
-          signal: abortCont.signal,
+          signal: abortCont.current,
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

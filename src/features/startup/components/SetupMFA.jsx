@@ -101,7 +101,7 @@ const SetupMFA = () => {
 
         if (apiHost !== '') {
           const res = await fetch(`${apiHost}api/mfa/verify-token`, {
-            signal: abortCont.signal,
+            signal: abortCont.current,
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

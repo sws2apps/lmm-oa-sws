@@ -11,6 +11,7 @@ node_modules
 dist
 dist-ssr
 build
+sws2apps-api
 *.local
 
 # Editor directories and files

@@ -1,2 +1,2 @@
-import WhatsNewContent from './WhatsNewContent';
-export default WhatsNewContent;
+export { default as WhatsNew } from './WhatsNew';
+export { default as WhatsNewContent } from './WhatsNewContent';

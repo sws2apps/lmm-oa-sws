@@ -4,14 +4,15 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import FingerprintJS from '@fingerprintjs/fingerprintjs-pro';
 import CssBaseline from '@mui/material/CssBaseline';
-import NavBar from './components/NavBar';
-import Startup from './features/startup';
-import { apiHostState, isAppLoadState, isLightThemeState, isOnlineState, visitorIDState } from './states/main';
+import { apiHostState, isLightThemeState, isOnlineState, visitorIDState } from './states/main';
 import { InternetChecker } from './features/internetChecker';
 import { appSnackOpenState } from './states/notification';
 import NotificationWrapper from './features/notificationWrapper';
-import UserAutoLogin from './features/userAutoLogin/UserAutoLogin';
 import DashboardMenu from './pages/DashboardMenu';
+import Layout from './components/Layout';
+import Persons from './pages/Persons';
+import PersonDetails from './pages/PersonDetails';
+import Schedules from './pages/Schedules';
 
 // creating theme
 const lightTheme = createTheme({
@@ -28,8 +29,14 @@ const darkTheme = createTheme({
 
 const router = createBrowserRouter([
   {
-    path: '/',
-    element: <DashboardMenu />,
+    element: <Layout />,
+    children: [
+      { path: '/', element: <DashboardMenu /> },
+      { path: '/persons', element: <Persons /> },
+      { path: '/persons/new', element: <PersonDetails /> },
+      { path: '/persons/:id', element: <PersonDetails /> },
+      { path: '/schedules', element: <Schedules /> },
+    ],
   },
 ]);
 
@@ -39,7 +46,6 @@ const App = () => {
 
   const isOnline = useRecoilValue(isOnlineState);
   const isLight = useRecoilValue(isLightThemeState);
-  const isAppLoad = useRecoilValue(isAppLoadState);
   const appSnackOpen = useRecoilValue(appSnackOpenState);
 
   const [activeTheme, setActiveTheme] = useState(darkTheme);
@@ -77,7 +83,11 @@ const App = () => {
 
   useEffect(() => {
     if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-      setApiHost('http://localhost:8000/');
+      if (import.meta.env.VITE_GITHUB_API_SERVER) {
+        setApiHost(import.meta.env.VITE_GITHUB_API_SERVER);
+      } else {
+        setApiHost('http://localhost:8000/');
+      }
     } else {
       setApiHost('https://sws2apps-api.onrender.com/');
     }
@@ -100,12 +110,9 @@ const App = () => {
   return (
     <ThemeProvider theme={activeTheme}>
       <CssBaseline />
-      <NavBar />
       <InternetChecker />
-      <UserAutoLogin />
       {appSnackOpen && <NotificationWrapper />}
-      {isAppLoad && <Startup />}
-      {!isAppLoad && <RouterProvider router={router} />}
+      <RouterProvider router={router} />
     </ThemeProvider>
   );
 };

@@ -15,7 +15,7 @@ import {
   dbHistoryAssignment,
 } from '../indexedDb/dbAssignment';
 import { dbGetAllSourceMaterials, dbMigrateSrcData } from '../indexedDb/dbSourceMaterial';
-import { studentsAssignmentHistoryState } from '../states/students';
+import { studentsAssignmentHistoryState } from '../states/persons';
 import { startupProgressState } from '../states/main';
 import { loadApp } from './app';
 

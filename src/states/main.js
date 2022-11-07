@@ -18,7 +18,7 @@ export const settingsState = atom({
 
 export const isAppLoadState = atom({
   key: 'isAppLoad',
-  default: false,
+  default: true,
 });
 
 export const isSetupState = atom({
