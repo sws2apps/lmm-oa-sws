@@ -438,7 +438,7 @@ const PersonDetails = () => {
                 <PersonTimeAway timeAway={timeAway} setTimeAway={(value) => setTimeAway(value)} />
               </AccordionDetails>
             </Accordion>
-            {isOnline && congAccountConnected && (
+            {isOnline && congAccountConnected && id && (
               <Accordion expanded={expanded === 'panel5'} onChange={handleChange('panel5')}>
                 <AccordionSummary aria-controls="panel5d-content" id="panel5d-header">
                   <Typography>{t('persons.accessPocketApp')}</Typography>

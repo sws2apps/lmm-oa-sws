@@ -13,6 +13,7 @@ import Layout from './components/Layout';
 import Persons from './pages/Persons';
 import PersonDetails from './pages/PersonDetails';
 import Schedules from './pages/Schedules';
+import ScheduleDetails from './pages/ScheduleDetails';
 
 // creating theme
 const lightTheme = createTheme({
@@ -36,6 +37,7 @@ const router = createBrowserRouter([
       { path: '/persons/new', element: <PersonDetails /> },
       { path: '/persons/:id', element: <PersonDetails /> },
       { path: '/schedules', element: <Schedules /> },
+      { path: '/schedules/:schedule', element: <ScheduleDetails /> },
     ],
   },
 ]);

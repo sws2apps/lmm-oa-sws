@@ -29,7 +29,7 @@ import { loadApp } from '../../../utils/app';
 import { runUpdater } from '../../../utils/updater';
 
 const VerifyMFA = () => {
-  const abortCont = useRef();
+  const cancel = useRef();
 
   const { t } = useTranslation();
 
@@ -59,7 +59,7 @@ const VerifyMFA = () => {
 
   const handleVerifyOTP = async () => {
     try {
-      abortCont.current = new AbortController();
+      cancel.current = false;
 
       setHasErrorOTP(false);
 
@@ -71,7 +71,6 @@ const VerifyMFA = () => {
 
         if (apiHost !== '') {
           const res = await fetch(`${apiHost}api/mfa/verify-token`, {
-            signal: abortCont.current,
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -81,85 +80,87 @@ const VerifyMFA = () => {
             body: JSON.stringify(reqPayload),
           });
 
-          const data = await res.json();
-          if (res.status === 200) {
-            const { id, cong_id, cong_name, cong_role, cong_number } = data;
+          if (!cancel.current) {
+            const data = await res.json();
+            if (res.status === 200) {
+              const { id, cong_id, cong_name, cong_role, cong_number } = data;
 
-            if (cong_name.length > 0) {
-              if (cong_role.length > 0) {
-                // role admin
-                if (cong_role.includes('admin')) {
-                  setIsAdminCong(true);
+              if (cong_name.length > 0) {
+                if (cong_role.length > 0) {
+                  // role admin
+                  if (cong_role.includes('admin')) {
+                    setIsAdminCong(true);
+                  }
+
+                  // role approved
+                  if (cong_role.includes('lmmo') || cong_role.includes('lmmo-backup')) {
+                    setCongID(cong_id);
+                    // encrypt email & pwd
+                    const encPwd = await encryptString(userPwd, JSON.stringify({ email: userEmail, pwd: userPwd }));
+
+                    // save congregation update if any
+                    let obj = {};
+                    obj.username = data.username;
+                    obj.isCongVerified = true;
+                    obj.cong_name = cong_name;
+                    obj.cong_number = cong_number;
+                    obj.userPass = encPwd;
+                    obj.isLoggedOut = false;
+                    setUserID(id);
+
+                    await dbUpdateAppSettings(obj);
+
+                    await loadApp();
+
+                    setIsSetup(false);
+
+                    await runUpdater();
+                    setTimeout(() => {
+                      setStartupProgress(0);
+                      setOfflineOverride(false);
+                      setCongAccountConnected(true);
+                      setIsAppLoad(false);
+                    }, [2000]);
+                  }
+                  return;
                 }
 
-                // role approved
-                if (cong_role.includes('lmmo') || cong_role.includes('lmmo-backup')) {
-                  setCongID(cong_id);
-                  // encrypt email & pwd
-                  const encPwd = await encryptString(userPwd, JSON.stringify({ email: userEmail, pwd: userPwd }));
-
-                  // save congregation update if any
-                  let obj = {};
-                  obj.username = data.username;
-                  obj.isCongVerified = true;
-                  obj.cong_name = cong_name;
-                  obj.cong_number = cong_number;
-                  obj.userPass = encPwd;
-                  obj.isLoggedOut = false;
-                  setUserID(id);
-
-                  await dbUpdateAppSettings(obj);
-
-                  await loadApp();
-
-                  setIsSetup(false);
-
-                  await runUpdater();
-                  setTimeout(() => {
-                    setStartupProgress(0);
-                    setOfflineOverride(false);
-                    setCongAccountConnected(true);
-                    setIsAppLoad(false);
-                  }, [2000]);
-                }
+                setIsProcessing(false);
+                setIsUserMfaVerify(false);
+                setIsUnauthorizedRole(true);
                 return;
               }
 
+              // congregation not assigned
               setIsProcessing(false);
               setIsUserMfaVerify(false);
-              setIsUnauthorizedRole(true);
-              return;
+              setIsCongAccountCreate(true);
+            } else {
+              setIsProcessing(false);
+              setAppMessage(data.message);
+              setAppSeverity('warning');
+              setAppSnackOpen(true);
             }
-
-            // congregation not assigned
-            setIsProcessing(false);
-            setIsUserMfaVerify(false);
-            setIsCongAccountCreate(true);
-          } else {
-            setIsProcessing(false);
-            setAppMessage(data.message);
-            setAppSeverity('warning');
-            setAppSnackOpen(true);
           }
         }
       } else {
         setHasErrorOTP(true);
       }
     } catch (err) {
-      setIsProcessing(false);
-      setAppMessage(err.message);
-      setAppSeverity('error');
-      setAppSnackOpen(true);
+      if (!cancel.current) {
+        setIsProcessing(false);
+        setAppMessage(err.message);
+        setAppSeverity('error');
+        setAppSnackOpen(true);
+      }
     }
   };
 
   useEffect(() => {
     return () => {
-      if (abortCont.current) {
-        abortCont.current.abort();
-      }
+      cancel.current = true;
     };
-  }, [abortCont]);
+  }, []);
 
   return (
     <Container sx={{ marginTop: '20px' }}>

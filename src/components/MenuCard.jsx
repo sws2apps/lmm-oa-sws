@@ -6,6 +6,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { themeOptionsState } from '../states/theme';
 
@@ -22,7 +23,7 @@ const MenuCard = ({ menu }) => {
   return (
     <>
       {visible && (
-        <Box sx={{ width: '350px' }}>
+        <Paper elevation={8} sx={{ width: '350px' }}>
           <Box sx={{ padding: '10px', backgroundColor: theme.mainColor, borderRadius: '10px 10px 0 0' }}>
             <Typography textAlign="center" sx={{ color: 'white', fontSize: '20px' }}>
               {title}
@@ -30,7 +31,6 @@ const MenuCard = ({ menu }) => {
           </Box>
           <Box
             sx={{
-              border: '1px solid',
               padding: '10px',
               height: '280px',
               maxHeight: '280px',
@@ -49,7 +49,7 @@ const MenuCard = ({ menu }) => {
               ))}
             </List>
           </Box>
-        </Box>
+        </Paper>
       )}
     </>
   );

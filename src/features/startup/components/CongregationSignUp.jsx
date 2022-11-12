@@ -71,24 +71,24 @@ const CongregationSignUp = () => {
               email: userEmail,
             },
             body: JSON.stringify(reqPayload),
-          })
+          });
 
           if (!cancel.current) {
             const data = await res.json();
-              if (res.status === 200) {
-                setIsCongRequestSent(true);
-                setIsProcessing(false);
-                setIsCongAccountCreate(false);
-              } else if (res.status === 405) {
-                setIsCongWaitRequest(true);
-                setIsProcessing(false);
-                setIsCongAccountCreate(false);
-              } else {
-                setIsProcessing(false);
-                setAppMessage(data.message);
-                setAppSeverity('warning');
-                setAppSnackOpen(true);
-              }
+            if (res.status === 200) {
+              setIsCongRequestSent(true);
+              setIsProcessing(false);
+              setIsCongAccountCreate(false);
+            } else if (res.status === 405) {
+              setIsCongWaitRequest(true);
+              setIsProcessing(false);
+              setIsCongAccountCreate(false);
+            } else {
+              setIsProcessing(false);
+              setAppMessage(data.message);
+              setAppSeverity('warning');
+              setAppSnackOpen(true);
+            }
           }
         }
       } else {
@@ -102,9 +102,9 @@ const CongregationSignUp = () => {
     } catch (err) {
       if (!cancel.current) {
         setIsProcessing(false);
-              setAppMessage(t('login.createFailed'));
-              setAppSeverity('error');
-              setAppSnackOpen(true);
+        setAppMessage(t('login.createFailed'));
+        setAppSeverity('error');
+        setAppSnackOpen(true);
       }
     }
   };

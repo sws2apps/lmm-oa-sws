@@ -305,6 +305,11 @@
   "schedule.publishPocket": "Handefa fandaharana -> SWS Pocket ...",
   "schedule.publishMSC": "Handefa fandaharana -> MSC ...",
   "schedule.publishSuccess": "Lasa soa aman-tsara ny fandaharana",
+  "schedule.weeksList": "Lisitr’ireo Herinandro",
+  "schedule.assignedParts": "Anjara Efa Notendrena",
+  "schedule.deleteScheduleConfirm": "Tianao hofafana ve ny fanendrena rehetra ao amin’ny fandaharana {{ currentSchedule }}?",
+  "schedule.deleteWeekConfirm": "Tianao hofafana ve ny fanendrena rehetra ao amin’ny herinandron’ny currentWeek }}?",
+  "schedule.midweekMeetingPrint": "Fandaharam-pivoriana Andavanandro",
 
   "s89.title": "ANJARA AMIN’NY FIVORIANA MOMBA<br />NY FIAINANTSIKA SY NY FANOMPOANA",
   "s89.toBeGiven": "Hatao ao amin’ny:",
@@ -387,7 +392,6 @@
 
   "about.description": "Programa fandaminana ny fandaharam-pivoriana andavanandro ny LMM-OA (Life and Ministry Meeting Overseer Assistant).",
 
-  
   "dashboard.persons": "Olona ao Amin’ny Fiangonana",
   "dashboard.personAdd": "Hanampy Olona",
   "dashboard.managePocket": "Handrindra ny Mpampiasa Pocket",

@@ -17,7 +17,7 @@ import {
 } from '../../../states/main';
 
 const EmailNotVerified = () => {
-  const abortCont = useRef();
+  const cancel = useRef();
 
   const { t } = useTranslation();
 
@@ -38,14 +38,13 @@ const EmailNotVerified = () => {
 
   const handleResendVerification = async () => {
     try {
-      abortCont.current = new AbortController();
+      cancel.current = false;
 
       setErrTxt('');
       setIsProcessing(true);
 
       if (apiHost !== '') {
         const res = await fetch(`${apiHost}api/users/resend-verification`, {
-          signal: abortCont.current,
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -54,26 +53,28 @@ const EmailNotVerified = () => {
           },
         });
 
-        const data = await res.json();
-        setIsProcessing(false);
+        if (!cancel.current) {
+          const data = await res.json();
+          setIsProcessing(false);
 
-        if (res.status !== 200) {
-          setErrTxt(data.message);
+          if (res.status !== 200) {
+            setErrTxt(data.message);
+          }
         }
       }
     } catch (err) {
-      setIsProcessing(false);
-      setErrTxt(err.message);
+      if (!cancel.current) {
+        setIsProcessing(false);
+        setErrTxt(err.message);
+      }
     }
   };
 
   useEffect(() => {
     return () => {
-      if (abortCont.current) {
-        abortCont.current.abort();
-      }
+      cancel.current = true;
     };
-  }, [abortCont]);
+  }, []);
 
   return (
     <Container sx={{ marginTop: '20px' }}>

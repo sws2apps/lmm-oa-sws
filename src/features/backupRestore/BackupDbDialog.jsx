@@ -12,21 +12,21 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Typography from '@mui/material/Typography';
 import {
   apiHostState,
-  restoreDbOpenState,
+  backupDbOpenState,
   shortDateFormatState,
   userEmailState,
   visitorIDState,
 } from '../../states/main';
 import { appMessageState, appSeverityState, appSnackOpenState } from '../../states/notification';
 import { congIDState } from '../../states/congregation';
-import { dbRestoreCongregationBackup } from '../../indexedDb/dbUtility';
+import { dbExportDataOnline } from '../../indexedDb/dbUtility';
 
-const RestoreDbDialog = () => {
+const BackupDbDialog = () => {
   const cancel = useRef();
 
   const { t } = useTranslation();
 
-  const [open, setOpen] = useRecoilState(restoreDbOpenState);
+  const [open, setOpen] = useRecoilState(backupDbOpenState);
 
   const setAppSnackOpen = useSetRecoilState(appSnackOpenState);
   const setAppSeverity = useSetRecoilState(appSeverityState);
@@ -42,18 +42,20 @@ const RestoreDbDialog = () => {
   const [hasBackup, setHasBackup] = useState(false);
   const [backup, setBackup] = useState({});
 
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway' || reason === 'backdropClick') {
-      return;
-    }
-    setOpen(false);
-  };
+  const handleClose = useCallback(
+    (event, reason) => {
+      if (reason === 'clickaway' || reason === 'backdropClick') {
+        return;
+      }
+      setOpen(false);
+    },
+    [setOpen]
+  );
 
   const fetchLastBackup = useCallback(async () => {
     try {
       if (apiHost !== '') {
         cancel.current = false;
-
         setIsProcessing(true);
         const res = await fetch(`${apiHost}api/congregations/${congID}/backup/last`, {
           method: 'GET',
@@ -98,35 +100,42 @@ const RestoreDbDialog = () => {
     }
   }, [apiHost, cancel, congID, setAppMessage, setAppSeverity, setAppSnackOpen, setOpen, userEmail, visitorID]);
 
-  const restoreBackup = async () => {
+  const handleCreateBackup = async () => {
     try {
       if (apiHost !== '') {
+        setIsProcessing(true);
         cancel.current = false;
 
-        setIsProcessing(true);
+        const { dbPersons, dbSourceMaterial, dbSchedule, dbPocketTbl } = await dbExportDataOnline();
+
+        const reqPayload = {
+          cong_persons: dbPersons,
+          cong_schedule: dbSchedule,
+          cong_sourceMaterial: dbSourceMaterial,
+          cong_swsPocket: dbPocketTbl,
+        };
 
         const res = await fetch(`${apiHost}api/congregations/${congID}/backup`, {
-          method: 'GET',
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             visitorid: visitorID,
             email: userEmail,
           },
+          body: JSON.stringify(reqPayload),
         });
 
         if (!cancel.current) {
           const data = await res.json();
 
           if (res.status === 200) {
-            const { cong_persons, cong_schedule, cong_sourceMaterial, cong_swsPocket } = data;
-
-            await dbRestoreCongregationBackup(cong_persons, cong_schedule, cong_sourceMaterial, cong_swsPocket);
-
-            window.location.reload();
+            setAppMessage(t('settings.backupSuccess'));
+            setAppSeverity('success');
+            setAppSnackOpen(true);
+            setOpen(false);
             return;
           }
 
-          setIsProcessing(false);
           setAppMessage(data.message);
           setAppSeverity('error');
           setAppSnackOpen(true);
@@ -162,7 +171,7 @@ const RestoreDbDialog = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{t('settings.restoreBackup')}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{t('settings.createBackup')}</DialogTitle>
         <DialogContent sx={{ minWidth: '380px' }}>
           {isProcessing && (
             <CircularProgress
@@ -179,7 +188,7 @@ const RestoreDbDialog = () => {
             <>
               {hasBackup && (
                 <Typography>
-                  {t('settings.restoreConfirmation', {
+                  {t('settings.lastCongBackup', {
                     backup_person: backup.by,
                     backup_date: dateFormat(new Date(backup.date), shortDateFormat),
                   })}
@@ -193,8 +202,8 @@ const RestoreDbDialog = () => {
           <Button onClick={handleClose} color="primary">
             {t('global.cancel')}
           </Button>
-          <Button onClick={restoreBackup} disabled={isProcessing} color="primary">
-            {t('global.restore')}
+          <Button onClick={handleCreateBackup} disabled={isProcessing} color="primary">
+            {t('global.create')}
           </Button>
         </DialogActions>
       </Dialog>
@@ -202,4 +211,4 @@ const RestoreDbDialog = () => {
   );
 };
 
-export default RestoreDbDialog;
+export default BackupDbDialog;

@@ -5,18 +5,28 @@ import Box from '@mui/material/Box';
 import About from '../features/about';
 import RootModal from './RootModal';
 import UserAutoLogin from '../features/userAutoLogin';
-import { RestoreDbDialog } from '../features/backupRestore';
+import { BackupDbDialog, RestoreDbDialog } from '../features/backupRestore';
 import { WhatsNew } from '../features/whatsNew';
-import { isAboutOpenState, isAppLoadState, isWhatsNewOpenState, restoreDbOpenState } from '../states/main';
+import {
+  backupDbOpenState,
+  isAboutOpenState,
+  isAppLoadState,
+  isWhatsNewOpenState,
+  restoreDbOpenState,
+} from '../states/main';
 import Startup from '../features/startup';
 import NavBar from './NavBar';
 import { fetchNotifications } from '../utils/app';
+import { dlgAssDeleteOpenState } from '../states/schedule';
+import { DeleteSchedule } from '../features/schedules/';
 
 const Layout = () => {
   const isAppLoad = useRecoilValue(isAppLoadState);
   const isOpenAbout = useRecoilValue(isAboutOpenState);
   const isOpenWhatsNew = useRecoilValue(isWhatsNewOpenState);
   const isRestoreDb = useRecoilValue(restoreDbOpenState);
+  const isBackupDb = useRecoilValue(backupDbOpenState);
+  const isDeleteAssignment = useRecoilValue(dlgAssDeleteOpenState);
 
   useEffect(() => {
     const fetchNotif = async () => {
@@ -38,6 +48,8 @@ const Layout = () => {
         {isOpenAbout && <About />}
         {isOpenWhatsNew && <WhatsNew />}
         {isRestoreDb && <RestoreDbDialog />}
+        {isBackupDb && <BackupDbDialog />}
+        {isDeleteAssignment && <DeleteSchedule />}
 
         {isAppLoad && <Startup />}
         {!isAppLoad && <Outlet />}

@@ -47,7 +47,7 @@ const a11yProps = (index) => {
 };
 
 const SetupMFA = () => {
-  const abortCont = useRef();
+  const cancel = useRef();
 
   const { t } = useTranslation();
 
@@ -90,7 +90,7 @@ const SetupMFA = () => {
 
   const handleVerifyOTP = async () => {
     try {
-      abortCont.current = new AbortController();
+      cancel.current = false;
       setHasErrorOTP(false);
 
       if (userOTP.length === 6) {
@@ -101,7 +101,6 @@ const SetupMFA = () => {
 
         if (apiHost !== '') {
           const res = await fetch(`${apiHost}api/mfa/verify-token`, {
-            signal: abortCont.current,
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -111,81 +110,85 @@ const SetupMFA = () => {
             body: JSON.stringify(reqPayload),
           });
 
-          const data = await res.json();
-          if (res.status === 200) {
-            const { id, cong_id, cong_name, cong_role, cong_number } = data;
+          if (!cancel.current) {
+            const data = await res.json();
+            if (res.status === 200) {
+              const { id, cong_id, cong_name, cong_role, cong_number } = data;
 
-            if (cong_name.length > 0) {
-              if (cong_role.length > 0) {
-                // role admin
-                if (cong_role.includes('admin')) {
-                  setIsAdminCong(true);
-                }
-
-                // role approved
-                if (cong_role.includes('lmmo') || cong_role.includes('lmmo-backup')) {
-                  setCongID(cong_id);
-
-                  const isMainDb = await isDbExist('lmm_oa');
-                  if (!isMainDb) {
-                    await initAppDb();
+              if (cong_name.length > 0) {
+                if (cong_role.length > 0) {
+                  // role admin
+                  if (cong_role.includes('admin')) {
+                    setIsAdminCong(true);
                   }
 
-                  // encrypt email & pwd
-                  const encPwd = await encryptString(userPwd, JSON.stringify({ email: userEmail, pwd: userPwd }));
+                  // role approved
+                  if (cong_role.includes('lmmo') || cong_role.includes('lmmo-backup')) {
+                    setCongID(cong_id);
 
-                  // save congregation update if any
-                  let obj = {};
-                  obj.username = data.username;
-                  obj.isCongVerified = true;
-                  obj.cong_name = cong_name;
-                  obj.cong_number = cong_number;
-                  obj.userPass = encPwd;
-                  obj.isLoggedOut = false;
-                  await dbUpdateAppSettings(obj);
+                    const isMainDb = await isDbExist('lmm_oa');
+                    if (!isMainDb) {
+                      await initAppDb();
+                    }
 
-                  setUserID(id);
+                    // encrypt email & pwd
+                    const encPwd = await encryptString(userPwd, JSON.stringify({ email: userEmail, pwd: userPwd }));
 
-                  await loadApp();
+                    // save congregation update if any
+                    let obj = {};
+                    obj.username = data.username;
+                    obj.isCongVerified = true;
+                    obj.cong_name = cong_name;
+                    obj.cong_number = cong_number;
+                    obj.userPass = encPwd;
+                    obj.isLoggedOut = false;
+                    await dbUpdateAppSettings(obj);
 
-                  setIsSetup(false);
+                    setUserID(id);
 
-                  await runUpdater();
-                  setTimeout(() => {
-                    setStartupProgress(0);
-                    setOfflineOverride(false);
-                    setCongAccountConnected(true);
-                    setIsAppLoad(false);
-                  }, [2000]);
+                    await loadApp();
+
+                    setIsSetup(false);
+
+                    await runUpdater();
+                    setTimeout(() => {
+                      setStartupProgress(0);
+                      setOfflineOverride(false);
+                      setCongAccountConnected(true);
+                      setIsAppLoad(false);
+                    }, [2000]);
+                  }
+                  return;
                 }
+
+                setIsProcessing(false);
+                setIsUserMfaSetup(false);
+                setIsUnauthorizedRole(true);
                 return;
               }
 
+              // congregation not assigned
               setIsProcessing(false);
               setIsUserMfaSetup(false);
-              setIsUnauthorizedRole(true);
-              return;
+              setIsCongAccountCreate(true);
+            } else {
+              setIsProcessing(false);
+              setAppMessage(data.message);
+              setAppSeverity('warning');
+              setAppSnackOpen(true);
             }
-
-            // congregation not assigned
-            setIsProcessing(false);
-            setIsUserMfaSetup(false);
-            setIsCongAccountCreate(true);
-          } else {
-            setIsProcessing(false);
-            setAppMessage(data.message);
-            setAppSeverity('warning');
-            setAppSnackOpen(true);
           }
         }
       } else {
         setHasErrorOTP(true);
       }
     } catch (err) {
-      setIsProcessing(false);
-      setAppMessage(err.message);
-      setAppSeverity('error');
-      setAppSnackOpen(true);
+      if (!cancel.current) {
+        setIsProcessing(false);
+        setAppMessage(err.message);
+        setAppSeverity('error');
+        setAppSnackOpen(true);
+      }
     }
   };
 
@@ -207,11 +210,9 @@ const SetupMFA = () => {
 
   useEffect(() => {
     return () => {
-      if (abortCont.current) {
-        abortCont.current.abort();
-      }
+      cancel.current = true;
     };
-  }, [abortCont]);
+  }, []);
 
   return (
     <Container sx={{ marginTop: '20px' }}>
