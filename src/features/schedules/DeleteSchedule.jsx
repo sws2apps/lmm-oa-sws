@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -14,6 +14,7 @@ import {
   currentWeekSchedState,
   dlgAssDeleteOpenState,
   isDeleteSchedState,
+  reloadWeekSummaryState,
 } from '../../states/schedule';
 import { dbGetWeekListBySched } from '../../indexedDb/dbSourceMaterial';
 import { dbCountAssignmentsInfo, dbGetScheduleData } from '../../indexedDb/dbSchedule';
@@ -23,6 +24,8 @@ const DeleteSchedule = () => {
   const { t } = useTranslation();
 
   const [dlgAssDeleteOpen, setDlgAssDeleteOpen] = useRecoilState(dlgAssDeleteOpenState);
+
+  const setReloadWeekSummary = useSetRecoilState(reloadWeekSummaryState);
 
   const isDeleteSched = useRecoilValue(isDeleteSchedState);
   const currentSchedule = useRecoilValue(currentScheduleState);
@@ -42,13 +45,19 @@ const DeleteSchedule = () => {
   };
 
   const fetchInfoToDelete = useCallback(async () => {
-    let data = await dbGetWeekListBySched(currentSchedule.value);
     const newData = [];
-    for (let i = 0; i < data.length; i++) {
-      const obj = {};
-      obj.value = data[i].weekOf;
-      newData.push(obj);
+
+    if (isDeleteSched) {
+      let data = await dbGetWeekListBySched(currentSchedule.value);
+      for (let i = 0; i < data.length; i++) {
+        const obj = {};
+        obj.value = data[i].weekOf;
+        newData.push(obj);
+      }
+    } else {
+      newData.push({ value: currentWeek.value });
     }
+
     setWeeks(newData);
 
     let cn = 0;
@@ -59,7 +68,7 @@ const DeleteSchedule = () => {
     }
 
     setTotalToDelete(cn);
-  }, [currentSchedule]);
+  }, [currentSchedule, currentWeek, isDeleteSched]);
 
   const handleDeleteSchedule = async () => {
     setIsDeleting(true);
@@ -117,8 +126,15 @@ const DeleteSchedule = () => {
         }
       }
     }
-    setIsDeleting(false);
-    setDlgAssDeleteOpen(false);
+
+    setReloadWeekSummary((prev) => {
+      return !prev;
+    });
+
+    setTimeout(() => {
+      setIsDeleting(false);
+      setDlgAssDeleteOpen(false);
+    }, [1000]);
   };
 
   useEffect(() => {

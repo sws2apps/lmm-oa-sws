@@ -308,8 +308,10 @@
   "schedule.weeksList": "Lisitr’ireo Herinandro",
   "schedule.assignedParts": "Anjara Efa Notendrena",
   "schedule.deleteScheduleConfirm": "Tianao hofafana ve ny fanendrena rehetra ao amin’ny fandaharana {{ currentSchedule }}?",
-  "schedule.deleteWeekConfirm": "Tianao hofafana ve ny fanendrena rehetra ao amin’ny herinandron’ny currentWeek }}?",
+  "schedule.deleteWeekConfirm": "Tianao hofafana ve ny fanendrena rehetra ao amin’ny herinandron’ny {{ currentWeek }}?",
   "schedule.midweekMeetingPrint": "Fandaharam-pivoriana Andavanandro",
+  "schedule.autofillScheduleConfirm": "Tianao hofenoina ho azy ve ny fanendrena rehetra ao amin’ny fandaharana {{ currentSchedule }}?",
+  "schedule.autofillWeekConfirm": "Tianao hofenoina ho azy ve ny fanendrena rehetra ao amin’ny herinandron’ny {{ currentWeek }}?",
 
   "s89.title": "ANJARA AMIN’NY FIVORIANA MOMBA<br />NY FIAINANTSIKA SY NY FANOMPOANA",
   "s89.toBeGiven": "Hatao ao amin’ny:",

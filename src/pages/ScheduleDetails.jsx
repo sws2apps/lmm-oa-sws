@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import dateFormat from 'dateformat';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { monthNamesState, shortDateFormatState } from '../states/main';
 import { dbGetWeekListBySched } from '../indexedDb/dbSourceMaterial';
@@ -11,6 +13,7 @@ import { WeekSummaryItem } from '../features/schedules';
 
 const ScheduleDetails = () => {
   const { schedule } = useParams();
+  const navigate = useNavigate();
 
   const { t } = useTranslation();
 
@@ -42,15 +45,24 @@ const ScheduleDetails = () => {
     setWeeks(newData);
   }, [scheduleFormatted, shortDateFormat]);
 
+  const handleNavigateSchedule = () => {
+    navigate('/schedules');
+  };
+
   useEffect(() => {
     getWeekBySchedule();
   }, [getWeekBySchedule]);
 
   return (
     <Box>
-      <Typography sx={{ margin: '0px 0px 20px 0px', textTransform: 'uppercase', fontWeight: 'bold' }}>
-        {`${t('dashboard.schedule')} > ${scheduleName}`}
-      </Typography>
+      <Box sx={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '20px' }}>
+        <IconButton onClick={handleNavigateSchedule}>
+          <ArrowBackIcon sx={{ fontSize: '30px' }} />
+        </IconButton>
+        <Typography sx={{ textTransform: 'uppercase', fontWeight: 'bold' }}>
+          {`${t('dashboard.schedule')} > ${scheduleName}`}
+        </Typography>
+      </Box>
 
       <Typography variant="h4">{t('schedule.weeksList')}</Typography>
 

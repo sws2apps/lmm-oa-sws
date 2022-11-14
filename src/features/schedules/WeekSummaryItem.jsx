@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -8,9 +9,25 @@ import FlashAutoIcon from '@mui/icons-material/FlashAuto';
 import LinearProgress from '@mui/material/LinearProgress';
 import Typography from '@mui/material/Typography';
 import { dbCountAssignmentsInfo } from '../../indexedDb/dbSchedule';
+import {
+  currentWeekSchedState,
+  dlgAssDeleteOpenState,
+  dlgAutoFillOpenState,
+  isAutoFillSchedState,
+  isDeleteSchedState,
+  reloadWeekSummaryState,
+} from '../../states/schedule';
 
 const WeekSummaryItem = ({ week }) => {
   const { t } = useTranslation();
+
+  const setDlgAssDeleteOpen = useSetRecoilState(dlgAssDeleteOpenState);
+  const setIsDeleteSched = useSetRecoilState(isDeleteSchedState);
+  const setDlgAutofillOpen = useSetRecoilState(dlgAutoFillOpenState);
+  const setIsAutofillSched = useSetRecoilState(isAutoFillSchedState);
+  const setCurrentWeek = useSetRecoilState(currentWeekSchedState);
+
+  const reloadSummary = useRecoilValue(reloadWeekSummaryState);
 
   const [assInfo, setAssInfo] = useState({ total: 0, assigned: 0 });
   const [progress, setProgress] = useState(0);
@@ -22,9 +39,21 @@ const WeekSummaryItem = ({ week }) => {
     setProgress(vPg);
   }, [week]);
 
+  const handleAssignWeek = () => {
+    setCurrentWeek(week);
+    setIsAutofillSched(false);
+    setDlgAutofillOpen(true);
+  };
+
+  const handleDeleteWeek = () => {
+    setCurrentWeek(week);
+    setIsDeleteSched(false);
+    setDlgAssDeleteOpen(true);
+  };
+
   useEffect(() => {
     getAssignmentsInfo();
-  }, [getAssignmentsInfo]);
+  }, [getAssignmentsInfo, reloadSummary]);
 
   return (
     <Box
@@ -55,10 +84,10 @@ const WeekSummaryItem = ({ week }) => {
           <Button variant="outlined" startIcon={<EditIcon color="success" />}>
             {t('global.edit')}
           </Button>
-          <Button variant="outlined" startIcon={<FlashAutoIcon color="secondary" />}>
+          <Button variant="outlined" startIcon={<FlashAutoIcon color="secondary" />} onClick={handleAssignWeek}>
             {t('schedule.autofill')}
           </Button>
-          <Button variant="outlined" startIcon={<DeleteIcon color="error" />}>
+          <Button variant="outlined" startIcon={<DeleteIcon color="error" />} onClick={handleDeleteWeek}>
             {t('global.delete')}
           </Button>
         </Box>

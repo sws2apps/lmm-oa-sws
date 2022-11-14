@@ -17,6 +17,7 @@ import { appMessageState, appSeverityState, appSnackOpenState } from '../../stat
 import { apiHostState, userEmailState, visitorIDState } from '../../states/main';
 import { congIDState } from '../../states/congregation';
 import { allStudentsState } from '../../states/persons';
+import { dbGetStudentDetailsMini } from '../../indexedDb/dbPersons';
 
 const PersonPocket = ({ id, name }) => {
   const { t } = useTranslation();
@@ -44,43 +45,42 @@ const PersonPocket = ({ id, name }) => {
 
   const handleUpdatePocketUsername = async () => {
     try {
-			if (apiHost !== '') {
-        cancel.current = false
-				setIsGenerating(true);
-				const res = await fetch(
-					`${apiHost}api/congregations/${congID}/pockets/${id}/username`,
-					{
-						method: 'PATCH',
-						headers: {
-							'Content-Type': 'application/json',
-							visitorid: visitorID,
-							email: userEmail,
-						},
-						body: JSON.stringify({ username: name }),
-					}
-				);
+      if (apiHost !== '') {
+        cancel.current = false;
+        setIsGenerating(true);
+        const res = await fetch(`${apiHost}api/congregations/${congID}/pockets/${id}/username`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            visitorid: visitorID,
+            email: userEmail,
+          },
+          body: JSON.stringify({ username: name }),
+        });
 
-				const data = await res.json();
+        if (!cancel.current) {
+          const data = await res.json();
 
-				if (res.status === 200) {
-					setPocketName(data.username);
-					setIsGenerating(false);
-					return;
-				}
+          if (res.status === 200) {
+            setPocketName(data.username);
+            setIsGenerating(false);
+            return;
+          }
 
-				setIsGenerating(false);
-				setAppMessage(data.message);
-				setAppSeverity('warning');
-				setAppSnackOpen(true);
-			}
-		} catch (err) {
+          setIsGenerating(false);
+          setAppMessage(data.message);
+          setAppSeverity('warning');
+          setAppSnackOpen(true);
+        }
+      }
+    } catch (err) {
       if (!cancel.current) {
         setIsGenerating(false);
         setAppMessage(err.message);
         setAppSeverity('error');
         setAppSnackOpen(true);
       }
-		}
+    }
   };
 
   const handleSetupPocket = () => {};
@@ -126,9 +126,104 @@ const PersonPocket = ({ id, name }) => {
     }
   };
 
-  const handleDeleteDevice = () => {};
+  const handleDeleteDevice = async (pocket_visitorid) => {
+    try {
+      if (apiHost !== '' && congID !== '') {
+        cancel.current = false;
 
-  const handleUpdatePocketMembers = () => {};
+        setIsGenerating(true);
+        const res = await fetch(`${apiHost}api/congregations/${congID}/pockets/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            visitorid: visitorID,
+            email: userEmail,
+          },
+          body: JSON.stringify({ pocket_visitorid }),
+        });
+
+        if (!cancel.current) {
+          const data = await res.json();
+
+          if (res.status === 200) {
+            if (data.devices) {
+              setDevices(data.devices);
+            }
+
+            if (data.message === 'POCKET_USER_DELETED') {
+              setPocketName('');
+              setIsGettingUser(false);
+              setDevices([]);
+            }
+
+            setIsGenerating(false);
+
+            return;
+          }
+
+          setIsGenerating(false);
+          setAppMessage(data.message);
+          setAppSeverity('warning');
+          setAppSnackOpen(true);
+        }
+      }
+    } catch (err) {
+      if (!cancel.current) {
+        setIsGenerating(false);
+        setAppMessage(err.message);
+        setAppSeverity('error');
+        setAppSnackOpen(true);
+      }
+    }
+  };
+
+  const handleUpdatePocketMembers = async () => {
+    try {
+      if (apiHost !== '' && congID !== '') {
+        cancel.current = false;
+        setIsGenerating(true);
+
+        const members = value.map((member) => {
+          return {
+            person_uid: member.person_uid,
+            person_name: member.person_name,
+          };
+        });
+
+        const res = await fetch(`${apiHost}api/congregations/${congID}/pockets/${id}/members`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            visitorid: visitorID,
+            email: userEmail,
+          },
+          body: JSON.stringify({ members }),
+        });
+
+        if (!cancel.current) {
+          const data = await res.json();
+
+          if (res.status === 200) {
+            setPocketMembers(data.pocket_members);
+            setIsGenerating(false);
+            return;
+          }
+
+          setIsGenerating(false);
+          setAppMessage(data.message);
+          setAppSeverity('warning');
+          setAppSnackOpen(true);
+        }
+      }
+    } catch (err) {
+      if (!cancel.current) {
+        setIsGenerating(false);
+        setAppMessage(err.message);
+        setAppSeverity('error');
+        setAppSnackOpen(true);
+      }
+    }
+  };
 
   useEffect(() => {
     const fetchPocketUser = async () => {
@@ -188,10 +283,32 @@ const PersonPocket = ({ id, name }) => {
   }, [apiHost, cancel, congID, id, setAppMessage, setAppSeverity, setAppSnackOpen, userEmail, visitorID]);
 
   useEffect(() => {
+    const options = dbStudents.filter((student) => student.person_uid !== id);
+    setPocketOptions(options);
+  }, [dbStudents, id]);
+
+  useEffect(() => {
+    const updateValue = async () => {
+      let newValue = [];
+
+      for (let i = 0; i < pocketMembers.length; i++) {
+        const { person_uid } = pocketMembers[i];
+        const person = await dbGetStudentDetailsMini(person_uid);
+
+        newValue.push(person);
+      }
+
+      setValue(newValue);
+    };
+
+    updateValue();
+  }, [pocketMembers]);
+
+  useEffect(() => {
     return () => {
       cancel.current = true;
     };
-  }, [])
+  }, []);
 
   return (
     <Box>

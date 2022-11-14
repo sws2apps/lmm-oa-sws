@@ -8,10 +8,10 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import maleIcon from '../img/student_male.svg';
 import femaleIcon from '../img/student_female.svg';
 import { styled } from '@mui/material/styles';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
-import CancelIcon from '@mui/icons-material/Cancel';
 import Chip from '@mui/material/Chip';
 import CircularProgress from '@mui/material/CircularProgress';
 import HandshakeIcon from '@mui/icons-material/Handshake';
@@ -188,7 +188,7 @@ const PersonDetails = () => {
     const result = await dbSavePersonExp(student);
     if (result) {
       navigate({
-        pathname: '/students',
+        pathname: '/persons',
         search: `${createSearchParams(studentsQuery)}`,
       });
       setRootModalOpen(false);
@@ -200,8 +200,11 @@ const PersonDetails = () => {
     }
   };
 
-  const handleCancel = () => {
-    navigate('/persons');
+  const handleNavigateStudents = () => {
+    navigate({
+      pathname: '/persons',
+      search: `${createSearchParams(studentsQuery)}`,
+    });
   };
 
   useEffect(() => {
@@ -294,24 +297,29 @@ const PersonDetails = () => {
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 flexWrap: 'wrap',
+                gap: '10px',
               }}
             >
-              <Typography
-                sx={{
-                  textTransform: 'uppercase',
-                  fontWeight: 'bold',
-                  flexGrow: 1,
-                  marginBottom: '10px',
-                }}
-              >
-                {isEdit ? t('persons.edit') : t('persons.addNew')}
-              </Typography>
+              <Box sx={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                <IconButton onClick={handleNavigateStudents}>
+                  <ArrowBackIcon sx={{ fontSize: '30px' }} />
+                </IconButton>
+                <Typography
+                  sx={{
+                    textTransform: 'uppercase',
+                    fontWeight: 'bold',
+                    flexGrow: 1,
+                  }}
+                >
+                  {isEdit ? t('persons.edit') : t('persons.addNew')}
+                </Typography>
+              </Box>
+
               <Box
                 sx={{
                   flexGrow: 1,
                   display: 'flex',
                   justifyContent: 'flex-end',
-                  marginBottom: '10px',
                 }}
               >
                 {isEdit && student.isDisqualified === false && (
@@ -345,13 +353,6 @@ const PersonDetails = () => {
                   <IconButton edge="start" color="inherit" sx={iconButtonStyles} onClick={handleSavePerson}>
                     <SaveIcon color="primary" />
                     {lgUp && <Typography sx={txtButtonStyles}>{t('global.save')}</Typography>}
-                  </IconButton>
-                </Tooltip>
-
-                <Tooltip title={lgUp ? '' : t('global.back')}>
-                  <IconButton edge="start" color="inherit" sx={iconButtonStyles} onClick={handleCancel}>
-                    <CancelIcon color="error" />
-                    {lgUp && <Typography sx={txtButtonStyles}>{t('global.back')}</Typography>}
                   </IconButton>
                 </Tooltip>
               </Box>

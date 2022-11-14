@@ -309,6 +309,8 @@
   "schedule.deleteScheduleConfirm": "Are you sure to delete all the assignments for the {{ currentSchedule }} schedule?",
   "schedule.deleteWeekConfirm": "Are you sure to delete all the assignments for the week of {{ currentWeek }}?",
   "schedule.midweekMeetingPrint": "Midweek Meeting Schedule",
+  "schedule.autofillScheduleConfirm": "Are you sure to autofill all the assignments for the {{ currentSchedule }} schedule?",
+  "schedule.autofillWeekConfirm": "Are you sure to autofill all the assignments for the week of {{ currentWeek }}?",
 
   "s89.title": "OUR CHRISTIAN LIFE AND MINISTRY<br />MEETING ASSIGNMENT",
   "s89.toBeGiven": "To be given in:",

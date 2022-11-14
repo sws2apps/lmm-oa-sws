@@ -14,7 +14,13 @@ import Paper from '@mui/material/Paper';
 import PrintIcon from '@mui/icons-material/Print';
 import SendIcon from '@mui/icons-material/Send';
 import Typography from '@mui/material/Typography';
-import { currentScheduleState, dlgAssDeleteOpenState, isDeleteSchedState } from '../../states/schedule';
+import {
+  currentScheduleState,
+  dlgAssDeleteOpenState,
+  dlgAutoFillOpenState,
+  isAutoFillSchedState,
+  isDeleteSchedState,
+} from '../../states/schedule';
 
 const ScheduleCard = ({ schedule }) => {
   const navigate = useNavigate();
@@ -23,6 +29,8 @@ const ScheduleCard = ({ schedule }) => {
 
   const setDlgAssDeleteOpen = useSetRecoilState(dlgAssDeleteOpenState);
   const setIsDeleteSched = useSetRecoilState(isDeleteSchedState);
+  const setDlgAutofillOpen = useSetRecoilState(dlgAutoFillOpenState);
+  const setIsAutofillSched = useSetRecoilState(isAutoFillSchedState);
   const setCurrentSchedule = useSetRecoilState(currentScheduleState);
 
   const [anchorPrintEl, setAnchorPrintEl] = useState(null);
@@ -39,6 +47,12 @@ const ScheduleCard = ({ schedule }) => {
 
   const handleOpenSchedule = () => {
     navigate(`/schedules/${schedule.value.replace('/', '-')}`);
+  };
+
+  const handleAssignSchedule = () => {
+    setCurrentSchedule(schedule);
+    setIsAutofillSched(true);
+    setDlgAutofillOpen(true);
   };
 
   const handleDeleteSchedule = () => {
@@ -66,7 +80,7 @@ const ScheduleCard = ({ schedule }) => {
         <IconButton onClick={handleOpenSchedule}>
           <OpenInNewIcon color="success" sx={{ fontSize: '35px' }} />
         </IconButton>
-        <IconButton>
+        <IconButton onClick={handleAssignSchedule}>
           <FlashAutoIcon color="secondary" sx={{ fontSize: '35px' }} />
         </IconButton>
         <IconButton
