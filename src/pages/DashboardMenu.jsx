@@ -5,13 +5,10 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import Box from '@mui/material/Box';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import CloudSyncIcon from '@mui/icons-material/CloudSync';
-import DeleteIcon from '@mui/icons-material/Delete';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
-import FlashAutoIcon from '@mui/icons-material/FlashAuto';
 import MoreTimeIcon from '@mui/icons-material/MoreTime';
 import PeopleIcon from '@mui/icons-material/People';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import PrintIcon from '@mui/icons-material/Print';
 import MenuCard from '../components/MenuCard';
 import { isAdminCongState } from '../states/congregation';
 import { isOnlineState } from '../states/main';
@@ -37,7 +34,7 @@ const DashboardMenu = () => {
           title: t('dashboard.personAdd'),
           icon: <PersonAddIcon />,
           disabled: false,
-          navigateTo: '/persons/new'
+          navigateTo: '/persons/new',
         },
       ],
     },
@@ -49,27 +46,7 @@ const DashboardMenu = () => {
           title: t('dashboard.viewAssignmentsSchedule'),
           icon: <AssignmentIcon />,
           disabled: false,
-          navigateTo: '/schedules'
-        },
-        {
-          title: t('dashboard.autoAssignSchedule'),
-          icon: <FlashAutoIcon />,
-          disabled: false,
-        },
-        {
-          title: t('dashboard.deleteAssignments'),
-          icon: <DeleteIcon />,
-          disabled: false,
-        },
-        {
-          title: t('dashboard.printS89'),
-          icon: <PrintIcon />,
-          disabled: false,
-        },
-        {
-          title: t('dashboard.printMeetingSchedule'),
-          icon: <PrintIcon />,
-          disabled: false,
+          navigateTo: '/schedules',
         },
       ],
     },

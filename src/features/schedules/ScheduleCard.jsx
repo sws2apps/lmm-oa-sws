@@ -20,6 +20,7 @@ import {
   dlgAutoFillOpenState,
   isAutoFillSchedState,
   isDeleteSchedState,
+  s89DataState,
 } from '../../states/schedule';
 
 const ScheduleCard = ({ schedule }) => {
@@ -32,6 +33,7 @@ const ScheduleCard = ({ schedule }) => {
   const setDlgAutofillOpen = useSetRecoilState(dlgAutoFillOpenState);
   const setIsAutofillSched = useSetRecoilState(isAutoFillSchedState);
   const setCurrentSchedule = useSetRecoilState(currentScheduleState);
+  const setS89Data = useSetRecoilState(s89DataState);
 
   const [anchorPrintEl, setAnchorPrintEl] = useState(null);
 
@@ -53,6 +55,17 @@ const ScheduleCard = ({ schedule }) => {
     setCurrentSchedule(schedule);
     setIsAutofillSched(true);
     setDlgAutofillOpen(true);
+  };
+
+  const handleS89Export = async () => {
+    setS89Data([]);
+    setCurrentSchedule(schedule);
+    navigate('/assignment-form');
+  };
+
+  const handleS140Export = async () => {
+    setCurrentSchedule(schedule);
+    navigate('/midweek-meeting-schedule');
   };
 
   const handleDeleteSchedule = () => {
@@ -112,10 +125,10 @@ const ScheduleCard = ({ schedule }) => {
           open={openPrint}
           onClose={handleClosePrint}
         >
-          <MenuItem>
+          <MenuItem onClick={handleS89Export}>
             <ListItemText primary={t('schedule.s89')} />
           </MenuItem>
-          <MenuItem>
+          <MenuItem onClick={handleS140Export}>
             <ListItemText primary={t('schedule.midweekMeetingPrint')} />
           </MenuItem>
         </Menu>

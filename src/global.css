@@ -40,3 +40,35 @@
 	justify-content: center;
 	height: 90vh;
 }
+
+.ulSchedule {
+	margin: 0;
+	padding-inline-start: 20px;
+	list-style: none;
+}
+
+.ulSchedule li {
+	display: flex;
+}
+
+.ulSchedule li::before {
+	content: '\2022'; /* Add content: \2022 is the CSS Code/unicode for a bullet */
+	font-size: 26px;
+	font-weight: bold; /* If you want it to be bold */
+	display: inline-block; /* Needed to add space between the bullet and the text */
+	width: 15px; /* Also needed for space (tweak if needed) */
+	margin-left: -20px; /* Also needed for space (tweak if needed) */
+}
+
+.ulSchedule li.tgw::before {
+	color: #656164; /* Change the color */
+}
+
+.ulSchedule li.ayf::before {
+	color: #a56803;
+}
+
+.student-part-duration {
+	margin: 6px;
+	font-size: 11px;
+}

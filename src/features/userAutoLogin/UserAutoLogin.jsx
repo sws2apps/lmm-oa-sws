@@ -15,7 +15,6 @@ const UserAutoLogin = () => {
   let abortCont = useMemo(() => new AbortController(), []);
 
   const [userEmail, setUserEmail] = useRecoilState(userEmailState);
-  const [visitorID, setVisitorID] = useRecoilState(visitorIDState);
 
   const setCongAccountConnected = useSetRecoilState(congAccountConnectedState);
   const setIsAdminCong = useSetRecoilState(isAdminCongState);
@@ -25,6 +24,7 @@ const UserAutoLogin = () => {
 
   const isOnline = useRecoilValue(isOnlineState);
   const apiHost = useRecoilValue(apiHostState);
+  const visitorID = useRecoilValue(visitorIDState);
 
   const handleDisapproved = useCallback(async () => {
     setModalOpen(true);
