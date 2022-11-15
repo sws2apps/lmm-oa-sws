@@ -41,6 +41,14 @@
 	height: 90vh;
 }
 
+.tgwPart {
+	background-color: #656164;
+}
+
+.ayfPart {
+	background-color: #a56803;
+}
+
 .ulSchedule {
 	margin: 0;
 	padding-inline-start: 20px;

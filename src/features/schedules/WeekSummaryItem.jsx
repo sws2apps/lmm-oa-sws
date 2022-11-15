@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import Box from '@mui/material/Box';
@@ -18,8 +19,9 @@ import {
   reloadWeekSummaryState,
 } from '../../states/schedule';
 
-const WeekSummaryItem = ({ week }) => {
+const WeekSummaryItem = ({ week, schedule }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const setDlgAssDeleteOpen = useSetRecoilState(dlgAssDeleteOpenState);
   const setIsDeleteSched = useSetRecoilState(isDeleteSchedState);
@@ -38,6 +40,10 @@ const WeekSummaryItem = ({ week }) => {
     setAssInfo(data);
     setProgress(vPg);
   }, [week]);
+
+  const handleEditAssignment = () => {
+    navigate(`/schedules/${schedule}/${week.value.replaceAll('/', '-')}`);
+  };
 
   const handleAssignWeek = () => {
     setCurrentWeek(week);
@@ -81,7 +87,7 @@ const WeekSummaryItem = ({ week }) => {
       </Box>
       {assInfo.total > 0 && (
         <Box sx={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-          <Button variant="outlined" startIcon={<EditIcon color="success" />}>
+          <Button variant="outlined" startIcon={<EditIcon color="success" />} onClick={handleEditAssignment}>
             {t('global.edit')}
           </Button>
           <Button variant="outlined" startIcon={<FlashAutoIcon color="secondary" />} onClick={handleAssignWeek}>

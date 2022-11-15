@@ -16,6 +16,7 @@ import Schedules from './pages/Schedules';
 import ScheduleDetails from './pages/ScheduleDetails';
 import S89 from './pages/S89';
 import S140 from './pages/S140';
+import ScheduleWeekDetails from './pages/ScheduleWeekDetails';
 
 // creating theme
 const lightTheme = createTheme({
@@ -40,6 +41,7 @@ const router = createBrowserRouter([
       { path: '/persons/:id', element: <PersonDetails /> },
       { path: '/schedules', element: <Schedules /> },
       { path: '/schedules/:schedule', element: <ScheduleDetails /> },
+      { path: '/schedules/:schedule/:weekToFormat', element: <ScheduleWeekDetails /> },
       { path: '/assignment-form', element: <S89 /> },
       { path: '/midweek-meeting-schedule', element: <S140 /> },
     ],

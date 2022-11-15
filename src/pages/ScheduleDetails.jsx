@@ -68,7 +68,7 @@ const ScheduleDetails = () => {
 
       <Box sx={{ display: 'flex', gap: '20px', flexDirection: 'column', marginTop: '25px' }}>
         {weeks.map((week) => (
-          <WeekSummaryItem key={week.value} week={week} />
+          <WeekSummaryItem key={week.value} week={week} schedule={schedule} />
         ))}
       </Box>
     </Box>
