@@ -14,7 +14,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
-import { green, grey } from '@mui/material/colors';
+import { grey } from '@mui/material/colors';
 import { studentsAssignmentHistoryState } from '../../states/persons';
 import { dbGetPersonsByAssType, dbHistoryAssistant } from '../../indexedDb/dbPersons';
 import { formatDateForCompare } from '../../utils/app';

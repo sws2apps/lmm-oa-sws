@@ -201,6 +201,12 @@ const Persons = () => {
     getQuery();
   }, [handleSearchStudent, searchParams]);
 
+  const handleSearchEnter = (e) => {
+    if (e.key === 'Enter') {
+      handleSearchStudent(txtSearch, isMale, isFemale, assTypes);
+    }
+  };
+
   useEffect(() => {
     if (!mdUp) setAnchorElMenuSmall(null);
   }, [mdUp]);
@@ -265,6 +271,7 @@ const Persons = () => {
             inputProps={{ 'aria-label': 'search' }}
             value={txtSearch}
             onChange={(e) => setTxtSearch(e.target.value)}
+            onKeyUp={handleSearchEnter}
           />
         </Box>
 
