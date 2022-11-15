@@ -16,8 +16,14 @@ const MenuCard = ({ menu }) => {
 
   const { title, links, visible } = menu;
 
-  const handleNavigate = (link) => {
-    navigate(link);
+  const handleAction = (link) => {
+    if (link.navigateTo) {
+      navigate(link.navigateTo);
+    }
+
+    if (link.action) {
+      link.action();
+    }
   };
 
   return (
@@ -41,9 +47,7 @@ const MenuCard = ({ menu }) => {
             <List>
               {links.map((link, index) => (
                 <ListItem key={`menu-child-${index}`} disablePadding disabled={link.disabled}>
-                  <ListItemButton
-                    onClick={link.navigateTo ? () => handleNavigate(link.navigateTo) : () => link.action()}
-                  >
+                  <ListItemButton onClick={() => handleAction(link)}>
                     <ListItemIcon>{link.icon}</ListItemIcon>
                     <ListItemText primary={link.title} />
                   </ListItemButton>

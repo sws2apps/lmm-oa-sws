@@ -29,6 +29,7 @@ import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import Toolbar from '@mui/material/Toolbar';
 import TopicIcon from '@mui/icons-material/Topic';
 import Typography from '@mui/material/Typography';
+import SettingsIcon from '@mui/icons-material/Settings';
 import AppLanguage from '../features/languageSwitcher';
 import ThemeSwitcher from '../features/themeSwitcher';
 import { WhatsNewContent } from '../features/whatsNew';
@@ -331,6 +332,12 @@ const NavBar = (props) => {
                       </List>
                     </Collapse>
 
+                    <MenuItem>
+                      <ListItemIcon>
+                        <SettingsIcon fontSize="medium" color="error" />
+                      </ListItemIcon>
+                      <ListItemText>{t('global.settings')}</ListItemText>
+                    </MenuItem>
                     <MenuItem onClick={handleAbout}>
                       <ListItemIcon>
                         <InfoIcon fontSize="medium" sx={{ color: '#3498DB' }} />
