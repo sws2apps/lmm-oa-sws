@@ -58,6 +58,7 @@ const DashboardMenu = () => {
           title: t('dashboard.viewSourceMaterial'),
           icon: <CalendarMonthIcon />,
           disabled: false,
+          navigateTo: '/source-materials',
         },
         {
           title: t('dashboard.weekAddNew'),
