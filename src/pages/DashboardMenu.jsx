@@ -15,7 +15,7 @@ import { isAdminCongState } from '../states/congregation';
 import { appLangState, isOnlineState } from '../states/main';
 import { dbAddManualSource } from '../indexedDb/dbSourceMaterial';
 import { appMessageState, appSeverityState, appSnackOpenState } from '../states/notification';
-import { epubFileState, isImportEPUBState } from '../states/sourceMaterial';
+import { epubFileState, isImportEPUBState, isImportJWOrgState } from '../states/sourceMaterial';
 
 const DashboardMenu = () => {
   const { t } = useTranslation();
@@ -27,6 +27,7 @@ const DashboardMenu = () => {
   const setAppMessage = useSetRecoilState(appMessageState);
   const setEpubFile = useSetRecoilState(epubFileState);
   const setIsImportEPUB = useSetRecoilState(isImportEPUBState);
+  const setIsImportJWOrg = useSetRecoilState(isImportJWOrgState);
 
   const isAdminCong = useRecoilValue(isAdminCongState);
   const isOnline = useRecoilValue(isOnlineState);
@@ -44,8 +45,6 @@ const DashboardMenu = () => {
       strict: true,
     });
 
-    console.log(file);
-
     const epubLang = file.name.split('_')[1];
     if (epubLang && epubLang === appLang.toUpperCase()) {
       setEpubFile(file);
@@ -55,6 +54,10 @@ const DashboardMenu = () => {
       setAppSeverity('warning');
       setAppMessage(t('sourceMaterial.invalidFilename'));
     }
+  };
+
+  const handleImportJWOrg = () => {
+    setIsImportJWOrg(true);
   };
 
   const dashboardMenus = [
@@ -114,6 +117,7 @@ const DashboardMenu = () => {
           title: t('dashboard.sourceImportJw'),
           icon: <CloudSyncIcon />,
           disabled: isOnline ? false : true,
+          action: handleImportJWOrg,
         },
       ],
     },
