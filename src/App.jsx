@@ -18,6 +18,7 @@ import S89 from './pages/S89';
 import S140 from './pages/S140';
 import ScheduleWeekDetails from './pages/ScheduleWeekDetails';
 import SourceMaterials from './pages/SourceMaterials';
+import SourceWeekDetails from './pages/SourceWeekDetails';
 
 // creating theme
 const lightTheme = createTheme({
@@ -46,6 +47,7 @@ const router = createBrowserRouter([
       { path: '/assignment-form', element: <S89 /> },
       { path: '/midweek-meeting-schedule', element: <S140 /> },
       { path: '/source-materials', element: <SourceMaterials /> },
+      { path: '/source-materials/:weekToFormat', element: <SourceWeekDetails /> },
     ],
   },
 ]);

@@ -1,82 +1,92 @@
 .browser-not-supported {
-	font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
-	color: red;
-	font-weight: bold;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	text-align: center;
-	padding: 50px;
+  font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+  color: red;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 50px;
 }
 
 .appLogo {
-	width: 120px;
-	height: auto;
-	border-radius: 15px;
+  width: 120px;
+  height: auto;
+  border-radius: 15px;
 }
 
 .appLogoMini {
-	width: 80px;
-	height: auto;
-	border-radius: 8px;
+  width: 80px;
+  height: auto;
+  border-radius: 8px;
 }
 
 .appLogoExtraMini {
-	width: 40px;
-	height: auto;
-	border-radius: 6px;
+  width: 40px;
+  height: auto;
+  border-radius: 6px;
 }
 
 .appLogoStartup {
-	height: 60px;
-	width: auto;
-	border-radius: 8px;
+  height: 60px;
+  width: auto;
+  border-radius: 8px;
 }
 
 .app-splash-screen {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+}
+
+.meetingPart {
+  max-width: 550px;
+  min-width: 320px;
+  border-radius: 10px;
+  padding: 0 10px;
+  color: white;
+  margin-top: 10px;
+  margin-bottom: 5px;
 }
 
 .tgwPart {
-	background-color: #656164;
+  background-color: #656164;
 }
 
 .ayfPart {
-	background-color: #a56803;
+  background-color: #a56803;
 }
 
 .ulSchedule {
-	margin: 0;
-	padding-inline-start: 20px;
-	list-style: none;
+  margin: 0;
+  padding-inline-start: 20px;
+  list-style: none;
 }
 
 .ulSchedule li {
-	display: flex;
+  display: flex;
 }
 
 .ulSchedule li::before {
-	content: '\2022'; /* Add content: \2022 is the CSS Code/unicode for a bullet */
-	font-size: 26px;
-	font-weight: bold; /* If you want it to be bold */
-	display: inline-block; /* Needed to add space between the bullet and the text */
-	width: 15px; /* Also needed for space (tweak if needed) */
-	margin-left: -20px; /* Also needed for space (tweak if needed) */
+  content: '\2022'; /* Add content: \2022 is the CSS Code/unicode for a bullet */
+  font-size: 26px;
+  font-weight: bold; /* If you want it to be bold */
+  display: inline-block; /* Needed to add space between the bullet and the text */
+  width: 15px; /* Also needed for space (tweak if needed) */
+  margin-left: -20px; /* Also needed for space (tweak if needed) */
 }
 
 .ulSchedule li.tgw::before {
-	color: #656164; /* Change the color */
+  color: #656164; /* Change the color */
 }
 
 .ulSchedule li.ayf::before {
-	color: #a56803;
+  color: #a56803;
 }
 
 .student-part-duration {
-	margin: 6px;
-	font-size: 11px;
+  margin: 6px;
+  font-size: 11px;
 }

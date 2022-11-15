@@ -21,7 +21,7 @@ import NoMeetingRoomIcon from '@mui/icons-material/NoMeetingRoom';
 import Typography from '@mui/material/Typography';
 import { ScheduleAYF, StudentSelector } from '../features/schedules';
 import { dbSaveAss } from '../indexedDb/dbAssignment';
-import { currentScheduleState, isReloadScheduleState } from '../states/schedule';
+import { isReloadScheduleState } from '../states/schedule';
 import { classCountState } from '../states/congregation';
 import { dbGetSourceMaterial } from '../indexedDb/dbSourceMaterial';
 import { dbGetScheduleData } from '../indexedDb/dbSchedule';
@@ -188,7 +188,6 @@ const ScheduleWeekDetails = () => {
   const [isReload, setIsReload] = useRecoilState(isReloadScheduleState);
 
   const classCount = useRecoilValue(classCountState);
-  const currentSchedule = useRecoilValue(currentScheduleState);
   const monthNames = useRecoilValue(monthNamesState);
   const shortDateFormat = useRecoilValue(shortDateFormatState);
   const themeOptions = useRecoilValue(themeOptionsState);

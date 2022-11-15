@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import dateFormat from 'dateformat';
 import Box from '@mui/material/Box';
@@ -10,9 +11,13 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { dbGetWeekListBySched } from '../../indexedDb/dbSourceMaterial';
 import { shortDateFormatState } from '../../states/main';
+import { currentWeekState } from '../../states/sourceMaterial';
 
 const SourceCard = ({ schedule }) => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
+
+  const setCurrentWeek = useSetRecoilState(currentWeekState);
 
   const shortDateFormat = useRecoilValue(shortDateFormatState);
 
@@ -36,6 +41,11 @@ const SourceCard = ({ schedule }) => {
 
     setWeeks(newData);
   }, [schedule, shortDateFormat]);
+
+  const handleEditSource = (week) => {
+    setCurrentWeek(week);
+    navigate(`/source-materials/${week.value.replaceAll('/', '-')}`);
+  };
 
   useEffect(() => {
     getWeekBySchedule();
@@ -75,7 +85,7 @@ const SourceCard = ({ schedule }) => {
           {weeks.map((week) => (
             <Box key={week.value} sx={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
               <Typography>{week.label}</Typography>
-              <IconButton sx={{ padding: 0 }}>
+              <IconButton sx={{ padding: 0 }} onClick={() => handleEditSource(week)}>
                 <EditIcon color="success" />
               </IconButton>
             </Box>
