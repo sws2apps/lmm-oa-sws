@@ -19,6 +19,8 @@ import NavBar from './NavBar';
 import { fetchNotifications } from '../utils/app';
 import { dlgAssDeleteOpenState, dlgAutoFillOpenState, isPublishOpenState } from '../states/schedule';
 import { AutofillSchedule, DeleteSchedule, SchedulePublish } from '../features/schedules/';
+import { isImportEPUBState } from '../states/sourceMaterial';
+import { ImportEPUB } from '../features/sourceMaterial/';
 
 const Layout = () => {
   const isAppLoad = useRecoilValue(isAppLoadState);
@@ -29,6 +31,7 @@ const Layout = () => {
   const isDeleteAssignment = useRecoilValue(dlgAssDeleteOpenState);
   const isAutofillAssignment = useRecoilValue(dlgAutoFillOpenState);
   const isPublishPocket = useRecoilValue(isPublishOpenState);
+  const isImportEPUB = useRecoilValue(isImportEPUBState);
 
   useEffect(() => {
     const fetchNotif = async () => {
@@ -54,6 +57,7 @@ const Layout = () => {
         {isDeleteAssignment && <DeleteSchedule />}
         {isAutofillAssignment && <AutofillSchedule />}
         {isPublishPocket && <SchedulePublish />}
+        {isImportEPUB && <ImportEPUB />}
 
         {isAppLoad && <Startup />}
         {!isAppLoad && <Outlet />}

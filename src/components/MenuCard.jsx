@@ -41,7 +41,9 @@ const MenuCard = ({ menu }) => {
             <List>
               {links.map((link, index) => (
                 <ListItem key={`menu-child-${index}`} disablePadding disabled={link.disabled}>
-                  <ListItemButton onClick={() => handleNavigate(link.navigateTo)}>
+                  <ListItemButton
+                    onClick={link.navigateTo ? () => handleNavigate(link.navigateTo) : () => link.action()}
+                  >
                     <ListItemIcon>{link.icon}</ListItemIcon>
                     <ListItemText primary={link.title} />
                   </ListItemButton>
