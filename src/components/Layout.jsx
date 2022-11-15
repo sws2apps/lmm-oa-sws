@@ -17,8 +17,8 @@ import {
 import Startup from '../features/startup';
 import NavBar from './NavBar';
 import { fetchNotifications } from '../utils/app';
-import { dlgAssDeleteOpenState, dlgAutoFillOpenState } from '../states/schedule';
-import { AutofillSchedule, DeleteSchedule } from '../features/schedules/';
+import { dlgAssDeleteOpenState, dlgAutoFillOpenState, isPublishOpenState } from '../states/schedule';
+import { AutofillSchedule, DeleteSchedule, SchedulePublish } from '../features/schedules/';
 
 const Layout = () => {
   const isAppLoad = useRecoilValue(isAppLoadState);
@@ -28,6 +28,7 @@ const Layout = () => {
   const isBackupDb = useRecoilValue(backupDbOpenState);
   const isDeleteAssignment = useRecoilValue(dlgAssDeleteOpenState);
   const isAutofillAssignment = useRecoilValue(dlgAutoFillOpenState);
+  const isPublishPocket = useRecoilValue(isPublishOpenState);
 
   useEffect(() => {
     const fetchNotif = async () => {
@@ -52,6 +53,7 @@ const Layout = () => {
         {isBackupDb && <BackupDbDialog />}
         {isDeleteAssignment && <DeleteSchedule />}
         {isAutofillAssignment && <AutofillSchedule />}
+        {isPublishPocket && <SchedulePublish />}
 
         {isAppLoad && <Startup />}
         {!isAppLoad && <Outlet />}

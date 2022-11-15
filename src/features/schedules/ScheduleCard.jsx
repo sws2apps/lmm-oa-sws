@@ -20,6 +20,7 @@ import {
   dlgAutoFillOpenState,
   isAutoFillSchedState,
   isDeleteSchedState,
+  isPublishOpenState,
   s89DataState,
 } from '../../states/schedule';
 
@@ -34,6 +35,7 @@ const ScheduleCard = ({ schedule }) => {
   const setIsAutofillSched = useSetRecoilState(isAutoFillSchedState);
   const setCurrentSchedule = useSetRecoilState(currentScheduleState);
   const setS89Data = useSetRecoilState(s89DataState);
+  const setPublishPocket = useSetRecoilState(isPublishOpenState);
 
   const [anchorPrintEl, setAnchorPrintEl] = useState(null);
 
@@ -66,6 +68,11 @@ const ScheduleCard = ({ schedule }) => {
   const handleS140Export = async () => {
     setCurrentSchedule(schedule);
     navigate('/midweek-meeting-schedule');
+  };
+
+  const handlePublishPocket = () => {
+    setCurrentSchedule(schedule);
+    setPublishPocket(true);
   };
 
   const handleDeleteSchedule = () => {
@@ -133,7 +140,7 @@ const ScheduleCard = ({ schedule }) => {
           </MenuItem>
         </Menu>
 
-        <IconButton>
+        <IconButton onClick={handlePublishPocket}>
           <SendIcon color="info" sx={{ fontSize: '35px' }} />
         </IconButton>
         <IconButton onClick={handleDeleteSchedule}>
