@@ -17,6 +17,8 @@ sws2apps-api
 # Editor directories and files
 .idea
 .DS_Store
+.replit
+replit.nix
 *.suo
 *.ntvs*
 *.njsproj
