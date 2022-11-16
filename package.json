@@ -8,9 +8,9 @@
     "@emotion/styled": "^11.10.5",
     "@fingerprintjs/fingerprintjs-pro": "^3.8.1",
     "@fontsource/roboto": "^4.5.8",
-    "@mui/icons-material": "^5.10.9",
-    "@mui/lab": "^5.0.0-alpha.107",
-    "@mui/material": "^5.10.13",
+    "@mui/icons-material": "^5.10.14",
+    "@mui/lab": "^5.0.0-alpha.108",
+    "@mui/material": "^5.10.14",
     "@mui/x-date-pickers": "^5.0.8",
     "@sws2apps/react-sw-helper": "^1.9.0",
     "date-fns": "^2.29.3",
@@ -68,7 +68,7 @@
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/exec": "^6.0.2",
     "@semantic-release/git": "^10.0.1",
-    "cypress": "^11.0.1",
+    "cypress": "^11.1.0",
     "prop-types": "^15.8.1",
     "serve": "^14.1.1"
   }
