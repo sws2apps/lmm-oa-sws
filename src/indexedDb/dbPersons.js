@@ -22,11 +22,6 @@ export const dbGetStudents = async () => {
     person.person_displayName = appData[i].person_displayName;
     person.isMale = appData[i].isMale;
     person.isFemale = appData[i].isFemale;
-    person.isBRead = appData[i].isBRead;
-    person.isInitialCall = appData[i].isInitialCall;
-    person.isReturnVisit = appData[i].isReturnVisit;
-    person.isBibleStudy = appData[i].isBibleStudy;
-    person.isTalk = appData[i].isTalk;
     person.isUnavailable = appData[i].isUnavailable;
     person.forLivePart = appData[i].forLivePart;
     person.viewOnlineSchedule = appData[i].viewOnlineSchedule || false;
@@ -98,13 +93,7 @@ export const dbSavePersonData = async (personData) => {
     person_displayName: personData.person_displayName,
     isMale: personData.isMale,
     isFemale: personData.isFemale,
-    isBRead: personData.isBRead,
-    isInitialCall: personData.isInitialCall,
-    isReturnVisit: personData.isReturnVisit,
-    isBibleStudy: personData.isBibleStudy,
-    isTalk: personData.isTalk,
     isUnavailable: personData.isUnavailable,
-    forLivePart: personData.forLivePart,
     viewOnlineSchedule: personData.viewOnlineSchedule,
     student_PIN: personData.student_PIN,
     viewStudent_Part: personData.viewStudent_Part,
@@ -124,13 +113,7 @@ export const dbAddPersonData = async (personData) => {
     person_displayName: personData.person_displayName,
     isMale: personData.isMale,
     isFemale: personData.isFemale,
-    isBRead: personData.isBRead,
-    isInitialCall: personData.isInitialCall,
-    isReturnVisit: personData.isReturnVisit,
-    isBibleStudy: personData.isBibleStudy,
-    isTalk: personData.isTalk,
     isUnavailable: personData.isUnavailable,
-    forLivePart: personData.forLivePart,
   });
 };
 

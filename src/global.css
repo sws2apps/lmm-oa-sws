@@ -53,10 +53,12 @@
 
 .tgwPart {
   background-color: #656164;
+  text-transform: capitalize;
 }
 
 .ayfPart {
   background-color: #a56803;
+  text-transform: capitalize;
 }
 
 .settingHeader {

@@ -3,7 +3,6 @@ import { useRecoilValue } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import { styled, lighten, darken } from '@mui/system';
 import Autocomplete from '@mui/material/Autocomplete';
-import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import { assTypeLocalNewState } from '../states/sourceMaterial';
 
@@ -28,6 +27,12 @@ const AssignmentType = ({ student, assignable, currentType, handleChangeType }) 
   const assTypeList = useRecoilValue(assTypeLocalNewState);
   const [localList, setLocalList] = useState([]);
   const [isFemale, setIsFemale] = useState(false);
+  const [value, setValue] = useState(null);
+
+  const handleChange = (newVal) => {
+    setValue(newVal);
+    handleChangeType(newVal.value);
+  };
 
   useEffect(() => {
     setIsFemale(student.isFemale);
@@ -41,52 +46,49 @@ const AssignmentType = ({ student, assignable, currentType, handleChangeType }) 
         data = data.filter((assType) => assType.maleOnly !== true);
       }
 
-      console.log(data);
       setLocalList(data);
     } else {
       setLocalList(assTypeList);
     }
   }, [assTypeList, assignable, isFemale]);
 
-  const renderPartType = (type) => {
-    return (
-      <MenuItem key={type.value} value={type.value}>
-        {type.label}
-      </MenuItem>
-    );
-  };
+  useEffect(() => {
+    const find = assTypeList.find((assType) => assType.value === currentType);
+    setValue(find);
+  }, [assTypeList, currentType]);
 
   return (
     <>
       {localList.length > 0 && (
-        <>
-          <TextField
-            id="outlined-select-type"
-            select
-            label={t('sourceMaterial.partType')}
-            size="small"
-            value={currentType}
-            onChange={(e) => handleChangeType(e.target.value)}
-            sx={{
-              minWidth: '250px',
-            }}
-          >
-            {localList.map((partType) => renderPartType(partType))}
-          </TextField>
-          <Autocomplete
-            id="grouped-demo"
-            options={localList}
-            groupBy={(localList) => localList.type}
-            getOptionLabel={(localList) => localList.label}
-            renderInput={(params) => <TextField {...params} label={t('sourceMaterial.partType')} />}
-            renderGroup={(params) => (
-              <li>
-                <GroupHeader>{params.group}</GroupHeader>
-                <GroupItems>{params.children}</GroupItems>
-              </li>
-            )}
-          />
-        </>
+        <Autocomplete
+          id="grouped-demo"
+          size="small"
+          sx={{ minWidth: '340px' }}
+          options={localList}
+          groupBy={(option) => option.type}
+          getOptionLabel={(option) => (option.label ? option.label : '')}
+          onChange={(e, value) => handleChange(value)}
+          value={value}
+          disableClearable={true}
+          isOptionEqualToValue={(option, value) => option.value === value.value}
+          renderInput={(params) => <TextField {...params} label={t('sourceMaterial.partType')} />}
+          renderGroup={(params) => (
+            <li key={`group-${params.group}`}>
+              <GroupHeader>
+                {params.group === 'mm'
+                  ? t('global.midweekMeeting')
+                  : params.group === 'tgw'
+                  ? t('global.treasuresPart')
+                  : params.group === 'ayf'
+                  ? t('global.applyFieldMinistryPart')
+                  : params.group === 'lc'
+                  ? t('global.livingPart')
+                  : ''}
+              </GroupHeader>
+              <GroupItems>{params.children}</GroupItems>
+            </li>
+          )}
+        />
       )}
     </>
   );

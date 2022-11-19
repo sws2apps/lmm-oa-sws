@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import Box from '@mui/material/Box';
 import About from '../features/about';
@@ -16,13 +16,15 @@ import {
 } from '../states/main';
 import Startup from '../features/startup';
 import NavBar from './NavBar';
-import { fetchNotifications } from '../utils/app';
 import { dlgAssDeleteOpenState, dlgAutoFillOpenState, isPublishOpenState } from '../states/schedule';
 import { AutofillSchedule, DeleteSchedule, SchedulePublish } from '../features/schedules/';
 import { isImportEPUBState, isImportJWOrgState } from '../states/sourceMaterial';
 import { ImportEPUB, ImportJWOrg } from '../features/sourceMaterial/';
+import { fetchNotifications } from '../utils/app';
 
 const Layout = () => {
+  let location = useLocation();
+
   const isAppLoad = useRecoilValue(isAppLoadState);
   const isOpenAbout = useRecoilValue(isAboutOpenState);
   const isOpenWhatsNew = useRecoilValue(isWhatsNewOpenState);
@@ -35,15 +37,8 @@ const Layout = () => {
   const isImportJWOrg = useRecoilValue(isImportJWOrgState);
 
   useEffect(() => {
-    const fetchNotif = async () => {
-      setTimeout(async () => {
-        await fetchNotifications();
-        fetchNotif();
-      }, 60000);
-    };
-
-    fetchNotif();
-  }, []);
+    fetchNotifications();
+  }, [location]);
 
   return (
     <RootModal>

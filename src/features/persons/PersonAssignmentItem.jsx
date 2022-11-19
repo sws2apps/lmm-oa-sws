@@ -101,7 +101,7 @@ const PersonAssignmentItem = ({ student, assignment, assignments, setAssignments
           marginTop: '-5px',
         }}
       >
-        <Box sx={{ width: '250px', marginLeft: '10px', marginTop: '25px' }}>
+        <Box sx={{ marginLeft: '10px', marginTop: '25px' }}>
           <AssignmentType
             assignable={true}
             currentType={assignmentType}
