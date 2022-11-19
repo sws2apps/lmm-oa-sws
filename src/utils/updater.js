@@ -243,6 +243,13 @@ const updateAssignmentType = async (step) => {
   let rvVideoObj = {};
   let otherObj = {};
   let memorialObj = {};
+  let chairmanMMObj = {};
+  let prayerMMObj = {};
+  let tgwTalkObj = {};
+  let tgwGemsObj = {};
+  let lcPartObj = {};
+  let cbsConductorObj = {};
+  let cbsReaderObj = {};
 
   langList.forEach((lang) => {
     bReadObj[lang.code.toUpperCase()] = getI18n().getDataByLanguage(lang.code).translation['global.bibleReading'];
@@ -254,6 +261,19 @@ const updateAssignmentType = async (step) => {
     icVideoObj[lang.code.toUpperCase()] = getI18n().getDataByLanguage(lang.code).translation['global.initialCallVideo'];
     rvVideoObj[lang.code.toUpperCase()] = getI18n().getDataByLanguage(lang.code).translation['global.returnVisitVideo'];
     memorialObj[lang.code.toUpperCase()] = getI18n().getDataByLanguage(lang.code).translation['global.memorialInvite'];
+    chairmanMMObj[lang.code.toUpperCase()] = getI18n().getDataByLanguage(lang.code).translation[
+      'global.chairmanMidweekMeeting'
+    ];
+    prayerMMObj[lang.code.toUpperCase()] = getI18n().getDataByLanguage(lang.code).translation[
+      'global.prayerMidweekMeeting'
+    ];
+    tgwTalkObj[lang.code.toUpperCase()] = getI18n().getDataByLanguage(lang.code).translation['global.tgwTalk'];
+    tgwGemsObj[lang.code.toUpperCase()] = getI18n().getDataByLanguage(lang.code).translation['global.tgwGems'];
+    lcPartObj[lang.code.toUpperCase()] = getI18n().getDataByLanguage(lang.code).translation['global.lcPart'];
+    cbsConductorObj[lang.code.toUpperCase()] = getI18n().getDataByLanguage(lang.code).translation[
+      'global.cbsConductor'
+    ];
+    cbsReaderObj[lang.code.toUpperCase()] = getI18n().getDataByLanguage(lang.code).translation['global.cbsReader'];
   });
 
   await appDb.ass_type.clear();
@@ -264,6 +284,7 @@ const updateAssignmentType = async (step) => {
       code: 100,
       maleOnly: true,
       assignable: true,
+      type: 'ayf',
       ass_type_name: {
         ...bReadObj,
       },
@@ -272,6 +293,7 @@ const updateAssignmentType = async (step) => {
       id_type: 1,
       code: 101,
       assignable: true,
+      type: 'ayf',
       ass_type_name: {
         ...initCallObj,
       },
@@ -280,6 +302,7 @@ const updateAssignmentType = async (step) => {
       id_type: 2,
       code: 102,
       assignable: true,
+      type: 'ayf',
       ass_type_name: {
         ...rvObj,
       },
@@ -288,6 +311,7 @@ const updateAssignmentType = async (step) => {
       id_type: 3,
       code: 103,
       assignable: true,
+      type: 'ayf',
       ass_type_name: {
         ...bsObj,
       },
@@ -297,6 +321,7 @@ const updateAssignmentType = async (step) => {
       code: 104,
       maleOnly: true,
       assignable: true,
+      type: 'ayf',
       ass_type_name: {
         ...talkObj,
       },
@@ -305,6 +330,7 @@ const updateAssignmentType = async (step) => {
       id_type: 5,
       code: 105,
       assignable: false,
+      type: 'ayf',
       ass_type_name: {
         ...icVideoObj,
       },
@@ -313,6 +339,7 @@ const updateAssignmentType = async (step) => {
       id_type: 6,
       code: 106,
       assignable: false,
+      type: 'ayf',
       ass_type_name: {
         ...rvVideoObj,
       },
@@ -321,6 +348,7 @@ const updateAssignmentType = async (step) => {
       id_type: 7,
       code: 107,
       assignable: false,
+      type: 'ayf',
       ass_type_name: {
         ...otherObj,
       },
@@ -330,8 +358,79 @@ const updateAssignmentType = async (step) => {
       code: 108,
       linkTo: 101,
       assignable: false,
+      type: 'ayf',
       ass_type_name: {
         ...memorialObj,
+      },
+    },
+    {
+      id_type: 9,
+      code: 109,
+      maleOnly: true,
+      assignable: true,
+      type: 'mm',
+      ass_type_name: {
+        ...chairmanMMObj,
+      },
+    },
+    {
+      id_type: 10,
+      code: 110,
+      maleOnly: true,
+      assignable: true,
+      type: 'mm',
+      ass_type_name: {
+        ...prayerMMObj,
+      },
+    },
+    {
+      id_type: 11,
+      code: 111,
+      maleOnly: true,
+      assignable: true,
+      type: 'tgw',
+      ass_type_name: {
+        ...tgwTalkObj,
+      },
+    },
+    {
+      id_type: 12,
+      code: 112,
+      maleOnly: true,
+      assignable: true,
+      type: 'tgw',
+      ass_type_name: {
+        ...tgwGemsObj,
+      },
+    },
+    {
+      id_type: 13,
+      code: 113,
+      maleOnly: true,
+      assignable: true,
+      type: 'lc',
+      ass_type_name: {
+        ...lcPartObj,
+      },
+    },
+    {
+      id_type: 14,
+      code: 114,
+      maleOnly: true,
+      assignable: true,
+      type: 'lc',
+      ass_type_name: {
+        ...cbsConductorObj,
+      },
+    },
+    {
+      id_type: 15,
+      code: 115,
+      maleOnly: true,
+      assignable: true,
+      type: 'lc',
+      ass_type_name: {
+        ...cbsReaderObj,
       },
     },
   ]);

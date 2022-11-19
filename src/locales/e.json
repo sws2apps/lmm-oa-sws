@@ -129,6 +129,13 @@
   "global.create": "Create",
   "global.savedSuccess": "Changes saved successfully!",
   "global.update": "Update",
+  "global.chairmanMidweekMeeting": "Chairman",
+  "global.prayerMidweekMeeting": "Prayer",
+  "global.tgwTalk": "Talk 10 min.",
+  "global.tgwGems": "Spiritual Gems",
+  "global.lcPart": "Living Parts",
+  "global.cbsConductor": "Congregation Bible Study Conductor",
+  "global.cbsReader": "Congregation Bible Study Reader",
 
   "startup.welcomeTitle": "Welcome to LMM-OA",
   "startup.welcomeDescription": "LMM-OA (or Life and Ministry Meeting Overseer Assistant) is an application designed for the Life and Ministry Meeting Overseer.",

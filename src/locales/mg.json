@@ -130,6 +130,13 @@
   "global.create": "Hamorona",
   "global.savedSuccess": "Voatahiry soa aman-tsara ny fanovana!",
   "global.update": "Hanova",
+  "global.chairmanMidweekMeeting": "Mpitari-draharaha",
+  "global.prayerMidweekMeeting": "Vavaka",
+  "global.tgwTalk": "Lahateny 10 min.",
+  "global.tgwGems": "Vatosoa Ara-panahy",
+  "global.lcPart": "Anjara Amin’ny Fiainantsika",
+  "global.cbsConductor": "Mpitarika - Fianarana Baiboly",
+  "global.cbsReader": "Mpamaky - Fianarana Baiboly",
 
   "startup.welcomeTitle": "Tongasoa eto amin’ny LMM-OA",
   "startup.welcomeDescription": "Programa natao ho ampiasain’ny Mpiandraikitra ny Fivoriana Momba ny Fiainantsika sy ny Fanompoana ny LMM-OA (na Life and Ministry Meeting Overseer Assistant).",
