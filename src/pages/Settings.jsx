@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil';
 import Box from '@mui/material/Box';
-import { BasicSettings, DataStorage } from '../features/settings'
+import { BasicSettings, DataStorage, MyAccount } from '../features/settings';
 import { congAccountConnectedState } from '../states/congregation';
 import { isOnlineState } from '../states/main';
 
@@ -17,6 +17,12 @@ const Settings = () => {
 
   return (
     <Box>
+      {isOnline && congAccountConnected && (
+        <Box sx={sharedStyles.settingItem}>
+          <MyAccount />
+        </Box>
+      )}
+
       <Box sx={sharedStyles.settingItem}>
         <BasicSettings />
       </Box>

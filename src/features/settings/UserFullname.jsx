@@ -6,18 +6,8 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { usernameState } from '../../states/congregation';
-import {
-  apiHostState,
-  rootModalOpenState,
-  userEmailState,
-  userIDState,
-  visitorIDState,
-} from '../../states/main';
-import {
-  appMessageState,
-  appSeverityState,
-  appSnackOpenState,
-} from '../../states/notification';
+import { apiHostState, rootModalOpenState, userEmailState, userIDState, visitorIDState } from '../../states/main';
+import { appMessageState, appSeverityState, appSnackOpenState } from '../../states/notification';
 
 const UserFullname = () => {
   const cancel = useRef();
@@ -78,7 +68,6 @@ const UserFullname = () => {
           setAppSeverity('warning');
           setAppSnackOpen(true);
         }
-
       }
     } catch (err) {
       if (!cancel.current) {
@@ -87,14 +76,12 @@ const UserFullname = () => {
         setAppSeverity('error');
         setAppSnackOpen(true);
       }
-
     }
   };
 
   useEffect(() => {
     setIsEdit(tmpUsername !== username);
   }, [tmpUsername, username]);
-
 
   useEffect(() => {
     return () => {
@@ -119,11 +106,11 @@ const UserFullname = () => {
         }}
       >
         <TextField
-          id='settings-username'
+          id="settings-username"
           label={t('login.fullname')}
-          variant='outlined'
-          size='small'
-          autoComplete='off'
+          variant="outlined"
+          size="small"
+          autoComplete="off"
           required
           sx={{
             width: '320px',
@@ -135,18 +122,10 @@ const UserFullname = () => {
         />
         {isEdit && (
           <Box sx={{ marginBottom: '5px' }}>
-            <Button
-              onClick={handleUpdateUsername}
-              variant='contained'
-              sx={{ marginRight: '5px' }}
-            >
+            <Button onClick={handleUpdateUsername} variant="contained" sx={{ marginRight: '5px' }}>
               {t('global.save')}
             </Button>
-            <Button
-              onClick={handleCancelChanges}
-              variant='contained'
-              color='secondary'
-            >
+            <Button onClick={handleCancelChanges} variant="contained" color="secondary">
               {t('global.cancel')}
             </Button>
           </Box>
@@ -154,11 +133,11 @@ const UserFullname = () => {
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
         <TextField
-          id='settings-email-address'
+          id="settings-email-address"
           label={t('login.email')}
-          variant='outlined'
-          size='small'
-          autoComplete='off'
+          variant="outlined"
+          size="small"
+          autoComplete="off"
           sx={{
             width: '320px',
             marginRight: '5px',
@@ -170,9 +149,7 @@ const UserFullname = () => {
             readOnly: true,
           }}
         />
-        <Typography sx={{ fontSize: '12px' }}>
-          {t('settings.emailLocked')}
-        </Typography>
+        <Typography sx={{ fontSize: '12px' }}>{t('settings.emailLocked')}</Typography>
       </Box>
     </Box>
   );

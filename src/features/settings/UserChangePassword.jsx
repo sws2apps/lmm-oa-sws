@@ -64,7 +64,7 @@ const UserChangePassword = () => {
 
       // update password in firebase auth
       if (apiHost !== '') {
-        cancel.current = false
+        cancel.current = false;
         setModalOpen(true);
 
         const res = await fetch(`${apiHost}api/users/${userID}/password`, {
@@ -105,7 +105,6 @@ const UserChangePassword = () => {
         setAppSeverity('error');
         setAppSnackOpen(true);
       }
-
     }
   };
 

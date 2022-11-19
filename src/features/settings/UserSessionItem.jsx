@@ -7,18 +7,8 @@ import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
 import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 import Typography from '@mui/material/Typography';
-import {
-  apiHostState,
-  rootModalOpenState,
-  userEmailState,
-  userIDState,
-  visitorIDState,
-} from '../../states/main';
-import {
-  appMessageState,
-  appSeverityState,
-  appSnackOpenState,
-} from '../../states/notification';
+import { apiHostState, rootModalOpenState, userEmailState, userIDState, visitorIDState } from '../../states/main';
+import { appMessageState, appSeverityState, appSnackOpenState } from '../../states/notification';
 
 const UserSessionItem = ({ session, setSessions }) => {
   const cancel = useRef();
@@ -35,10 +25,7 @@ const UserSessionItem = ({ session, setSessions }) => {
   const visitorID = useRecoilValue(visitorIDState);
   const userID = useRecoilValue(userIDState);
 
-  const lastSeen = dateFormat(
-    new Date(session.last_seen),
-    t('global.shortDateTimeFormat')
-  );
+  const lastSeen = dateFormat(new Date(session.last_seen), t('global.shortDateTimeFormat'));
 
   const handleRevokeSession = async () => {
     try {
@@ -48,7 +35,6 @@ const UserSessionItem = ({ session, setSessions }) => {
         setModalOpen(true);
 
         const res = await fetch(`${apiHost}api/users/${userID}/sessions`, {
-          signal: abortCont.signal,
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
@@ -72,8 +58,6 @@ const UserSessionItem = ({ session, setSessions }) => {
           setAppSeverity('warning');
           setAppSnackOpen(true);
         }
-
-
       }
     } catch (err) {
       if (!cancel.current) {
@@ -82,7 +66,6 @@ const UserSessionItem = ({ session, setSessions }) => {
         setAppSeverity('error');
         setAppSnackOpen(true);
       }
-
     }
   };
 
@@ -104,19 +87,13 @@ const UserSessionItem = ({ session, setSessions }) => {
       }}
     >
       <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-        <GpsFixedIcon
-          sx={{ fontSize: '60px', marginRight: '10px', color: '#1976d2' }}
-        />
+        <GpsFixedIcon sx={{ fontSize: '60px', marginRight: '10px', color: '#1976d2' }} />
         <Box>
-          <Typography
-            sx={{ fontSize: '14px' }}
-          >{`${session.ip} - ${session.country_name}`}</Typography>
+          <Typography sx={{ fontSize: '14px' }}>{`${session.ip} - ${session.country_name}`}</Typography>
           <Typography
             sx={{ fontSize: '14px' }}
           >{`${session.device.browserName} (${session.device.os} ${session.device.osVersion})`}</Typography>
-          <Typography sx={{ fontSize: '14px' }}>
-            {t('settings.lastSeen', { last_seen: lastSeen })}
-          </Typography>
+          <Typography sx={{ fontSize: '14px' }}>{t('settings.lastSeen', { last_seen: lastSeen })}</Typography>
           {visitorID === session.visitorid && (
             <Chip
               label={t('settings.currentSession')}
@@ -130,12 +107,7 @@ const UserSessionItem = ({ session, setSessions }) => {
         </Box>
       </Box>
       <Box sx={{ display: 'flex', flexGrow: 1, justifyContent: 'flex-end' }}>
-        <Button
-          onClick={handleRevokeSession}
-          variant='outlined'
-          color='error'
-          sx={{ marginBottom: '10px' }}
-        >
+        <Button onClick={handleRevokeSession} variant="outlined" color="error" sx={{ marginBottom: '10px' }}>
           {t('settings.sessionRevoke')}
         </Button>
       </Box>
