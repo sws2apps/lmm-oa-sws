@@ -59,6 +59,17 @@
   background-color: #a56803;
 }
 
+.settingHeader {
+	padding: 5px;
+	line-height: 1.2 !important;
+	font-weight: bold !important;
+}
+
+.btnSubItem {
+	margin-right: 5px !important;
+	margin-bottom: 5px !important;
+}
+
 .ulSchedule {
   margin: 0;
   padding-inline-start: 20px;

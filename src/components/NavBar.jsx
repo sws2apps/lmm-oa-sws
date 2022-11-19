@@ -161,6 +161,11 @@ const NavBar = (props) => {
     navigate('/');
   };
 
+  const handleGoSettings = () => {
+    handleClose();
+    navigate('/settings');
+  }
+
   return (
     <>
       <CssBaseline />
@@ -332,7 +337,7 @@ const NavBar = (props) => {
                       </List>
                     </Collapse>
 
-                    <MenuItem>
+                    <MenuItem onClick={handleGoSettings}>
                       <ListItemIcon>
                         <SettingsIcon fontSize="medium" color="error" />
                       </ListItemIcon>

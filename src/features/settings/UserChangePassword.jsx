@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import { dbGetAppSettings } from '../../indexedDb/dbAppSettings';
+import { decryptString } from '../../utils/swsEncryption';
 import { apiHostState, rootModalOpenState, userEmailState, userIDState, visitorIDState } from '../../states/main';
 import { appMessageState, appSeverityState, appSnackOpenState } from '../../states/notification';
 
@@ -44,7 +46,7 @@ const UserChangePassword = () => {
 
       // validating old password
       const { userPass } = await dbGetAppSettings();
-      const crdParse = await decryptStrins(oldPassword, userPass);
+      const crdParse = await decryptString(oldPassword, userPass);
       if (!crdParse.pwd) {
         setAppMessage(t('settings.passwordIncorrect'));
         setAppSeverity('warning');

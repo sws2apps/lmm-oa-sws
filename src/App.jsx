@@ -17,6 +17,7 @@ import ScheduleDetails from './pages/ScheduleDetails';
 import S89 from './pages/S89';
 import S140 from './pages/S140';
 import ScheduleWeekDetails from './pages/ScheduleWeekDetails';
+import Settings from './pages/Settings';
 import SourceMaterials from './pages/SourceMaterials';
 import SourceWeekDetails from './pages/SourceWeekDetails';
 
@@ -48,6 +49,7 @@ const router = createBrowserRouter([
       { path: '/midweek-meeting-schedule', element: <S140 /> },
       { path: '/source-materials', element: <SourceMaterials /> },
       { path: '/source-materials/:weekToFormat', element: <SourceWeekDetails /> },
+      { path: '/settings', element: <Settings /> },
     ],
   },
 ]);

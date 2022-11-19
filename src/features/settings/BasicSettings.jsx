@@ -91,7 +91,7 @@ const BasicSettings = () => {
         {t('settings.aboutCongregation')}
       </Typography>
       <Divider sx={{ borderWidth: '5px' }} />
-      <Box sx={{ marginTop: '20px' }}>
+      <Box sx={{ padding: '20px 20px' }}>
         <TextField
           id='outlined-basic'
           label={t('global.congregation')}
@@ -177,22 +177,15 @@ const BasicSettings = () => {
           </TextField>
         </Box>
 
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'flex-start',
-          }}
+        <Button
+          variant='contained'
+          color='primary'
+          startIcon={<SaveIcon />}
+          onClick={() => saveAppSettings()}
+          sx={{ marginTop: '10px' }}
         >
-          <Button
-            variant='contained'
-            color='primary'
-            startIcon={<SaveIcon />}
-            onClick={() => saveAppSettings()}
-          >
-            {t('global.save')}
-          </Button>
-        </Box>
+          {t('global.save')}
+        </Button>
       </Box>
     </Box>
   );
