@@ -81,6 +81,7 @@ const UserSessions = () => {
         sx={{
           maxWidth: '500px',
           borderRadius: '8px',
+          marginTop: '20px',
         }}
       >
         {sessions.length > 0 &&

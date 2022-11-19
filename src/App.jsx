@@ -8,10 +8,12 @@ import { apiHostState, isLightThemeState, isOnlineState, visitorIDState } from '
 import { InternetChecker } from './features/internetChecker';
 import { appSnackOpenState } from './states/notification';
 import NotificationWrapper from './features/notificationWrapper';
+import Administration from './pages/Administration';
 import DashboardMenu from './pages/DashboardMenu';
 import Layout from './components/Layout';
 import Persons from './pages/Persons';
 import PersonDetails from './pages/PersonDetails';
+import PrivateRoot from './components/PrivateRoot';
 import Schedules from './pages/Schedules';
 import ScheduleDetails from './pages/ScheduleDetails';
 import S89 from './pages/S89';
@@ -20,6 +22,8 @@ import ScheduleWeekDetails from './pages/ScheduleWeekDetails';
 import Settings from './pages/Settings';
 import SourceMaterials from './pages/SourceMaterials';
 import SourceWeekDetails from './pages/SourceWeekDetails';
+import VipUserDetail from './pages/VipUserDetail';
+import { isAdminCongState } from './states/congregation';
 
 // creating theme
 const lightTheme = createTheme({
@@ -34,26 +38,6 @@ const darkTheme = createTheme({
   },
 });
 
-const router = createBrowserRouter([
-  {
-    element: <Layout />,
-    children: [
-      { path: '/', element: <DashboardMenu /> },
-      { path: '/persons', element: <Persons /> },
-      { path: '/persons/new', element: <PersonDetails /> },
-      { path: '/persons/:id', element: <PersonDetails /> },
-      { path: '/schedules', element: <Schedules /> },
-      { path: '/schedules/:schedule', element: <ScheduleDetails /> },
-      { path: '/schedules/:schedule/:weekToFormat', element: <ScheduleWeekDetails /> },
-      { path: '/assignment-form', element: <S89 /> },
-      { path: '/midweek-meeting-schedule', element: <S140 /> },
-      { path: '/source-materials', element: <SourceMaterials /> },
-      { path: '/source-materials/:weekToFormat', element: <SourceWeekDetails /> },
-      { path: '/settings', element: <Settings /> },
-    ],
-  },
-]);
-
 const App = () => {
   const setVisitorID = useSetRecoilState(visitorIDState);
   const setApiHost = useSetRecoilState(apiHostState);
@@ -61,8 +45,46 @@ const App = () => {
   const isOnline = useRecoilValue(isOnlineState);
   const isLight = useRecoilValue(isLightThemeState);
   const appSnackOpen = useRecoilValue(appSnackOpenState);
+  const isAdminCong = useRecoilValue(isAdminCongState);
 
   const [activeTheme, setActiveTheme] = useState(darkTheme);
+
+  const router = createBrowserRouter([
+    {
+      element: <Layout />,
+      children: [
+        { path: '/', element: <DashboardMenu /> },
+        { path: '/persons', element: <Persons /> },
+        { path: '/persons/new', element: <PersonDetails /> },
+        { path: '/persons/:id', element: <PersonDetails /> },
+        { path: '/schedules', element: <Schedules /> },
+        { path: '/schedules/:schedule', element: <ScheduleDetails /> },
+        { path: '/schedules/:schedule/:weekToFormat', element: <ScheduleWeekDetails /> },
+        { path: '/assignment-form', element: <S89 /> },
+        { path: '/midweek-meeting-schedule', element: <S140 /> },
+        { path: '/source-materials', element: <SourceMaterials /> },
+        { path: '/source-materials/:weekToFormat', element: <SourceWeekDetails /> },
+        { path: '/settings', element: <Settings /> },
+        {
+          element: <PrivateRoot isAdminCong={isAdminCong} />,
+          children: [
+            {
+              path: '/administration',
+              element: <Administration />,
+            },
+            {
+              path: '/administration/members/new',
+              element: <VipUserDetail />,
+            },
+            {
+              path: '/administration/members/:id',
+              element: <VipUserDetail />,
+            },
+          ],
+        },
+      ],
+    },
+  ]);
 
   useEffect(() => {
     if (isLight) {

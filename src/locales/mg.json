@@ -380,6 +380,7 @@
   "settings.lastSeen": "Nampiasaina farany tamin’ny: {{ last_seen }}",
   "settings.currentSession": "Ampiasainao izao",
 
+  "administration.heading": "Fandrindrana ny Fampiasana Programa sws2apps",
   "administration.vipUsersHeading": "RAHALAHY VOATENDRY SY ANDRAIKITRA",
   "administration.notConnected": "Efa ela tsy niditra",
   "administration.removeBrother": "Esorina ao amin’ny fiangonana",

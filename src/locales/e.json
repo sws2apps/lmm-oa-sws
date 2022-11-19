@@ -379,6 +379,7 @@
   "settings.lastSeen": "Last seen: {{ last_seen }}",
   "settings.currentSession": "Current session",
 
+  "administration.heading": "Manage Access to sws2apps",
   "administration.vipUsersHeading": "APPOINTED BROTHERS AND THEIR ROLES",
   "administration.notConnected": "Not connected recently",
   "administration.removeBrother": "Remove brother from congregation",

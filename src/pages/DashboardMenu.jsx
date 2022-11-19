@@ -129,6 +129,7 @@ const DashboardMenu = () => {
           title: t('dashboard.manageAccessToApps'),
           icon: <AccountCircleIcon />,
           disabled: false,
+          navigateTo: '/administration',
         },
       ],
     },
