@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import Fab from '@mui/material/Fab';
@@ -14,7 +13,6 @@ import { congIDState } from '../../states/congregation';
 const VipUsers = () => {
   const cancel = useRef();
 
-  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const setAppSnackOpen = useSetRecoilState(appSnackOpenState);
