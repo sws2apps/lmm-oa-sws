@@ -130,11 +130,6 @@ const DashboardMenu = () => {
           icon: <AccountCircleIcon />,
           disabled: false,
         },
-        {
-          title: t('dashboard.addNewAppointed'),
-          icon: <PersonAddIcon />,
-          disabled: false,
-        },
       ],
     },
   ];

@@ -95,8 +95,8 @@ const App = () => {
 
   useEffect(() => {
     if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-      if (import.meta.env.VITE_GITHUB_API_SERVER) {
-        setApiHost(import.meta.env.VITE_GITHUB_API_SERVER);
+      if (import.meta.env.VITE_API_REMOTE_URL) {
+        setApiHost(import.meta.env.VITE_API_REMOTE_URL);
       } else {
         setApiHost('http://localhost:8000/');
       }

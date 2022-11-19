@@ -62,6 +62,7 @@ const UserChangePassword = () => {
 
       // update password in firebase auth
       if (apiHost !== '') {
+        cancel.current = false
         setModalOpen(true);
 
         const res = await fetch(`${apiHost}api/users/${userID}/password`, {
@@ -74,30 +75,35 @@ const UserChangePassword = () => {
           body: JSON.stringify({ password: newPassword }),
         });
 
-        const data = await res.json();
+        if (!cancel.current) {
+          const data = await res.json();
 
-        if (res.status === 200) {
+          if (res.status === 200) {
+            setModalOpen(false);
+            setAppMessage(t('settings.passwordChanged'));
+            setAppSeverity('success');
+            setAppSnackOpen(true);
+
+            setOldPassword('');
+            setNewPassword('');
+            setNewPasswordConfirm('');
+            return;
+          }
+
           setModalOpen(false);
-          setAppMessage(t('settings.passwordChanged'));
-          setAppSeverity('success');
+          setAppMessage(data.message);
+          setAppSeverity('warning');
           setAppSnackOpen(true);
-
-          setOldPassword('');
-          setNewPassword('');
-          setNewPasswordConfirm('');
-          return;
         }
-
-        setModalOpen(false);
-        setAppMessage(data.message);
-        setAppSeverity('warning');
-        setAppSnackOpen(true);
       }
     } catch (err) {
-      setModalOpen(false);
-      setAppMessage(err.message);
-      setAppSeverity('error');
-      setAppSnackOpen(true);
+      if (!cancel.current) {
+        setModalOpen(false);
+        setAppMessage(err.message);
+        setAppSeverity('error');
+        setAppSnackOpen(true);
+      }
+
     }
   };
 
