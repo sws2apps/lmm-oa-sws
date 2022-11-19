@@ -27,10 +27,10 @@ const addDataToDb = async (data) => {
       const cnAYF = src.ayfCount;
       let a = 0;
 
-      var obj = {};
-      var toSplit1;
-      var assType = '';
-      var assSource = '';
+      const obj = {};
+      let toSplit1;
+      let assType = '';
+      let assSource = '';
 
       //WeekOf Source
       let dayParse = src.weekDate.match(/(\w|\s)*\w(?=")|\w+/g);
@@ -58,12 +58,26 @@ const addDataToDb = async (data) => {
 
       const schedDate = new Date(data.mwbYear, monthIndex, varDay);
       obj.weekOf = dateFormat(schedDate, 'mm/dd/yyyy');
+      obj.weekDate_src = src.weekDate;
+
+      // Weekly Bible Reading
+      obj.weeklyBibleReading_src = src.weeklyBibleReading;
+
+      // Opening Song
+      obj.songFirst_src = src.songFirst;
+
+      // TGW Talk 10 min
+      toSplit1 = src.tgw10Talk.replaceAll(/\u00A0/g, ' ').split(': (10 ');
+      obj.tgwTalk_src = toSplit1[0].trim();
 
       //Bible Reading Source
       toSplit1 = src.tgwBRead.split('.) ');
       assSource = toSplit1[1];
       assSource = assSource.trim();
       obj.bibleReading_src = assSource;
+
+      // AYF Count
+      obj.ayfCount = src.ayfCount;
 
       //AYF1 Assignment Type
       for (a = assTypeList.length - 1; a >= 0; a--) {
@@ -187,6 +201,49 @@ const addDataToDb = async (data) => {
         }
         obj.ass4_src = assSource;
       }
+
+      // Middle Song
+      obj.songMiddle_src = src.songMiddle;
+
+      // LC Count
+      obj.lcCount = src.lcCount;
+
+      let lcSplit = '';
+
+      // LC Part 1 Time
+      const numberPattern = /\d+/g;
+      lcSplit = ': (';
+      toSplit1 = src.lcPart1.split(lcSplit);
+      obj.lcPart1_time = +toSplit1[1].match(numberPattern)[0];
+
+      // LC Part 1 Source
+      lcSplit = ': (' + obj.lcPart1_time;
+      toSplit1 = src.lcPart1.split(lcSplit);
+      obj.lcPart1_src = toSplit1[0];
+
+      obj.lcPart2_time = '';
+      obj.lcPart2_src = '';
+
+      // LC Part 2
+      if (src.lcCount > 1) {
+        // LC Part 2 Time
+        lcSplit = ': (';
+        toSplit1 = src.lcPart2.split(lcSplit);
+        obj.lcPart2_time = +toSplit1[1].match(numberPattern)[0];
+
+        // LC Part 2 Source
+        lcSplit = ': (' + obj.lcPart2_time;
+        toSplit1 = src.lcPart2.split(lcSplit);
+        obj.lcPart2_src = toSplit1[0];
+      }
+
+      // CBS Source
+      const forSplit = '.) ';
+      toSplit1 = src.lcCBS.split(forSplit);
+      obj.cbs_src = toSplit1[1];
+
+      // Concluding Song
+      obj.songConclude_src = src.songConclude;
 
       obj.week_type = 1;
       obj.noMeeting = false;

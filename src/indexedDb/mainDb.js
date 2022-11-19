@@ -147,6 +147,16 @@ appDb.version(34).stores({
 appDb.version(35).stores({
   sws_pocket: '&id, [month+year]',
 });
+appDb.version(36).stores({
+  persons:
+    '++id, person_name, person_displayName, isMale, isFemale, isBRead, isInitialCall, isReturnVisit, isBibleStudy, isTalk, forLivePart, isUnavailable, lastBRead, lastInitialCall, lastReturnVisit, lastBibleStudy, lastTalk, lastAssistant, lastAssignment, person_uid, assignments, timeAway, isMoved, isDisqualified, isChairmanMM, isPrayerMM, isTGWTalk, isTGWGems, isLCPart, isCBSConductor, isCBSReader, lastChairmanMM, lastPrayerMM, lastTGWTalk, lastTGWGems, lastLCPart, lastCBSConductor, lastCBSReader',
+  sched_MM:
+    '&weekOf, bRead_stu_A, bRead_stu_B, ass1_stu_A, ass1_ass_A, ass1_stu_B, ass1_ass_B, ass2_stu_A, ass2_ass_A, ass2_stu_B, ass2_ass_B, ass3_stu_A, ass3_ass_A, ass3_stu_B, ass3_ass_B, ass4_stu_A, ass4_ass_A, ass4_stu_B, ass4_ass_B, week_type, noMeeting, isReleased, chairmanMM_A, chairmanMM_B, opening_prayer, tgw_talk, tgw_gems, lc_part1, lc_part2, cbs_conductor, cbs_reader, closing_prayer',
+  src: '&weekOf, bibleReading_src, ass1_type, ass1_time, ass1_src, ass2_type, ass2_time, ass2_src, ass3_type, ass3_time, ass3_src, ass4_type, ass4_time, ass4_src, ayfCount, weekDate_src, weeklyBibleReading_src, songFirst_src, tgwTalk_src, songMiddle_src, lcCount, lcPart1_src, lcPart2_src, cbs_src, songConclude_src',
+});
+appDb.version(37).stores({
+  src: '&weekOf, bibleReading_src, ass1_type, ass1_time, ass1_src, ass2_type, ass2_time, ass2_src, ass3_type, ass3_time, ass3_src, ass4_type, ass4_time, ass4_src, ayfCount, weekDate_src, weeklyBibleReading_src, songFirst_src, tgwTalk_src, songMiddle_src, lcCount, lcPart1_time, lcPart1_src, lcPart2_time, lcPart2_src, cbs_src, songConclude_src',
+});
 
 appDb.on('populate', function () {
   appDb.app_settings.add({
