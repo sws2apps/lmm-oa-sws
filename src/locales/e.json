@@ -30,6 +30,7 @@
   "global.class": "Class",
   "global.oneClass": "1 class",
   "global.twoClass": "2 classes",
+  "global.weeklybibleReading": "Weekly Bible Reading",
   "global.bibleReading": "Bible Reading",
   "global.bibleReadingTime": "(4 min. or less)",
   "global.initialCall": "Initial Call",
@@ -138,6 +139,8 @@
   "global.cbsConductor": "Congregation Bible Study Conductor",
   "global.cbsReader": "Congregation Bible Study Reader",
   "global.midweekMeeting": "Midweek Meeting",
+  "global.cbs": "Congregation Bible Study",
+  "global.song": "Song",
 
   "startup.welcomeTitle": "Welcome to LMM-OA",
   "startup.welcomeDescription": "LMM-OA (or Life and Ministry Meeting Overseer Assistant) is an application designed for the Life and Ministry Meeting Overseer.",

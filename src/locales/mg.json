@@ -31,6 +31,7 @@
   "global.class": "Kilasy",
   "global.oneClass": "Kilasy 1",
   "global.twoClass": "Kilasy 2",
+  "global.weeklybibleReading": "Famakiana Baiboly Isan-kerinandro",
   "global.bibleReading": "Famakiana Baiboly",
   "global.bibleReadingTime": "(4 min. na latsaka)",
   "global.initialCall": "Fitoriana",
@@ -139,6 +140,8 @@
   "global.cbsConductor": "Mpitarika - Fianarana Baiboly",
   "global.cbsReader": "Mpamaky - Fianarana Baiboly",
   "global.midweekMeeting": "Fivoriana Andavanandro",
+  "global.cbs": "Fianarana Baiboly Ataon’ny Fiangonana",
+  "global.song": "Hira",
 
   "startup.welcomeTitle": "Tongasoa eto amin’ny LMM-OA",
   "startup.welcomeDescription": "Programa natao ho ampiasain’ny Mpiandraikitra ny Fivoriana Momba ny Fiainantsika sy ny Fanompoana ny LMM-OA (na Life and Ministry Meeting Overseer Assistant).",

@@ -53,23 +53,28 @@
 
 .tgwPart {
   background-color: #656164;
-  text-transform: capitalize;
+  text-transform: uppercase;
 }
 
 .ayfPart {
   background-color: #a56803;
-  text-transform: capitalize;
+  text-transform: uppercase;
+}
+
+.lcPart {
+  background-color: #942926;
+  text-transform: uppercase;
 }
 
 .settingHeader {
-	padding: 5px;
-	line-height: 1.2 !important;
-	font-weight: bold !important;
+  padding: 5px;
+  line-height: 1.2 !important;
+  font-weight: bold !important;
 }
 
 .btnSubItem {
-	margin-right: 5px !important;
-	margin-bottom: 5px !important;
+  margin-right: 5px !important;
+  margin-bottom: 5px !important;
 }
 
 .ulSchedule {

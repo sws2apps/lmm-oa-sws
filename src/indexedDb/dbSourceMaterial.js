@@ -67,6 +67,10 @@ export const dbGetSourceMaterial = async (weekOf) => {
   let indexType;
 
   obj.weekOf = appData.weekOf;
+  obj.weekDate_src = appData.weekDate_src ? appData.weekDate_src[lang] || '' : '';
+  obj.weeklyBibleReading_src = appData.weeklyBibleReading_src ? appData.weeklyBibleReading_src[lang] || '' : '';
+  obj.songFirst_src = appData.songFirst_src;
+  obj.tgwTalk_src = appData.tgwTalk_src ? appData.tgwTalk_src[lang] || '' : '';
   obj.bibleReading_src = appData.bibleReading_src ? appData.bibleReading_src[lang] || '' : '';
   obj.ass1_type = +appData.ass1_type || '';
 
@@ -96,6 +100,14 @@ export const dbGetSourceMaterial = async (weekOf) => {
   obj.ass4_time = appData.ass4_time ? (typeof appData.ass4_time === 'object' ? '' : appData.ass4_time) : '';
   obj.ass4_src = appData.ass4_src ? appData.ass4_src[lang] || '' : '';
 
+  obj.songMiddle_src = appData.songMiddle_src;
+  obj.lcPart1_time = appData.lcPart1_time;
+  obj.lcPart1_src = appData.lcPart1_src ? appData.lcPart1_src[lang] || '' : '';
+  obj.lcPart2_time = appData.lcPart2_time;
+  obj.lcPart2_src = appData.lcPart2_src ? appData.lcPart2_src[lang] || '' : '';
+  obj.cbs_src = appData.cbs_src ? appData.cbs_src[lang] || '' : '';
+  obj.songConclude_src = appData.songConclude_src;
+
   const weekSchedInfo = await dbGetScheduleWeekInfo(weekOf);
   obj.week_type = weekSchedInfo.week_type;
   obj.noMeeting = weekSchedInfo.noMeeting;
@@ -109,6 +121,10 @@ export const dbGetSourceMaterialPocket = async (weekOf) => {
   let obj = {};
 
   obj.weekOf = appData.weekOf;
+  obj.weekDate_src = appData.weekDate_src;
+  obj.weeklyBibleReading_src = appData.weeklyBibleReading_src;
+  obj.songFirst_src = appData.songFirst_src;
+  obj.tgwTalk_src = appData.tgwTalk_src;
   obj.bibleReading_src = appData.bibleReading_src;
   obj.ass1_type = +appData.ass1_type || '';
 
@@ -130,6 +146,14 @@ export const dbGetSourceMaterialPocket = async (weekOf) => {
   obj.ass4_type_name = assTypeList.findIndex((type) => type.code === obj.ass4_type).ass_type_name || '';
   obj.ass4_time = appData.ass4_time ? (typeof appData.ass4_time === 'object' ? '' : +appData.ass4_time) : '';
   obj.ass4_src = appData.ass4_src;
+
+  obj.songMiddle_src = appData.songMiddle_src;
+  obj.lcPart1_time = appData.lcPart1_time;
+  obj.lcPart1_src = appData.lcPart1_src;
+  obj.lcPart2_time = appData.lcPart2_time;
+  obj.lcPart2_src = appData.lcPart2_src;
+  obj.cbs_src = appData.cbs_src;
+  obj.songConclude_src = appData.songConclude_src;
 
   const weekSchedInfo = await dbGetScheduleWeekInfo(weekOf);
   obj.week_type = weekSchedInfo.week_type;
@@ -224,12 +248,12 @@ export const dbSaveSrcData = async (srcData) => {
         },
         songMiddle_src: srcData.songMiddle_src,
         lcCount: srcData.lcCount,
-        lc1Part1_time: srcData.lcPart1_time,
+        lcPart1_time: srcData.lcPart1_time,
         lcPart1_src: {
           ...lcPart1_src,
           [lang]: srcData.lcPart1_src || '',
         },
-        lc1Part2_time: srcData.lcPart2_time,
+        lcPart2_time: srcData.lcPart2_time,
         lcPart2_src: {
           ...lcPart2_src,
           [lang]: srcData.lcPart2_src || '',

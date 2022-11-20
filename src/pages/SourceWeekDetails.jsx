@@ -12,7 +12,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import Switch from '@mui/material/Switch';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { PartDuration, PartType, WeekType } from '../features/sourceMaterial';
+import { LCPartDuration, PartDuration, PartType, SongsList, WeekType } from '../features/sourceMaterial';
 import { isRerenderSourceState } from '../states/sourceMaterial';
 import { appLangState, shortDateFormatState } from '../states/main';
 import { appMessageState, appSeverityState, appSnackOpenState } from '../states/notification';
@@ -28,12 +28,21 @@ const sharedStyles = {
     display: 'flex',
     flexWrap: 'wrap',
   },
+  lcPartInfo: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    width: '100%',
+    gap: '10px',
+  },
   inputAYF: {
     width: '100%',
   },
+  inputLC: {
+    flexGrow: 1,
+  },
   partHeader: {
     fontWeight: 'bold',
-    marginBottom: '10px',
+    marginBottom: '15px',
   },
 };
 
@@ -53,6 +62,10 @@ const SourceWeekDetails = () => {
   const [weekOf, setWeekOf] = useState('');
   const [hasMeeting, setHasMeeting] = useState(true);
   const [weekType, setWeekType] = useState(1);
+  const [WeekDate, setWeekDate] = useState('');
+  const [WeeklyBibleReading, setWeeklyBibleReading] = useState('');
+  const [SongFirst, setSongFirst] = useState('');
+  const [TGWTalk, setTGWTalk] = useState('');
   const [BRead, setBRead] = useState('');
   const [Ass1Type, setAss1Type] = useState('');
   const [Ass1Time, setAss1Time] = useState('');
@@ -66,6 +79,13 @@ const SourceWeekDetails = () => {
   const [Ass4Type, setAss4Type] = useState('');
   const [Ass4Time, setAss4Time] = useState('');
   const [Ass4Src, setAss4Src] = useState('');
+  const [SongMiddle, setSongMiddle] = useState('');
+  const [LCPart1Time, setLCPart1Time] = useState('');
+  const [LCPart1Src, setLCPart1Src] = useState('');
+  const [LCPart2Time, setLCPart2Time] = useState('');
+  const [LCPart2Src, setLCPart2Src] = useState('');
+  const [CBSSrc, setCBSSrc] = useState('');
+  const [SongConclude, setSongConclude] = useState('');
 
   const week = weekToFormat.replaceAll('-', '/');
   const weekFormatted = dateFormat(new Date(week), shortDateFormat);
@@ -77,6 +97,10 @@ const SourceWeekDetails = () => {
   const handleSaveSource = async () => {
     const obj = {};
     obj.weekOf = weekOf;
+    obj.weekData_src = WeekDate;
+    obj.weeklyBibleReading_src = WeeklyBibleReading;
+    obj.songFirst_src = SongFirst;
+    obj.tgwTalk_src = TGWTalk;
     obj.bibleReading_src = BRead;
     obj.ass1_type = Ass1Type;
     obj.ass1_time = Ass1Time;
@@ -90,6 +114,13 @@ const SourceWeekDetails = () => {
     obj.ass4_type = Ass4Type;
     obj.ass4_time = Ass4Time;
     obj.ass4_src = Ass4Src;
+    obj.songMiddle_src = SongMiddle;
+    obj.lcPart1_time = LCPart1Time;
+    obj.lcPart1_src = LCPart1Src;
+    obj.lcPart2_time = LCPart2Time;
+    obj.lcPart2_src = LCPart2Src;
+    obj.cbs_src = CBSSrc;
+    obj.songConclude_src = SongConclude;
     obj.week_type = weekType;
     obj.noMeeting = !hasMeeting;
     obj.isOverride = true;
@@ -115,6 +146,10 @@ const SourceWeekDetails = () => {
         setWeekOf(data.weekOf);
         setHasMeeting(!data.noMeeting);
         setWeekType(data.week_type);
+        setWeekDate(data.weekDate_src);
+        setWeeklyBibleReading(data.weeklyBibleReading_src);
+        setSongFirst(data.songFirst_src);
+        setTGWTalk(data.tgwTalk_src);
         setBRead(data.bibleReading_src);
         setAss1Time(data.ass1_time);
         setAss1Type(data.ass1_type);
@@ -128,6 +163,13 @@ const SourceWeekDetails = () => {
         setAss4Time(data.ass4_time);
         setAss4Type(data.ass4_type);
         setAss4Src(data.ass4_src);
+        setSongMiddle(data.songMiddle_src);
+        setLCPart1Time(data.lcPart1_time);
+        setLCPart1Src(data.lcPart1_src);
+        setLCPart2Time(data.lcPart2_time);
+        setLCPart2Src(data.lcPart2_src);
+        setCBSSrc(data.cbs_src);
+        setSongConclude(data.songConclude_src);
       }
     };
 
@@ -176,98 +218,186 @@ const SourceWeekDetails = () => {
             label={hasMeeting ? t('sourceMaterial.hasMeeting') : t('sourceMaterial.noMeeting')}
           />
         </Box>
+        <Box sx={{ margin: '20px 0', display: 'flex', flexDirection: 'column', gap: '20px', width: '280px' }}>
+          <TextField
+            id="outlined-week-date"
+            label={t('global.date')}
+            variant="outlined"
+            size="small"
+            value={WeekDate}
+            onChange={(e) => setWeekDate(e.target.value)}
+          />
+          <TextField
+            id="outlined-weekly-bible-reading"
+            label={t('global.weeklybibleReading')}
+            variant="outlined"
+            size="small"
+            value={WeeklyBibleReading}
+            onChange={(e) => setWeeklyBibleReading(e.target.value)}
+          />
+        </Box>
+        <Box sx={{ marginBottom: '20px' }}>
+          <SongsList songPart={1} song={SongFirst} setSongFirst={(value) => setSongFirst(value)} />
+        </Box>
         <Box className={`tgwPart meetingPart`}>
           <Typography variant="h6">{t('global.treasuresPart')}</Typography>
         </Box>
-        <TextField
-          id="outlined-basic"
-          label={t('global.bibleReadingText')}
-          variant="outlined"
-          size="small"
-          sx={{
-            marginTop: '8px',
-            width: '300px',
-          }}
-          value={BRead}
-          onChange={(e) => setBRead(e.target.value)}
-        />
+        <Box sx={{ margin: '20px 0', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <TextField
+            id="outlined-tgw-talk-10"
+            label={t('global.tgwTalk')}
+            variant="outlined"
+            size="small"
+            sx={{ maxWidth: '800px' }}
+            value={TGWTalk}
+            onChange={(e) => setTGWTalk(e.target.value)}
+          />
+          <TextField
+            id="outlined-basic"
+            label={t('global.bibleReadingText')}
+            variant="outlined"
+            size="small"
+            value={BRead}
+            sx={{ width: '300px' }}
+            onChange={(e) => setBRead(e.target.value)}
+          />
+        </Box>
         <Box className={`ayfPart meetingPart`}>
           <Typography variant="h6">{t('global.applyFieldMinistryPart')}</Typography>
         </Box>
-        <Box sx={sharedStyles.ayfStuPart}>
-          <Typography variant="body1" sx={sharedStyles.partHeader}>
-            {t('global.ayfPart1')}
-          </Typography>
-          <Box sx={sharedStyles.ayfStuPartInfo}>
-            <PartDuration ayf={1} assTime={Ass1Time} setAss1Time={(value) => setAss1Time(value)} />
-            <PartType ayf={1} assType={Ass1Type} setAss1Type={(value) => setAss1Type(value)} />
-            <TextField
-              id="outlined-basic"
-              label={t('global.sourceMaterial')}
-              variant="outlined"
-              multiline
-              size="small"
-              sx={sharedStyles.inputAYF}
-              value={Ass1Src}
-              onChange={(e) => setAss1Src(e.target.value)}
-            />
+        <Box sx={{ margin: '10px 0' }}>
+          <Box sx={sharedStyles.ayfStuPart}>
+            <Typography variant="body1" sx={sharedStyles.partHeader}>
+              {t('global.ayfPart1')}
+            </Typography>
+            <Box sx={sharedStyles.ayfStuPartInfo}>
+              <PartDuration ayf={1} assTime={Ass1Time} setAss1Time={(value) => setAss1Time(value)} />
+              <PartType ayf={1} assType={Ass1Type} setAss1Type={(value) => setAss1Type(value)} />
+              <TextField
+                id="outlined-basic"
+                label={t('global.sourceMaterial')}
+                variant="outlined"
+                multiline
+                size="small"
+                sx={sharedStyles.inputAYF}
+                value={Ass1Src}
+                onChange={(e) => setAss1Src(e.target.value)}
+              />
+            </Box>
+          </Box>
+          <Box sx={sharedStyles.ayfStuPart}>
+            <Typography variant="body1" sx={sharedStyles.partHeader}>
+              {t('global.ayfPart2')}
+            </Typography>
+            <Box sx={sharedStyles.ayfStuPartInfo}>
+              <PartDuration ayf={2} assTime={Ass2Time} setAss2Time={(value) => setAss2Time(value)} />
+              <PartType ayf={2} assType={Ass2Type} setAss2Type={(value) => setAss2Type(value)} />
+              <TextField
+                id="outlined-basic"
+                label={t('global.sourceMaterial')}
+                variant="outlined"
+                multiline
+                size="small"
+                sx={sharedStyles.inputAYF}
+                value={Ass2Src}
+                onChange={(e) => setAss2Src(e.target.value)}
+              />
+            </Box>
+          </Box>
+          <Box sx={sharedStyles.ayfStuPart}>
+            <Typography variant="body1" sx={sharedStyles.partHeader}>
+              {t('global.ayfPart3')}
+            </Typography>
+            <Box sx={sharedStyles.ayfStuPartInfo}>
+              <PartDuration ayf={3} assTime={Ass3Time} setAss3Time={(value) => setAss3Time(value)} />
+              <PartType ayf={3} assType={Ass3Type} setAss3Type={(value) => setAss3Type(value)} />
+              <TextField
+                id="outlined-basic"
+                label={t('global.sourceMaterial')}
+                variant="outlined"
+                multiline
+                size="small"
+                sx={sharedStyles.inputAYF}
+                value={Ass3Src}
+                onChange={(e) => setAss3Src(e.target.value)}
+              />
+            </Box>
+          </Box>
+          <Box sx={sharedStyles.ayfStuPart}>
+            <Typography variant="body1" sx={sharedStyles.partHeader}>
+              {t('global.ayfPart4')}
+            </Typography>
+            <Box sx={sharedStyles.ayfStuPartInfo}>
+              <PartDuration ayf={4} assTime={Ass4Time} setAss4Time={(value) => setAss4Time(value)} />
+              <PartType ayf={4} assType={Ass4Type} setAss4Type={(value) => setAss4Type(value)} />
+              <TextField
+                id="outlined-basic"
+                label={t('global.sourceMaterial')}
+                variant="outlined"
+                multiline
+                size="small"
+                sx={sharedStyles.inputAYF}
+                value={Ass4Src}
+                onChange={(e) => setAss4Src(e.target.value)}
+              />
+            </Box>
           </Box>
         </Box>
-        <Box sx={sharedStyles.ayfStuPart}>
-          <Typography variant="body1" sx={sharedStyles.partHeader}>
-            {t('global.ayfPart2')}
-          </Typography>
-          <Box sx={sharedStyles.ayfStuPartInfo}>
-            <PartDuration ayf={2} assTime={Ass2Time} setAss2Time={(value) => setAss2Time(value)} />
-            <PartType ayf={2} assType={Ass2Type} setAss2Type={(value) => setAss2Type(value)} />
-            <TextField
-              id="outlined-basic"
-              label={t('global.sourceMaterial')}
-              variant="outlined"
-              multiline
-              size="small"
-              sx={sharedStyles.inputAYF}
-              value={Ass2Src}
-              onChange={(e) => setAss2Src(e.target.value)}
-            />
-          </Box>
+
+        <Box className={`lcPart meetingPart`}>
+          <Typography variant="h6">{t('global.livingPart')}</Typography>
         </Box>
-        <Box sx={sharedStyles.ayfStuPart}>
-          <Typography variant="body1" sx={sharedStyles.partHeader}>
-            {t('global.ayfPart3')}
-          </Typography>
-          <Box sx={sharedStyles.ayfStuPartInfo}>
-            <PartDuration ayf={3} assTime={Ass3Time} setAss3Time={(value) => setAss3Time(value)} />
-            <PartType ayf={3} assType={Ass3Type} setAss3Type={(value) => setAss3Type(value)} />
-            <TextField
-              id="outlined-basic"
-              label={t('global.sourceMaterial')}
-              variant="outlined"
-              multiline
-              size="small"
-              sx={sharedStyles.inputAYF}
-              value={Ass3Src}
-              onChange={(e) => setAss3Src(e.target.value)}
-            />
-          </Box>
+        <Box sx={{ marginTop: '20px' }}>
+          <SongsList songPart={2} song={SongMiddle} setSongMiddle={(value) => setSongMiddle(value)} />
         </Box>
-        <Box sx={sharedStyles.ayfStuPart}>
-          <Typography variant="body1" sx={sharedStyles.partHeader}>
-            {t('global.ayfPart4')}
-          </Typography>
-          <Box sx={sharedStyles.ayfStuPartInfo}>
-            <PartDuration ayf={4} assTime={Ass4Time} setAss4Time={(value) => setAss4Time(value)} />
-            <PartType ayf={4} assType={Ass4Type} setAss4Type={(value) => setAss4Type(value)} />
-            <TextField
-              id="outlined-basic"
-              label={t('global.sourceMaterial')}
-              variant="outlined"
-              multiline
-              size="small"
-              sx={sharedStyles.inputAYF}
-              value={Ass4Src}
-              onChange={(e) => setAss4Src(e.target.value)}
-            />
+        <Box sx={{ margin: '20px 0' }}>
+          <Box sx={sharedStyles.ayfStuPart}>
+            <Typography variant="body1" sx={sharedStyles.partHeader}>
+              {t('global.ayfPart1')}
+            </Typography>
+            <Box sx={sharedStyles.lcPartInfo}>
+              <LCPartDuration lc={1} lcTime={LCPart1Time} setLCPart1Time={(value) => setLCPart1Time(value)} />
+              <TextField
+                id="outlined-basic"
+                label={t('global.sourceMaterial')}
+                variant="outlined"
+                multiline
+                size="small"
+                sx={sharedStyles.inputLC}
+                value={LCPart1Src}
+                onChange={(e) => setLCPart1Src(e.target.value)}
+              />
+            </Box>
+          </Box>
+          <Box sx={sharedStyles.ayfStuPart}>
+            <Typography variant="body1" sx={sharedStyles.partHeader}>
+              {t('global.ayfPart2')}
+            </Typography>
+            <Box sx={sharedStyles.lcPartInfo}>
+              <LCPartDuration lc={2} lcTime={LCPart2Time} setLCPart2Time={(value) => setLCPart2Time(value)} />
+              <TextField
+                id="outlined-lc-part-2"
+                label={t('global.sourceMaterial')}
+                variant="outlined"
+                multiline
+                size="small"
+                sx={sharedStyles.inputLC}
+                value={LCPart2Src}
+                onChange={(e) => setLCPart2Src(e.target.value)}
+              />
+            </Box>
+          </Box>
+          <TextField
+            id="outlined-cbs"
+            label={t('global.cbs')}
+            variant="outlined"
+            size="small"
+            value={CBSSrc}
+            sx={{ marginTop: '20px', width: '420px' }}
+            onChange={(e) => setCBSSrc(e.target.value)}
+          />
+          <Box sx={{ marginTop: '30px' }}>
+            <SongsList songPart={3} song={SongConclude} setSongConclude={(value) => setSongConclude(value)} />
           </Box>
         </Box>
       </Box>
