@@ -3,14 +3,14 @@ import { useRecoilValue } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
-import { assTypeLocalState } from '../../states/sourceMaterial';
+import { assTypeAYFOnlyState } from '../../states/sourceMaterial';
 
 const PartType = (props) => {
   const { t } = useTranslation();
 
   const [type, setType] = useState('');
 
-  const assTypeList = useRecoilValue(assTypeLocalState);
+  const assTypeList = useRecoilValue(assTypeAYFOnlyState);
 
   const handleChangeType = (e) => {
     setType(e.target.value);

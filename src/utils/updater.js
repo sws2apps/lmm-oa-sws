@@ -284,7 +284,7 @@ const updateAssignmentType = async (step) => {
       code: 100,
       maleOnly: true,
       assignable: true,
-      type: 'ayf',
+      type: 'tgw',
       ass_type_name: {
         ...bReadObj,
       },

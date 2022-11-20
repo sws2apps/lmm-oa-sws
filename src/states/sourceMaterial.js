@@ -81,7 +81,22 @@ export const assTypeLocalNewState = selector({
       newList.push(obj);
     }
 
-    return newList;
+    return newList.sort((a, b) => {
+      return a.type > b.type ? 1 : -1;
+    });
+  },
+});
+
+export const assTypeAYFOnlyState = selector({
+  key: 'assTypeAYFOnly',
+  get: ({ get }) => {
+    const assTypeList = get(assTypeLocalNewState);
+    const newList = assTypeList.filter((ass) => ass.type === 'ayf');
+    const final = newList.map((list) => {
+      return { label: list.label, value: list.value };
+    });
+
+    return final;
   },
 });
 

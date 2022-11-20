@@ -85,7 +85,11 @@ const AssignmentType = ({ student, assignable, currentType, handleChangeType }) 
                   ? t('global.livingPart')
                   : ''}
               </GroupHeader>
-              <GroupItems>{params.children}</GroupItems>
+              <GroupItems>
+                {params.children.sort((a, b) => {
+                  return a.key > b.key ? 1 : -1;
+                })}
+              </GroupItems>
             </li>
           )}
         />

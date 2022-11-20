@@ -127,6 +127,7 @@ const ScheduleWeekDetails = () => {
   const navigate = useNavigate();
   const { schedule, weekToFormat } = useParams();
 
+  const [tgwTalkSrc, setTgwTalkSrc] = useState('');
   const [bibleReadingSrc, setBibleReadingSrc] = useState('');
   const [ass1Type, setAss1Type] = useState('');
   const [ass1TypeName, setAss1TypeName] = useState('');
@@ -144,7 +145,23 @@ const ScheduleWeekDetails = () => {
   const [ass4TypeName, setAss4TypeName] = useState('');
   const [ass4Time, setAss4Time] = useState('');
   const [ass4Src, setAss4Src] = useState('');
+  const [cnLC, setCnLC] = useState(1);
+  const [lcPart1Time, setLcPart1Time] = useState('');
+  const [lcPart1Src, setLcPart1Src] = useState('');
+  const [lcPart2Time, setLcPart2Time] = useState('');
+  const [lcPart2Src, setLcPart2Src] = useState('');
+  const [cbsSrc, setCbsSrc] = useState('');
   const [noMeeting, setNoMeeting] = useState(false);
+  const [chairmanA, setChairmanA] = useState('');
+  const [isChairmanA, setIsChairmanA] = useState(false);
+  const [chairmanB, setChairmanB] = useState('');
+  const [isChairmanB, setIsChairmanB] = useState(false);
+  const [openingPrayer, setOpeningPrayer] = useState('');
+  const [isOpeningPrayer, setIsOpeningPrayer] = useState(false);
+  const [tgwTalk, setTgwTalk] = useState('');
+  const [isTgwTalk, setIsTgwTalk] = useState(false);
+  const [tgwGems, setTgwGems] = useState('');
+  const [isTgwGems, setIsTgwGems] = useState(false);
   const [stuBReadA, setStuBReadA] = useState('');
   const [isStuBReadA, setIsStuBReadA] = useState(false);
   const [stuBReadB, setStuBReadB] = useState('');
@@ -181,6 +198,17 @@ const ScheduleWeekDetails = () => {
   const [isStu4B, setIsStu4B] = useState(false);
   const [ass4B, setAss4B] = useState('');
   const [isAss4B, setIsAss4B] = useState(false);
+  const [lcPart1, setLcPart1] = useState('');
+  const [isLcPart1, setIsLcPart1] = useState(false);
+  const [lcPart2, setLcPart2] = useState('');
+  const [isLcPart2, setIsLcPart2] = useState(false);
+  const [cbsConductor, setCbsConductor] = useState('');
+  const [isCbsConductor, setIsCbsCondcutor] = useState(false);
+  const [cbsReader, setCbsReader] = useState('');
+  const [isCbsReader, setIsCbsReader] = useState(false);
+  const [closingPrayer, setClosingPrayer] = useState('');
+  const [isClosingPrayer, setIsClosingPrayer] = useState(false);
+  const [weekType, setWeekType] = useState(1);
   const [isAssign, setIsAssign] = useState(false);
   const [assInfo, setAssInfo] = useState({});
   const [isDlgOpen, setIsDlgOpen] = useState(false);
@@ -332,6 +360,7 @@ const ScheduleWeekDetails = () => {
       const scheduleData = await dbGetScheduleData(week);
       const sourceData = await dbGetSourceMaterial(week);
 
+      setTgwTalkSrc(sourceData.tgwTalk_src);
       setBibleReadingSrc(sourceData.bibleReading_src);
       setStuBReadA(scheduleData.bRead_stu_A_dispName);
       setStuBReadB(scheduleData.bRead_stu_B_dispName);
@@ -367,6 +396,13 @@ const ScheduleWeekDetails = () => {
       setAss4A(scheduleData.ass4_ass_A_dispName);
       setStu4B(scheduleData.ass4_stu_B_dispName);
       setAss4B(scheduleData.ass4_ass_B_dispName);
+      setCnLC(sourceData.cnLC);
+      setLcPart1Time(sourceData.lcPart1_time);
+      setLcPart1Src(sourceData.lcPart1_src);
+      setLcPart2Time(sourceData.lcPart2_time);
+      setLcPart2Src(sourceData.lcPart2_src);
+      setCbsSrc(sourceData.cbs_src);
+      setWeekType(scheduleData.week_type);
       setNoMeeting(scheduleData.noMeeting);
     };
 
@@ -435,8 +471,231 @@ const ScheduleWeekDetails = () => {
         )}
 
         <Box sx={{ width: '100%' }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              <Box>
+                <Typography variant="body1" sx={{ fontWeight: 'bold', fontSize: 16, marginBottom: '5px' }}>
+                  {t('global.chairmanMidweekMeeting')}
+                </Typography>
+                <Box sx={boxStudentFldContainer}>
+                  <Typography
+                    sx={{
+                      ...typoStudentField,
+                      backgroundColor: alpha(theme.palette.common[themeOptions.searchBg], 0.15),
+                    }}
+                    variant="body1"
+                  >
+                    {chairmanA}
+                  </Typography>
+                  {isChairmanA && (
+                    <CircularProgress
+                      sx={sharedStyles.fieldBtnContainer}
+                      color="secondary"
+                      size={26}
+                      disableShrink={true}
+                    />
+                  )}
+                  {!isChairmanA && (
+                    <IconButton
+                      sx={iconButtonContainer}
+                      onClick={() =>
+                        loadStudentPicker({
+                          assID: 0,
+                          assType: 100,
+                          assTypeName: t('global.chairmanMidweekMeeting'),
+                          currentStudent: chairmanA,
+                        })
+                      }
+                    >
+                      <EditIcon sx={editIconButton} />
+                    </IconButton>
+                  )}
+                </Box>
+              </Box>
+              <Box>
+                <Typography variant="body1" sx={{ fontWeight: 'bold', fontSize: 16, marginBottom: '5px' }}>
+                  {t('global.auxClassCounselor')}
+                </Typography>
+                <Box sx={boxStudentFldContainer}>
+                  <Typography
+                    sx={{
+                      ...typoStudentField,
+                      backgroundColor: alpha(theme.palette.common[themeOptions.searchBg], 0.15),
+                    }}
+                    variant="body1"
+                  >
+                    {chairmanB}
+                  </Typography>
+                  {isChairmanB && (
+                    <CircularProgress
+                      sx={sharedStyles.fieldBtnContainer}
+                      color="secondary"
+                      size={26}
+                      disableShrink={true}
+                    />
+                  )}
+                  {!isChairmanB && (
+                    <IconButton
+                      sx={iconButtonContainer}
+                      onClick={() =>
+                        loadStudentPicker({
+                          assID: 0,
+                          assType: 100,
+                          assTypeName: t('global.auxClassCounselor'),
+                          currentStudent: chairmanB,
+                        })
+                      }
+                    >
+                      <EditIcon sx={editIconButton} />
+                    </IconButton>
+                  )}
+                </Box>
+              </Box>
+            </Box>
+            <Box>
+              <Typography variant="body1" sx={{ fontWeight: 'bold', fontSize: 16, marginBottom: '5px' }}>
+                {t('global.prayerMidweekMeeting')}
+              </Typography>
+              <Box sx={boxStudentFldContainer}>
+                <Typography
+                  sx={{
+                    ...typoStudentField,
+                    backgroundColor: alpha(theme.palette.common[themeOptions.searchBg], 0.15),
+                  }}
+                  variant="body1"
+                >
+                  {openingPrayer}
+                </Typography>
+                {isOpeningPrayer && (
+                  <CircularProgress
+                    sx={sharedStyles.fieldBtnContainer}
+                    color="secondary"
+                    size={26}
+                    disableShrink={true}
+                  />
+                )}
+                {!isOpeningPrayer && (
+                  <IconButton
+                    sx={iconButtonContainer}
+                    onClick={() =>
+                      loadStudentPicker({
+                        assID: 0,
+                        assType: 100,
+                        assTypeName: t('global.prayerMidweekMeeting'),
+                        currentStudent: openingPrayer,
+                      })
+                    }
+                  >
+                    <EditIcon sx={editIconButton} />
+                  </IconButton>
+                )}
+              </Box>
+            </Box>
+          </Box>
           <Box sx={boxMeetingPart} className={'tgwPart'}>
             <Typography variant="h6">{t('global.treasuresPart')}</Typography>
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              alignItems: 'flex-start',
+              justifyContent: 'space-between',
+              marginBottom: '20px',
+            }}
+          >
+            <Grid item sx={sharedStyles.studentPartWrapper1}>
+              <Typography variant="body1" sx={{ fontWeight: 'bold', fontSize: 16 }}>
+                {tgwTalkSrc}
+              </Typography>
+            </Grid>
+            <Grid item sx={sharedStyles.studentContainer1}>
+              <Box sx={boxStudentFldContainer}>
+                <Typography
+                  sx={{
+                    ...typoStudentField,
+                    backgroundColor: alpha(theme.palette.common[themeOptions.searchBg], 0.15),
+                  }}
+                  variant="body1"
+                >
+                  {tgwTalk}
+                </Typography>
+                {isTgwTalk && (
+                  <CircularProgress
+                    sx={sharedStyles.fieldBtnContainer}
+                    color="secondary"
+                    size={26}
+                    disableShrink={true}
+                  />
+                )}
+                {!isTgwTalk && (
+                  <IconButton
+                    sx={iconButtonContainer}
+                    onClick={() =>
+                      loadStudentPicker({
+                        assID: 0,
+                        assType: 100,
+                        assTypeName: t('global.tgwTalk'),
+                        currentStudent: tgwTalk,
+                      })
+                    }
+                  >
+                    <EditIcon sx={editIconButton} />
+                  </IconButton>
+                )}
+              </Box>
+            </Grid>
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              alignItems: 'flex-start',
+              justifyContent: 'space-between',
+              marginBottom: '20px',
+            }}
+          >
+            <Grid item sx={sharedStyles.studentPartWrapper1}>
+              <Typography variant="body1" sx={{ fontWeight: 'bold', fontSize: 16 }}>
+                {t('global.tgwGems')}
+              </Typography>
+            </Grid>
+            <Grid item sx={sharedStyles.studentContainer1}>
+              <Box sx={boxStudentFldContainer}>
+                <Typography
+                  sx={{
+                    ...typoStudentField,
+                    backgroundColor: alpha(theme.palette.common[themeOptions.searchBg], 0.15),
+                  }}
+                  variant="body1"
+                >
+                  {tgwGems}
+                </Typography>
+                {isTgwGems && (
+                  <CircularProgress
+                    sx={sharedStyles.fieldBtnContainer}
+                    color="secondary"
+                    size={26}
+                    disableShrink={true}
+                  />
+                )}
+                {!isTgwGems && (
+                  <IconButton
+                    sx={iconButtonContainer}
+                    onClick={() =>
+                      loadStudentPicker({
+                        assID: 0,
+                        assType: 100,
+                        assTypeName: t('global.tgwGems'),
+                        currentStudent: tgwGems,
+                      })
+                    }
+                  >
+                    <EditIcon sx={editIconButton} />
+                  </IconButton>
+                )}
+              </Box>
+            </Grid>
           </Box>
           <Box
             sx={{
@@ -628,6 +887,247 @@ const ScheduleWeekDetails = () => {
               loadStudentPicker={(value) => loadStudentPicker(value)}
             />
           )}
+          <Box sx={boxMeetingPart} className="lcPart">
+            <Typography variant="h6">{t('global.livingPart')}</Typography>
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              alignItems: 'flex-start',
+              justifyContent: 'space-between',
+              marginBottom: '20px',
+            }}
+          >
+            <Grid item sx={sharedStyles.studentPartWrapper1}>
+              <Typography variant="body1" sx={{ fontWeight: 'bold', fontSize: 16 }}>
+                {`(${lcPart1Time} min.) ${lcPart1Src}`}
+              </Typography>
+            </Grid>
+            <Grid item sx={sharedStyles.studentContainer1}>
+              <Box sx={boxStudentFldContainer}>
+                <Typography
+                  sx={{
+                    ...typoStudentField,
+                    backgroundColor: alpha(theme.palette.common[themeOptions.searchBg], 0.15),
+                  }}
+                  variant="body1"
+                >
+                  {lcPart1}
+                </Typography>
+                {isLcPart1 && (
+                  <CircularProgress
+                    sx={sharedStyles.fieldBtnContainer}
+                    color="secondary"
+                    size={26}
+                    disableShrink={true}
+                  />
+                )}
+                {!isLcPart1 && (
+                  <IconButton
+                    sx={iconButtonContainer}
+                    onClick={() =>
+                      loadStudentPicker({
+                        assID: 0,
+                        assType: 100,
+                        assTypeName: t('global.lcPart'),
+                        currentStudent: lcPart1,
+                      })
+                    }
+                  >
+                    <EditIcon sx={editIconButton} />
+                  </IconButton>
+                )}
+              </Box>
+            </Grid>
+          </Box>
+          {cnLC > 1 && (
+            <Box
+              sx={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                alignItems: 'flex-start',
+                justifyContent: 'space-between',
+                marginBottom: '20px',
+              }}
+            >
+              <Grid item sx={sharedStyles.studentPartWrapper1}>
+                <Typography variant="body1" sx={{ fontWeight: 'bold', fontSize: 16 }}>
+                  {`(${lcPart2Time} min.) ${lcPart2Src}`}
+                </Typography>
+              </Grid>
+              <Grid item sx={sharedStyles.studentContainer1}>
+                <Box sx={boxStudentFldContainer}>
+                  <Typography
+                    sx={{
+                      ...typoStudentField,
+                      backgroundColor: alpha(theme.palette.common[themeOptions.searchBg], 0.15),
+                    }}
+                    variant="body1"
+                  >
+                    {lcPart2}
+                  </Typography>
+                  {isLcPart1 && (
+                    <CircularProgress
+                      sx={sharedStyles.fieldBtnContainer}
+                      color="secondary"
+                      size={26}
+                      disableShrink={true}
+                    />
+                  )}
+                  {!isLcPart2 && (
+                    <IconButton
+                      sx={iconButtonContainer}
+                      onClick={() =>
+                        loadStudentPicker({
+                          assID: 0,
+                          assType: 100,
+                          assTypeName: t('global.lcPart'),
+                          currentStudent: lcPart2,
+                        })
+                      }
+                    >
+                      <EditIcon sx={editIconButton} />
+                    </IconButton>
+                  )}
+                </Box>
+              </Grid>
+            </Box>
+          )}
+          {weekType === 1 && (
+            <Box
+              sx={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                alignItems: 'flex-start',
+                justifyContent: 'space-between',
+              }}
+            >
+              <Grid item sx={classCount === 1 ? sharedStyles.studentPartWrapper1 : sharedStyles.studentPartWrapper2}>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    fontWeight: 'bold',
+                    fontSize: 16,
+                  }}
+                >
+                  {t('global.cbs')}
+                </Typography>
+                <Typography variant="body1">{cbsSrc}</Typography>
+              </Grid>
+              <Grid item sx={sharedStyles.studentContainer2}>
+                <Box sx={boxStudentFldContainer}>
+                  <Typography
+                    sx={{
+                      ...typoStudentField,
+                      backgroundColor: alpha(theme.palette.common[themeOptions.searchBg], 0.15),
+                    }}
+                    variant="body1"
+                  >
+                    {cbsConductor}
+                  </Typography>
+                  {isCbsConductor && (
+                    <CircularProgress
+                      sx={sharedStyles.fieldBtnContainer}
+                      color="secondary"
+                      size={26}
+                      disableShrink={true}
+                    />
+                  )}
+                  {!isCbsConductor && (
+                    <IconButton
+                      sx={iconButtonContainer}
+                      onClick={() =>
+                        loadStudentPicker({
+                          assID: 0,
+                          assType: 100,
+                          assTypeName: t('global.cbsConductor'),
+                          currentStudent: cbsConductor,
+                        })
+                      }
+                    >
+                      <EditIcon sx={editIconButton} />
+                    </IconButton>
+                  )}
+                </Box>
+                <Box sx={boxStudentFldContainer}>
+                  <Typography
+                    sx={{
+                      ...typoStudentField,
+                      backgroundColor: alpha(theme.palette.common[themeOptions.searchBg], 0.15),
+                    }}
+                    variant="body1"
+                  >
+                    {cbsReader}
+                  </Typography>
+                  {isCbsReader && (
+                    <CircularProgress
+                      sx={sharedStyles.fieldBtnContainer}
+                      color="secondary"
+                      size={26}
+                      disableShrink={true}
+                    />
+                  )}
+                  {!isCbsReader && (
+                    <IconButton
+                      sx={iconButtonContainer}
+                      onClick={() =>
+                        loadStudentPicker({
+                          assID: 1,
+                          assType: 100,
+                          assTypeName: t('global.cbsReader'),
+                          currentStudent: cbsReader,
+                        })
+                      }
+                    >
+                      <EditIcon sx={editIconButton} />
+                    </IconButton>
+                  )}
+                </Box>
+              </Grid>
+            </Box>
+          )}
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px' }}>
+            <Box>
+              <Typography variant="body1" sx={{ fontWeight: 'bold', fontSize: 16, marginBottom: '5px' }}>
+                {t('global.prayerMidweekMeeting')}
+              </Typography>
+              <Box sx={boxStudentFldContainer}>
+                <Typography
+                  sx={{
+                    ...typoStudentField,
+                    backgroundColor: alpha(theme.palette.common[themeOptions.searchBg], 0.15),
+                  }}
+                  variant="body1"
+                >
+                  {closingPrayer}
+                </Typography>
+                {isClosingPrayer && (
+                  <CircularProgress
+                    sx={sharedStyles.fieldBtnContainer}
+                    color="secondary"
+                    size={26}
+                    disableShrink={true}
+                  />
+                )}
+                {!isClosingPrayer && (
+                  <IconButton
+                    sx={iconButtonContainer}
+                    onClick={() =>
+                      loadStudentPicker({
+                        assID: 0,
+                        assType: 100,
+                        assTypeName: t('global.prayerMidweekMeeting'),
+                        currentStudent: closingPrayer,
+                      })
+                    }
+                  >
+                    <EditIcon sx={editIconButton} />
+                  </IconButton>
+                )}
+              </Box>
+            </Box>
+          </Box>
         </Box>
         {!mdDown && (
           <Box sx={boxStudentSelector}>

@@ -3,7 +3,7 @@ import dateFormat from 'dateformat';
 import { promiseGetRecoil, promiseSetRecoil } from 'recoil-outside';
 import { dbSaveSrcData, dbGetYearList } from '../indexedDb/dbSourceMaterial';
 import { monthNamesState } from '../states/main';
-import { assTypeLocalState, yearsListState } from '../states/sourceMaterial';
+import { assTypeAYFOnlyState, yearsListState } from '../states/sourceMaterial';
 
 export const addEpubDataToDb = async (fileEPUB) => {
   const data = await loadEPUB(fileEPUB);
@@ -20,7 +20,7 @@ export const addJwDataToDb = async (dataJw) => {
 const addDataToDb = async (data) => {
   try {
     const monthNames = await promiseGetRecoil(monthNamesState);
-    const assTypeList = await promiseGetRecoil(assTypeLocalState);
+    const assTypeList = await promiseGetRecoil(assTypeAYFOnlyState);
 
     for (let i = 0; i < data.weeksData.length; i++) {
       const src = data.weeksData[i];
