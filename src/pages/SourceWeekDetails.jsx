@@ -393,7 +393,7 @@ const SourceWeekDetails = () => {
             variant="outlined"
             size="small"
             value={CBSSrc}
-            sx={{ marginTop: '20px', width: '420px' }}
+            sx={{ marginTop: '20px', width: '100%' }}
             onChange={(e) => setCBSSrc(e.target.value)}
           />
           <Box sx={{ marginTop: '30px' }}>

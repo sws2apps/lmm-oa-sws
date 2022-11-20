@@ -83,7 +83,47 @@ const PersonPocket = ({ id, name }) => {
     }
   };
 
-  const handleSetupPocket = () => {};
+  const handleSetupPocket = async () => {
+    try {
+      if (apiHost !== '') {
+        cancel.current = false;
+        setIsGenerating(true);
+        setVerifyCode('');
+        const res = await fetch(`${apiHost}api/congregations/${congID}/pockets/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            visitorid: visitorID,
+            email: userEmail,
+          },
+          body: JSON.stringify({ username: name }),
+        });
+
+        if (!cancel.current) {
+          const data = await res.json();
+
+          if (res.status === 200) {
+            setVerifyCode(data.code);
+            setPocketName(data.username);
+            setIsGenerating(false);
+            return;
+          }
+
+          setIsGenerating(false);
+          setAppMessage(data.message);
+          setAppSeverity('warning');
+          setAppSnackOpen(true);
+        }
+      }
+    } catch (err) {
+      if (!cancel.current) {
+        setIsGenerating(false);
+        setAppMessage(err.message);
+        setAppSeverity('error');
+        setAppSnackOpen(true);
+      }
+    }
+  };
 
   const handleGenerateOCode = async () => {
     try {
