@@ -127,6 +127,11 @@ export const dbGetStudentByUid = async (uid) => {
   return appData;
 };
 
+export const dbGetStudentByDispName = async (name) => {
+  const appData = await appDb.table('persons').get({ person_displayName: name });
+  return appData;
+};
+
 export const dbGetStudentDetails = async (uid) => {
   const students = await promiseGetRecoil(allStudentsState);
 

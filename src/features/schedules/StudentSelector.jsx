@@ -16,7 +16,7 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import { grey } from '@mui/material/colors';
 import { studentsAssignmentHistoryState } from '../../states/persons';
-import { dbGetPersonsByAssType, dbHistoryAssistant } from '../../indexedDb/dbPersons';
+import { dbGetPersonsByAssType, dbGetStudentByDispName, dbHistoryAssistant } from '../../indexedDb/dbPersons';
 import { formatDateForCompare } from '../../utils/app';
 
 const sharedStyles = {
@@ -225,6 +225,20 @@ const StudentSelector = (props) => {
       isSubscribed = false;
     };
   }, [stuForAssistant]);
+
+  useEffect(() => {
+    const findSelectStudent = async () => {
+      const tempStu = props.assInfo.currentStudent;
+      const found = await dbGetStudentByDispName(tempStu);
+
+      setSelectedStudent(tempStu);
+      setSelectedStuID(found.person_uid);
+    };
+
+    if (props.assInfo.currentStudent !== '') {
+      findSelectStudent();
+    }
+  }, [props.assInfo]);
 
   return (
     <Box>

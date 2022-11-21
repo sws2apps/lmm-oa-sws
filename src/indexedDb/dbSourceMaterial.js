@@ -63,6 +63,7 @@ export const dbGetSourceMaterial = async (weekOf) => {
   const assTypeList = await promiseGetRecoil(assTypeLocalState);
 
   const appData = await appDb.table('src').get({ weekOf: weekOf });
+
   let obj = {};
   let indexType;
 
@@ -72,6 +73,7 @@ export const dbGetSourceMaterial = async (weekOf) => {
   obj.songFirst_src = appData.songFirst_src;
   obj.tgwTalk_src = appData.tgwTalk_src ? appData.tgwTalk_src[lang] || '' : '';
   obj.bibleReading_src = appData.bibleReading_src ? appData.bibleReading_src[lang] || '' : '';
+  obj.ayfCount = appData.ayfCount;
   obj.ass1_type = +appData.ass1_type || '';
 
   indexType = assTypeList.findIndex((type) => type.value === obj.ass1_type);
@@ -101,6 +103,7 @@ export const dbGetSourceMaterial = async (weekOf) => {
   obj.ass4_src = appData.ass4_src ? appData.ass4_src[lang] || '' : '';
 
   obj.songMiddle_src = appData.songMiddle_src;
+  obj.lcCount = appData.lcCount;
   obj.lcPart1_time = appData.lcPart1_time;
   obj.lcPart1_src = appData.lcPart1_src ? appData.lcPart1_src[lang] || '' : '';
   obj.lcPart2_time = appData.lcPart2_time;

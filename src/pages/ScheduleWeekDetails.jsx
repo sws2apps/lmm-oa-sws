@@ -145,7 +145,7 @@ const ScheduleWeekDetails = () => {
   const [ass4TypeName, setAss4TypeName] = useState('');
   const [ass4Time, setAss4Time] = useState('');
   const [ass4Src, setAss4Src] = useState('');
-  const [cnLC, setCnLC] = useState(1);
+  const [lcCount, setLcCount] = useState(1);
   const [lcPart1Time, setLcPart1Time] = useState('');
   const [lcPart1Src, setLcPart1Src] = useState('');
   const [lcPart2Time, setLcPart2Time] = useState('');
@@ -451,7 +451,7 @@ const ScheduleWeekDetails = () => {
       setAss4A(scheduleData.ass4_ass_A_dispName);
       setStu4B(scheduleData.ass4_stu_B_dispName);
       setAss4B(scheduleData.ass4_ass_B_dispName);
-      setCnLC(sourceData.cnLC);
+      setLcCount(sourceData.lcCount);
       setLcPart1Time(sourceData.lcPart1_time);
       setLcPart1Src(sourceData.lcPart1_src);
       setLcPart1(scheduleData.lc_part1_dispName);
@@ -1003,7 +1003,7 @@ const ScheduleWeekDetails = () => {
               </Box>
             </Grid>
           </Box>
-          {cnLC > 1 && (
+          {lcCount > 1 && (
             <Box
               sx={{
                 display: 'flex',
@@ -1029,7 +1029,7 @@ const ScheduleWeekDetails = () => {
                   >
                     {lcPart2}
                   </Typography>
-                  {isLcPart1 && (
+                  {isLcPart2 && (
                     <CircularProgress
                       sx={sharedStyles.fieldBtnContainer}
                       color="secondary"
