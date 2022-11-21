@@ -410,7 +410,12 @@ const ScheduleWeekDetails = () => {
       const scheduleData = await dbGetScheduleData(week);
       const sourceData = await dbGetSourceMaterial(week);
 
+      setChairmanA(scheduleData.chairmanMM_A_dispName);
+      setChairmanB(scheduleData.chairmanMM_B_dispName);
+      setOpeningPrayer(scheduleData.opening_prayer_dispName);
       setTgwTalkSrc(sourceData.tgwTalk_src);
+      setTgwTalk(scheduleData.tgw_talk_dispName);
+      setTgwGems(scheduleData.tgw_gems_dispName);
       setBibleReadingSrc(sourceData.bibleReading_src);
       setStuBReadA(scheduleData.bRead_stu_A_dispName);
       setStuBReadB(scheduleData.bRead_stu_B_dispName);
@@ -449,9 +454,14 @@ const ScheduleWeekDetails = () => {
       setCnLC(sourceData.cnLC);
       setLcPart1Time(sourceData.lcPart1_time);
       setLcPart1Src(sourceData.lcPart1_src);
+      setLcPart1(scheduleData.lc_part1_dispName);
       setLcPart2Time(sourceData.lcPart2_time);
       setLcPart2Src(sourceData.lcPart2_src);
+      setLcPart2(scheduleData.lc_part2_dispName);
       setCbsSrc(sourceData.cbs_src);
+      setCbsConductor(scheduleData.cbs_conductor_dispName);
+      setCbsReader(scheduleData.cbs_reader_dispName);
+      setClosingPrayer(scheduleData.closing_prayer_dispName);
       setWeekType(scheduleData.week_type);
       setNoMeeting(scheduleData.noMeeting);
     };
@@ -562,45 +572,47 @@ const ScheduleWeekDetails = () => {
                   )}
                 </Box>
               </Box>
-              <Box>
-                <Typography variant="body1" sx={{ fontWeight: 'bold', fontSize: 16, marginBottom: '5px' }}>
-                  {t('global.auxClassCounselor')}
-                </Typography>
-                <Box sx={boxStudentFldContainer}>
-                  <Typography
-                    sx={{
-                      ...typoStudentField,
-                      backgroundColor: alpha(theme.palette.common[themeOptions.searchBg], 0.15),
-                    }}
-                    variant="body1"
-                  >
-                    {chairmanB}
+              {classCount === 2 && weekType === 1 && (
+                <Box>
+                  <Typography variant="body1" sx={{ fontWeight: 'bold', fontSize: 16, marginBottom: '5px' }}>
+                    {t('global.auxClassCounselor')}
                   </Typography>
-                  {isChairmanB && (
-                    <CircularProgress
-                      sx={sharedStyles.fieldBtnContainer}
-                      color="secondary"
-                      size={26}
-                      disableShrink={true}
-                    />
-                  )}
-                  {!isChairmanB && (
-                    <IconButton
-                      sx={iconButtonContainer}
-                      onClick={() =>
-                        loadStudentPicker({
-                          assID: 19,
-                          assType: 110,
-                          assTypeName: t('global.auxClassCounselor'),
-                          currentStudent: chairmanB,
-                        })
-                      }
+                  <Box sx={boxStudentFldContainer}>
+                    <Typography
+                      sx={{
+                        ...typoStudentField,
+                        backgroundColor: alpha(theme.palette.common[themeOptions.searchBg], 0.15),
+                      }}
+                      variant="body1"
                     >
-                      <EditIcon sx={editIconButton} />
-                    </IconButton>
-                  )}
+                      {chairmanB}
+                    </Typography>
+                    {isChairmanB && (
+                      <CircularProgress
+                        sx={sharedStyles.fieldBtnContainer}
+                        color="secondary"
+                        size={26}
+                        disableShrink={true}
+                      />
+                    )}
+                    {!isChairmanB && (
+                      <IconButton
+                        sx={iconButtonContainer}
+                        onClick={() =>
+                          loadStudentPicker({
+                            assID: 19,
+                            assType: 110,
+                            assTypeName: t('global.auxClassCounselor'),
+                            currentStudent: chairmanB,
+                          })
+                        }
+                      >
+                        <EditIcon sx={editIconButton} />
+                      </IconButton>
+                    )}
+                  </Box>
                 </Box>
-              </Box>
+              )}
             </Box>
             <Box>
               <Typography variant="body1" sx={{ fontWeight: 'bold', fontSize: 16, marginBottom: '5px' }}>

@@ -45,7 +45,7 @@ export const dbGetScheduleData = async (weekValue) => {
   } else {
     schedule.tgw_talk = appData.tgw_talk;
     student = await dbGetStudentByUid(schedule.tgw_talk);
-    schedule.tgw_talk_dispName = student.tgw_talk_dispName;
+    schedule.tgw_talk_dispName = student.person_displayName;
   }
   if (typeof appData.tgw_gems === 'undefined') {
     schedule.tgw_gems = '';
@@ -53,7 +53,7 @@ export const dbGetScheduleData = async (weekValue) => {
   } else {
     schedule.tgw_gems = appData.tgw_gems;
     student = await dbGetStudentByUid(schedule.tgw_gems);
-    schedule.tgw_gems_dispName = student.tgw_gems_dispName;
+    schedule.tgw_gems_dispName = student.person_displayName;
   }
   if (typeof appData.bRead_stu_A === 'undefined') {
     schedule.bRead_stu_A = '';
@@ -573,7 +573,7 @@ export const dbCountAssignmentsInfo = async (week) => {
   }
 
   // LC Part 2
-  if (sourceData.lcPart2_src !== '') {
+  if (sourceData.cnLC === 2) {
     assTotal = assTotal + 1;
 
     if (schedData.lc_part2 !== '') {

@@ -91,22 +91,37 @@ export const dbHistoryAssignment = async () => {
         let fldName = '';
 
         // Chairman History
-        for (let a = 0; a < varClasses.length - 1; a++) {
-          fldName = 'chairmanMM_' + varClasses[a].classLabel;
-          if (typeof appData[i][fldName] !== 'undefined') {
-            person.ID = histID;
-            person.weekOf = appData[i].weekOf;
-            person.weekOfFormatted = dateFormatted;
-            person.studentID = appData[i][fldName];
-            const stuDetails = await dbGetStudentDetails(person.studentID);
-            person.studentName = stuDetails.person_displayName;
-            person.assignmentID = 110;
-            person.assignmentName = getI18n().t('global.chairmanMidweekMeeting');
-            person.class = varClasses[a].classLabel;
-            dbHistory.push(person);
-            person = {};
-            histID++;
-          }
+        fldName = 'chairmanMM_A';
+        if (typeof appData[i][fldName] !== 'undefined') {
+          person.ID = histID;
+          person.weekOf = appData[i].weekOf;
+          person.weekOfFormatted = dateFormatted;
+          person.studentID = appData[i][fldName];
+          const stuDetails = await dbGetStudentByUid(person.studentID);
+          person.studentName = stuDetails.person_displayName;
+          person.assignmentID = 110;
+          person.assignmentName = getI18n().t('global.chairmanMidweekMeeting');
+          person.class = '';
+          dbHistory.push(person);
+          person = {};
+          histID++;
+        }
+
+        // Aux Class Counselor History
+        fldName = 'chairmanMM_B';
+        if (typeof appData[i][fldName] !== 'undefined') {
+          person.ID = histID;
+          person.weekOf = appData[i].weekOf;
+          person.weekOfFormatted = dateFormatted;
+          person.studentID = appData[i][fldName];
+          const stuDetails = await dbGetStudentByUid(person.studentID);
+          person.studentName = stuDetails.person_displayName;
+          person.assignmentID = 110;
+          person.assignmentName = getI18n().t('global.auxClassCounselor');
+          person.class = '';
+          dbHistory.push(person);
+          person = {};
+          histID++;
         }
 
         // Opening Prayer History
@@ -116,7 +131,7 @@ export const dbHistoryAssignment = async () => {
           person.weekOf = appData[i].weekOf;
           person.weekOfFormatted = dateFormatted;
           person.studentID = appData[i][fldName];
-          const stuDetails = await dbGetStudentDetails(person.studentID);
+          const stuDetails = await dbGetStudentByUid(person.studentID);
           person.studentName = stuDetails.person_displayName;
           person.assignmentID = 111;
           person.assignmentName = getI18n().t('global.prayerMidweekMeeting');
@@ -133,7 +148,7 @@ export const dbHistoryAssignment = async () => {
           person.weekOf = appData[i].weekOf;
           person.weekOfFormatted = dateFormatted;
           person.studentID = appData[i][fldName];
-          const stuDetails = await dbGetStudentDetails(person.studentID);
+          const stuDetails = await dbGetStudentByUid(person.studentID);
           person.studentName = stuDetails.person_displayName;
           person.assignmentID = 112;
           person.assignmentName = getI18n().t('global.tgwTalk');
@@ -150,7 +165,7 @@ export const dbHistoryAssignment = async () => {
           person.weekOf = appData[i].weekOf;
           person.weekOfFormatted = dateFormatted;
           person.studentID = appData[i][fldName];
-          const stuDetails = await dbGetStudentDetails(person.studentID);
+          const stuDetails = await dbGetStudentByUid(person.studentID);
           person.studentName = stuDetails.person_displayName;
           person.assignmentID = 113;
           person.assignmentName = getI18n().t('global.tgwGems');
@@ -229,13 +244,13 @@ export const dbHistoryAssignment = async () => {
 
         // LC Assignment History
         for (let b = 1; b < 3; b++) {
-          fldName = `lc_part_${b}`;
+          fldName = `lc_part${b}`;
           if (typeof appData[i][fldName] !== 'undefined') {
             person.ID = histID;
             person.weekOf = appData[i].weekOf;
             person.weekOfFormatted = dateFormatted;
             person.studentID = appData[i][fldName];
-            const stuDetails = await dbGetStudentDetails(person.studentID);
+            const stuDetails = await dbGetStudentByUid(person.studentID);
             person.studentName = stuDetails.person_displayName;
             person.assignmentID = 114;
             person.assignmentName = getI18n().t('global.lcPart');
@@ -253,7 +268,7 @@ export const dbHistoryAssignment = async () => {
           person.weekOf = appData[i].weekOf;
           person.weekOfFormatted = dateFormatted;
           person.studentID = appData[i][fldName];
-          const stuDetails = await dbGetStudentDetails(person.studentID);
+          const stuDetails = await dbGetStudentByUid(person.studentID);
           person.studentName = stuDetails.person_displayName;
           person.assignmentID = 115;
           person.assignmentName = getI18n().t('global.cbsConductor');
@@ -270,7 +285,7 @@ export const dbHistoryAssignment = async () => {
           person.weekOf = appData[i].weekOf;
           person.weekOfFormatted = dateFormatted;
           person.studentID = appData[i][fldName];
-          const stuDetails = await dbGetStudentDetails(person.studentID);
+          const stuDetails = await dbGetStudentByUid(person.studentID);
           person.studentName = stuDetails.person_displayName;
           person.assignmentID = 116;
           person.assignmentName = getI18n().t('global.cbsReader');
@@ -287,7 +302,7 @@ export const dbHistoryAssignment = async () => {
           person.weekOf = appData[i].weekOf;
           person.weekOfFormatted = dateFormatted;
           person.studentID = appData[i][fldName];
-          const stuDetails = await dbGetStudentDetails(person.studentID);
+          const stuDetails = await dbGetStudentByUid(person.studentID);
           person.studentName = stuDetails.person_displayName;
           person.assignmentID = 111;
           person.assignmentName = getI18n().t('global.prayerMidweekMeeting');
