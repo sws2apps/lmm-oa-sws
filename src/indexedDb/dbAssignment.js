@@ -71,98 +71,241 @@ export const dbSaveAss = async (weekOf, stuID, varSave) => {
 };
 
 export const dbHistoryAssignment = async () => {
-  const appData = await appDb.table('sched_MM').toArray();
-  const persons = (await appDb.persons.toArray()).length;
-  let dbHistory = [];
+  try {
+    const appData = await appDb.table('sched_MM').toArray();
+    const persons = (await appDb.persons.toArray()).length;
+    let dbHistory = [];
 
-  if (persons > 0) {
-    let histID = 0;
-    for (let i = 0; i < appData.length; i++) {
-      var person = {};
+    if (persons > 0) {
+      let histID = 0;
+      for (let i = 0; i < appData.length; i++) {
+        let person = {};
 
-      const weekData = await dbGetSourceMaterial(appData[i].weekOf);
-      const [varMonth, varDay, varYear] = appData[i].weekOf.split('/');
-      const lDate = new Date(varYear, varMonth - 1, varDay);
-      const shortDateFormat = await promiseGetRecoil(shortDateFormatState);
-      const dateFormatted = dateFormat(lDate, shortDateFormat);
-      const cnAss = [{ iAss: 1 }, { iAss: 2 }, { iAss: 3 }, { iAss: 4 }];
-      const varClasses = [{ classLabel: 'A' }, { classLabel: 'B' }];
+        const weekData = await dbGetSourceMaterial(appData[i].weekOf);
+        const [varMonth, varDay, varYear] = appData[i].weekOf.split('/');
+        const lDate = new Date(varYear, varMonth - 1, varDay);
+        const shortDateFormat = await promiseGetRecoil(shortDateFormatState);
+        const dateFormatted = dateFormat(lDate, shortDateFormat);
+        const cnAss = [{ iAss: 1 }, { iAss: 2 }, { iAss: 3 }, { iAss: 4 }];
+        const varClasses = [{ classLabel: 'A' }, { classLabel: 'B' }];
+        let fldName = '';
 
-      //Bible Reading History
-      for (let a = 0; a < varClasses.length; a++) {
-        const fldName = 'bRead_stu_' + varClasses[a].classLabel;
+        // Chairman History
+        for (let a = 0; a < varClasses.length - 1; a++) {
+          fldName = 'chairmanMM_' + varClasses[a].classLabel;
+          if (typeof appData[i][fldName] !== 'undefined') {
+            person.ID = histID;
+            person.weekOf = appData[i].weekOf;
+            person.weekOfFormatted = dateFormatted;
+            person.studentID = appData[i][fldName];
+            const stuDetails = await dbGetStudentDetails(person.studentID);
+            person.studentName = stuDetails.person_displayName;
+            person.assignmentID = 110;
+            person.assignmentName = getI18n().t('global.chairmanMidweekMeeting');
+            person.class = varClasses[a].classLabel;
+            dbHistory.push(person);
+            person = {};
+            histID++;
+          }
+        }
+
+        // Opening Prayer History
+        fldName = 'opening_prayer';
         if (typeof appData[i][fldName] !== 'undefined') {
           person.ID = histID;
           person.weekOf = appData[i].weekOf;
           person.weekOfFormatted = dateFormatted;
           person.studentID = appData[i][fldName];
-          const stuDetails = await dbGetStudentByUid(person.studentID);
-          person.studentName = stuDetails?.person_displayName || '';
-          person.assignmentID = 100;
-          person.assignmentName = getI18n().t('global.bibleReading');
-          person.class = varClasses[a].classLabel;
+          const stuDetails = await dbGetStudentDetails(person.studentID);
+          person.studentName = stuDetails.person_displayName;
+          person.assignmentID = 111;
+          person.assignmentName = getI18n().t('global.prayerMidweekMeeting');
+          person.class = '';
+          dbHistory.push(person);
+          person = {};
+          histID++;
+        }
+
+        // TGW Talk 10 min. History
+        fldName = 'tgw_talk';
+        if (typeof appData[i][fldName] !== 'undefined') {
+          person.ID = histID;
+          person.weekOf = appData[i].weekOf;
+          person.weekOfFormatted = dateFormatted;
+          person.studentID = appData[i][fldName];
+          const stuDetails = await dbGetStudentDetails(person.studentID);
+          person.studentName = stuDetails.person_displayName;
+          person.assignmentID = 112;
+          person.assignmentName = getI18n().t('global.tgwTalk');
+          person.class = '';
+          dbHistory.push(person);
+          person = {};
+          histID++;
+        }
+
+        // TGW Spiritual Gems History
+        fldName = 'tgw_gems';
+        if (typeof appData[i][fldName] !== 'undefined') {
+          person.ID = histID;
+          person.weekOf = appData[i].weekOf;
+          person.weekOfFormatted = dateFormatted;
+          person.studentID = appData[i][fldName];
+          const stuDetails = await dbGetStudentDetails(person.studentID);
+          person.studentName = stuDetails.person_displayName;
+          person.assignmentID = 113;
+          person.assignmentName = getI18n().t('global.tgwGems');
+          person.class = '';
+          dbHistory.push(person);
+          person = {};
+          histID++;
+        }
+
+        //Bible Reading History
+        for (let a = 0; a < varClasses.length - 1; a++) {
+          const fldName = 'bRead_stu_' + varClasses[a].classLabel;
+          if (typeof appData[i][fldName] !== 'undefined') {
+            person.ID = histID;
+            person.weekOf = appData[i].weekOf;
+            person.weekOfFormatted = dateFormatted;
+            person.studentID = appData[i][fldName];
+            const stuDetails = await dbGetStudentByUid(person.studentID);
+            person.studentName = stuDetails?.person_displayName || '';
+            person.assignmentID = 100;
+            person.assignmentName = getI18n().t('global.bibleReading');
+            person.class = varClasses[a].classLabel;
+            dbHistory.push(person);
+            person = {};
+            histID++;
+          }
+        }
+
+        //AYF Assigment History
+        for (let b = 0; b < cnAss.length - 1; b++) {
+          var weekFld = 'ass' + cnAss[b].iAss + '_type';
+          const assType = weekData[weekFld];
+
+          for (let a = 0; a < varClasses.length - 1; a++) {
+            fldName = 'ass' + cnAss[b].iAss + '_stu_' + varClasses[a].classLabel;
+            if (typeof appData[i][fldName] !== 'undefined') {
+              person.ID = histID;
+              person.weekOf = appData[i].weekOf;
+              person.weekOfFormatted = dateFormatted;
+              person.studentID = appData[i][fldName];
+              const stuDetails = await dbGetStudentByUid(person.studentID);
+              person.studentName = stuDetails?.person_displayName || '';
+              person.assignmentID = assType;
+              if (assType === 101 || assType === 108) {
+                person.assignmentName = getI18n().t('global.initialCall');
+              } else if (assType === 102) {
+                person.assignmentName = getI18n().t('global.returnVisit');
+              } else if (assType === 103) {
+                person.assignmentName = getI18n().t('global.bibleStudy');
+              } else if (assType === 104) {
+                person.assignmentName = getI18n().t('global.talk');
+              }
+              person.class = varClasses[a].classLabel;
+              dbHistory.push(person);
+              person = {};
+              histID++;
+            }
+
+            fldName = 'ass' + cnAss[b].iAss + '_ass_' + varClasses[a].classLabel;
+            if (typeof appData[i][fldName] !== 'undefined') {
+              person.ID = histID;
+              person.weekOf = appData[i].weekOf;
+              person.weekOfFormatted = dateFormatted;
+              person.studentID = appData[i][fldName];
+              const stuDetails = await dbGetStudentByUid(person.studentID);
+              person.studentName = stuDetails?.person_displayName || '';
+              person.assignmentID = 109;
+              person.assignmentName = getI18n().t('global.assistant');
+              person.class = varClasses[a].classLabel;
+              dbHistory.push(person);
+              person = {};
+              histID++;
+            }
+          }
+        }
+
+        // LC Assignment History
+        for (let b = 1; b < 3; b++) {
+          fldName = `lc_part_${b}`;
+          if (typeof appData[i][fldName] !== 'undefined') {
+            person.ID = histID;
+            person.weekOf = appData[i].weekOf;
+            person.weekOfFormatted = dateFormatted;
+            person.studentID = appData[i][fldName];
+            const stuDetails = await dbGetStudentDetails(person.studentID);
+            person.studentName = stuDetails.person_displayName;
+            person.assignmentID = 114;
+            person.assignmentName = getI18n().t('global.lcPart');
+            person.class = '';
+            dbHistory.push(person);
+            person = {};
+            histID++;
+          }
+        }
+
+        // CBS Conductor History
+        fldName = 'cbs_conductor';
+        if (typeof appData[i][fldName] !== 'undefined') {
+          person.ID = histID;
+          person.weekOf = appData[i].weekOf;
+          person.weekOfFormatted = dateFormatted;
+          person.studentID = appData[i][fldName];
+          const stuDetails = await dbGetStudentDetails(person.studentID);
+          person.studentName = stuDetails.person_displayName;
+          person.assignmentID = 115;
+          person.assignmentName = getI18n().t('global.cbsConductor');
+          person.class = '';
+          dbHistory.push(person);
+          person = {};
+          histID++;
+        }
+
+        // CBS Reader History
+        fldName = 'cbs_reader';
+        if (typeof appData[i][fldName] !== 'undefined') {
+          person.ID = histID;
+          person.weekOf = appData[i].weekOf;
+          person.weekOfFormatted = dateFormatted;
+          person.studentID = appData[i][fldName];
+          const stuDetails = await dbGetStudentDetails(person.studentID);
+          person.studentName = stuDetails.person_displayName;
+          person.assignmentID = 116;
+          person.assignmentName = getI18n().t('global.cbsReader');
+          person.class = '';
+          dbHistory.push(person);
+          person = {};
+          histID++;
+        }
+
+        // Closing Prayer History
+        fldName = 'closing_prayer';
+        if (typeof appData[i][fldName] !== 'undefined') {
+          person.ID = histID;
+          person.weekOf = appData[i].weekOf;
+          person.weekOfFormatted = dateFormatted;
+          person.studentID = appData[i][fldName];
+          const stuDetails = await dbGetStudentDetails(person.studentID);
+          person.studentName = stuDetails.person_displayName;
+          person.assignmentID = 111;
+          person.assignmentName = getI18n().t('global.prayerMidweekMeeting');
+          person.class = '';
           dbHistory.push(person);
           person = {};
           histID++;
         }
       }
-
-      //AYF Assigment History
-      for (let b = 0; b < cnAss.length; b++) {
-        var weekFld = 'ass' + cnAss[b].iAss + '_type';
-        const assType = weekData[weekFld];
-
-        for (let a = 0; a < varClasses.length; a++) {
-          var fldName = 'ass' + cnAss[b].iAss + '_stu_' + varClasses[a].classLabel;
-          if (typeof appData[i][fldName] !== 'undefined') {
-            person.ID = histID;
-            person.weekOf = appData[i].weekOf;
-            person.weekOfFormatted = dateFormatted;
-            person.studentID = appData[i][fldName];
-            const stuDetails = await dbGetStudentByUid(person.studentID);
-            person.studentName = stuDetails?.person_displayName || '';
-            person.assignmentID = assType;
-            if (assType === 101 || assType === 108) {
-              person.assignmentName = getI18n().t('global.initialCall');
-            } else if (assType === 102) {
-              person.assignmentName = getI18n().t('global.returnVisit');
-            } else if (assType === 103) {
-              person.assignmentName = getI18n().t('global.bibleStudy');
-            } else if (assType === 104) {
-              person.assignmentName = getI18n().t('global.talk');
-            }
-            person.class = varClasses[a].classLabel;
-            dbHistory.push(person);
-            person = {};
-            histID++;
-          }
-
-          fldName = 'ass' + cnAss[b].iAss + '_ass_' + varClasses[a].classLabel;
-          if (typeof appData[i][fldName] !== 'undefined') {
-            person.ID = histID;
-            person.weekOf = appData[i].weekOf;
-            person.weekOfFormatted = dateFormatted;
-            person.studentID = appData[i][fldName];
-            const stuDetails = await dbGetStudentByUid(person.studentID);
-            person.studentName = stuDetails?.person_displayName || '';
-            person.assignmentID = 109;
-            person.assignmentName = getI18n().t('global.assistant');
-            person.class = varClasses[a].classLabel;
-            dbHistory.push(person);
-            person = {};
-            histID++;
-          }
-        }
-      }
+      dbHistory.sort((a, b) => {
+        var dateA = a.weekOf.split('/')[2] + '/' + a.weekOf.split('/')[0] + '/' + a.weekOf.split('/')[1];
+        var dateB = b.weekOf.split('/')[2] + '/' + b.weekOf.split('/')[0] + '/' + b.weekOf.split('/')[1];
+        return dateA < dateB ? 1 : -1;
+      });
     }
-    dbHistory.sort((a, b) => {
-      var dateA = a.weekOf.split('/')[2] + '/' + a.weekOf.split('/')[0] + '/' + a.weekOf.split('/')[1];
-      var dateB = b.weekOf.split('/')[2] + '/' + b.weekOf.split('/')[0] + '/' + b.weekOf.split('/')[1];
-      return dateA < dateB ? 1 : -1;
-    });
-  }
 
-  return dbHistory;
+    return dbHistory;
+  } catch {}
 };
 
 export const dbStudentAssignmentsHistory = async (stuID) => {
@@ -299,6 +442,160 @@ export const dbLastAssignment = async (stuID) => {
     dLast = lastAssignment[0].weekOf;
   }
   return dLast;
+};
+
+export const dbLastChairman = async (stuID) => {
+  const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
+  const lastChairman = appData.filter((data) => (data.assignmentID === 110) & (data.studentID === stuID));
+
+  let dLast;
+  if (lastChairman.length > 0) {
+    dLast = lastChairman[0].weekOf;
+  }
+  return dLast;
+};
+
+export const dbFirstChairman = async (stuID) => {
+  const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
+  const firstChairman = appData.filter((data) => (data.assignmentID === 110) & (data.studentID === stuID));
+
+  let dFirst;
+  if (firstChairman.length > 0) {
+    dFirst = firstChairman[firstChairman.length - 1].weekOf;
+  }
+  return dFirst;
+};
+
+export const dbLastPrayer = async (stuID) => {
+  const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
+  const lastPrayer = appData.filter((data) => (data.assignmentID === 111) & (data.studentID === stuID));
+
+  let dLast;
+  if (lastPrayer.length > 0) {
+    dLast = lastPrayer[0].weekOf;
+  }
+  return dLast;
+};
+
+export const dbFirstPrayer = async (stuID) => {
+  const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
+  const firstPrayer = appData.filter((data) => (data.assignmentID === 111) & (data.studentID === stuID));
+
+  let dFirst;
+  if (firstPrayer.length > 0) {
+    dFirst = firstPrayer[firstPrayer.length - 1].weekOf;
+  }
+  return dFirst;
+};
+
+export const dbLastTGWTalk = async (stuID) => {
+  const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
+  const lastTGWTalk = appData.filter((data) => (data.assignmentID === 112) & (data.studentID === stuID));
+
+  let dLast;
+  if (lastTGWTalk.length > 0) {
+    dLast = lastTGWTalk[0].weekOf;
+  }
+  return dLast;
+};
+
+export const dbFirstTGWTalk = async (stuID) => {
+  const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
+  const firstTGWTalk = appData.filter((data) => (data.assignmentID === 112) & (data.studentID === stuID));
+
+  let dFirst;
+  if (firstTGWTalk.length > 0) {
+    dFirst = firstTGWTalk[firstTGWTalk.length - 1].weekOf;
+  }
+  return dFirst;
+};
+
+export const dbLastTGWGems = async (stuID) => {
+  const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
+  const lastTGWGems = appData.filter((data) => (data.assignmentID === 113) & (data.studentID === stuID));
+
+  let dLast;
+  if (lastTGWGems.length > 0) {
+    dLast = lastTGWGems[0].weekOf;
+  }
+  return dLast;
+};
+
+export const dbFirstTGWGems = async (stuID) => {
+  const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
+  const firstTGWGems = appData.filter((data) => (data.assignmentID === 113) & (data.studentID === stuID));
+
+  let dFirst;
+  if (firstTGWGems.length > 0) {
+    dFirst = firstTGWGems[firstTGWGems.length - 1].weekOf;
+  }
+  return dFirst;
+};
+
+export const dbLastLCPart = async (stuID) => {
+  const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
+  const lastLCPart = appData.filter((data) => (data.assignmentID === 114) & (data.studentID === stuID));
+
+  let dLast;
+  if (lastLCPart.length > 0) {
+    dLast = lastLCPart[0].weekOf;
+  }
+  return dLast;
+};
+
+export const dbFirstLCPart = async (stuID) => {
+  const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
+  const firstLCPart = appData.filter((data) => (data.assignmentID === 114) & (data.studentID === stuID));
+
+  let dFirst;
+  if (firstLCPart.length > 0) {
+    dFirst = firstLCPart[firstLCPart.length - 1].weekOf;
+  }
+  return dFirst;
+};
+
+export const dbLastCBSConductor = async (stuID) => {
+  const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
+  const lastCBSConductor = appData.filter((data) => (data.assignmentID === 115) & (data.studentID === stuID));
+
+  let dLast;
+  if (lastCBSConductor.length > 0) {
+    dLast = lastCBSConductor[0].weekOf;
+  }
+  return dLast;
+};
+
+export const dbFirstCBSConductor = async (stuID) => {
+  const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
+  const firstCBSConductor = appData.filter((data) => (data.assignmentID === 115) & (data.studentID === stuID));
+
+  let dFirst;
+  if (firstCBSConductor.length > 0) {
+    dFirst = firstCBSConductor[firstCBSConductor.length - 1].weekOf;
+  }
+  return dFirst;
+};
+
+export const dbLastCBSReader = async (stuID) => {
+  const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
+  const lastCBSReader = appData.filter((data) => (data.assignmentID === 116) & (data.studentID === stuID));
+
+  let dLast;
+  if (lastCBSReader.length > 0) {
+    dLast = lastCBSReader[0].weekOf;
+  }
+  return dLast;
+};
+
+export const dbFirstCBSReader = async (stuID) => {
+  const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
+  const firstCBSReader = appData.filter((data) => (data.assignmentID === 116) & (data.studentID === stuID));
+
+  let dFirst;
+  if (firstCBSReader.length > 0) {
+    dFirst = firstCBSReader[firstCBSReader.length - 1].weekOf;
+  }
+  return dFirst;
 };
 
 export const dbRefreshStudentHistory = async (varPrev, varNew) => {

@@ -159,7 +159,7 @@ const StudentSelector = (props) => {
       setPickStudents(available);
       setIsLoadingStudent(false);
 
-      var filteredHistory = [];
+      let filteredHistory = [];
       if (
         assID === 3 ||
         assID === 5 ||

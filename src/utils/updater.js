@@ -365,7 +365,7 @@ const updateAssignmentType = async (step) => {
     },
     {
       id_type: 9,
-      code: 109,
+      code: 110,
       maleOnly: true,
       assignable: true,
       type: 'mm',
@@ -375,7 +375,7 @@ const updateAssignmentType = async (step) => {
     },
     {
       id_type: 10,
-      code: 110,
+      code: 111,
       maleOnly: true,
       assignable: true,
       type: 'mm',
@@ -385,7 +385,7 @@ const updateAssignmentType = async (step) => {
     },
     {
       id_type: 11,
-      code: 111,
+      code: 112,
       maleOnly: true,
       assignable: true,
       type: 'tgw',
@@ -395,7 +395,7 @@ const updateAssignmentType = async (step) => {
     },
     {
       id_type: 12,
-      code: 112,
+      code: 113,
       maleOnly: true,
       assignable: true,
       type: 'tgw',
@@ -405,7 +405,7 @@ const updateAssignmentType = async (step) => {
     },
     {
       id_type: 13,
-      code: 113,
+      code: 114,
       maleOnly: true,
       assignable: true,
       type: 'lc',
@@ -415,7 +415,7 @@ const updateAssignmentType = async (step) => {
     },
     {
       id_type: 14,
-      code: 114,
+      code: 115,
       maleOnly: true,
       assignable: true,
       type: 'lc',
@@ -425,7 +425,7 @@ const updateAssignmentType = async (step) => {
     },
     {
       id_type: 15,
-      code: 115,
+      code: 116,
       maleOnly: true,
       assignable: true,
       type: 'lc',

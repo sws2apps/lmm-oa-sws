@@ -86,6 +86,58 @@ const AutofillSchedule = () => {
       if (schedData.noMeeting === false) {
         let students = [];
 
+        // Assign Chairman A
+        students = await dbGetPersonsByAssType(110);
+        if (students.length > 0) {
+          const chairmanA = students[0].person_uid;
+          await dbSaveAss(week, chairmanA, 'chairmanMM_A');
+          setAssigned((prev) => {
+            return prev + 1;
+          });
+        }
+
+        // Assign Chairman B
+        if (class_count === 2 && schedData.week_type === 1) {
+          students = await dbGetPersonsByAssType(110);
+          if (students.length > 0) {
+            const chairmanB = students[0].person_uid;
+            await dbSaveAss(week, chairmanB, 'chairmanMM_B');
+            setAssigned((prev) => {
+              return prev + 1;
+            });
+          }
+        }
+
+        // Opening Prayer
+        students = await dbGetPersonsByAssType(111);
+        if (students.length > 0) {
+          const openingPrayer = students[0].person_uid;
+          await dbSaveAss(week, openingPrayer, 'opening_prayer');
+          setAssigned((prev) => {
+            return prev + 1;
+          });
+        }
+
+        // TGW 10 min Talk
+        students = await dbGetPersonsByAssType(112);
+        if (students.length > 0) {
+          const tgwTalk = students[0].person_uid;
+          await dbSaveAss(week, tgwTalk, 'tgw_talk');
+          setAssigned((prev) => {
+            return prev + 1;
+          });
+        }
+
+        // TGW Spiritual Gems
+        students = await dbGetPersonsByAssType(113);
+        if (students.length > 0) {
+          const tgwGems = students[0].person_uid;
+          await dbSaveAss(week, tgwGems, 'tgw_gems');
+          setAssigned((prev) => {
+            return prev + 1;
+          });
+        }
+
         //Assign Bible Reading A
         students = await dbGetPersonsByAssType(100);
         if (students.length > 0) {
@@ -177,6 +229,61 @@ const AutofillSchedule = () => {
               }
             }
           }
+        }
+
+        // LC Part 1
+        students = await dbGetPersonsByAssType(114);
+        if (students.length > 0) {
+          const lcPart1 = students[0].person_uid;
+          await dbSaveAss(week, lcPart1, 'lc_part1');
+          setAssigned((prev) => {
+            return prev + 1;
+          });
+        }
+
+        // LC Part 2
+        if (schedData.cnLC === 2) {
+          students = await dbGetPersonsByAssType(114);
+          if (students.length > 0) {
+            const lcPart2 = students[0].person_uid;
+            await dbSaveAss(week, lcPart2, 'lc_part2');
+            setAssigned((prev) => {
+              return prev + 1;
+            });
+          }
+        }
+
+        // CBS
+        if (schedData.week_type === 1) {
+          // Conductor
+          students = await dbGetPersonsByAssType(115);
+          if (students.length > 0) {
+            const cbsConductor = students[0].person_uid;
+            await dbSaveAss(week, cbsConductor, 'cbs_conductor');
+            setAssigned((prev) => {
+              return prev + 1;
+            });
+          }
+
+          // Reader
+          students = await dbGetPersonsByAssType(116);
+          if (students.length > 0) {
+            const cbsReader = students[0].person_uid;
+            await dbSaveAss(week, cbsReader, 'cbs_reader');
+            setAssigned((prev) => {
+              return prev + 1;
+            });
+          }
+        }
+
+        // Closing Prayer
+        students = await dbGetPersonsByAssType(111);
+        if (students.length > 0) {
+          const closingPrayer = students[0].person_uid;
+          await dbSaveAss(week, closingPrayer, 'closing_prayer');
+          setAssigned((prev) => {
+            return prev + 1;
+          });
         }
       }
     }

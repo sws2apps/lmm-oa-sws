@@ -88,4 +88,3 @@ export const sortHistoricalDateDesc = (data) => {
 export const formatDateForCompare = (date) => {
   return new Date(date);
 };
-

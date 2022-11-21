@@ -352,6 +352,56 @@ const ScheduleWeekDetails = () => {
       await dbSaveAss(week, studentID, 'ass4_ass_B');
       setAss4B(studentName);
       setIsAss4B(false);
+    } else if (assID === 18) {
+      setIsChairmanA(true);
+      await dbSaveAss(week, studentID, 'chairmanMM_A');
+      setChairmanA(studentName);
+      setIsChairmanA(false);
+    } else if (assID === 19) {
+      setIsChairmanB(true);
+      await dbSaveAss(week, studentID, 'chairmanMM_B');
+      setChairmanB(studentName);
+      setIsChairmanB(false);
+    } else if (assID === 20) {
+      setIsOpeningPrayer(true);
+      await dbSaveAss(week, studentID, 'opening_prayer');
+      setOpeningPrayer(studentName);
+      setIsOpeningPrayer(false);
+    } else if (assID === 21) {
+      setIsTgwTalk(true);
+      await dbSaveAss(week, studentID, 'tgw_talk');
+      setTgwTalk(studentName);
+      setIsTgwTalk(false);
+    } else if (assID === 22) {
+      setIsTgwGems(true);
+      await dbSaveAss(week, studentID, 'tgw_gems');
+      setTgwGems(studentName);
+      setIsTgwGems(false);
+    } else if (assID === 23) {
+      setIsLcPart1(true);
+      await dbSaveAss(week, studentID, 'lc_part1');
+      setLcPart1(studentName);
+      setIsLcPart1(false);
+    } else if (assID === 24) {
+      setIsLcPart2(true);
+      await dbSaveAss(week, studentID, 'lc_part2');
+      setLcPart2(studentName);
+      setIsLcPart2(false);
+    } else if (assID === 25) {
+      setIsCbsCondcutor(true);
+      await dbSaveAss(week, studentID, 'cbs_conductor');
+      setCbsConductor(studentName);
+      setIsCbsCondcutor(false);
+    } else if (assID === 26) {
+      setIsCbsReader(true);
+      await dbSaveAss(week, studentID, 'cbs_reader');
+      setCbsReader(studentName);
+      setIsCbsReader(false);
+    } else if (assID === 27) {
+      setIsClosingPrayer(true);
+      await dbSaveAss(week, studentID, 'closing_prayer');
+      setClosingPrayer(studentName);
+      setIsClosingPrayer(false);
     }
   };
 
@@ -500,8 +550,8 @@ const ScheduleWeekDetails = () => {
                       sx={iconButtonContainer}
                       onClick={() =>
                         loadStudentPicker({
-                          assID: 0,
-                          assType: 100,
+                          assID: 18,
+                          assType: 110,
                           assTypeName: t('global.chairmanMidweekMeeting'),
                           currentStudent: chairmanA,
                         })
@@ -539,8 +589,8 @@ const ScheduleWeekDetails = () => {
                       sx={iconButtonContainer}
                       onClick={() =>
                         loadStudentPicker({
-                          assID: 0,
-                          assType: 100,
+                          assID: 19,
+                          assType: 110,
                           assTypeName: t('global.auxClassCounselor'),
                           currentStudent: chairmanB,
                         })
@@ -579,8 +629,8 @@ const ScheduleWeekDetails = () => {
                     sx={iconButtonContainer}
                     onClick={() =>
                       loadStudentPicker({
-                        assID: 0,
-                        assType: 100,
+                        assID: 20,
+                        assType: 111,
                         assTypeName: t('global.prayerMidweekMeeting'),
                         currentStudent: openingPrayer,
                       })
@@ -633,8 +683,8 @@ const ScheduleWeekDetails = () => {
                     sx={iconButtonContainer}
                     onClick={() =>
                       loadStudentPicker({
-                        assID: 0,
-                        assType: 100,
+                        assID: 21,
+                        assType: 112,
                         assTypeName: t('global.tgwTalk'),
                         currentStudent: tgwTalk,
                       })
@@ -684,8 +734,8 @@ const ScheduleWeekDetails = () => {
                     sx={iconButtonContainer}
                     onClick={() =>
                       loadStudentPicker({
-                        assID: 0,
-                        assType: 100,
+                        assID: 22,
+                        assType: 113,
                         assTypeName: t('global.tgwGems'),
                         currentStudent: tgwGems,
                       })
@@ -928,8 +978,8 @@ const ScheduleWeekDetails = () => {
                     sx={iconButtonContainer}
                     onClick={() =>
                       loadStudentPicker({
-                        assID: 0,
-                        assType: 100,
+                        assID: 23,
+                        assType: 114,
                         assTypeName: t('global.lcPart'),
                         currentStudent: lcPart1,
                       })
@@ -980,8 +1030,8 @@ const ScheduleWeekDetails = () => {
                       sx={iconButtonContainer}
                       onClick={() =>
                         loadStudentPicker({
-                          assID: 0,
-                          assType: 100,
+                          assID: 24,
+                          assType: 114,
                           assTypeName: t('global.lcPart'),
                           currentStudent: lcPart2,
                         })
@@ -1039,8 +1089,8 @@ const ScheduleWeekDetails = () => {
                       sx={iconButtonContainer}
                       onClick={() =>
                         loadStudentPicker({
-                          assID: 0,
-                          assType: 100,
+                          assID: 25,
+                          assType: 115,
                           assTypeName: t('global.cbsConductor'),
                           currentStudent: cbsConductor,
                         })
@@ -1073,8 +1123,8 @@ const ScheduleWeekDetails = () => {
                       sx={iconButtonContainer}
                       onClick={() =>
                         loadStudentPicker({
-                          assID: 1,
-                          assType: 100,
+                          assID: 26,
+                          assType: 116,
                           assTypeName: t('global.cbsReader'),
                           currentStudent: cbsReader,
                         })
@@ -1115,8 +1165,8 @@ const ScheduleWeekDetails = () => {
                     sx={iconButtonContainer}
                     onClick={() =>
                       loadStudentPicker({
-                        assID: 0,
-                        assType: 100,
+                        assID: 27,
+                        assType: 111,
                         assTypeName: t('global.prayerMidweekMeeting'),
                         currentStudent: closingPrayer,
                       })

@@ -1,8 +1,6 @@
 import { promiseGetRecoil } from 'recoil-outside';
 import { classCountState } from '../states/congregation';
-import { dbGetAppSettings } from './dbAppSettings';
-import { dbSaveAss } from './dbAssignment';
-import { dbGetPersonsByAssType, dbGetStudentByUid } from './dbPersons';
+import { dbGetStudentByUid } from './dbPersons';
 import {
   dbGetSourceMaterial,
   dbGetSourceMaterialPocket,
@@ -402,124 +400,6 @@ export const dbGetScheduleDataPocket = async (weekValue) => {
   schedule.week_type_name = await dbGetWeekTypeNamePocket(schedule.week_type);
   schedule.noMeeting = appData.noMeeting || false;
   return schedule;
-};
-
-export const dbAutoFill = async (schedule) => {
-  const allWeeks = await dbGetWeekListBySched(schedule);
-  const settings = await dbGetAppSettings();
-
-  for (let i = 0; i < allWeeks.length; i++) {
-    const weekValue = allWeeks[i].value;
-    const scheduleData = await dbGetScheduleData(weekValue);
-    const sourceData = await dbGetSourceMaterial(weekValue);
-
-    if (scheduleData.noMeeting === false) {
-      //Assign Bible Reading A
-      var students = [];
-      students = await dbGetPersonsByAssType(100);
-      if (students.length > 0) {
-        const stuBReadA = students[0].person_uid;
-        await dbSaveAss(weekValue, stuBReadA, 'bRead_stu_A');
-      }
-
-      //Assign Bible Reading B
-      if (settings.class_count === 2 && scheduleData.week_type === 1) {
-        students = await dbGetPersonsByAssType(100);
-        if (students.length > 0) {
-          const stuBReadB = students[0].person_uid;
-          await dbSaveAss(weekValue, stuBReadB, 'bRead_stu_B');
-        }
-      }
-
-      //Assign AYF Main Student
-      let fldName = '';
-      let fldType = '';
-
-      for (let a = 1; a <= 3; a++) {
-        fldType = 'ass' + a + '_type';
-        const assType = sourceData[fldType];
-
-        //Assign AYF A
-        fldName = 'ass' + a + '_stu_A';
-        students = await dbGetPersonsByAssType(assType);
-        if (assType === 101 || assType === 102 || assType === 103 || assType === 104 || assType === 108) {
-          if (students.length > 0) {
-            const stuA = students[0].person_uid;
-            await dbSaveAss(weekValue, stuA, fldName);
-          }
-        }
-
-        //Assign AYF B
-        if (settings.class_count === 2 && scheduleData.week_type === 1) {
-          fldName = 'ass' + a + '_stu_B';
-          students = await dbGetPersonsByAssType(assType);
-          if (assType === 101 || assType === 102 || assType === 103 || assType === 104 || assType === 108) {
-            if (students.length > 0) {
-              const stuB = students[0].person_uid;
-              await dbSaveAss(weekValue, stuB, fldName);
-            }
-          }
-        }
-      }
-
-      //Assign AYF Assistant
-      for (let a = 1; a <= 3; a++) {
-        fldType = 'ass' + a + '_type';
-        const assType = sourceData[fldType];
-
-        //Assign AYF A Assistant
-        if (assType === 101 || assType === 102 || assType === 103 || assType === 108) {
-          fldName = 'ass' + a + '_ass_A';
-          students = await dbGetPersonsByAssType('isAssistant');
-          if (students.length > 0) {
-            const assA = students[0].person_uid;
-            await dbSaveAss(weekValue, assA, fldName);
-          }
-        }
-
-        //Assign AYF B Assistant
-        if (settings.class_count === 2 && scheduleData.week_type === 1) {
-          if (assType === 101 || assType === 102 || assType === 103 || assType === 108) {
-            fldName = 'ass' + a + '_ass_B';
-            students = await dbGetPersonsByAssType('isAssistant');
-            if (students.length > 0) {
-              const assB = students[0].person_uid;
-              await dbSaveAss(weekValue, assB, fldName);
-            }
-          }
-        }
-      }
-    }
-  }
-};
-
-export const dbDeleteWeekAssignment = async (weekValue) => {
-  //Delete Bible Reading A
-  await dbSaveAss(weekValue, undefined, 'bRead_stu_A');
-
-  //Delete Bible Reading B
-  await dbSaveAss(weekValue, undefined, 'bRead_stu_B');
-
-  //Delete AYF
-  for (let a = 1; a <= 3; a++) {
-    var fldName = '';
-
-    //Delete AYF A
-    fldName = 'ass' + a + '_stu_A';
-    await dbSaveAss(weekValue, undefined, fldName);
-
-    //Delete AYF A Assistant
-    fldName = 'ass' + a + '_ass_A';
-    await dbSaveAss(weekValue, undefined, fldName);
-
-    //Delete AYF B
-    fldName = 'ass' + a + '_stu_B';
-    await dbSaveAss(weekValue, undefined, fldName);
-
-    //Delete AYF B Assistant
-    fldName = 'ass' + a + '_ass_B';
-    await dbSaveAss(weekValue, undefined, fldName);
-  }
 };
 
 export const dbBuildScheduleForShare = async (scheduleIndex) => {

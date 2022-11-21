@@ -78,6 +78,45 @@ const DeleteSchedule = () => {
 
       const schedData = await dbGetScheduleData(week);
 
+      // chairman
+      if (schedData.chairmanMM_A !== '') {
+        await dbSaveAss(week, undefined, 'chairmanMM_A');
+        setDeleted((prev) => {
+          return prev + 1;
+        });
+      }
+
+      if (schedData.chairmanMM_B !== '') {
+        await dbSaveAss(week, undefined, 'chairmanMM_B');
+        setDeleted((prev) => {
+          return prev + 1;
+        });
+      }
+
+      // opening prayer
+      if (schedData.opening_prayer !== '') {
+        await dbSaveAss(week, undefined, 'opening_prayer');
+        setDeleted((prev) => {
+          return prev + 1;
+        });
+      }
+
+      // tgw 10 min talk
+      if (schedData.tgw_talk !== '') {
+        await dbSaveAss(week, undefined, 'tgw_talk');
+        setDeleted((prev) => {
+          return prev + 1;
+        });
+      }
+
+      // tgw spiritual gems
+      if (schedData.tgw_gems !== '') {
+        await dbSaveAss(week, undefined, 'tgw_gems');
+        setDeleted((prev) => {
+          return prev + 1;
+        });
+      }
+
       // bible reading
       if (schedData.bRead_stu_A !== '') {
         await dbSaveAss(week, undefined, 'bRead_stu_A');
@@ -124,6 +163,46 @@ const DeleteSchedule = () => {
             return prev + 1;
           });
         }
+      }
+
+      // lc part 1
+      if (schedData.lc_part1 !== '') {
+        await dbSaveAss(week, undefined, 'lc_part1');
+        setDeleted((prev) => {
+          return prev + 1;
+        });
+      }
+
+      // lc part 2
+      if (schedData.lc_part2 !== '') {
+        await dbSaveAss(week, undefined, 'lc_part2');
+        setDeleted((prev) => {
+          return prev + 1;
+        });
+      }
+
+      // cbs conductor
+      if (schedData.cbs_conductor !== '') {
+        await dbSaveAss(week, undefined, 'cbs_conductor');
+        setDeleted((prev) => {
+          return prev + 1;
+        });
+      }
+
+      // cbs reader
+      if (schedData.cbs_reader !== '') {
+        await dbSaveAss(week, undefined, 'cbs_reader');
+        setDeleted((prev) => {
+          return prev + 1;
+        });
+      }
+
+      // closing prayer
+      if (schedData.closing_prayer !== '') {
+        await dbSaveAss(week, undefined, 'closing_prayer');
+        setDeleted((prev) => {
+          return prev + 1;
+        });
       }
     }
 
