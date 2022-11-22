@@ -59,7 +59,7 @@ const WaitingPage = () => {
   );
 };
 
-const App = () => {
+const App = ({ updatePwa }) => {
   const setVisitorID = useSetRecoilState(visitorIDState);
   const setApiHost = useSetRecoilState(apiHostState);
 
@@ -72,7 +72,7 @@ const App = () => {
 
   const router = createBrowserRouter([
     {
-      element: <Layout />,
+      element: <Layout updatePwa={updatePwa} />,
       children: [
         { path: '/', element: <DashboardMenu /> },
         {

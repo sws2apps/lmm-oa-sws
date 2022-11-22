@@ -24,7 +24,7 @@ import { ImportEPUB, ImportJWOrg } from '../features/sourceMaterial';
 import { fetchNotifications } from '../utils/app';
 import { AppUpdater } from '../features/updater';
 
-const Layout = () => {
+const Layout = ({ updatePwa }) => {
   let location = useLocation();
 
   const { enabledInstall, installPwa, isLoading } = usePwa2();
@@ -47,7 +47,7 @@ const Layout = () => {
   return (
     <RootModal>
       <NavBar enabledInstall={enabledInstall} isLoading={isLoading} installPwa={installPwa} />
-      <AppUpdater />
+      <AppUpdater updatePwa={updatePwa} enabledInstall={enabledInstall} />
 
       <Box sx={{ padding: '20px' }}>
         <UserAutoLogin />

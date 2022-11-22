@@ -10,7 +10,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && workbox generateSW workbox.config.cjs",
-    "preview": "vite preview"
+    "preview": "serve -l 5000 -s dist",
+    "test": "cypress run"
   },
   "eslintConfig": {
     "extends": [
@@ -60,6 +61,7 @@
     "cypress": "^10.10.0",
     "eslint": "^8.25.0",
     "eslint-config-react-app": "^7.0.1",
+    "serve": "^14.1.2",
     "vite": "^3.1.7",
     "vite-plugin-eslint": "^1.8.1"
   }
