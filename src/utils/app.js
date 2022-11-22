@@ -12,6 +12,7 @@ import {
   congNumberState,
   liveClassState,
   meetingDayState,
+  meetingTimeState,
   usernameState,
 } from '../states/congregation';
 import { apiHostState, appLangState, appNotificationsState, isOnlineState } from '../states/main';
@@ -22,7 +23,8 @@ export const loadApp = async () => {
   const I18n = getI18n();
 
   await initAppDb();
-  let { username, cong_number, cong_name, class_count, meeting_day, liveEventClass } = await dbGetAppSettings();
+  let { username, cong_number, cong_name, class_count, meeting_day, meeting_time, liveEventClass } =
+    await dbGetAppSettings();
 
   const app_lang = localStorage.getItem('app_lang') || 'e';
 
@@ -33,6 +35,7 @@ export const loadApp = async () => {
   await promiseSetRecoil(congNumberState, cong_number || '');
   await promiseSetRecoil(classCountState, class_count || 1);
   await promiseSetRecoil(meetingDayState, meeting_day || 3);
+  await promiseSetRecoil(meetingTimeState, meeting_time || new Date(Date.now()));
   await promiseSetRecoil(appLangState, app_lang || 'e');
   await promiseSetRecoil(liveClassState, liveEventClass || false);
 

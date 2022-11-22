@@ -142,6 +142,7 @@
   "global.midweekMeeting": "Midweek Meeting",
   "global.cbs": "Congregation Bible Study",
   "global.song": "Song",
+  "global.time": "Time",
 
   "startup.welcomeTitle": "Welcome to LMM-OA",
   "startup.welcomeDescription": "LMM-OA (or Life and Ministry Meeting Overseer Assistant) is an application designed for the Life and Ministry Meeting Overseer.",
@@ -332,6 +333,11 @@
 
   "scheduleTemplate.studentsAssignment": "Students Assigments",
   "scheduleTemplate.studentAssistant": "Student/Assistant:",
+  "scheduleTemplate.openingComments": "Opening Comments",
+  "scheduleTemplate.concludingComments": "Concluding Comments",
+  "scheduleTemplate.coTalk": "Talk given by Circuit Overseer",
+  "scheduleTemplate.cbsConductor": "Conductor",
+  "scheduleTemplate.cbsReader": "Reader",
 
   "settings.aboutCongregation": "ABOUT CONGREGATION",
   "settings.blankRequired": "Please provide input",
@@ -406,7 +412,7 @@
   "administration.roleLMMO": "Life and Ministry Meeting Overseer",
   "administration.roleLMMOAssistant": "Life and Ministry Meeting Overseer - Assistant",
 
-  "about.description": "LMM-OA (Life and Ministry Meeting Overseer Assistant) is an application to coordinate the schedule for Midweek Meeting.",
+  "about.description": "This application was developed to be used by the Life and Ministry Meeting Overseer to schedule the Midweek Meeting for Jehovah’s Witnesses.",
 
   "dashboard.persons": "Persons",
   "dashboard.personAdd": "Add Person",

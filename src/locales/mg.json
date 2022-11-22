@@ -47,7 +47,7 @@
   "global.shortDateTimeFormat": "dd/mm/yyyy h:MM TT",
   "global.treasuresPart": "Harena avy ao Amin’ny Tenin’Andriamanitra",
   "global.applyFieldMinistryPart": "Fampiofanana Amin’ny Fanompoana",
-  "global.livingPart": "Fiainantsika Kristianina",
+  "global.livingPart": "Ny Fiainantsika Kristianina",
   "global.bibleReadingText": "Famakiana Baiboly (4 min.)",
   "global.name": "Anarana",
   "global.displayName": "Fanafohezana",
@@ -143,6 +143,7 @@
   "global.midweekMeeting": "Fivoriana Andavanandro",
   "global.cbs": "Fianarana Baiboly Ataon’ny Fiangonana",
   "global.song": "Hira",
+  "global.time": "Ora",
 
   "startup.welcomeTitle": "Tongasoa eto amin’ny LMM-OA",
   "startup.welcomeDescription": "Programa natao ho ampiasain’ny Mpiandraikitra ny Fivoriana Momba ny Fiainantsika sy ny Fanompoana ny LMM-OA (na Life and Ministry Meeting Overseer Assistant).",
@@ -333,6 +334,11 @@
 
   "scheduleTemplate.studentsAssignment": "Anjaran’ny Mpianatra",
   "scheduleTemplate.studentAssistant": "Mpianatra/Mpanampy:",
+  "scheduleTemplate.openingComments": "Teny Fampidirana",
+  "scheduleTemplate.concludingComments": "Teny Famaranana",
+  "scheduleTemplate.coTalk": "Lahateny ataon’ny Mpiandraikitra ny Faritra",
+  "scheduleTemplate.cbsConductor": "Mpitarika",
+  "scheduleTemplate.cbsReader": "Mpamaky",
 
   "settings.aboutCongregation": "MOMBAMOMBA NY FIANGONANA",
   "settings.blankRequired": "Mila fenoina",
@@ -407,7 +413,7 @@
   "administration.roleLMMO": "Mpiandraikitra ny Fivoriana Momba ny Fiainanantsika sy ny Fanompoana",
   "administration.roleLMMOAssistant": "Mpiandraikitra ny Fivoriana Momba ny Fiainanantsika sy ny Fanompoana - Mpanampy",
 
-  "about.description": "Programa fandaminana ny fandaharam-pivoriana andavanandro ny LMM-OA (Life and Ministry Meeting Overseer Assistant).",
+  "about.description": "Namboarina mba ho ampiasain’ny Mpiandraikitra ny Fivoriana Momba ny Fiainantsika sy ny Fanompoana ity programa ity mba handaminana ny fandaharam-pivoriana andavanandro, ho an’ny Vavolombelon’i Jehovah",
 
   "dashboard.persons": "Olona ao Amin’ny Fiangonana",
   "dashboard.personAdd": "Hanampy Olona",

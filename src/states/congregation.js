@@ -40,6 +40,11 @@ export const classCountState = atom({
   default: 1,
 });
 
+export const meetingTimeState = atom({
+  key: 'meetingTime',
+  default: new Date(Date.now()),
+});
+
 export const liveClassState = atom({
   key: 'liveClass',
   default: false,

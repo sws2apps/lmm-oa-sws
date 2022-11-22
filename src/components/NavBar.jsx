@@ -99,6 +99,9 @@ const NavBar = (props) => {
   const mdUp = useMediaQuery(theme.breakpoints.up('md'), {
     noSsr: true,
   });
+  const lgUp = useMediaQuery(theme.breakpoints.up('lg'), {
+    noSsr: true,
+  });
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [anchorPopoverEl, setAnchorPopoverEl] = useState(null);
@@ -164,7 +167,7 @@ const NavBar = (props) => {
   const handleGoSettings = () => {
     handleClose();
     navigate('/settings');
-  }
+  };
 
   return (
     <>
@@ -213,7 +216,7 @@ const NavBar = (props) => {
                 }}
               />
               <Typography noWrap sx={{ fontSize: '18px' }}>
-                {mdUp ? 'Life and Ministry Meeting Overseer Assistant' : 'LMM-OA'}
+                {lgUp ? 'Life and Ministry Meeting Overseer Assistant' : 'LMM-OA'}
               </Typography>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: '20px' }}>

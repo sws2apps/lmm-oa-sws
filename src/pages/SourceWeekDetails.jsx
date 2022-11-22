@@ -97,7 +97,7 @@ const SourceWeekDetails = () => {
   const handleSaveSource = async () => {
     const obj = {};
     obj.weekOf = weekOf;
-    obj.weekData_src = WeekDate;
+    obj.weekDate_src = WeekDate;
     obj.weeklyBibleReading_src = WeeklyBibleReading;
     obj.songFirst_src = SongFirst;
     obj.tgwTalk_src = TGWTalk;

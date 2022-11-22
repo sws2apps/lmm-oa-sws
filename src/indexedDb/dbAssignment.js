@@ -9,6 +9,7 @@ import appDb from './mainDb';
 import { shortDateFormatState } from '../states/main';
 import { assTypeLocalState } from '../states/sourceMaterial';
 import { allStudentsState, filteredStudentsState, studentsAssignmentHistoryState } from '../states/persons';
+import { meetingTimeState } from '../states/congregation';
 
 export const dbGetAssType = async (assType, appLang) => {
   var srcAssType = '';
@@ -871,17 +872,120 @@ export const dbGetS89ItemData = async (week, assName, classLabel) => {
 export const dbGetScheduleForPrint = async (scheduleName) => {
   var data = [];
   const allWeeks = await dbGetWeekListBySched(scheduleName);
+  const meetingStart = dateFormat(await promiseGetRecoil(meetingTimeState), 'h:MM');
+
   for (let i = 0; i < allWeeks.length; i++) {
     const week = allWeeks[i].value;
     const scheduleData = await dbGetScheduleData(week);
     const sourceData = await dbGetSourceMaterial(week);
+
+    // pgm start
+    const time = {};
+    time.pgmStart = meetingStart;
+
+    // opening comments
+    time.openingComments = addMinutes(time.pgmStart, 5);
+
+    // tgw talk
+    time.tgwTalk = addMinutes(time.openingComments, 1);
+
+    // tgw gems
+    time.tgwGems = addMinutes(time.tgwTalk, 10);
+
+    // bible reading
+    time.bibleReading = addMinutes(time.tgwGems, 10);
+
+    // ayf 1
+    time.ayf1 = addMinutes(time.bibleReading, 5);
+
+    // ayf 2
+    if (sourceData.ass1_type === 105 || sourceData.ass1_type === 106 || sourceData.ass1_type === 107) {
+      time.ayf2 = addMinutes(time.ayf1, +sourceData.ass1_time);
+    } else {
+      time.ayf2 = addMinutes(time.ayf1, +sourceData.ass1_time + 1);
+    }
+
+    // ayf 3
+    if (sourceData.ass2_type === 105 || sourceData.ass2_type === 106 || sourceData.ass2_type === 107) {
+      time.ayf3 = addMinutes(time.ayf2, +sourceData.ass2_time);
+    } else {
+      time.ayf3 = addMinutes(time.ayf2, +sourceData.ass2_time + 1);
+    }
+
+    // ayf 4
+    if (sourceData.ass3_type === 105 || sourceData.ass3_type === 106 || sourceData.ass3_type === 107) {
+      time.ayf4 = addMinutes(time.ayf3, +sourceData.ass3_time);
+    } else {
+      time.ayf4 = addMinutes(time.ayf3, +sourceData.ass3_time + 1);
+    }
+
+    // middle song
+    if (sourceData.ass4_time !== '') {
+      if (sourceData.ass4_type === 105 || sourceData.ass4_type === 106 || sourceData.ass4_type === 107) {
+        time.middleSong = addMinutes(time.ayf4, +sourceData.ass4_time);
+      } else {
+        time.middleSong = addMinutes(time.ayf4, +sourceData.ass4_time + 1);
+      }
+    } else {
+      time.middleSong = time.ayf4;
+    }
+
+    // lc part 1
+    time.lc1 = addMinutes(time.middleSong, 5);
+
+    // lc part 2
+    time.lc2 = addMinutes(time.lc1, sourceData.lcPart1_time);
+
+    if (scheduleData.week_type === 1) {
+      // normal - cbs
+      if (sourceData.lcCount === 1) {
+        time.cbs = time.lc2;
+      } else {
+        time.cbs = addMinutes(time.lc2, sourceData.lcPart2_time);
+      }
+
+      // normal - concluding comments
+      time.concludingComments = addMinutes(time.cbs, 30);
+
+      // normal - pgm end
+      time.pgmEnd = addMinutes(time.concludingComments, 3);
+    } else {
+      // co - concluding comments
+      if (sourceData.lcCount === 1) {
+        time.concludingComments = time.lc2;
+      } else {
+        time.concludingComments = addMinutes(time.lc2, sourceData.lcPart2_time);
+      }
+
+      // co - talk
+      time.coTalk = addMinutes(time.concludingComments, 3);
+
+      // co - pgm end
+      time.pgmEnd = addMinutes(time.coTalk, 30);
+    }
+
     var obj = {};
     obj.week = week;
     obj.scheduleData = scheduleData;
-    obj.sourceData = sourceData;
+    obj.sourceData = { ...sourceData, ...time };
     data.push(obj);
   }
   return data;
+};
+
+const addMinutes = (prev, min) => {
+  const split = prev.split(':');
+  const hour = +split[0];
+  const minute = +split[1];
+
+  let newHour = hour;
+  let newMinute = minute + min;
+  if (newMinute >= 60) {
+    newHour = hour + 1;
+    newMinute = newMinute - 60;
+  }
+
+  return `${newHour}:${newMinute < 10 ? `0${newMinute}` : newMinute}`;
 };
 
 export const dbBuildNewAssignmentsFormat = async () => {};

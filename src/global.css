@@ -104,6 +104,10 @@
   color: #a56803;
 }
 
+.ulSchedule li.lc::before {
+  color: #942926;
+}
+
 .student-part-duration {
   margin: 6px;
   font-size: 11px;

@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
+import usePwa2 from 'use-pwa2/dist/index.js';
 import Box from '@mui/material/Box';
 import About from '../features/about';
 import RootModal from './RootModal';
@@ -25,6 +26,8 @@ import { fetchNotifications } from '../utils/app';
 const Layout = () => {
   let location = useLocation();
 
+  const { enabledInstall, installPwa, isLoading } = usePwa2();
+
   const isAppLoad = useRecoilValue(isAppLoadState);
   const isOpenAbout = useRecoilValue(isAboutOpenState);
   const isOpenWhatsNew = useRecoilValue(isWhatsNewOpenState);
@@ -42,7 +45,7 @@ const Layout = () => {
 
   return (
     <RootModal>
-      <NavBar />
+      <NavBar enabledInstall={enabledInstall} isLoading={isLoading} installPwa={installPwa} />
       <Box sx={{ padding: '20px' }}>
         <UserAutoLogin />
 

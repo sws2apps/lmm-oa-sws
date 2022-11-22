@@ -157,6 +157,10 @@ appDb.version(36).stores({
 appDb.version(37).stores({
   src: '&weekOf, bibleReading_src, ass1_type, ass1_time, ass1_src, ass2_type, ass2_time, ass2_src, ass3_type, ass3_time, ass3_src, ass4_type, ass4_time, ass4_src, ayfCount, weekDate_src, weeklyBibleReading_src, songFirst_src, tgwTalk_src, songMiddle_src, lcCount, lcPart1_time, lcPart1_src, lcPart2_time, lcPart2_src, cbs_src, songConclude_src',
 });
+appDb.version(38).stores({
+  app_settings:
+    '++id, username, cong_number, cong_name, class_count, meeting_day, meeting_time, userPass, isLoggedOut, isScheduleConverted, isCongVerified, isAssignmentsConverted',
+});
 
 appDb.on('populate', function () {
   appDb.app_settings.add({
