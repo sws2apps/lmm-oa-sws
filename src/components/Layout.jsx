@@ -18,10 +18,11 @@ import {
 import Startup from '../features/startup';
 import NavBar from './NavBar';
 import { dlgAssDeleteOpenState, dlgAutoFillOpenState, isPublishOpenState } from '../states/schedule';
-import { AutofillSchedule, DeleteSchedule, SchedulePublish } from '../features/schedules/';
+import { AutofillSchedule, DeleteSchedule, SchedulePublish } from '../features/schedules';
 import { isImportEPUBState, isImportJWOrgState } from '../states/sourceMaterial';
-import { ImportEPUB, ImportJWOrg } from '../features/sourceMaterial/';
+import { ImportEPUB, ImportJWOrg } from '../features/sourceMaterial';
 import { fetchNotifications } from '../utils/app';
+import { AppUpdater } from '../features/updater';
 
 const Layout = () => {
   let location = useLocation();
@@ -46,6 +47,8 @@ const Layout = () => {
   return (
     <RootModal>
       <NavBar enabledInstall={enabledInstall} isLoading={isLoading} installPwa={installPwa} />
+      <AppUpdater />
+
       <Box sx={{ padding: '20px' }}>
         <UserAutoLogin />
 

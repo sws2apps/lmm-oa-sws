@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && workbox generateSW workbox.config.cjs",
     "preview": "vite preview"
   },
   "eslintConfig": {
