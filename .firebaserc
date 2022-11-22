@@ -1,7 +1,7 @@
 {
   "projects": {
-    "default": "st-ro-sws",
-    "production": "st-ro-sws"
+    "production": "lmm-oa-sws",
+    "default": "lmm-oa-sws"
   },
   "targets": {}
 }
