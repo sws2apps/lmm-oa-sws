@@ -25,7 +25,6 @@ const S140 = () => {
   const monthNames = useRecoilValue(monthNamesState);
 
   const [data, setData] = useState([]);
-  const [month, setMonth] = useState('');
 
   const savePDF = () => {
     const element = document.getElementById('schedule_template');
@@ -42,12 +41,9 @@ const S140 = () => {
   useEffect(() => {
     const getData = async () => {
       setRootModalOpen(true);
-      const month = currentSchedule.value.split('/')[0];
-
-      const monthName = monthNames[+month - 1];
-      setMonth(monthName);
 
       const data = await dbGetScheduleForPrint(currentSchedule.value);
+      console.log(data);
       setData(data);
       setRootModalOpen(false);
     };
@@ -107,12 +103,10 @@ const S140 = () => {
                     color: 'black',
                   }}
                 >
-                  {t('scheduleTemplate.studentsAssignment')}
+                  {t('schedule.midweekMeetingPrint')}
                 </Typography>
               </Box>
               {data.map((weekItem) => {
-                const dateV = weekItem.week.split('/')[1] + ' ' + month.toUpperCase();
-
                 return (
                   <Box key={weekItem.week} sx={{ marginBottom: '15px' }}>
                     <Typography
@@ -121,9 +115,10 @@ const S140 = () => {
                         fontSize: '13px',
                         color: 'black',
                         marginBottom: '5px',
+                        textTransform: 'uppercase',
                       }}
                     >
-                      {dateV}
+                      {weekItem.sourceData.weekDate_src}
                     </Typography>
                     {weekItem.scheduleData.noMeeting && (
                       <Typography
@@ -164,6 +159,7 @@ const S140 = () => {
                               backgroundColor: '#656164',
                               width: '360px',
                               lineHeight: '20px',
+                              textTransform: 'uppercase',
                             }}
                           >
                             {t('global.treasuresPart')}
@@ -271,6 +267,7 @@ const S140 = () => {
                               backgroundColor: '#a56803',
                               width: '360px',
                               lineHeight: '20px',
+                              textTransform: 'uppercase',
                             }}
                           >
                             {t('global.applyFieldMinistryPart')}

@@ -330,7 +330,6 @@ const AutofillSchedule = () => {
 
         for (let z = 0; z < shuffledActions.length; z++) {
           const action = shuffledActions[z];
-          console.log(action.name);
           await action.run();
         }
       }
