@@ -42,7 +42,7 @@ jobs:
         id: check_build
         uses: andstor/file-existence-action@f02338908d150e00a4b8bebc2dad18bd9e5229b0
         with:
-          files: 'build'
+          files: 'dist'
 
       - name: Deploy to Firebase
         if: ${{ steps.check_build.outputs.files_exists == 'true' }}
