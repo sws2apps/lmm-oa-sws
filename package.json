@@ -27,7 +27,7 @@
     "@mui/material": "^5.10.16",
     "@mui/x-date-pickers": "^5.0.9",
     "@sws2apps/react-sw-helper": "^1.9.0",
-    "@tanstack/react-query": "^4.18.0",
+    "@tanstack/react-query": "^4.19.0",
     "date-fns": "^2.29.3",
     "dateformat": "^5.0.3",
     "dexie": "^3.2.2",
@@ -43,7 +43,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-i18next": "^12.0.0",
-    "react-router-dom": "^6.4.3",
+    "react-router-dom": "^6.4.4",
     "recoil": "^0.7.6",
     "recoil-outside": "^0.1.1",
     "simple-crypto-js": "^3.0.1",
@@ -52,7 +52,7 @@
     "workbox-cli": "^6.5.4"
   },
   "devDependencies": {
-    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/changelog": "^6.0.2",
     "@semantic-release/exec": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@types/react": "^18.0.25",
