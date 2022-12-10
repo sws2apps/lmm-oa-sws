@@ -175,7 +175,7 @@
   "startup.indexedDB": "Mampiasa <strong>IndexedDB</strong> izahay mba hitehirizana ny rakitra ampiasain’ny CPE, raha liana te hahafantatra bebe kokoa momba an’io teknolojia io ianao.",
   "startup.clearBrowserData": "Tadidio fa rehefa mamafa tanteraka ny lisitr’ireo zavatra nojerenao tamin’ny internet ao amin’ny programa ampiasainao ianao, dia voafafa miaraka amin’izany koa ny rakitra ampiasain’ny CPE. Tsy misy fomba hamerenana an’izany intsony, raha tsy nanamboatra rakitra fiandry ianao.",
   "startup.appPrivacy": "Ahoana no hiarovan’ny CPE ny tsiambaratelonao?",
-  "startup.dataCollection": "Rehefa tapa-kevitra ny hampiasa ny programa sws2apps ianao, dia manome alalana anay mba haka an’ireto fanazavana ireto: ny anaranao sy ny adiresy email ampiasainao. Mba hahafahanay manamarina tsara ny fangatahana rehetra voarainay koa, dia maka ny adiresy IP sy ny tsipiriany hafa momba ny fitaovana ampiasainao izahay.",
+  "startup.dataCollection": "Rehefa tapa-kevitra ny hampiasa ny programa CPE ianao, dia manome alalana anay mba haka an’ireto fanazavana ireto: ny anaranao sy ny adiresy email ampiasainao. Mba hahafahanay manamarina tsara ny fangatahana rehetra voarainay koa, dia maka ny adiresy IP sy ny tsipiriany hafa momba ny fitaovana ampiasainao izahay.",
   "startup.adBlock": "Tsy misy orinasa avelanay hampiasa ny fanazavana aty aminay, mba handefasana dokambarotra manokana ho anao. Tsy zarainay amin’iza n’iza koa ny fanazavana aty aminay na noho ny antony inona izany na inona.",
   "startup.nextStep": "Dingana manaraka",
   "startup.readComplete": "Voavakiko daholo ireo fanazavana ireo, ary hanohy hanamboatra ny kaontiko",
@@ -404,7 +404,7 @@
   "settings.lastSeen": "Nampiasaina farany tamin’ny: {{ last_seen }}",
   "settings.currentSession": "Ampiasainao izao",
 
-  "administration.heading": "Fandrindrana ny Fampiasana Programa sws2apps",
+  "administration.heading": "Fandrindrana ny Fampiasana Programa CPE",
   "administration.vipUsersHeading": "RAHALAHY VOATENDRY SY ANDRAIKITRA",
   "administration.notConnected": "Efa ela tsy niditra",
   "administration.removeBrother": "Esorina ao amin’ny fiangonana",
@@ -437,7 +437,7 @@
   "dashboard.sourceImportEPUB": "Hampiditra Avy Amin’ny EPUB",
   "dashboard.sourceImportJw": "Haka Any Amin’ny JW.ORG",
   "dashboard.administration": "Fandrindrana",
-  "dashboard.manageAccessToApps": "Handrindra ny Fampiasana Programa sws2apps",
+  "dashboard.manageAccessToApps": "Handrindra ny Fampiasana Programa CPE",
   "dashboard.addNewAppointed": "Hampiditra Rahalahy Vaovao",
 
   "assignments.setup": "Ataovy azo antoka aloha hoe efa misy firaketana momba anao ao amin’ny Olona ao Amin’ny Fiangonana. Tsindrio avy eo ilay hoe Hanamboatra.",
