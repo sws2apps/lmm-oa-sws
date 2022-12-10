@@ -17,7 +17,17 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import ScheduleIcon from '@mui/icons-material/Schedule';
 import MenuCard from '../components/MenuCard';
 import { congAccountConnectedState, isAdminCongState } from '../states/congregation';
+<<<<<<< HEAD
 import { appLangState, backupDbOpenState, isMyAssignmentOpenState, isOnlineState, restoreDbOpenState } from '../states/main';
+=======
+import {
+  appLangState,
+  backupDbOpenState,
+  isMyAssignmentOpenState,
+  isOnlineState,
+  restoreDbOpenState,
+} from '../states/main';
+>>>>>>> 2b90d5d76fec513c25fc161ddb2bd9b787a3a0c4
 import { dbAddManualSource } from '../indexedDb/dbSourceMaterial';
 import { appMessageState, appSeverityState, appSnackOpenState } from '../states/notification';
 import { epubFileState, isImportEPUBState, isImportJWOrgState } from '../states/sourceMaterial';
@@ -42,8 +52,13 @@ const DashboardMenu = () => {
   const isOnline = useRecoilValue(isOnlineState);
 
   const handleOpenMyAssignment = () => {
+<<<<<<< HEAD
     setMyAssignmentsOpen(true)
   }
+=======
+    setMyAssignmentsOpen(true);
+  };
+>>>>>>> 2b90d5d76fec513c25fc161ddb2bd9b787a3a0c4
 
   const handleWeekAdd = async () => {
     await dbAddManualSource();
@@ -201,8 +216,8 @@ const DashboardMenu = () => {
 
   return (
     <Box sx={{ padding: '20px', display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
-      {dashboardMenus.map((menu, index) => (
-        <MenuCard key={`menu-item-${index}`} menu={menu} />
+      {dashboardMenus.map((menu) => (
+        <MenuCard key={`menu-item-${menu.title}`} menu={menu} />
       ))}
     </Box>
   );
