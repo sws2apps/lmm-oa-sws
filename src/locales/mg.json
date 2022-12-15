@@ -405,7 +405,8 @@
   "settings.currentSession": "Ampiasainao izao",
 
   "administration.heading": "Fandrindrana ny Fampiasana Programa CPE",
-  "administration.vipUsersHeading": "RAHALAHY VOATENDRY SY ANDRAIKITRA",
+  "administration.vipUsersHeading": "Rahalahy Vita Batisa",
+  "administration.pocketUsersHeading": "Mpitory & Mpianatra Amin’ny Fivoriana Andavanandro",
   "administration.notConnected": "Efa ela tsy niditra",
   "administration.removeBrother": "Esorina ao amin’ny fiangonana",
   "administration.removeBrotherDesc": "Tianao ho esorina ao amin’ny fiangonana ve ny rahalahy {{ name }}? Tsy ho afaka hiditra ao amin’ny kaontin’ny fiangonanareo intsony izy, raha vao miditra ao amin’ny kaontiny ao amin’ny internet.",
@@ -417,6 +418,7 @@
   "administration.roleAdmin": "Mpandrindra ny kaonty",
   "administration.roleLMMO": "Mpiandraikitra ny Fivoriana Momba ny Fiainanantsika sy ny Fanompoana",
   "administration.roleLMMOAssistant": "Mpiandraikitra ny Fivoriana Momba ny Fiainanantsika sy ny Fanompoana - Mpanampy",
+  "administration.roleViewMeetingSchedule": "Mijery Fandaharam-pivoriana",
 
   "about.description": "Namboarina mba ho ampiasain’ny Mpiandraikitra ny Fivoriana Momba ny Fiainantsika sy ny Fanompoana ity programa ity mba handaminana ny fandaharam-pivoriana andavanandro, ho an’ny Vavolombelon’i Jehovah",
 

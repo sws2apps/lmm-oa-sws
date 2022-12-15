@@ -404,7 +404,8 @@
   "settings.currentSession": "Current session",
 
   "administration.heading": "Manage Access to CPE",
-  "administration.vipUsersHeading": "APPOINTED BROTHERS AND THEIR ROLES",
+  "administration.vipUsersHeading": "Baptized Brothers",
+  "administration.pocketUsersHeading": "Publishers & Students for Midweek Meeting",
   "administration.notConnected": "Not connected recently",
   "administration.removeBrother": "Remove brother from congregation",
   "administration.removeBrotherDesc": "Are you sure to remove brother {{ name }} from the congregation? He will no longer have access to your congregation when he connects to his online account.",
@@ -416,6 +417,7 @@
   "administration.roleAdmin": "Administrator",
   "administration.roleLMMO": "Life and Ministry Meeting Overseer",
   "administration.roleLMMOAssistant": "Life and Ministry Meeting Overseer - Assistant",
+  "administration.roleViewMeetingSchedule": "View Meeting Schedule",
 
   "about.description": "This application was developed to be used by the Life and Ministry Meeting Overseer to schedule the Midweek Meeting for Jehovah’s Witnesses.",
 
