@@ -3,17 +3,12 @@ import { getI18n } from 'react-i18next';
 
 export const isLightThemeState = atom({
   key: 'isLightTheme',
-  default: localStorage.getItem('theme') === 'dark' ? false : true || true,
+  default: localStorage.getItem('theme') ? (localStorage.getItem('theme') === 'dark' ? false : true) : true,
 });
 
 export const offlineOverrideState = atom({
   key: 'offlineOverride',
   default: false,
-});
-
-export const settingsState = atom({
-  key: 'appSettings',
-  default: {},
 });
 
 export const isAppLoadState = atom({
@@ -314,4 +309,24 @@ export const restoreDbOpenState = atom({
 export const userIDState = atom({
   key: 'userID',
   default: '',
+});
+
+export const isReEnrollMFAState = atom({
+  key: 'isReEnrollMFA',
+  default: false,
+});
+
+export const userLocalUidState = atom({
+  key: 'userLocalUid',
+  default: '',
+});
+
+export const isMyAssignmentOpenState = atom({
+  key: 'isMyAssignmentOpen',
+  default: false,
+});
+
+export const refreshMyAssignmentsState = atom({
+  key: 'refreshMyAssignments',
+  default: false,
 });

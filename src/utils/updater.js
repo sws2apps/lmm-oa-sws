@@ -36,10 +36,10 @@ export const runUpdater = async () => {
 const updateScheduleToId = async (step) => {
   let appSettings = await dbGetAppSettings();
   if (!appSettings.isScheduleConverted) {
-    var scheduleData = await appDb.table('sched_MM').toArray();
+    const scheduleData = await appDb.table('sched_MM').toArray();
 
     let a = step / scheduleData.length;
-    for (let c = 0; i < scheduleData.length; c++) {
+    for (let c = 0; c < scheduleData.length; c++) {
       const schedule = scheduleData[c];
       if (schedule.bRead_stu_A !== undefined) {
         const uid = await dbGetStudentUidById(schedule.bRead_stu_A);
@@ -92,7 +92,7 @@ const updateScheduleToId = async (step) => {
 
 const removeOutdatedSettings = async (step) => {
   let appSettings = await dbGetAppSettings();
-  appSettings = await dbGetAppSettings();
+
   if (appSettings.crd) {
     delete appSettings.crd;
     await dbUpdateAppSettings({ ...appSettings }, true);
@@ -243,6 +243,7 @@ const updateAssignmentType = async (step) => {
   let rvVideoObj = {};
   let otherObj = {};
   let memorialObj = {};
+  let memorialVideoObj = {};
   let chairmanMMObj = {};
   let prayerMMObj = {};
   let tgwTalkObj = {};
@@ -261,6 +262,9 @@ const updateAssignmentType = async (step) => {
     icVideoObj[lang.code.toUpperCase()] = getI18n().getDataByLanguage(lang.code).translation['global.initialCallVideo'];
     rvVideoObj[lang.code.toUpperCase()] = getI18n().getDataByLanguage(lang.code).translation['global.returnVisitVideo'];
     memorialObj[lang.code.toUpperCase()] = getI18n().getDataByLanguage(lang.code).translation['global.memorialInvite'];
+    memorialVideoObj[lang.code.toUpperCase()] = getI18n().getDataByLanguage(lang.code).translation[
+      'global.memorialInviteVideo'
+    ];
     chairmanMMObj[lang.code.toUpperCase()] = getI18n().getDataByLanguage(lang.code).translation[
       'global.chairmanMidweekMeeting'
     ];
@@ -431,6 +435,16 @@ const updateAssignmentType = async (step) => {
       type: 'lc',
       ass_type_name: {
         ...cbsReaderObj,
+      },
+    },
+    {
+      id_type: 21,
+      code: 117,
+      linkTo: 105,
+      assignable: false,
+      type: 'ayf',
+      ass_type_name: {
+        ...memorialVideoObj,
       },
     },
   ]);

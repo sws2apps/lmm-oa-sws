@@ -66,13 +66,13 @@ const StudentSelector = (props) => {
   const [isLoadingAssistantHistory, setIsLoadingAssistantHistory] = useState(true);
   const [isLoadingAssHistory, setIsLoadingAssHistory] = useState(true);
 
-  const handleSelectStudent = (selectedStudent) => {
-    setSelectedStudent(selectedStudent.innerText);
-    setSelectedStuID(selectedStudent.dataset.personId);
+  const handleSelectStudent = (value) => {
+    setSelectedStudent(value.innerText);
+    setSelectedStuID(value.dataset.personId);
   };
 
   const handleAssignStudent = () => {
-    var obj = {};
+    const obj = {};
     obj.assID = assID;
     obj.assType = assType;
     obj.studentId = selectedStuID;
@@ -105,7 +105,7 @@ const StudentSelector = (props) => {
   useEffect(() => {
     let isSubscribed = true;
     const loadStudents = async () => {
-      var students = [];
+      let students = [];
       if (
         assID === 3 ||
         assID === 5 ||

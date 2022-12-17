@@ -1,11 +1,10 @@
-import { lazy, Suspense, useEffect, useState } from 'react';
+import { lazy, useEffect, useState } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import FingerprintJS from '@fingerprintjs/fingerprintjs-pro';
 import CssBaseline from '@mui/material/CssBaseline';
-import CircularProgress from '@mui/material/CircularProgress';
 import { apiHostState, isLightThemeState, isOnlineState, visitorIDState } from './states/main';
 import { InternetChecker } from './features/internetChecker';
 import { appSnackOpenState } from './states/notification';
@@ -16,6 +15,7 @@ import PrivateRoot from './components/PrivateRoot';
 import { isAdminCongState } from './states/congregation';
 import WeeklyAssignments from './pages/WeeklyAssignments';
 import CongregationSettings from './pages/CongregationSettings';
+import ErrorBoundary from './components/ErrorBoundary';
 
 // lazy loading
 const Administration = lazy(() => import('./pages/Administration'));
@@ -46,24 +46,6 @@ const darkTheme = createTheme({
 
 const queryClient = new QueryClient();
 
-const WaitingPage = () => {
-  return (
-    <CircularProgress
-      color="primary"
-      size={80}
-      disableShrink={true}
-      sx={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        margin: 'auto',
-      }}
-    />
-  );
-};
-
 const App = ({ updatePwa }) => {
   const setVisitorID = useSetRecoilState(visitorIDState);
   const setApiHost = useSetRecoilState(apiHostState);
@@ -78,138 +60,75 @@ const App = ({ updatePwa }) => {
   const router = createBrowserRouter([
     {
       element: <Layout updatePwa={updatePwa} />,
+      errorElement: <ErrorBoundary />,
       children: [
         { path: '/', element: <DashboardMenu /> },
         {
           path: '/persons',
-          element: (
-            <Suspense fallback={<WaitingPage />}>
-              <Persons />
-            </Suspense>
-          ),
+          element: <Persons />,
         },
         {
           path: '/persons/new',
-          element: (
-            <Suspense fallback={<WaitingPage />}>
-              <PersonDetails />
-            </Suspense>
-          ),
+          element: <PersonDetails />,
         },
         {
           path: '/persons/:id',
-          element: (
-            <Suspense fallback={<WaitingPage />}>
-              <PersonDetails />
-            </Suspense>
-          ),
+          element: <PersonDetails />,
         },
         {
           path: '/schedules/view',
-          element: (
-            <Suspense fallback={<WaitingPage />}>
-              <WeeklyAssignments />
-            </Suspense>
-          ),
+          element: <WeeklyAssignments />,
         },
         {
           path: '/schedules',
-          element: (
-            <Suspense fallback={<WaitingPage />}>
-              <Schedules />
-            </Suspense>
-          ),
+          element: <Schedules />,
         },
         {
           path: '/schedules/:schedule',
-          element: (
-            <Suspense fallback={<WaitingPage />}>
-              <ScheduleDetails />
-            </Suspense>
-          ),
+          element: <ScheduleDetails />,
         },
         {
           path: '/schedules/:schedule/:weekToFormat',
-          element: (
-            <Suspense fallback={<WaitingPage />}>
-              <ScheduleWeekDetails />
-            </Suspense>
-          ),
+          element: <ScheduleWeekDetails />,
         },
         {
           path: '/assignment-form',
-          element: (
-            <Suspense fallback={<WaitingPage />}>
-              <S89 />
-            </Suspense>
-          ),
+          element: <S89 />,
         },
         {
           path: '/midweek-meeting-schedule',
-          element: (
-            <Suspense fallback={<WaitingPage />}>
-              <S140 />
-            </Suspense>
-          ),
+          element: <S140 />,
         },
         {
           path: '/source-materials',
-          element: (
-            <Suspense fallback={<WaitingPage />}>
-              <SourceMaterials />
-            </Suspense>
-          ),
+          element: <SourceMaterials />,
         },
         {
           path: '/source-materials/:weekToFormat',
-          element: (
-            <Suspense fallback={<WaitingPage />}>
-              <SourceWeekDetails />
-            </Suspense>
-          ),
+          element: <SourceWeekDetails />,
         },
         {
           path: '/user-settings',
-          element: (
-            <Suspense fallback={<WaitingPage />}>
-              <Settings />
-            </Suspense>
-          ),
+          element: <Settings />,
         },
         {
           path: '/congregation-settings',
-          element: (
-            <Suspense fallback={<WaitingPage />}>
-              <CongregationSettings />
-            </Suspense>
-          ),
+          element: <CongregationSettings />,
         },
         {
           element: <PrivateRoot isAdminCong={isAdminCong} />,
           children: [
             {
               path: '/administration',
-              element: (
-                <Suspense fallback={<WaitingPage />}>
-                  <Administration />
-                </Suspense>
-              ),
+              element: <Administration />,
             },
             {
               path: '/administration/members/new',
-              element: (
-                <Suspense fallback={<WaitingPage />}>
-                  <VipUserDetail />
-                </Suspense>
-              ),
+              element: <VipUserDetail />,
             },
             {
               path: '/administration/members/:id',
-              element: (
-                <Suspense fallback={<WaitingPage />}>
-                  <VipUserDetail />
-                </Suspense>
-              ),
+              element: <VipUserDetail />,
             },
           ],
         },
@@ -262,12 +181,11 @@ const App = ({ updatePwa }) => {
 
   useEffect(() => {
     if (!indexedDB) {
-      if ('serviceWorker' in navigator) {
-      } else {
+      if (!('serviceWorker' in navigator)) {
         return (
           <div className="browser-not-supported">
-            You seem to use an unsupported browser to use LMM-OA. Make sure that you browser is up to date, or try to
-            use another browser.
+            You seem to use an unsupported browser to use CPE. Make sure that you browser is up to date, or try to use
+            another browser.
           </div>
         );
       }

@@ -111,7 +111,7 @@ const ScheduleAYF = (props) => {
   };
 
   const loadStuPicker = (assID, assType, assTypeName, currentStudent, stuForAssistant, assTypeNameForAssistant) => {
-    var obj = {};
+    const obj = {};
     obj.assID = assID;
     obj.assType = assType;
     obj.assTypeName = assTypeName;
@@ -141,7 +141,7 @@ const ScheduleAYF = (props) => {
             )}
             <Typography variant="body1">{assSrc}</Typography>
           </Grid>
-          {assType !== 105 && assType !== 106 && assType !== 107 && (
+          {assType !== 105 && assType !== 106 && assType !== 107 && assType !== 117 && (
             <Grid item sx={classCount === 1 ? studentContainer1Styles : studentContainer2Styles}>
               <Box sx={boxStudentAYF}>
                 <Box sx={boxStudentFldContainer}>

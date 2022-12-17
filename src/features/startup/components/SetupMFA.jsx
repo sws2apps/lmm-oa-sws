@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import { Markup } from 'interweave';
+import { MuiOtpInput } from 'mui-one-time-password-input';
 import QRCode from 'qrcode';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -19,6 +20,7 @@ import {
   apiHostState,
   isAppLoadState,
   isCongAccountCreateState,
+  isReEnrollMFAState,
   isSetupState,
   isUnauthorizedRoleState,
   isUserMfaSetupState,
@@ -46,13 +48,20 @@ const a11yProps = (index) => {
   };
 };
 
+const matchIsNumeric = (text) => {
+  return !isNaN(Number(text));
+};
+
+const validateChar = (value, index) => {
+  return matchIsNumeric(value);
+};
+
 const SetupMFA = () => {
   const cancel = useRef();
 
   const { t } = useTranslation();
 
   const [isProcessing, setIsProcessing] = useState(false);
-  const [hasErrorOTP, setHasErrorOTP] = useState(false);
   const [userOTP, setUserOTP] = useState('');
   const [imgPath, setImgPath] = useState('');
   const [isNoQR, setIsNoQR] = useState(false);
@@ -79,6 +88,7 @@ const SetupMFA = () => {
   const userEmail = useRecoilValue(userEmailState);
   const visitorID = useRecoilValue(visitorIDState);
   const userPwd = useRecoilValue(userPasswordState);
+  const isReEnrollMFA = useRecoilValue(isReEnrollMFAState);
 
   const handleTabChange = (e, newValue) => {
     setTabValue(newValue);
@@ -88,10 +98,9 @@ const SetupMFA = () => {
     await navigator.clipboard.writeText(text);
   };
 
-  const handleVerifyOTP = async () => {
+  const handleVerifyOTP = useCallback(async () => {
     try {
       cancel.current = false;
-      setHasErrorOTP(false);
 
       if (userOTP.length === 6) {
         setIsProcessing(true);
@@ -179,8 +188,6 @@ const SetupMFA = () => {
             }
           }
         }
-      } else {
-        setHasErrorOTP(true);
       }
     } catch (err) {
       if (!cancel.current) {
@@ -190,7 +197,50 @@ const SetupMFA = () => {
         setAppSnackOpen(true);
       }
     }
+  }, [
+    apiHost,
+    setAppMessage,
+    setAppSeverity,
+    setAppSnackOpen,
+    setCongAccountConnected,
+    setCongID,
+    setIsAdminCong,
+    setIsAppLoad,
+    setIsCongAccountCreate,
+    setIsSetup,
+    setIsUnauthorizedRole,
+    setIsUserMfaSetup,
+    setOfflineOverride,
+    setStartupProgress,
+    setUserID,
+    userEmail,
+    userOTP,
+    userPwd,
+    visitorID,
+  ]);
+
+  const handleOtpChange = async (newValue) => {
+    setUserOTP(newValue);
   };
+
+  useEffect(() => {
+    if (userOTP.length === 6) {
+      handleVerifyOTP();
+    }
+  }, [handleVerifyOTP, userOTP]);
+
+  useEffect(() => {
+    const handlePaste = (e) => {
+      const text = (e.clipboardData || window.clipboardData).getData('text');
+      setUserOTP(text)
+    };
+
+    window.addEventListener('paste', handlePaste);
+
+    return () => {
+      window.removeEventListener('paste', handlePaste);
+    };
+  }, []);
 
   useEffect(() => {
     const getQrCode = async () => {
@@ -225,7 +275,7 @@ const SetupMFA = () => {
           margin: '20px 0',
         }}
       >
-        <Markup content={t('login.mfaSetupTitle')} />
+        <Markup content={isReEnrollMFA ? t('login.mfaSetupUpdate') : t('login.mfaSetupTitle')} />
       </Typography>
 
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -287,17 +337,14 @@ const SetupMFA = () => {
       <Typography sx={{ marginBottom: '15px', marginTop: '20px' }}>{t('login.setupTextOTP')}</Typography>
 
       <Box sx={{ width: '300px' }}>
-        <TextField
-          id="outlined-otp"
-          type="number"
-          label={t('login.labelOTP')}
-          variant="outlined"
-          autoComplete="off"
-          required
+        <MuiOtpInput
           value={userOTP}
-          onChange={(e) => setUserOTP(e.target.value)}
-          error={hasErrorOTP ? true : false}
-          sx={{ width: '100%' }}
+          onChange={handleOtpChange}
+          length={6}
+          display="flex"
+          gap={1}
+          validateChar={validateChar}
+          TextFieldsProps={{ autoComplete: 'off' }}
         />
       </Box>
 

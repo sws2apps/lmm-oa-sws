@@ -6,17 +6,17 @@ import { dbGetStudentByUid, dbGetStudentDetails, dbGetStudentsMini } from './dbP
 import { dbGetScheduleData } from './dbSchedule';
 import { dbGetSourceMaterial, dbGetWeekListBySched } from './dbSourceMaterial';
 import appDb from './mainDb';
-import { shortDateFormatState } from '../states/main';
+import { refreshMyAssignmentsState, shortDateFormatState, userLocalUidState } from '../states/main';
 import { assTypeLocalState } from '../states/sourceMaterial';
 import { allStudentsState, filteredStudentsState, studentsAssignmentHistoryState } from '../states/persons';
 import { meetingTimeState } from '../states/congregation';
 
 export const dbGetAssType = async (assType, appLang) => {
-  var srcAssType = '';
+  let srcAssType = '';
   if (assType === '') {
     return srcAssType;
   } else {
-    var i = parseInt(assType, 10);
+    const i = parseInt(assType, 10);
     const appData = await appDb.table('ass_type').get(i);
     srcAssType = appData.ass_type_name[appLang];
     return srcAssType;
@@ -24,7 +24,7 @@ export const dbGetAssType = async (assType, appLang) => {
 };
 
 export const dbGetAssTypeId = async (assType, appLang) => {
-  var srcAssType = '';
+  let srcAssType = '';
   if (assType === '') {
     return srcAssType;
   } else {
@@ -39,8 +39,8 @@ export const dbGetAssTypeId = async (assType, appLang) => {
 };
 
 export const dbGetListAssType = async () => {
-  var assType = [];
-  var obj = {};
+  const assType = [];
+  let obj = {};
   const appData = await appDb.table('ass_type').reverse().reverse().sortBy('code');
 
   for (let i = 0; i < appData.length; i++) {
@@ -51,6 +51,7 @@ export const dbGetListAssType = async () => {
     obj.ass_type_name = appData[i].ass_type_name;
     obj.maleOnly = appData[i].maleOnly || false;
     obj.type = appData[i].type;
+    obj.linkTo = appData[i].linkTo;
     assType.push(obj);
   }
   return assType;
@@ -60,7 +61,7 @@ export const dbSaveAss = async (weekOf, stuID, varSave) => {
   const appData = await appDb.table('sched_MM').get({ weekOf: weekOf });
   const stuPrev = appData[varSave];
 
-  var obj = {};
+  const obj = {};
   obj[varSave] = stuID;
 
   await appDb.table('sched_MM').update(weekOf, { ...obj });
@@ -69,6 +70,13 @@ export const dbSaveAss = async (weekOf, stuID, varSave) => {
   await promiseSetRecoil(studentsAssignmentHistoryState, history);
 
   await dbRefreshStudentHistory(stuPrev, stuID);
+
+  const localUid = await promiseGetRecoil(userLocalUidState);
+
+  if (stuID === localUid) {
+    const prevValue = await promiseGetRecoil(refreshMyAssignmentsState);
+    await promiseSetRecoil(refreshMyAssignmentsState, !prevValue);
+  }
 };
 
 export const dbHistoryAssignment = async () => {
@@ -87,235 +95,133 @@ export const dbHistoryAssignment = async () => {
         const lDate = new Date(varYear, varMonth - 1, varDay);
         const shortDateFormat = await promiseGetRecoil(shortDateFormatState);
         const dateFormatted = dateFormat(lDate, shortDateFormat);
-        const cnAss = [{ iAss: 1 }, { iAss: 2 }, { iAss: 3 }, { iAss: 4 }];
-        const varClasses = [{ classLabel: 'A' }, { classLabel: 'B' }];
-        let fldName = '';
 
-        // Chairman History
-        fldName = 'chairmanMM_A';
-        if (typeof appData[i][fldName] !== 'undefined') {
+        const assList = [];
+        const excludeFiles = ['weekOf', 'week_type', 'noMeeting', 'isReleased'];
+        for (const [key, value] of Object.entries(appData[i])) {
+          if (excludeFiles.indexOf(key) === -1) {
+            if (value && value !== '') {
+              assList.push({ assignment: key, person: value });
+            }
+          }
+        }
+
+        for (const item of assList) {
           person.ID = histID;
           person.weekOf = appData[i].weekOf;
           person.weekOfFormatted = dateFormatted;
-          person.studentID = appData[i][fldName];
-          const stuDetails = await dbGetStudentByUid(person.studentID);
-          person.studentName = stuDetails.person_displayName;
-          person.assignmentID = 110;
-          person.assignmentName = getI18n().t('global.chairmanMidweekMeeting');
+          person.studentID = item.person;
+          const stuDetails = await dbGetStudentByUid(item.person);
+          person.studentName = stuDetails?.person_displayName || '';
           person.class = '';
-          dbHistory.push(person);
-          person = {};
-          histID++;
-        }
 
-        // Aux Class Counselor History
-        fldName = 'chairmanMM_B';
-        if (typeof appData[i][fldName] !== 'undefined') {
-          person.ID = histID;
-          person.weekOf = appData[i].weekOf;
-          person.weekOfFormatted = dateFormatted;
-          person.studentID = appData[i][fldName];
-          const stuDetails = await dbGetStudentByUid(person.studentID);
-          person.studentName = stuDetails.person_displayName;
-          person.assignmentID = 110;
-          person.assignmentName = getI18n().t('global.auxClassCounselor');
-          person.class = '';
-          dbHistory.push(person);
-          person = {};
-          histID++;
-        }
+          // Chairman History
+          if (item.assignment === 'chairmanMM_A') {
+            person.assignmentID = 110;
+            person.assignmentName = getI18n().t('global.chairmanMidweekMeeting2');
+          }
 
-        // Opening Prayer History
-        fldName = 'opening_prayer';
-        if (typeof appData[i][fldName] !== 'undefined') {
-          person.ID = histID;
-          person.weekOf = appData[i].weekOf;
-          person.weekOfFormatted = dateFormatted;
-          person.studentID = appData[i][fldName];
-          const stuDetails = await dbGetStudentByUid(person.studentID);
-          person.studentName = stuDetails.person_displayName;
-          person.assignmentID = 111;
-          person.assignmentName = getI18n().t('global.prayerMidweekMeeting');
-          person.class = '';
-          dbHistory.push(person);
-          person = {};
-          histID++;
-        }
+          // Aux Class Counselor History
+          if (item.assignment === 'chairmanMM_B') {
+            person.assignmentID = 110;
+            person.assignmentName = getI18n().t('global.auxClassCounselor');
+          }
 
-        // TGW Talk 10 min. History
-        fldName = 'tgw_talk';
-        if (typeof appData[i][fldName] !== 'undefined') {
-          person.ID = histID;
-          person.weekOf = appData[i].weekOf;
-          person.weekOfFormatted = dateFormatted;
-          person.studentID = appData[i][fldName];
-          const stuDetails = await dbGetStudentByUid(person.studentID);
-          person.studentName = stuDetails.person_displayName;
-          person.assignmentID = 112;
-          person.assignmentName = getI18n().t('global.tgwTalk');
-          person.class = '';
-          dbHistory.push(person);
-          person = {};
-          histID++;
-        }
+          // Opening Prayer
+          if (item.assignment === 'opening_prayer') {
+            person.assignmentID = 111;
+            person.assignmentName = getI18n().t('global.prayerMidweekMeeting');
+          }
 
-        // TGW Spiritual Gems History
-        fldName = 'tgw_gems';
-        if (typeof appData[i][fldName] !== 'undefined') {
-          person.ID = histID;
-          person.weekOf = appData[i].weekOf;
-          person.weekOfFormatted = dateFormatted;
-          person.studentID = appData[i][fldName];
-          const stuDetails = await dbGetStudentByUid(person.studentID);
-          person.studentName = stuDetails.person_displayName;
-          person.assignmentID = 113;
-          person.assignmentName = getI18n().t('global.tgwGems');
-          person.class = '';
-          dbHistory.push(person);
-          person = {};
-          histID++;
-        }
+          // TGW Talk 10 min. History
+          if (item.assignment === 'tgw_talk') {
+            person.assignmentID = 112;
+            person.assignmentName = getI18n().t('global.tgwTalk');
+            person.assignmentSource = weekData.tgwTalk_src;
+          }
 
-        //Bible Reading History
-        for (let a = 0; a < varClasses.length - 1; a++) {
-          const fldName = 'bRead_stu_' + varClasses[a].classLabel;
-          if (typeof appData[i][fldName] !== 'undefined') {
-            person.ID = histID;
-            person.weekOf = appData[i].weekOf;
-            person.weekOfFormatted = dateFormatted;
-            person.studentID = appData[i][fldName];
-            const stuDetails = await dbGetStudentByUid(person.studentID);
-            person.studentName = stuDetails?.person_displayName || '';
+          // TGW Spiritual Gems History
+          if (item.assignment === 'tgw_gems') {
+            person.assignmentID = 113;
+            person.assignmentName = getI18n().t('global.tgwGems');
+          }
+
+          //Bible Reading History
+          if (item.assignment.startsWith('bRead_stu_')) {
+            const stuclass = item.assignment.split('_')[2];
             person.assignmentID = 100;
             person.assignmentName = getI18n().t('global.bibleReading');
-            person.class = varClasses[a].classLabel;
-            dbHistory.push(person);
-            person = {};
-            histID++;
+            person.class = stuclass;
           }
-        }
 
-        //AYF Assigment History
-        for (let b = 0; b < cnAss.length - 1; b++) {
-          var weekFld = 'ass' + cnAss[b].iAss + '_type';
-          const assType = weekData[weekFld];
+          //AYF Assigment History
+          if (item.assignment.startsWith('ass_') && item.assignment.includes('_stu_')) {
+            const stuclass = item.assignment.split('_')[2];
+            const weekFld = item.assignment.split('_')[0] + '_type';
+            const assType = weekData[weekFld];
 
-          for (let a = 0; a < varClasses.length - 1; a++) {
-            fldName = 'ass' + cnAss[b].iAss + '_stu_' + varClasses[a].classLabel;
-            if (typeof appData[i][fldName] !== 'undefined') {
-              person.ID = histID;
-              person.weekOf = appData[i].weekOf;
-              person.weekOfFormatted = dateFormatted;
-              person.studentID = appData[i][fldName];
-              const stuDetails = await dbGetStudentByUid(person.studentID);
-              person.studentName = stuDetails?.person_displayName || '';
-              person.assignmentID = assType;
-              if (assType === 101 || assType === 108) {
-                person.assignmentName = getI18n().t('global.initialCall');
-              } else if (assType === 102) {
-                person.assignmentName = getI18n().t('global.returnVisit');
-              } else if (assType === 103) {
-                person.assignmentName = getI18n().t('global.bibleStudy');
-              } else if (assType === 104) {
-                person.assignmentName = getI18n().t('global.talk');
-              }
-              person.class = varClasses[a].classLabel;
-              dbHistory.push(person);
-              person = {};
-              histID++;
+            person.assignmentID = assType;
+            if (assType === 101) {
+              person.assignmentName = getI18n().t('global.initialCall');
+            } else if (assType === 102) {
+              person.assignmentName = getI18n().t('global.returnVisit');
+            } else if (assType === 103) {
+              person.assignmentName = getI18n().t('global.bibleStudy');
+            } else if (assType === 104) {
+              person.assignmentName = getI18n().t('global.talk');
+            } else if (assType === 108) {
+              person.assignmentName = getI18n().t('global.memorialInvite');
             }
-
-            fldName = 'ass' + cnAss[b].iAss + '_ass_' + varClasses[a].classLabel;
-            if (typeof appData[i][fldName] !== 'undefined') {
-              person.ID = histID;
-              person.weekOf = appData[i].weekOf;
-              person.weekOfFormatted = dateFormatted;
-              person.studentID = appData[i][fldName];
-              const stuDetails = await dbGetStudentByUid(person.studentID);
-              person.studentName = stuDetails?.person_displayName || '';
-              person.assignmentID = 109;
-              person.assignmentName = getI18n().t('global.assistant');
-              person.class = varClasses[a].classLabel;
-              dbHistory.push(person);
-              person = {};
-              histID++;
-            }
+            person.class = stuclass;
           }
-        }
 
-        // LC Assignment History
-        for (let b = 1; b < 3; b++) {
-          fldName = `lc_part${b}`;
-          if (typeof appData[i][fldName] !== 'undefined') {
-            person.ID = histID;
-            person.weekOf = appData[i].weekOf;
-            person.weekOfFormatted = dateFormatted;
-            person.studentID = appData[i][fldName];
-            const stuDetails = await dbGetStudentByUid(person.studentID);
-            person.studentName = stuDetails.person_displayName;
+          // AYF Assistant History
+          if (item.assignment.startsWith('ass_') && item.assignment.includes('_ass_')) {
+            const stuclass = item.assignment.split('_')[2];
+            person.assignmentID = 109;
+            person.assignmentName = getI18n().t('global.assistant');
+            person.class = stuclass;
+          }
+
+          // LC Assignment History
+          if (item.assignment.startsWith('lc_part')) {
+            const lcIndex = item.assignment.slice(-1);
+            const fldSource = `lcPart${lcIndex}_src`;
+            const fldTime = `lcPart${lcIndex}_time`;
+
             person.assignmentID = 114;
             person.assignmentName = getI18n().t('global.lcPart');
-            person.class = '';
-            dbHistory.push(person);
-            person = {};
-            histID++;
+            person.assignmentSource = `(${weekData[fldTime]} min.) ${weekData[fldSource]}`;
           }
-        }
 
-        // CBS Conductor History
-        fldName = 'cbs_conductor';
-        if (typeof appData[i][fldName] !== 'undefined') {
-          person.ID = histID;
-          person.weekOf = appData[i].weekOf;
-          person.weekOfFormatted = dateFormatted;
-          person.studentID = appData[i][fldName];
-          const stuDetails = await dbGetStudentByUid(person.studentID);
-          person.studentName = stuDetails.person_displayName;
-          person.assignmentID = 115;
-          person.assignmentName = getI18n().t('global.cbsConductor');
-          person.class = '';
-          dbHistory.push(person);
-          person = {};
-          histID++;
-        }
+          // CBS Conductor History
+          if (item.assignment === 'cbs_conductor') {
+            person.assignmentID = 115;
+            person.assignmentName = getI18n().t('global.cbsConductor');
+            person.assignmentSource = weekData.cbs_src;
+          }
 
-        // CBS Reader History
-        fldName = 'cbs_reader';
-        if (typeof appData[i][fldName] !== 'undefined') {
-          person.ID = histID;
-          person.weekOf = appData[i].weekOf;
-          person.weekOfFormatted = dateFormatted;
-          person.studentID = appData[i][fldName];
-          const stuDetails = await dbGetStudentByUid(person.studentID);
-          person.studentName = stuDetails.person_displayName;
-          person.assignmentID = 116;
-          person.assignmentName = getI18n().t('global.cbsReader');
-          person.class = '';
-          dbHistory.push(person);
-          person = {};
-          histID++;
-        }
+          // CBS Reader History
+          if (item.assignment === 'cbs_reader') {
+            person.assignmentID = 116;
+            person.assignmentName = getI18n().t('global.cbsReader');
+            person.assignmentSource = weekData.cbs_src;
+          }
 
-        // Closing Prayer History
-        fldName = 'closing_prayer';
-        if (typeof appData[i][fldName] !== 'undefined') {
-          person.ID = histID;
-          person.weekOf = appData[i].weekOf;
-          person.weekOfFormatted = dateFormatted;
-          person.studentID = appData[i][fldName];
-          const stuDetails = await dbGetStudentByUid(person.studentID);
-          person.studentName = stuDetails.person_displayName;
-          person.assignmentID = 111;
-          person.assignmentName = getI18n().t('global.prayerMidweekMeeting');
-          person.class = '';
+          // Closing Prayer History
+          if (item.assignment === 'closing_prayer') {
+            person.assignmentID = 111;
+            person.assignmentName = getI18n().t('global.prayerMidweekMeeting');
+          }
+
           dbHistory.push(person);
           person = {};
           histID++;
         }
       }
       dbHistory.sort((a, b) => {
-        var dateA = a.weekOf.split('/')[2] + '/' + a.weekOf.split('/')[0] + '/' + a.weekOf.split('/')[1];
-        var dateB = b.weekOf.split('/')[2] + '/' + b.weekOf.split('/')[0] + '/' + b.weekOf.split('/')[1];
+        const dateA = a.weekOf.split('/')[2] + '/' + a.weekOf.split('/')[0] + '/' + a.weekOf.split('/')[1];
+        const dateB = b.weekOf.split('/')[2] + '/' + b.weekOf.split('/')[0] + '/' + b.weekOf.split('/')[1];
         return dateA < dateB ? 1 : -1;
       });
     }
@@ -334,7 +240,7 @@ export const dbLastBRead = async (stuID) => {
   const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
   const lastBRead = appData.filter((data) => (data.assignmentID === 100) & (data.studentID === stuID));
 
-  var dLast;
+  let dLast;
   if (lastBRead.length > 0) {
     dLast = lastBRead[0].weekOf;
   }
@@ -345,7 +251,7 @@ export const dbFirstBRead = async (stuID) => {
   const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
   const lastBRead = appData.filter((data) => (data.assignmentID === 100) & (data.studentID === stuID));
 
-  var dLast;
+  let dLast;
   if (lastBRead.length > 0) {
     dLast = lastBRead[lastBRead.length - 1].weekOf;
   }
@@ -356,7 +262,7 @@ export const dbLastIniCall = async (stuID) => {
   const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
   const lastIniCall = appData.filter((data) => (data.assignmentID === 101) & (data.studentID === stuID));
 
-  var dLast;
+  let dLast;
   if (lastIniCall.length > 0) {
     dLast = lastIniCall[0].weekOf;
   }
@@ -367,7 +273,7 @@ export const dbFirstIniCall = async (stuID) => {
   const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
   const lastIniCall = appData.filter((data) => (data.assignmentID === 101) & (data.studentID === stuID));
 
-  var dLast;
+  let dLast;
   if (lastIniCall.length > 0) {
     dLast = lastIniCall[lastIniCall.length - 1].weekOf;
   }
@@ -378,7 +284,7 @@ export const dbLastRV = async (stuID) => {
   const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
   const lastRV = appData.filter((data) => (data.assignmentID === 102) & (data.studentID === stuID));
 
-  var dLast;
+  let dLast;
   if (lastRV.length > 0) {
     dLast = lastRV[0].weekOf;
   }
@@ -389,7 +295,7 @@ export const dbFirstRV = async (stuID) => {
   const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
   const lastRV = appData.filter((data) => (data.assignmentID === 102) & (data.studentID === stuID));
 
-  var dLast;
+  let dLast;
   if (lastRV.length > 0) {
     dLast = lastRV[lastRV.length - 1].weekOf;
   }
@@ -400,7 +306,7 @@ export const dbLastBibleStudy = async (stuID) => {
   const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
   const lastBibleStudy = appData.filter((data) => (data.assignmentID === 103) & (data.studentID === stuID));
 
-  var dLast;
+  let dLast;
   if (lastBibleStudy.length > 0) {
     dLast = lastBibleStudy[0].weekOf;
   }
@@ -411,7 +317,7 @@ export const dbFirstBibleStudy = async (stuID) => {
   const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
   const lastBibleStudy = appData.filter((data) => (data.assignmentID === 103) & (data.studentID === stuID));
 
-  var dLast;
+  let dLast;
   if (lastBibleStudy.length > 0) {
     dLast = lastBibleStudy[lastBibleStudy.length - 1].weekOf;
   }
@@ -422,7 +328,7 @@ export const dbLastTalk = async (stuID) => {
   const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
   const lastTalk = appData.filter((data) => (data.assignmentID === 104) & (data.studentID === stuID));
 
-  var dLast;
+  let dLast;
   if (lastTalk.length > 0) {
     dLast = lastTalk[0].weekOf;
   }
@@ -433,7 +339,7 @@ export const dbFirstTalk = async (stuID) => {
   const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
   const lastTalk = appData.filter((data) => (data.assignmentID === 104) & (data.studentID === stuID));
 
-  var dLast;
+  let dLast;
   if (lastTalk.length > 0) {
     dLast = lastTalk[lastTalk.length - 1].weekOf;
   }
@@ -443,7 +349,7 @@ export const dbFirstTalk = async (stuID) => {
 export const dbLastAssistant = async (stuID) => {
   const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
   const lastAssistant = appData.filter((data) => (data.assignmentID === 109) & (data.studentID === stuID));
-  var dLast;
+  let dLast;
   if (lastAssistant.length > 0) {
     dLast = lastAssistant[0].weekOf;
   }
@@ -453,7 +359,7 @@ export const dbLastAssistant = async (stuID) => {
 export const dbLastAssignment = async (stuID) => {
   const appData = await promiseGetRecoil(studentsAssignmentHistoryState);
   const lastAssignment = appData.filter((data) => data.studentID === stuID);
-  var dLast;
+  let dLast;
   if (lastAssignment.length > 0) {
     dLast = lastAssignment[0].weekOf;
   }
@@ -629,7 +535,7 @@ export const dbRefreshStudentHistory = async (varPrev, varNew) => {
       if (student) {
         const stuAssignment = await dbLastAssignment(varPers);
 
-        var obj = {};
+        const obj = {};
         obj.lastAssignment = stuAssignment;
         await appDb.table('persons').update(student.id, { ...obj });
 
@@ -645,13 +551,13 @@ export const dbRefreshStudentHistory = async (varPrev, varNew) => {
 };
 
 export const dbGetS89WeekList = async (scheduleName) => {
-  var s89Data = [];
+  const s89Data = [];
   const allWeeks = await dbGetWeekListBySched(scheduleName);
   for (let i = 0; i < allWeeks.length; i++) {
     const week = allWeeks[i].value;
     const scheduleData = await dbGetScheduleData(week);
     if (!scheduleData.noMeeting) {
-      var parentWeek = {};
+      const parentWeek = {};
       parentWeek.value = week;
       const dateW = new Date(week);
       const weekDateFormatted = dateFormat(dateW, getI18n().t('global.shortDateFormat'));
@@ -659,14 +565,15 @@ export const dbGetS89WeekList = async (scheduleName) => {
       parentWeek.children = [];
 
       const sourceData = await dbGetSourceMaterial(week);
+      let assClass = {};
+      let assType = {};
 
       if (scheduleData.bRead_stu_A !== '' || scheduleData.bRead_stu_B !== '') {
-        var assType = {};
         assType.label = getI18n().t('global.bibleReading');
         assType.value = week + '-0@bRead-A';
         if (scheduleData.bRead_stu_A !== '' && scheduleData.bRead_stu_B !== '') {
           assType.children = [];
-          var assClass = {};
+          assClass = {};
           assClass.value = week + '-0@bRead-A';
           assClass.label = getI18n().t('global.mainHall');
           assType.children.push(assClass);
@@ -708,7 +615,7 @@ export const dbGetS89WeekList = async (scheduleName) => {
       }
     }
   }
-  var obj = {};
+  const obj = {};
   obj.value = 'S89';
   obj.label = getI18n().t('global.allWeeks');
   obj.children = s89Data;
@@ -716,10 +623,10 @@ export const dbGetS89WeekList = async (scheduleName) => {
 };
 
 export const dbGetS89ItemData = async (week, assName, classLabel) => {
-  var stuFld = '';
-  var assFld = '';
-  var assTimeFld = '';
-  var assTypeFld = 0;
+  let stuFld = '';
+  let assFld = '';
+  let assTimeFld = '';
+  let assTypeFld = 0;
 
   if (assName === 'bRead') {
     stuFld = 'bRead_stu_' + classLabel;
@@ -746,7 +653,7 @@ export const dbGetS89ItemData = async (week, assName, classLabel) => {
   }
 
   const appSettings = await dbGetAppSettings();
-  var midDay = parseInt(appSettings.meeting_day, 10);
+  let midDay = parseInt(appSettings.meeting_day, 10);
 
   const [varMonth, varDay, varYear] = week.split('/');
   midDay = parseInt(varDay, 10) + midDay - 1;
@@ -756,7 +663,7 @@ export const dbGetS89ItemData = async (week, assName, classLabel) => {
   const sourceData = await dbGetSourceMaterial(week);
   const scheduleData = await dbGetScheduleData(week);
 
-  var s89Data = {};
+  const s89Data = {};
   const stuID = scheduleData[stuFld];
   const { person_name } = await dbGetStudentDetails(stuID);
   s89Data.studentName = person_name;
@@ -770,6 +677,7 @@ export const dbGetS89ItemData = async (week, assName, classLabel) => {
   s89Data.bibleStudySpec = '';
   s89Data.isTalk = false;
   s89Data.assignmentDate = dateFormatted;
+  s89Data.isMemorialInvite = false;
 
   if (assName === 'ass1' || assName === 'ass2' || assName === 'ass3' || assName === 'ass4') {
     const assType = sourceData[assTypeFld];
@@ -788,7 +696,8 @@ export const dbGetS89ItemData = async (week, assName, classLabel) => {
     const assTime = sourceData[assTimeFld];
 
     if (assType === 101 || assType === 108) {
-      s89Data.isInitialCall = true;
+      if (assType === 101) s89Data.isInitialCall = true;
+      if (assType === 108) s89Data.isMemorialInvite = true;
       if (assName === 'ass1') {
         if (ass1Type === ass2Type || ass1Type === ass3Type || ass1Type === ass4Type) {
           s89Data.initialCallSpec = getI18n().t('schedule.assignmentPart', {
@@ -870,7 +779,7 @@ export const dbGetS89ItemData = async (week, assName, classLabel) => {
 };
 
 export const dbGetScheduleForPrint = async (scheduleName) => {
-  var data = [];
+  const data = [];
   const allWeeks = await dbGetWeekListBySched(scheduleName);
   const meetingStart = dateFormat(await promiseGetRecoil(meetingTimeState), 'h:MM');
 
@@ -899,21 +808,36 @@ export const dbGetScheduleForPrint = async (scheduleName) => {
     time.ayf1 = addMinutes(time.bibleReading, 5);
 
     // ayf 2
-    if (sourceData.ass1_type === 105 || sourceData.ass1_type === 106 || sourceData.ass1_type === 107) {
+    if (
+      sourceData.ass1_type === 105 ||
+      sourceData.ass1_type === 106 ||
+      sourceData.ass1_type === 107 ||
+      sourceData.ass1_type === 117
+    ) {
       time.ayf2 = addMinutes(time.ayf1, +sourceData.ass1_time);
     } else {
       time.ayf2 = addMinutes(time.ayf1, +sourceData.ass1_time + 1);
     }
 
     // ayf 3
-    if (sourceData.ass2_type === 105 || sourceData.ass2_type === 106 || sourceData.ass2_type === 107) {
+    if (
+      sourceData.ass2_type === 105 ||
+      sourceData.ass2_type === 106 ||
+      sourceData.ass2_type === 107 ||
+      sourceData.ass2_type === 117
+    ) {
       time.ayf3 = addMinutes(time.ayf2, +sourceData.ass2_time);
     } else {
       time.ayf3 = addMinutes(time.ayf2, +sourceData.ass2_time + 1);
     }
 
     // ayf 4
-    if (sourceData.ass3_type === 105 || sourceData.ass3_type === 106 || sourceData.ass3_type === 107) {
+    if (
+      sourceData.ass3_type === 105 ||
+      sourceData.ass3_type === 106 ||
+      sourceData.ass3_type === 107 ||
+      sourceData.ass2_type === 117
+    ) {
       time.ayf4 = addMinutes(time.ayf3, +sourceData.ass3_time);
     } else {
       time.ayf4 = addMinutes(time.ayf3, +sourceData.ass3_time + 1);
@@ -921,7 +845,12 @@ export const dbGetScheduleForPrint = async (scheduleName) => {
 
     // middle song
     if (sourceData.ass4_time !== '') {
-      if (sourceData.ass4_type === 105 || sourceData.ass4_type === 106 || sourceData.ass4_type === 107) {
+      if (
+        sourceData.ass4_type === 105 ||
+        sourceData.ass4_type === 106 ||
+        sourceData.ass4_type === 107 ||
+        sourceData.ass2_type === 117
+      ) {
         time.middleSong = addMinutes(time.ayf4, +sourceData.ass4_time);
       } else {
         time.middleSong = addMinutes(time.ayf4, +sourceData.ass4_time + 1);
@@ -964,7 +893,7 @@ export const dbGetScheduleForPrint = async (scheduleName) => {
       time.pgmEnd = addMinutes(time.coTalk, 30);
     }
 
-    var obj = {};
+    const obj = {};
     obj.week = week;
     obj.scheduleData = scheduleData;
     obj.sourceData = { ...sourceData, ...time };

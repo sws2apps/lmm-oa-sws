@@ -1,3 +1,132 @@
+## [2.10.1](https://github.com/sws2apps/lmm-oa-sws/compare/v2.10.0...v2.10.1) (2022-12-16)
+
+
+### Bug Fixes
+
+* **schedules:** remove wrong keys being included when building assignments details ([2d30ae6](https://github.com/sws2apps/lmm-oa-sws/commit/2d30ae6ad594b7a7ece167b87ac47f6fdd4311f0))
+
+# [2.10.0](https://github.com/sws2apps/lmm-oa-sws/compare/v2.9.2...v2.10.0) (2022-12-16)
+
+
+### Bug Fixes
+
+* **schedules:** fix wrong stats in schedule overview page ([ec32069](https://github.com/sws2apps/lmm-oa-sws/commit/ec3206976228bc897d50b073c42c1f8115c51268))
+
+
+### Features
+
+* **deps:** bump @mui/icons-material from 5.10.16 to 5.11.0 ([33cba76](https://github.com/sws2apps/lmm-oa-sws/commit/33cba763d99979a4e829d1fea9224c1a71d2df26))
+* **deps:** bump @mui/lab from 5.0.0-alpha.111 to 5.0.0-alpha.112 ([108baaa](https://github.com/sws2apps/lmm-oa-sws/commit/108baaaba21846bbd8cf780834fd1a3c8508f5ff))
+* **deps:** bump @mui/material from 5.10.17 to 5.11.0 ([a39af38](https://github.com/sws2apps/lmm-oa-sws/commit/a39af38ef08749c7b7b96d8cd8d156a5d901556d))
+* **deps:** bump @tanstack/react-query from 4.19.1 to 4.20.4 ([260a648](https://github.com/sws2apps/lmm-oa-sws/commit/260a6489a6652f3ccd2f2dce03153280224e43a9))
+* **deps:** bump i18next from 22.1.4 to 22.4.5 ([20e851c](https://github.com/sws2apps/lmm-oa-sws/commit/20e851c14ff563f8d4c61f6a519fdd99d8547884))
+* **deps:** bump jw-epub-parser from 1.28.0 to 1.29.0 ([a42c036](https://github.com/sws2apps/lmm-oa-sws/commit/a42c036608910cc70569dd3f8202cebeeef961ae))
+
+## [2.9.2](https://github.com/sws2apps/lmm-oa-sws/compare/v2.9.1...v2.9.2) (2022-12-11)
+
+
+### Bug Fixes
+
+* **templates:** fix error when previewing S-140 ([dfe0818](https://github.com/sws2apps/lmm-oa-sws/commit/dfe0818d053ead81cade30d57f6f40d834e75102))
+
+## [2.9.1](https://github.com/sws2apps/lmm-oa-sws/compare/v2.9.0...v2.9.1) (2022-12-10)
+
+
+### Bug Fixes
+
+* **my-assignments:** change order of the list of assignments ([6b73265](https://github.com/sws2apps/lmm-oa-sws/commit/6b73265ac1f77a0026883979f132ab6333207e9f))
+
+# [2.9.0](https://github.com/sws2apps/lmm-oa-sws/compare/v2.8.1...v2.9.0) (2022-12-10)
+
+
+### Features
+
+* **app:** display LMM Overseer current and future assignments ([a082e5f](https://github.com/sws2apps/lmm-oa-sws/commit/a082e5f89776fcae0f371c95013a8779a3f42691))
+
+## [2.8.1](https://github.com/sws2apps/lmm-oa-sws/compare/v2.8.0...v2.8.1) (2022-12-09)
+
+
+### Bug Fixes
+
+* **template:** update style for assignment part indice in S-89 ([11d78c5](https://github.com/sws2apps/lmm-oa-sws/commit/11d78c5d69bed1e058be0be225f346d2590179fa))
+
+# [2.8.0](https://github.com/sws2apps/lmm-oa-sws/compare/v2.7.1...v2.8.0) (2022-12-09)
+
+
+### Bug Fixes
+
+* **schedule:** memorial invitation students not showing ([80916b5](https://github.com/sws2apps/lmm-oa-sws/commit/80916b57aa9b069e5a83a1789dbc8acc209df665))
+* **schedules:** autofill not assigning part 2 in living as christians part ([bd4dc5d](https://github.com/sws2apps/lmm-oa-sws/commit/bd4dc5d57b519cdcf951b6ccf96c97086f0b3b61))
+* **template:** assignment indice not being shown in s89 template ([4747d57](https://github.com/sws2apps/lmm-oa-sws/commit/4747d578883f6c1220f0ab9317573576fdf3a30c))
+* **template:** update s-89 template to display memorial invitation part ([a17dd18](https://github.com/sws2apps/lmm-oa-sws/commit/a17dd1852a7aacd4916019891ba548bfeb5c99b7))
+
+
+### Features
+
+* **deps:** bump @mui/lab from 5.0.0-alpha.110 to 5.0.0-alpha.111 ([756975b](https://github.com/sws2apps/lmm-oa-sws/commit/756975b0c1192688f6016e220dca6b8ef58e5ccb))
+* **deps:** bump @mui/material from 5.10.16 to 5.10.17 ([5cf05e7](https://github.com/sws2apps/lmm-oa-sws/commit/5cf05e79e9285aee0e2f3b19e7590040543b3aee))
+* **deps:** bump @mui/x-date-pickers from 5.0.9 to 5.0.10 ([f969e5f](https://github.com/sws2apps/lmm-oa-sws/commit/f969e5f6425211d8e6c58d67f2bff7ca577c55f7))
+* **deps:** bump i18next from 22.0.8 to 22.1.4 ([5321cd1](https://github.com/sws2apps/lmm-oa-sws/commit/5321cd1898321f552672cf0c511eb88fd0162330))
+* **deps:** bump react-i18next from 12.0.0 to 12.1.0 ([ccc0c6e](https://github.com/sws2apps/lmm-oa-sws/commit/ccc0c6e023c3ea7402545a63afba7da48f6069f7))
+* **deps:** bump react-i18next from 12.1.0 to 12.1.1 ([6e701a7](https://github.com/sws2apps/lmm-oa-sws/commit/6e701a7a855d10260ae28cb79f15bf2b1505278e))
+* **deps:** bump react-router-dom from 6.4.4 to 6.4.5 ([7958f03](https://github.com/sws2apps/lmm-oa-sws/commit/7958f0326f0c03d2819e23a4bdeaa453aa0decb9))
+
+## [2.7.1](https://github.com/sws2apps/lmm-oa-sws/compare/v2.7.0...v2.7.1) (2022-12-06)
+
+
+### Bug Fixes
+
+* **source-material:** change the regex to search from start when parsing assignment type ([95625e3](https://github.com/sws2apps/lmm-oa-sws/commit/95625e32dcc20915d5f712a988d467fd54ac6233))
+
+# [2.7.0](https://github.com/sws2apps/lmm-oa-sws/compare/v2.6.1...v2.7.0) (2022-12-06)
+
+
+### Features
+
+* **deps:** bump @tanstack/react-query from 4.19.0 to 4.19.1 ([e1724ed](https://github.com/sws2apps/lmm-oa-sws/commit/e1724ed51e1684b06b27cb15a27adf57b9c46d27))
+* **deps:** bump i18next from 22.0.6 to 22.0.8 ([3bdab6b](https://github.com/sws2apps/lmm-oa-sws/commit/3bdab6b558b73038cdcdfd0dfea852d12c248a22))
+* **source-material:** add new assignment type for memorial video ([49f8c0b](https://github.com/sws2apps/lmm-oa-sws/commit/49f8c0b6e6980ba718c953cad60756afa62cf40c))
+
+## [2.6.1](https://github.com/sws2apps/lmm-oa-sws/compare/v2.6.0...v2.6.1) (2022-12-05)
+
+
+### Bug Fixes
+
+* **schedule:** 2nd assignments in living as christians part not being assigned ([1239890](https://github.com/sws2apps/lmm-oa-sws/commit/1239890c1c0e62ecdc4c0ed2126e754d3a4c021f))
+
+# [2.6.0](https://github.com/sws2apps/lmm-oa-sws/compare/v2.5.0...v2.6.0) (2022-12-04)
+
+
+### Features
+
+* **app:** add error element and change application name ([daf6ec6](https://github.com/sws2apps/lmm-oa-sws/commit/daf6ec659a85ff4165c6714d5908bd1e6cf9095c))
+
+# [2.5.0](https://github.com/sws2apps/lmm-oa-sws/compare/v2.4.0...v2.5.0) (2022-12-04)
+
+
+### Bug Fixes
+
+* **startup:** fix error message on invalid otp token ([448ae3f](https://github.com/sws2apps/lmm-oa-sws/commit/448ae3feefd691ad07ac4c8c2b19dcf0cf6474e3))
+
+
+### Features
+
+* **startup:** new ui for otp code ([1280319](https://github.com/sws2apps/lmm-oa-sws/commit/128031906ebb1199643541e2bf041af04de9d412))
+
+# [2.4.0](https://github.com/sws2apps/lmm-oa-sws/compare/v2.3.1...v2.4.0) (2022-12-04)
+
+
+### Features
+
+* **setup:** support change of otp library ([32f496b](https://github.com/sws2apps/lmm-oa-sws/commit/32f496bf611d3c9dbc4c03a8f28e6ad8859af156))
+
+## [2.3.1](https://github.com/sws2apps/lmm-oa-sws/compare/v2.3.0...v2.3.1) (2022-12-03)
+
+
+### Bug Fixes
+
+* **schedule:** hide publish schedule when not connected to congregation account ([8ec8695](https://github.com/sws2apps/lmm-oa-sws/commit/8ec86950e9c65a4679d568067586343ca18b92d1))
+
 # [2.3.0](https://github.com/sws2apps/lmm-oa-sws/compare/v2.2.0...v2.3.0) (2022-12-03)
 
 
