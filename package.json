@@ -48,7 +48,6 @@
     "recoil-outside": "^0.1.1",
     "simple-crypto-js": "^3.0.1",
     "use-pwa2": "^0.2.0",
-    "vite-plugin-package-version": "^1.0.2",
     "workbox-cli": "^6.5.4"
   },
   "devDependencies": {
@@ -62,6 +61,7 @@
     "eslint-config-react-app": "^7.0.1",
     "serve": "^14.1.2",
     "vite": "^3.2.4",
-    "vite-plugin-eslint": "^1.8.1"
+    "vite-plugin-eslint": "^1.8.1",
+    "vite-plugin-package-version": "^1.0.2"
   }
 }
