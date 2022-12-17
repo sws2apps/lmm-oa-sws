@@ -30,6 +30,7 @@ const Settings = lazy(() => import('./pages/UserSettings'));
 const SourceMaterials = lazy(() => import('./pages/SourceMaterials'));
 const SourceWeekDetails = lazy(() => import('./pages/SourceWeekDetails'));
 const CongregationPersonDetail = lazy(() => import('./pages/CongregationPersonDetail'));
+const CongregationPersonDetails = lazy(() => import('./pages/CongregationPersonDetails'));
 
 // creating theme
 const lightTheme = createTheme({
@@ -128,7 +129,7 @@ const App = ({ updatePwa }) => {
             },
             {
               path: '/administration/members/:id',
-              element: <CongregationPersonDetail />,
+              element: <CongregationPersonDetails />,
             },
           ],
         },

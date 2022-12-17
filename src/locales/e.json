@@ -147,6 +147,7 @@
   "global.time": "Time",
   "global.myUserProfile": "My User Profile",
   "global.record": "Record",
+  "global.roles": "Roles/Privileges",
 
   "startup.welcomeTitle": "Welcome to CPE",
   "startup.welcomeDescription": "CPE (or Congregation Program for Everyone) is an application designed for the Life and Ministry Meeting Overseer.",
@@ -411,6 +412,7 @@
   "administration.removeBrotherDesc": "Are you sure to remove brother {{ name }} from the congregation? He will no longer have access to your congregation when he connects to his online account.",
   "administration.addNewBrother": "ADD NEW BROTHER",
   "administration.editBrotherRole": "EDIT BROTHER ROLE",
+  "administration.editCPEUser": "EDIT CPE USER",
   "administration.accountNotFound": "No user account has been found. Please make sure that the email address is correct. You can check with the user also if his account was already verified, and MFA was enabled.",
   "administration.accountExist": "This account is already a brother in your congregation.",
   "administration.congregationRoles": "CONGREGATION ROLES",
@@ -418,6 +420,11 @@
   "administration.roleLMMO": "Life and Ministry Meeting Overseer",
   "administration.roleLMMOAssistant": "Life and Ministry Meeting Overseer - Assistant",
   "administration.roleViewMeetingSchedule": "View Meeting Schedule",
+  "administration.sessionsDevices": "Sessions/Devices",
+  "administration.pocketSetupInstruction": "Setup Instructions",
+  "administration.pocketSetupSite": "New device can be added. Ask the user to visit https://sws-pocket.web.app.",
+  "administration.pocketSetupCode": "Then, when prompted, enter the following code to allow CPE app to be run on that device:",
+  "administration.pocketAddDevice": "Add Device",
 
   "about.description": "This application was developed to be used by the Life and Ministry Meeting Overseer to schedule the Midweek Meeting for Jehovah’s Witnesses.",
 

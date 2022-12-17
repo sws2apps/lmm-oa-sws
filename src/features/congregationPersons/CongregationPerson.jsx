@@ -7,12 +7,12 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 
 const CongregationPerson = ({ person }) => {
-  const { id, name, global_role } = person;
+  const { id, username, global_role } = person;
 
   const navigate = useNavigate();
 
   const handleOpenDetails = () => {
-    navigate(`/administration/members/${id}`, { state: { person } });
+    navigate(`/administration/members/${id}`);
   };
 
   return (
@@ -34,8 +34,8 @@ const CongregationPerson = ({ person }) => {
             width: '100%',
           }}
         >
-          <Typography sx={{ fontWeight: 'bold' }}>{name}</Typography>
-          <IconButton color="success">
+          <Typography sx={{ fontWeight: 'bold' }}>{username}</Typography>
+          <IconButton color="success" onClick={handleOpenDetails}>
             <OpenInNewIcon />
           </IconButton>
         </Box>
