@@ -13,12 +13,12 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { VipFindUser } from '../features/administration';
+import { CongregationFindPerson } from '../features/congregationPersons';
 import { apiHostState, rootModalOpenState, userEmailState, visitorIDState } from '../states/main';
 import { appMessageState, appSeverityState, appSnackOpenState } from '../states/notification';
 import { congIDState } from '../states/congregation';
 
-const VipUserDetail = () => {
+const CongregationPersonDetail = () => {
   const queryClient = useQueryClient();
 
   const cancel = useRef();
@@ -97,7 +97,7 @@ const VipUserDetail = () => {
     }
   };
 
-  const { isLoading, error, data } = useQuery({ queryKey: ['vipUser', id], queryFn: handleFetchUser });
+  const { isLoading, error, data } = useQuery({ queryKey: ['congPersons', id], queryFn: handleFetchUser });
 
   const handleUpdateRole = async () => {
     try {
@@ -125,7 +125,7 @@ const VipUserDetail = () => {
 
           if (res.status === 200) {
             setModalOpen(false);
-            queryClient.invalidateQueries({ queryKey: ['vipUser', id] });
+            queryClient.invalidateQueries({ queryKey: ['congPersons', id] });
             navigate('/administration');
             return;
           }
@@ -183,7 +183,7 @@ const VipUserDetail = () => {
         </Typography>
       </Box>
 
-      {!id && <VipFindUser setMember={(value) => setMember(value)} />}
+      {!id && <CongregationFindPerson setMember={(value) => setMember(value)} />}
       {id && isProcessing && (
         <CircularProgress
           color="secondary"
@@ -255,4 +255,4 @@ const VipUserDetail = () => {
   );
 };
 
-export default VipUserDetail;
+export default CongregationPersonDetail;
