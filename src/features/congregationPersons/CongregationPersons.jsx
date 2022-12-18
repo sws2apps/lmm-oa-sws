@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
@@ -7,7 +6,7 @@ import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import Fab from '@mui/material/Fab';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import { apiHostState, userEmailState, visitorIDState } from '../../states/main';
+import { apiHostState, isCongPersonAddState, userEmailState, visitorIDState } from '../../states/main';
 import { appMessageState, appSeverityState, appSnackOpenState } from '../../states/notification';
 import { congIDState } from '../../states/congregation';
 import CongregationPersonsGroup from './CongregationPersonsGroup';
@@ -17,11 +16,10 @@ const CongregationPersons = () => {
 
   const cancel = useRef();
 
-  const navigate = useNavigate();
-
   const setAppSnackOpen = useSetRecoilState(appSnackOpenState);
   const setAppSeverity = useSetRecoilState(appSeverityState);
   const setAppMessage = useSetRecoilState(appMessageState);
+  const setIsCongPersonAdd = useSetRecoilState(isCongPersonAddState);
 
   const userEmail = useRecoilValue(userEmailState);
   const apiHost = useRecoilValue(apiHostState);
@@ -32,7 +30,7 @@ const CongregationPersons = () => {
   const [members, setMembers] = useState([]);
 
   const handleAddMember = () => {
-    navigate('/administration/members/new');
+    setIsCongPersonAdd(true);
   };
 
   const handleFetchUsers = useCallback(async () => {
@@ -115,8 +113,12 @@ const CongregationPersons = () => {
             size={40}
             disableShrink={true}
             sx={{
-              display: 'flex',
-              margin: '10px auto',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              margin: 'auto',
             }}
           />
         )}

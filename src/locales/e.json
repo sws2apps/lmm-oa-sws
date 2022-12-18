@@ -148,6 +148,7 @@
   "global.myUserProfile": "My User Profile",
   "global.record": "Record",
   "global.roles": "Roles/Privileges",
+  "global.search": "Search",
 
   "startup.welcomeTitle": "Welcome to CPE",
   "startup.welcomeDescription": "CPE (or Congregation Program for Everyone) is an application designed for the Life and Ministry Meeting Overseer.",
@@ -425,6 +426,9 @@
   "administration.pocketSetupSite": "New device can be added. Ask the user to visit https://sws-pocket.web.app.",
   "administration.pocketSetupCode": "Then, when prompted, enter the following code to allow CPE app to be run on that device:",
   "administration.pocketAddDevice": "Add Device",
+  "administration.addCPEUser": "Add new CPE user",
+  "administration.cpeUserFound": "Now, click Create. Then edit the roles and priviledge of this user.",
+  "administration.selectPocketRecord": "Select the person record from the list:",
 
   "about.description": "This application was developed to be used by the Life and Ministry Meeting Overseer to schedule the Midweek Meeting for Jehovah’s Witnesses.",
 
