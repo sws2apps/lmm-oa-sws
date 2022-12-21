@@ -39,7 +39,6 @@ const S89Selector = ({ setIsGenerating }) => {
   };
 
   const handleSelection = (value) => {
-    console.log(value);
     setSelected(value);
   };
 
