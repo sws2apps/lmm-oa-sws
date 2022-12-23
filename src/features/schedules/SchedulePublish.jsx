@@ -1,16 +1,26 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
 import Typography from '@mui/material/Typography';
-import { dbBuildScheduleForShare } from '../../indexedDb/dbSchedule';
+import {
+  dbBuildScheduleForShare,
+  dbBuildSchedulesListForShare,
+  formatSelectedSchedulesForShare,
+} from '../../indexedDb/dbSchedule';
 import { appMessageState, appSeverityState, appSnackOpenState } from '../../states/notification';
 import { currentScheduleState, isPublishOpenState } from '../../states/schedule';
 import { apiHostState, userEmailState, visitorIDState } from '../../states/main';
 import { congIDState } from '../../states/congregation';
+import TreeViewCheckbox from '../../components/TreeViewCheckbox';
 
 const SchedulePublish = () => {
   const { t } = useTranslation();
@@ -29,6 +39,13 @@ const SchedulePublish = () => {
   const currentSchedule = useRecoilValue(currentScheduleState);
   const congID = useRecoilValue(congIDState);
 
+  const [data, setData] = useState({});
+  const [selected, setSelected] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
   const handleClose = useCallback(
     (event, reason) => {
       if (reason === 'clickaway' || reason === 'backdropClick') {
@@ -38,6 +55,24 @@ const SchedulePublish = () => {
     },
     [setOpen]
   );
+
+  const handlePublishSchedule = async () => {
+    const schedules = formatSelectedSchedulesForShare(selected);
+    if (schedules.length === 0) {
+      setAppMessage(t('schedule.selectSchedule'));
+      setAppSeverity('warning');
+      setAppSnackOpen(true);
+      return;
+    }
+
+    let dataPocket = [];
+    for (let i = 0; i < schedules.length; i++) {
+      const schedule = schedules[i];
+      const temp = await dbBuildScheduleForShare(schedule);
+      dataPocket.push(temp);
+    }
+    console.log(dataPocket);
+  };
 
   useEffect(() => {
     const abortCont = new AbortController();
@@ -87,7 +122,7 @@ const SchedulePublish = () => {
       }
     };
 
-    publish();
+    // publish();
 
     return () => {
       abortCont.abort();
@@ -105,21 +140,64 @@ const SchedulePublish = () => {
     visitorID,
   ]);
 
+  useEffect(() => {
+    const getList = async () => {
+      setIsLoading(true);
+      const temp = await dbBuildSchedulesListForShare();
+      setData(temp);
+      setIsLoading(false);
+    };
+
+    getList();
+  }, []);
+
   return (
     <Box>
-      <Dialog open={open} aria-labelledby="dialog-title-publish" onClose={handleClose}>
-        <DialogContent>
-          <CircularProgress
-            color="secondary"
-            size={80}
-            disableShrink={true}
-            sx={{
-              display: 'flex',
-              margin: '30px auto',
-            }}
-          />
-          <Typography>{t('schedule.publishPocket')}</Typography>
+      <Dialog
+        open={open}
+        fullScreen={fullScreen}
+        aria-labelledby="dialog-title-publish"
+        onClose={handleClose}
+        scroll="paper"
+      >
+        <DialogTitle id="alert-dialog-title" sx={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+          {fullScreen && (
+            <img
+              src="./img/appLogo.png"
+              alt="App Logo"
+              style={{
+                width: 'auto',
+                height: '30px',
+                borderRadius: '4px',
+              }}
+            />
+          )}
+
+          <Typography sx={{ lineHeight: 1.3, fontSize: fullScreen ? '16px' : '20px' }}>
+            {t('schedule.publishPocket')}
+          </Typography>
+        </DialogTitle>
+        <DialogContent dividers={true}>
+          <Typography>{t('schedule.publishSelectSchedule')}</Typography>
+          <Box sx={{ marginTop: '20px' }}>
+            {!isLoading && Object.keys(data).length > 2 && data.children.length > 0 && (
+              <TreeViewCheckbox
+                data={data}
+                selected={selected}
+                setSelected={(value) => setSelected(value)}
+                defaultExpanded={['sched']}
+              />
+            )}
+          </Box>
         </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            {t('global.cancel')}
+          </Button>
+          <Button onClick={handlePublishSchedule} color="primary" autoFocus disabled={selected.length === 0}>
+            {t('global.publish')}
+          </Button>
+        </DialogActions>
       </Dialog>
     </Box>
   );
