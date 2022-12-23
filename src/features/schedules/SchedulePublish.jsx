@@ -17,7 +17,7 @@ import {
   formatSelectedSchedulesForShare,
 } from '../../indexedDb/dbSchedule';
 import { appMessageState, appSeverityState, appSnackOpenState } from '../../states/notification';
-import { currentScheduleState, isPublishOpenState } from '../../states/schedule';
+import { isPublishOpenState } from '../../states/schedule';
 import { apiHostState, userEmailState, visitorIDState } from '../../states/main';
 import { congIDState } from '../../states/congregation';
 import TreeViewCheckbox from '../../components/TreeViewCheckbox';
@@ -25,7 +25,7 @@ import TreeViewCheckbox from '../../components/TreeViewCheckbox';
 const SchedulePublish = () => {
   const { t } = useTranslation();
 
-  const cancel = useRef();
+  const abortCont = useRef();
 
   const [open, setOpen] = useRecoilState(isPublishOpenState);
 
@@ -36,12 +36,12 @@ const SchedulePublish = () => {
   const visitorID = useRecoilValue(visitorIDState);
   const userEmail = useRecoilValue(userEmailState);
   const apiHost = useRecoilValue(apiHostState);
-  const currentSchedule = useRecoilValue(currentScheduleState);
   const congID = useRecoilValue(congIDState);
 
   const [data, setData] = useState({});
   const [selected, setSelected] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -57,88 +57,61 @@ const SchedulePublish = () => {
   );
 
   const handlePublishSchedule = async () => {
-    const schedules = formatSelectedSchedulesForShare(selected);
-    if (schedules.length === 0) {
-      setAppMessage(t('schedule.selectSchedule'));
-      setAppSeverity('warning');
-      setAppSnackOpen(true);
-      return;
-    }
+    try {
+      const schedules = formatSelectedSchedulesForShare(selected);
+      if (schedules.length === 0) {
+        setAppMessage(t('schedule.selectSchedule'));
+        setAppSeverity('warning');
+        setAppSnackOpen(true);
+        return;
+      }
 
-    let dataPocket = [];
-    for (let i = 0; i < schedules.length; i++) {
-      const schedule = schedules[i];
-      const temp = await dbBuildScheduleForShare(schedule);
-      dataPocket.push(temp);
-    }
-    console.log(dataPocket);
-  };
+      let dataSchedules = [];
+      for (let i = 0; i < schedules.length; i++) {
+        const schedule = schedules[i];
+        const temp = await dbBuildScheduleForShare(schedule);
+        dataSchedules.push(temp);
+      }
 
-  useEffect(() => {
-    const abortCont = new AbortController();
+      if (apiHost !== '') {
+        setIsProcessing(true);
+        abortCont.current = new AbortController();
+        const res = await fetch(`${apiHost}api/congregations/${congID}/schedule`, {
+          method: 'POST',
+          signal: abortCont.current.signal,
+          headers: {
+            'Content-Type': 'application/json',
+            visitorid: visitorID,
+            email: userEmail,
+          },
+          body: JSON.stringify({ schedules: dataSchedules }),
+        });
 
-    const publish = async () => {
-      try {
-        cancel.current = false;
+        const data = await res.json();
 
-        const dataPocket = await dbBuildScheduleForShare(currentSchedule.value);
-        const { cong_schedule, cong_sourceMaterial } = dataPocket;
-
-        if (apiHost !== '') {
-          const res = await fetch(`${apiHost}api/congregations/${congID}/schedule`, {
-            method: 'POST',
-            signal: abortCont.signal,
-            headers: {
-              'Content-Type': 'application/json',
-              visitorid: visitorID,
-              email: userEmail,
-            },
-            body: JSON.stringify({ cong_schedule, cong_sourceMaterial }),
-          });
-
-          const data = await res.json();
-
-          if (res.status === 200) {
-            setAppMessage(t('schedule.publishSuccess'));
-            setAppSeverity('success');
-            setAppSnackOpen(true);
-            handleClose(false);
-
-            return;
-          }
-
-          setAppMessage(data.message);
-          setAppSeverity('warning');
+        if (res.status === 200) {
+          setAppMessage(t('schedule.publishSuccess'));
+          setAppSeverity('success');
           setAppSnackOpen(true);
           handleClose(false);
+          setIsProcessing(false);
+          return;
         }
-      } catch (err) {
-        if (err.name !== 'AbortError') {
-          setAppMessage(err.message);
-          setAppSeverity('error');
-          setAppSnackOpen(true);
-          handleClose();
-        }
+
+        setAppMessage(data.message);
+        setAppSeverity('warning');
+        setAppSnackOpen(true);
+        handleClose(false);
       }
-    };
-
-    // publish();
-
-    return () => {
-      abortCont.abort();
-    };
-  }, [
-    apiHost,
-    congID,
-    currentSchedule,
-    handleClose,
-    setAppMessage,
-    setAppSeverity,
-    setAppSnackOpen,
-    t,
-    userEmail,
-    visitorID,
-  ]);
+    } catch (err) {
+      if (!abortCont.current.signal.aborted) {
+        setAppMessage(err.message);
+        setAppSeverity('warning');
+        setIsProcessing(false);
+        setAppSnackOpen(true);
+      }
+    }
+  };
 
   useEffect(() => {
     const getList = async () => {
@@ -150,6 +123,12 @@ const SchedulePublish = () => {
 
     getList();
   }, []);
+
+  useEffect(() => {
+    return () => {
+      if (abortCont.current) abortCont.current.abort();
+    };
+  }, [abortCont]);
 
   return (
     <Box>
@@ -178,17 +157,38 @@ const SchedulePublish = () => {
           </Typography>
         </DialogTitle>
         <DialogContent dividers={true}>
-          <Typography>{t('schedule.publishSelectSchedule')}</Typography>
-          <Box sx={{ marginTop: '20px' }}>
-            {!isLoading && Object.keys(data).length > 2 && data.children.length > 0 && (
-              <TreeViewCheckbox
-                data={data}
-                selected={selected}
-                setSelected={(value) => setSelected(value)}
-                defaultExpanded={['sched']}
+          {isProcessing && (
+            <Box sx={{ width: '340px', height: '210px' }}>
+              <CircularProgress
+                color="primary"
+                size={80}
+                disableShrink={true}
+                sx={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  margin: 'auto',
+                }}
               />
-            )}
-          </Box>
+            </Box>
+          )}
+          {!isProcessing && (
+            <Box>
+              <Typography>{t('schedule.publishSelectSchedule')}</Typography>
+              <Box sx={{ marginTop: '20px' }}>
+                {!isLoading && Object.keys(data).length > 2 && data.children.length > 0 && (
+                  <TreeViewCheckbox
+                    data={data}
+                    selected={selected}
+                    setSelected={(value) => setSelected(value)}
+                    defaultExpanded={['sched']}
+                  />
+                )}
+              </Box>
+            </Box>
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">

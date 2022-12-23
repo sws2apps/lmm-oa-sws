@@ -114,16 +114,11 @@ export const dbBuildScheduleForShare = async (scheduleIndex) => {
   }
 
   const dataPocket = {
-    cong_schedule: {
-      schedules: objSchedule,
-      month: month,
-      year: year,
-      id: id,
-    },
-    cong_sourceMaterial: {
-      sources: objSource,
-      id: id,
-    },
+    sources: objSource,
+    id: id,
+    schedules: objSchedule,
+    month: month,
+    year: year,
   };
 
   return dataPocket;
