@@ -157,8 +157,8 @@ export const dbGetPersonsByAssType = async (assType) => {
   const assTypeList = await promiseGetRecoil(assTypeLocalNewState);
 
   const linkTo = assTypeList.find((item) => item.value === assType)?.linkTo;
-  assType = linkTo ? linkTo : assType
-  
+  assType = linkTo ? linkTo : assType;
+
   const data = await promiseGetRecoil(allStudentsState);
   // remove disqualified students
   const appData = data.filter((person) => person.isDisqualified === false);
@@ -371,11 +371,15 @@ export const dbRecentStudents = async (data) => {
   const recentStudents = data ? JSON.parse(data) : [];
 
   const dbStudents = await promiseGetRecoil(allStudentsState);
-
-  const builtStudents = recentStudents.map((recent) => {
-    const findStudent = dbStudents.find((student) => student.person_uid === recent);
-    return findStudent;
-  });
+  let builtStudents = [];
+  if (dbStudents.length === 0) {
+    localStorage.removeItem('recentStudents');
+  } else {
+    builtStudents = recentStudents.map((recent) => {
+      const findStudent = dbStudents.find((student) => student.person_uid === recent);
+      return findStudent;
+    });
+  }
 
   return builtStudents;
 };
