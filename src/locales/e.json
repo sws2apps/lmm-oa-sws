@@ -284,6 +284,7 @@
   "persons.recentStudents": "Viewed recently",
   "persons.clearRecents": "Clear recents",
   "persons.pocketDevices": "Devices",
+  "persons.localRecord": "Local record",
 
   "sourceMaterial.weekAdded": "New week has been added",
   "sourceMaterial.weekSaved": "Source material for this week has been saved",
