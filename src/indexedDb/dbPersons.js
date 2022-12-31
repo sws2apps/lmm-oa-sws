@@ -208,6 +208,8 @@ export const dbGetPersonsByAssType = async (assType, stuForAssistant) => {
     }
     person.person_displayName = dbPersons[i].person_displayName;
     person.timeAway = dbPersons[i].timeAway;
+    person.isMale = dbPersons[i].isMale;
+    person.isFemale = dbPersons[i].isFemale;
     persons.push(person);
   }
 
@@ -391,9 +393,15 @@ export const dbRecentStudents = async (data) => {
   if (dbStudents.length === 0) {
     localStorage.removeItem('recentStudents');
   } else {
-    builtStudents = recentStudents.map((recent) => {
+    let temp = recentStudents;
+    recentStudents.forEach((recent) => {
       const findStudent = dbStudents.find((student) => student.person_uid === recent);
-      return findStudent;
+      if (findStudent) {
+        builtStudents.push(findStudent);
+      } else {
+        temp = temp.filter((tmp) => tmp !== recent);
+        localStorage.setItem('recentStudents', JSON.stringify(temp));
+      }
     });
   }
 

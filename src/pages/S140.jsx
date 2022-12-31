@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { useTranslation } from 'react-i18next';
+import { getI18n } from 'react-i18next';
 import html2pdf from 'html2pdf.js';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import Typography from '@mui/material/Typography';
-import { monthNamesState, rootModalOpenState } from '../states/main';
+import { monthNamesState, rootModalOpenState, sourceLangState } from '../states/main';
 import { currentScheduleState } from '../states/schedule';
 import { classCountState, congNameState, congNumberState } from '../states/congregation';
 import { dbGetScheduleForPrint } from '../indexedDb/dbAssignment';
@@ -65,7 +65,6 @@ const ScheduleHeading = ({ congName, congNumber, midweekMeetingPrint }) => {
 
 const S140 = () => {
   let navigate = useNavigate();
-  const { t } = useTranslation();
 
   const setRootModalOpen = useSetRecoilState(rootModalOpenState);
 
@@ -74,8 +73,10 @@ const S140 = () => {
   const congName = useRecoilValue(congNameState);
   const congNumber = useRecoilValue(congNumberState);
   const monthNames = useRecoilValue(monthNamesState);
+  const sourceLang = useRecoilValue(sourceLangState);
 
   const [data, setData] = useState([]);
+  const [dataLang, setDataLang] = useState({});
 
   const savePDF = () => {
     const element = document.getElementById('schedule_template');
@@ -88,6 +89,15 @@ const S140 = () => {
     };
     html2pdf().set(opt).from(element).save();
   };
+
+  const formatAssTime = (text, time) => {
+    return text.replace('{{ duration }}', time);
+  };
+
+  useEffect(() => {
+    const temp = getI18n().getDataByLanguage(sourceLang).translation;
+    setDataLang(temp);
+  }, [sourceLang]);
 
   useEffect(() => {
     const getData = async () => {
@@ -135,7 +145,7 @@ const S140 = () => {
                       <ScheduleHeading
                         congName={congName}
                         congNumber={congNumber}
-                        midweekMeetingPrint={t('schedule.midweekMeetingPrint')}
+                        midweekMeetingPrint={dataLang['schedule.midweekMeetingPrint']}
                       />
                     </Box>
                   )}
@@ -163,7 +173,7 @@ const S140 = () => {
                           lineHeight: '20px',
                         }}
                       >
-                        {`${t('global.chairmanMidweekMeeting')}:`}
+                        {`${dataLang['global.chairmanMidweekMeeting']}:`}
                       </Typography>
                       <Typography sx={styles.assignedPers}>{weekItem.scheduleData.chairmanMM_A_dispName}</Typography>
                     </Box>
@@ -181,7 +191,7 @@ const S140 = () => {
                         }}
                       >
                         {weekItem.scheduleData.noMeeting
-                          ? t('sourceMaterial.noMeeting')
+                          ? dataLang['sourceMaterial.noMeeting']
                           : weekItem.scheduleData.week_type !== 1
                           ? weekItem.scheduleData.week_type_name.toUpperCase()
                           : ''}
@@ -196,7 +206,7 @@ const S140 = () => {
                           lineHeight: '20px',
                         }}
                       >
-                        {classCount === 2 ? `${t('global.auxClassCounselor')}:` : ''}
+                        {classCount === 2 ? `${dataLang['global.auxClassCounselor']}:` : ''}
                       </Typography>
                       <Typography sx={styles.assignedPers}>
                         {classCount === 2 ? weekItem.scheduleData.chairmanMM_B_dispName : ''}
@@ -216,7 +226,7 @@ const S140 = () => {
                                 lineHeight: 1.2,
                               }}
                             >
-                              {`${t('global.song')} ${weekItem.sourceData.songFirst_src}`}
+                              {`${dataLang['global.song']} ${weekItem.sourceData.songFirst_src}`}
                             </Typography>
                           </li>
                         </ul>
@@ -231,7 +241,7 @@ const S140 = () => {
                           lineHeight: '20px',
                         }}
                       >
-                        {`${t('global.prayerMidweekMeeting')}:`}
+                        {`${dataLang['global.prayerMidweekMeeting']}:`}
                       </Typography>
                       <Typography sx={styles.assignedPers}>{weekItem.scheduleData.opening_prayer_dispName}</Typography>
                     </Box>
@@ -249,7 +259,7 @@ const S140 = () => {
                                 lineHeight: 1.2,
                               }}
                             >
-                              {t('scheduleTemplate.openingComments')}{' '}
+                              {dataLang['scheduleTemplate.openingComments']}{' '}
                               <span className="student-part-duration">(1 min.)</span>
                             </Typography>
                           </li>
@@ -275,7 +285,7 @@ const S140 = () => {
                               textTransform: 'uppercase',
                             }}
                           >
-                            {t('global.treasuresPart')}
+                            {dataLang['global.treasuresPart']}
                           </Typography>
                           <Typography
                             sx={{
@@ -287,7 +297,7 @@ const S140 = () => {
                               lineHeight: '20px',
                             }}
                           >
-                            {classCount === 1 ? '' : t('global.auxClass')}
+                            {classCount === 1 ? '' : dataLang['global.auxClass']}
                           </Typography>
                           <Typography
                             sx={{
@@ -299,7 +309,7 @@ const S140 = () => {
                               lineHeight: '20px',
                             }}
                           >
-                            {t('global.mainHall')}
+                            {dataLang['global.mainHall']}
                           </Typography>
                         </Box>
 
@@ -354,7 +364,8 @@ const S140 = () => {
                                       lineHeight: 1.2,
                                     }}
                                   >
-                                    {t('global.tgwGems')} <span className="student-part-duration">(10 min.)</span>
+                                    {dataLang['global.tgwGems']}{' '}
+                                    <span className="student-part-duration">(10 min.)</span>
                                   </Typography>
                                 </li>
                               </ul>
@@ -384,8 +395,8 @@ const S140 = () => {
                                       lineHeight: 1.2,
                                     }}
                                   >
-                                    {t('global.bibleReading')}
-                                    <span className="student-part-duration">{t('global.bibleReadingTime')}</span>
+                                    {dataLang['global.bibleReading']}
+                                    <span className="student-part-duration">{dataLang['global.bibleReadingTime']}</span>
                                   </Typography>
                                 </li>
                               </ul>
@@ -398,7 +409,7 @@ const S140 = () => {
                                 lineHeight: '20px',
                               }}
                             >
-                              {t('global.student')}:
+                              {dataLang['global.student']}:
                             </Typography>
                           </Box>
                           <Typography sx={styles.assignedPers}>
@@ -421,7 +432,7 @@ const S140 = () => {
                               textTransform: 'uppercase',
                             }}
                           >
-                            {t('global.applyFieldMinistryPart')}
+                            {dataLang['global.applyFieldMinistryPart']}
                           </Typography>
                           <Typography
                             sx={{
@@ -433,7 +444,7 @@ const S140 = () => {
                               lineHeight: '20px',
                             }}
                           >
-                            {classCount === 1 ? '' : t('global.auxClass')}
+                            {classCount === 1 ? '' : dataLang['global.auxClass']}
                           </Typography>
                           <Typography
                             sx={{
@@ -445,7 +456,7 @@ const S140 = () => {
                               lineHeight: '20px',
                             }}
                           >
-                            {t('global.mainHall')}
+                            {dataLang['global.mainHall']}
                           </Typography>
                         </Box>
 
@@ -503,9 +514,10 @@ const S140 = () => {
                                                 weekItem.sourceData[fldType] === 104) && (
                                                 <>
                                                   (
-                                                  {t('global.partLessTime', {
-                                                    duration: weekItem.sourceData[fldTime],
-                                                  })}
+                                                  {formatAssTime(
+                                                    dataLang['global.partLessTime'],
+                                                    weekItem.sourceData[fldTime]
+                                                  )}
                                                   )
                                                 </>
                                               )}
@@ -525,13 +537,13 @@ const S140 = () => {
                                       {weekItem.sourceData[fldType] === 101 ||
                                       weekItem.sourceData[fldType] === 102 ||
                                       weekItem.sourceData[fldType] === 103
-                                        ? t('scheduleTemplate.studentAssistant')
+                                        ? dataLang['scheduleTemplate.studentAssistant']
                                         : weekItem.sourceData[fldType] === 105 ||
                                           weekItem.sourceData[fldType] === 106 ||
                                           weekItem.sourceData[fldType] === 107 ||
                                           weekItem.sourceData[fldType] === 117
                                         ? ''
-                                        : t('global.student')}
+                                        : dataLang['global.student']}
                                     </Typography>
                                   </Box>
                                   <Typography sx={styles.assignedPers}>
@@ -598,7 +610,7 @@ const S140 = () => {
                               textTransform: 'uppercase',
                             }}
                           >
-                            {t('global.livingPart')}
+                            {dataLang['global.livingPart']}
                           </Typography>
                           <Typography
                             sx={{
@@ -639,7 +651,7 @@ const S140 = () => {
                                     lineHeight: 1.2,
                                   }}
                                 >
-                                  {`${t('global.song')} ${weekItem.sourceData.songMiddle_src}`}
+                                  {`${dataLang['global.song']} ${weekItem.sourceData.songMiddle_src}`}
                                 </Typography>
                               </li>
                             </ul>
@@ -733,7 +745,7 @@ const S140 = () => {
                                         lineHeight: 1.2,
                                       }}
                                     >
-                                      {t('scheduleTemplate.concludingComments')}{' '}
+                                      {dataLang['scheduleTemplate.concludingComments']}{' '}
                                       <span className="student-part-duration">(3 min.)</span>
                                     </Typography>
                                   </li>
@@ -758,7 +770,7 @@ const S140 = () => {
                                         lineHeight: 1.2,
                                       }}
                                     >
-                                      {t('scheduleTemplate.coTalk')}{' '}
+                                      {dataLang['scheduleTemplate.coTalk']}{' '}
                                       <span className="student-part-duration">(30 min.)</span>
                                     </Typography>
                                   </li>
@@ -786,7 +798,7 @@ const S140 = () => {
                                         lineHeight: 1.2,
                                       }}
                                     >
-                                      {t('global.cbs')} <span className="student-part-duration">(30 min.)</span>
+                                      {dataLang['global.cbs']} <span className="student-part-duration">(30 min.)</span>
                                     </Typography>
                                   </li>
                                 </ul>
@@ -801,10 +813,10 @@ const S140 = () => {
                                   lineHeight: '20px',
                                 }}
                               >
-                                {t('scheduleTemplate.cbsConductor')}
+                                {dataLang['scheduleTemplate.cbsConductor']}
                                 {weekItem.scheduleData.cbs_reader_dispName &&
                                 weekItem.scheduleData.cbs_reader_dispName !== ''
-                                  ? `/${t('scheduleTemplate.cbsReader')}`
+                                  ? `/${dataLang['scheduleTemplate.cbsReader']}`
                                   : ''}
                                 :
                               </Typography>
@@ -830,7 +842,7 @@ const S140 = () => {
                                         lineHeight: 1.2,
                                       }}
                                     >
-                                      {t('scheduleTemplate.concludingComments')}{' '}
+                                      {dataLang['scheduleTemplate.concludingComments']}{' '}
                                       <span className="student-part-duration">(3 min.)</span>
                                     </Typography>
                                   </li>
@@ -857,7 +869,7 @@ const S140 = () => {
                                     lineHeight: 1.2,
                                   }}
                                 >
-                                  {t('global.song')}
+                                  {dataLang['global.song']}
                                   {weekItem.scheduleData.week_type === 2
                                     ? ''
                                     : ` ${weekItem.sourceData.songConclude_src}`}
@@ -875,7 +887,7 @@ const S140 = () => {
                               lineHeight: '20px',
                             }}
                           >
-                            {`${t('global.prayerMidweekMeeting')}:`}
+                            {`${dataLang['global.prayerMidweekMeeting']}:`}
                           </Typography>
                           <Typography sx={styles.assignedPers}>
                             {weekItem.scheduleData.closing_prayer_dispName}
