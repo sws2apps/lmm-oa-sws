@@ -119,7 +119,6 @@ const SignUp = () => {
           setHasErrorEmail(true);
         }
         if (!isSupportedEmail) {
-          setIsProcessing(false);
           setAppMessage(t('global.emailNotSupported'));
           setAppSeverity('warning');
           setAppSnackOpen(true);
