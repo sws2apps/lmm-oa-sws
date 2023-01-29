@@ -14,7 +14,7 @@ import { sourceLangState } from '../../states/main';
 import { SOURCELANGUAGE_LIST } from '../../locales/langList';
 
 const SourceLangSwitcher = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('ui');
 
   const setAppSnackOpen = useSetRecoilState(appSnackOpenState);
   const setAppSeverity = useSetRecoilState(appSeverityState);
@@ -36,21 +36,21 @@ const SourceLangSwitcher = () => {
 
     setAppSnackOpen(true);
     setAppSeverity('success');
-    setAppMessage(t('settings.saved'));
+    setAppMessage(t('saved'));
   };
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Typography className={'settingHeader'}>{t('settings.sourceTemplateLang')}</Typography>
+      <Typography className={'settingHeader'}>{t('sourceTemplateLang')}</Typography>
       <Divider sx={{ borderWidth: '5px' }} />
       <Box sx={{ padding: '20px 20px' }}>
-        <Typography sx={{ marginBottom: '15px' }}>{t('settings.sourceTemplateLangDesc')}</Typography>
+        <Typography sx={{ marginBottom: '15px' }}>{t('sourceTemplateLangDesc')}</Typography>
 
         <Box>
           <TextField
             id="outlined-select-class"
             select
-            label={t('global.changeLanguage')}
+            label={t('changeLanguage')}
             value={tempSourceLang}
             defaultValue={'e'}
             onChange={handleSourceLangChange}
@@ -72,7 +72,7 @@ const SourceLangSwitcher = () => {
           onClick={() => saveAppSettings()}
           sx={{ marginTop: '10px' }}
         >
-          {t('global.save')}
+          {t('save')}
         </Button>
       </Box>
     </Box>
