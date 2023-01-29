@@ -11,7 +11,7 @@ import Tooltip from '@mui/material/Tooltip';
 import TranslateIcon from '@mui/icons-material/Translate';
 import Typography from '@mui/material/Typography';
 import { appLangState } from '../../states/main';
-import { UILANGUAGE_LIST } from '../../locales/langList.js';
+import { LANGUAGE_LIST } from '../../locales/langList.js';
 
 const AppLanguage = () => {
   const { t, i18n } = useTranslation('ui');
@@ -28,6 +28,8 @@ const AppLanguage = () => {
   });
 
   let isMenuOpen = Boolean(anchorEl);
+
+  const listUILangs = LANGUAGE_LIST.filter((lang) => lang.isUI === true);
 
   const handleLangChange = async (e) => {
     setUserChange(true);
@@ -100,7 +102,7 @@ const AppLanguage = () => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        {UILANGUAGE_LIST.map((lang) => (
+        {listUILangs.map((lang) => (
           <MenuItem key={lang.code} onClick={handleLangChange} sx={{ padding: 0 }}>
             <ListItemText data-code={lang.code}>
               <Typography sx={{ padding: '6px 16px' }}>{lang.name}</Typography>

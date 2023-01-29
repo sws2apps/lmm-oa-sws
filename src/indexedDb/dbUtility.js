@@ -313,7 +313,7 @@ export const dbRestoreCongregationBackup = async (
       if (isRestore) {
         const obj = {};
         for (const [key, value] of Object.entries(oldSrc)) {
-          if (key.indexOf('_override')) {
+          if (key.indexOf('_override') !== -1) {
             obj[key] = value;
           }
         }

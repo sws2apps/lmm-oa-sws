@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import { dbUpdateAppSettings } from '../../indexedDb/dbAppSettings';
 import { appMessageState, appSeverityState, appSnackOpenState } from '../../states/notification';
 import { sourceLangState } from '../../states/main';
-import { SOURCELANGUAGE_LIST } from '../../locales/langList';
+import { LANGUAGE_LIST } from '../../locales/langList';
 
 const SourceLangSwitcher = () => {
   const { t } = useTranslation('ui');
@@ -22,6 +22,8 @@ const SourceLangSwitcher = () => {
   const [sourceLang, setSourceLang] = useRecoilState(sourceLangState);
 
   const [tempSourceLang, setTempSourceLang] = useState(sourceLang);
+
+  const listSourceLangs = LANGUAGE_LIST.filter((lang) => lang.isSource === true);
 
   const handleSourceLangChange = (e) => {
     setTempSourceLang(e.target.value);
@@ -57,7 +59,7 @@ const SourceLangSwitcher = () => {
             size="small"
             sx={{ minWidth: 100 }}
           >
-            {SOURCELANGUAGE_LIST.map((lang) => (
+            {listSourceLangs.map((lang) => (
               <MenuItem key={`source-language-${lang.code}`} value={lang.code}>
                 {lang.name}
               </MenuItem>
