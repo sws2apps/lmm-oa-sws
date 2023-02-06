@@ -1,5 +1,5 @@
 import { useEffect, Suspense } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation, useSearchParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import usePwa2 from 'use-pwa2/dist/index.js';
 import Box from '@mui/material/Box';
@@ -19,17 +19,18 @@ import {
   isWhatsNewOpenState,
   restoreDbOpenState,
 } from '../states/main';
+import EmailLinkAuthentication from '../features/startup/EmailLinkAuthentication';
 import Startup from '../features/startup';
 import NavBar from './NavBar';
 import { dlgAssDeleteOpenState, dlgAutoFillOpenState, isPublishOpenState } from '../states/schedule';
 import { AutofillSchedule, DeleteSchedule, SchedulePublish } from '../features/schedules';
 import { isImportEPUBState, isImportJWOrgState } from '../states/sourceMaterial';
 import { ImportEPUB, ImportJWOrg } from '../features/sourceMaterial';
-import { fetchNotifications } from '../utils/app';
 import { AppUpdater } from '../features/updater';
 import { UserSignOut } from '../features/userSignOut';
 import { MyAssignments } from '../features/myAssignments';
 import { CongregationPersonAdd } from '../features/congregationPersons';
+import { fetchNotifications } from '../api/notification';
 
 const WaitingPage = () => {
   return (
@@ -53,6 +54,10 @@ const Layout = ({ updatePwa }) => {
   let location = useLocation();
 
   const { enabledInstall, installPwa, isLoading } = usePwa2();
+
+  const [searchParams] = useSearchParams();
+
+  const isEmailAuth = searchParams.get('code') !== null;
 
   const isAppLoad = useRecoilValue(isAppLoadState);
   const isOpenAbout = useRecoilValue(isAboutOpenState);
@@ -115,7 +120,8 @@ const Layout = ({ updatePwa }) => {
         {isAppClosing && <UserSignOut />}
         {isCongPersonAdd && <CongregationPersonAdd />}
 
-        {isAppLoad && <Startup />}
+        {isEmailAuth && <EmailLinkAuthentication />}
+        {isAppLoad && !isEmailAuth && <Startup />}
         {!isAppLoad && (
           <Suspense fallback={<WaitingPage />}>
             <MyAssignments />

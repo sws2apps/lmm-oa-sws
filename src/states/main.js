@@ -187,11 +187,6 @@ export const isCongAccountCreateState = atom({
   default: false,
 });
 
-export const userEmailState = atom({
-  key: 'userEmail',
-  default: '',
-});
-
 export const isShowTermsUseState = atom({
   key: 'isShowLAG',
   default: localStorage.getItem('termsUse') === 'false' ? false : true,
@@ -329,4 +324,14 @@ export const isCongPersonAddState = atom({
 export const sourceLangState = atom({
   key: 'sourceLang',
   default: 'e',
+});
+
+export const isEmailAuthState = atom({
+  key: 'isEmailAuth',
+  default: false,
+});
+
+export const isAuthProcessingState = atom({
+  key: 'isAuthProcessing',
+  default: false,
 });

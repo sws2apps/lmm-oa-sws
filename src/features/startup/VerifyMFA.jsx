@@ -21,7 +21,7 @@ import {
   visitorIDState,
 } from '../../states/main';
 import { congAccountConnectedState } from '../../states/congregation';
-import { apiHandleVerifyOTP } from '../../utils/app';
+import { apiHandleVerifyOTP } from '../../api/auth';
 import { runUpdater } from '../../utils/updater';
 
 const matchIsNumeric = (text) => {

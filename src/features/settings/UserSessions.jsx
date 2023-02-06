@@ -5,8 +5,9 @@ import { useQuery } from '@tanstack/react-query';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { UserSessionItem } from './';
-import { apiHostState, rootModalOpenState, userEmailState, userIDState, visitorIDState } from '../../states/main';
+import { apiHostState, rootModalOpenState, userIDState, visitorIDState } from '../../states/main';
 import { appMessageState, appSeverityState, appSnackOpenState } from '../../states/notification';
+import useFirebaseAuth from '../../hooks/useFirebaseAuth';
 
 const UserSessions = () => {
   const cancel = useRef();
@@ -18,10 +19,11 @@ const UserSessions = () => {
   const setAppSeverity = useSetRecoilState(appSeverityState);
   const setAppMessage = useSetRecoilState(appMessageState);
 
-  const userEmail = useRecoilValue(userEmailState);
   const apiHost = useRecoilValue(apiHostState);
   const visitorID = useRecoilValue(visitorIDState);
   const userID = useRecoilValue(userIDState);
+
+  const { user } = useFirebaseAuth();
 
   const [sessions, setSessions] = useState([]);
 
@@ -34,7 +36,7 @@ const UserSessions = () => {
         headers: {
           'Content-Type': 'application/json',
           visitorid: visitorID,
-          email: userEmail,
+          uid: user.uid,
         },
       });
 

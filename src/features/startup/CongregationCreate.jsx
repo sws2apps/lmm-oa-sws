@@ -15,9 +15,7 @@ import {
   isUserSignInState,
   offlineOverrideState,
   startupProgressState,
-  userEmailState,
   userIDState,
-  userPasswordState,
 } from '../../states/main';
 import CongregationSelect from '../../components/CongregationSelect';
 import { appMessageState, appSeverityState, appSnackOpenState } from '../../states/notification';
@@ -29,7 +27,6 @@ import {
   isUpdateForVerificationState,
   pocketMembersState,
 } from '../../states/congregation';
-import { encryptString } from '../../utils/swsEncryption';
 import { dbUpdateAppSettings } from '../../indexedDb/dbAppSettings';
 import { loadApp } from '../../utils/app';
 import { runUpdater } from '../../utils/updater';
@@ -54,8 +51,6 @@ const CongregationCreate = () => {
   const setIsAppLoad = useSetRecoilState(isAppLoadState);
   const setPocketMembers = useSetRecoilState(pocketMembersState);
 
-  const userPwd = useRecoilValue(userPasswordState);
-  const userEmail = useRecoilValue(userEmailState);
   const isUpdateCong = useRecoilValue(isUpdateForVerificationState);
   const congId = useRecoilValue(congIDState);
 
@@ -88,16 +83,12 @@ const CongregationCreate = () => {
           // role approved
           if (cong_role.includes('lmmo') || cong_role.includes('lmmo-backup')) {
             setCongID(cong_id);
-            // encrypt email & pwd
-            const encPwd = await encryptString(userPwd, JSON.stringify({ email: userEmail, pwd: userPwd }));
-
             // save congregation update if any
             let obj = {};
             obj.username = data.username;
             obj.isCongUpdated2 = true;
             obj.cong_name = cong_name;
             obj.cong_number = cong_number;
-            obj.userPass = encPwd;
             obj.isLoggedOut = false;
             obj.pocket_members = pocket_members;
             await dbUpdateAppSettings(obj);

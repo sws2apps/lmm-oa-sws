@@ -1,3 +1,4 @@
+import { getAuth } from 'firebase/auth';
 import Dexie from 'dexie';
 import { exportDB, importDB } from 'dexie-export-import';
 import download from 'downloadjs';
@@ -387,4 +388,15 @@ export const dbRestoreCongregationBackup = async (
     const pocket = cong_swsPocket[i];
     await appDb.sws_pocket.add(pocket, pocket.id);
   }
+};
+
+export const dbSavePhotoAvatar = async () => {
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  const photoRes = await fetch(user.photoURL);
+  const photoBlob = await photoRes.blob();
+  const photoArrayBuffer = await photoBlob.arrayBuffer();
+
+  await dbUpdateAppSettings({ user_avatar: photoArrayBuffer });
 };

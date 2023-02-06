@@ -6,10 +6,11 @@ import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import Fab from '@mui/material/Fab';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import { apiHostState, isCongPersonAddState, userEmailState, visitorIDState } from '../../states/main';
+import { apiHostState, isCongPersonAddState, visitorIDState } from '../../states/main';
 import { appMessageState, appSeverityState, appSnackOpenState } from '../../states/notification';
 import { congIDState } from '../../states/congregation';
 import CongregationPersonsGroup from './CongregationPersonsGroup';
+import useFirebaseAuth from '../../hooks/useFirebaseAuth';
 
 const CongregationPersons = () => {
   const { t } = useTranslation('ui');
@@ -21,10 +22,11 @@ const CongregationPersons = () => {
   const setAppMessage = useSetRecoilState(appMessageState);
   const setIsCongPersonAdd = useSetRecoilState(isCongPersonAddState);
 
-  const userEmail = useRecoilValue(userEmailState);
   const apiHost = useRecoilValue(apiHostState);
   const visitorID = useRecoilValue(visitorIDState);
   const congID = useRecoilValue(congIDState);
+
+  const { user } = useFirebaseAuth();
 
   const [isProcessing, setIsProcessing] = useState(true);
   const [members, setMembers] = useState([]);
@@ -42,13 +44,13 @@ const CongregationPersons = () => {
         headers: {
           'Content-Type': 'application/json',
           visitorid: visitorID,
-          email: userEmail,
+          uid: user.uid,
         },
       });
 
       return await res.json();
     }
-  }, [apiHost, congID, userEmail, visitorID]);
+  }, [apiHost, congID, user, visitorID]);
 
   const { isLoading, error, data } = useQuery({ queryKey: ['congPersons'], queryFn: handleFetchUsers });
 

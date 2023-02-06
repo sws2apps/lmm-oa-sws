@@ -19,17 +19,16 @@ import {
   isUserSignInState,
   isUserSignUpState,
   offlineOverrideState,
-  userEmailState,
   visitorIDState,
 } from '../../states/main';
 import { congAccountConnectedState } from '../../states/congregation';
 import { dbUpdateAppSettings } from '../../indexedDb/dbAppSettings';
+import useFirebaseAuth from '../../hooks/useFirebaseAuth';
 
 const UserSignOut = () => {
   const { t } = useTranslation('ui');
 
   const [open, setOpen] = useRecoilState(isAppClosingState);
-  const [userEmail, setUserEmail] = useRecoilState(userEmailState);
   const [congAccountConnected, setCongAccountConnectedState] = useRecoilState(congAccountConnectedState);
 
   const setIsAppLoad = useSetRecoilState(isAppLoadState);
@@ -45,6 +44,8 @@ const UserSignOut = () => {
   const isOnline = useRecoilValue(isOnlineState);
   const apiHost = useRecoilValue(apiHostState);
   const visitorID = useRecoilValue(visitorIDState);
+
+  const { user } = useFirebaseAuth();
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway' || reason === 'backdropClick') {
@@ -65,7 +66,7 @@ const UserSignOut = () => {
             headers: {
               'Content-Type': 'application/json',
               visitorid: visitorID,
-              email: userEmail,
+              uid: user.uid,
             },
           });
 
@@ -86,7 +87,6 @@ const UserSignOut = () => {
       setUserSignUp(false);
       setIsCongAccountCreateState(false);
       setUserSignIn(true);
-      setUserEmail('');
     };
 
     if (open) {
@@ -112,8 +112,7 @@ const UserSignOut = () => {
     setUserMfaVerify,
     setUserSignIn,
     setUserSignUp,
-    setUserEmail,
-    userEmail,
+    user,
     visitorID,
   ]);
 

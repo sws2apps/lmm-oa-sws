@@ -13,8 +13,9 @@ import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { apiHostState, rootModalOpenState, userEmailState, userIDState, visitorIDState } from '../../states/main';
+import { apiHostState, rootModalOpenState, userIDState, visitorIDState } from '../../states/main';
 import { appMessageState, appSeverityState, appSnackOpenState } from '../../states/notification';
+import useFirebaseAuth from '../../hooks/useFirebaseAuth';
 
 const User2FA = () => {
   const cancel = useRef();
@@ -26,10 +27,11 @@ const User2FA = () => {
   const setAppSeverity = useSetRecoilState(appSeverityState);
   const setAppMessage = useSetRecoilState(appMessageState);
 
-  const userEmail = useRecoilValue(userEmailState);
   const apiHost = useRecoilValue(apiHostState);
   const visitorID = useRecoilValue(visitorIDState);
   const userID = useRecoilValue(userIDState);
+
+  const { user } = useFirebaseAuth();
 
   const [qrCode, setQrCode] = useState('');
   const [token, setToken] = useState('');
@@ -44,7 +46,7 @@ const User2FA = () => {
         headers: {
           'Content-Type': 'application/json',
           visitorid: visitorID,
-          email: userEmail,
+          uid: user.uid,
         },
       });
 
