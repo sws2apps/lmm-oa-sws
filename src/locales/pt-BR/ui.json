@@ -300,7 +300,7 @@
   "nothing": "Nada",
   "addWeek": "Nova semana",
   "importEPUB": "Importar EPUB",
-  "addWeekDesc": "Tem certeza que deseja adicionar uma nova semana? É recomendado adicionar a fonte de matéria da Apostila em EPUB baixada no JW.ORG. Clique em Sim para continuar, ou Não para cancelar.",
+  "addWeekDesc": "Tem certeza que deseja adicionar uma nova semana? É recomendado baixar o arquivo EPUB da Apostila e importá-lo para o CPE. Clique em Sim para continuar, ou Não para cancelar.",
   "addWeekTitle": "Adicionar nova semana",
   "invalidFilename": "Esse arquivo EPUB selecionado não pode ser importado",
   "importEPUBTitle": "Importando fonte de matéria desse arquivo EPUB",
@@ -455,7 +455,7 @@
   "btnSetup": "Configurações",
   "selectRecord": "Selecione o seu cadastro da lista:",
   "noMatchRecord": "Nenhum cadastro",
-  "overridePart": "Substituir parte",
-  "overrideSaveWarning": "Ajustar o tempo das partes em Nossa Vida Cristã, incluindo o Estudo Bíblico de Congregação, antes de salvar. O tempo total deve ser de 45 min.",
+  "overridePart": "Substituir",
+  "overrideSaveWarning": "Ajuste o tempo das partes em Nossa Vida Cristã, incluindo o Estudo Bíblico de Congregação, antes de salvar. O tempo total deve ser de 45 min.",
   "languageMissing": "Meu idioma não está aqui"
 }
