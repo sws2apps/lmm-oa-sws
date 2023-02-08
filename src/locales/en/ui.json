@@ -330,7 +330,6 @@
   "deleteWeekOnlyLabel": "{{ currentWeek }} only",
   "assistantHistory": "{{ currentStudent }} (Assistant History)",
   "s89NoData": "There is no assignment to be printed for this schedule",
-  "assignmentPart": "Part {{ id }} ({{ time }} min.)",
   "publishPocket": "Share Schedule",
   "publishSelectSchedule": "Select the schedule you want to share:",
   "publishMSC": "Publish schedule to MSC ...",
@@ -459,5 +458,6 @@
   "overrideSaveWarning": "Adjust the timing of parts in Living as Christians, including Congregation Bible Study, before saving. Total timings should be 45 min.",
   "languageMissing": "My language is not here",
   "initialCallVariations": "0",
-  "returnVisitVariations": "0"
+  "returnVisitVariations": "0",
+  "sourceNotFoundUnavailable": "The source material is not available yet, or this language is not yet supported"
 }

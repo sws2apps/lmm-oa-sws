@@ -739,22 +739,22 @@ export const dbGetS89ItemData = async (week, assName, classLabel) => {
       if (assType === 102 || (assType >= 170 && assType < 200)) fieldSpec = 'returnVisitSpec';
       if (assName === 'ass1') {
         if (ass1Type === ass2Type || ass1Type === ass3Type || ass1Type === ass4Type) {
-          const spec = getI18n().t('assignmentPart', { ns: 'ui', id: 1, time: assTime });
+          const spec = getI18n().t('assignmentPart', { ns: 'source', id: 1, time: assTime });
           s89Data[fieldSpec] = spec;
         }
       } else if (assName === 'ass2') {
         if (ass2Type === ass1Type || ass2Type === ass3Type || ass2Type === ass4Type) {
-          const spec = getI18n().t('assignmentPart', { ns: 'ui', id: 2, time: assTime });
+          const spec = getI18n().t('assignmentPart', { ns: 'source', id: 2, time: assTime });
           s89Data[fieldSpec] = spec;
         }
       } else if (assName === 'ass3') {
         if (ass3Type === ass1Type || ass3Type === ass2Type || ass3Type === ass4Type) {
-          const spec = getI18n().t('assignmentPart', { ns: 'ui', id: 3, time: assTime });
+          const spec = getI18n().t('assignmentPart', { ns: 'source', id: 3, time: assTime });
           s89Data[fieldSpec] = spec;
         }
       } else if (assName === 'ass4') {
         if (ass4Type === ass1Type || ass4Type === ass2Type || ass4Type === ass3Type) {
-          const spec = getI18n().t('assignmentPart', { ns: 'ui', id: 4, time: assTime });
+          const spec = getI18n().t('assignmentPart', { ns: 'source', id: 4, time: assTime });
           s89Data[fieldSpec] = spec;
         }
       }
