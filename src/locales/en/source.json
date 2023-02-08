@@ -45,5 +45,6 @@
   "coTalk": "Talk given by Circuit Overseer",
   "auxClass": "Auxiliary Classroom",
   "memorialInvite": "Memorial Invitation",
-  "assignmentPart": "Part {{ id }} ({{ time }} min.)"
+  "s89Part1Label": "Part 1",
+  "s89Part2Label": "Part 2"
 }
