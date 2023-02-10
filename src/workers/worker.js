@@ -6,21 +6,6 @@ export const getSchedules = async () => {
 
   const fetchIssueData = (issue) => {
     return new Promise((resolve) => {
-      if (issue.hasEPUB) {
-        const epubFile = issue.hasEPUB[0].file;
-        const epubUrl = epubFile.url;
-        const epubModifiedDate = epubFile.modifiedDatetime;
-
-        loadEPUB({ url: epubUrl }).then((epubData) => {
-          const obj = {
-            issueDate: issue.issueDate,
-            modifiedDateTime: epubModifiedDate,
-            ...epubData,
-          };
-          resolve(obj);
-        });
-      }
-
       if (!issue.hasEPUB) {
         const language = issue.language;
 
@@ -183,6 +168,6 @@ export const getSchedules = async () => {
     return mergedSources;
   };
 
-  const data = await fetchData('E');
+  const data = await fetchData('T');
   console.log(data);
 };
