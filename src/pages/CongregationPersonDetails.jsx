@@ -499,7 +499,7 @@ const CongregationPersonDetails = () => {
               </Box>
 
               {/* Local records */}
-              {user.email !== person.user_uid && member.cong_role?.includes('view_meeting_schedule') && (
+              {user && user.email !== person.user_uid && member.cong_role?.includes('view_meeting_schedule') && (
                 <Box sx={{ marginTop: '20px' }}>
                   <Typography
                     sx={{ fontWeight: 'bold', marginBottom: '10px', borderBottom: '1px outset', paddingBottom: '5px' }}
@@ -710,7 +710,7 @@ const CongregationPersonDetails = () => {
         </Box>
       </Box>
       <Box sx={{ '& > :not(style)': { m: 1 }, position: 'fixed', bottom: 20, right: 20 }}>
-        {person.global_role === 'vip' && user.email !== person.user_uid && (
+        {user && person.global_role === 'vip' && user.email !== person.user_uid && (
           <Fab aria-label="save" color="error" onClick={handleRemoveCongPerson}>
             <PersonRemoveIcon />
           </Fab>

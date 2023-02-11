@@ -1,5 +1,5 @@
 import { getI18n } from 'react-i18next';
-import { promiseSetRecoil } from 'recoil-outside';
+import { promiseGetRecoil, promiseSetRecoil } from 'recoil-outside';
 import { dbGetAppSettings, dbUpdateAppSettings } from '../indexedDb/dbAppSettings';
 import { checkSrcUpdate, dbGetListWeekType, dbGetYearList } from '../indexedDb/dbSourceMaterial';
 import { dbGetListAssType, dbHistoryAssignment } from '../indexedDb/dbAssignment';
@@ -14,7 +14,14 @@ import {
   meetingTimeState,
   usernameState,
 } from '../states/congregation';
-import { appLangState, appNotificationsState, sourceLangState, userLocalUidState } from '../states/main';
+import {
+  appLangState,
+  appNotificationsState,
+  avatarUrlState,
+  isOnlineState,
+  sourceLangState,
+  userLocalUidState,
+} from '../states/main';
 import { assTypeListState, weekTypeListState, yearsListState } from '../states/sourceMaterial';
 import { allStudentsState, filteredStudentsState, studentsAssignmentHistoryState } from '../states/persons';
 
@@ -22,8 +29,17 @@ export const loadApp = async () => {
   const I18n = getI18n();
 
   await initAppDb();
-  let { username, local_uid, source_lang, cong_number, cong_name, class_count, meeting_day, meeting_time } =
-    await dbGetAppSettings();
+  let {
+    username,
+    local_uid,
+    source_lang,
+    cong_number,
+    cong_name,
+    class_count,
+    meeting_day,
+    meeting_time,
+    user_avatar,
+  } = await dbGetAppSettings();
 
   const app_lang = localStorage.getItem('app_lang') || 'e';
 
@@ -31,6 +47,20 @@ export const loadApp = async () => {
 
   if (local_uid && local_uid !== '') {
     await promiseSetRecoil(userLocalUidState, local_uid);
+  }
+
+  const isOnline = await promiseGetRecoil(isOnlineState);
+
+  if (user_avatar) {
+    if (typeof user_avatar === 'string' && isOnline) {
+      await promiseSetRecoil(avatarUrlState, user_avatar);
+    }
+
+    if (typeof user_avatar === 'object') {
+      const blob = new Blob([user_avatar]);
+      const imgSrc = URL.createObjectURL(blob);
+      await promiseSetRecoil(avatarUrlState, imgSrc);
+    }
   }
 
   await promiseSetRecoil(usernameState, username || '');
@@ -109,4 +139,29 @@ export const getCurrentWeekDate = () => {
   const diff = today.getDate() - day + (day === 0 ? -6 : 1);
   const monDay = new Date(today.setDate(diff));
   return monDay;
+};
+
+export const saveProfilePic = async (url, provider) => {
+  if (url && url !== '' && url !== null) {
+    if (provider === 'yahoo.com') {
+      await dbUpdateAppSettings({ user_avatar: url });
+      await promiseSetRecoil(avatarUrlState, url);
+
+      return;
+    }
+
+    if (provider !== 'microsoft.com') {
+      const res = await fetch(url);
+      const profileBlob = await res.blob();
+
+      const profileBuffer = await profileBlob.arrayBuffer();
+      await dbUpdateAppSettings({ user_avatar: profileBuffer });
+      const imgSrc = URL.createObjectURL(profileBlob);
+      await promiseSetRecoil(avatarUrlState, imgSrc);
+
+      return;
+    }
+  }
+
+  await promiseSetRecoil(avatarUrlState, undefined);
 };

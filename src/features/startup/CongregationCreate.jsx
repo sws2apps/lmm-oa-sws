@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
+import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import CountrySelect from '../../components/CountrySelect';
 import {
@@ -30,8 +31,11 @@ import {
 import { dbUpdateAppSettings } from '../../indexedDb/dbAppSettings';
 import { loadApp } from '../../utils/app';
 import { runUpdater } from '../../utils/updater';
+import useFirebaseAuth from '../../hooks/useFirebaseAuth';
 
 const CongregationCreate = () => {
+  const { user } = useFirebaseAuth();
+
   const cancel = useRef();
 
   const { t } = useTranslation('ui');
@@ -57,6 +61,7 @@ const CongregationCreate = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [country, setCountry] = useState(null);
   const [congregation, setCongregation] = useState(null);
+  const [userTmpFullname, setUserTmpFullname] = useState('');
 
   const handleSignIn = () => {
     setUserSignIn(true);
@@ -69,7 +74,7 @@ const CongregationCreate = () => {
 
       const { status, data } = isUpdateCong
         ? await apiUpdateCongregation(congId, country.code, congregation.congName, congregation.congNumber)
-        : await apiCreateCongregation(country.code, congregation.congName, congregation.congNumber);
+        : await apiCreateCongregation(country.code, congregation.congName, congregation.congNumber, userTmpFullname);
 
       if (status === 200) {
         const { id, cong_id, cong_name, cong_role, cong_number, pocket_members } = data;
@@ -131,6 +136,10 @@ const CongregationCreate = () => {
   };
 
   useEffect(() => {
+    if (user) setUserTmpFullname(user.displayName || '');
+  }, [user]);
+
+  useEffect(() => {
     return () => {
       cancel.current = true;
     };
@@ -154,6 +163,19 @@ const CongregationCreate = () => {
           gap: '20px',
         }}
       >
+        {!isUpdateCong && (
+          <TextField
+            sx={{ width: '100%' }}
+            id="outlined-fullname"
+            label={t('fullname')}
+            variant="outlined"
+            autoComplete="off"
+            required
+            value={userTmpFullname}
+            onChange={(e) => setUserTmpFullname(e.target.value)}
+          />
+        )}
+
         <CountrySelect setCountry={(value) => setCountry(value)} />
         {country !== null && (
           <CongregationSelect country={country} setCongregation={(value) => setCongregation(value)} />

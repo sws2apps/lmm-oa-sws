@@ -13,6 +13,7 @@ import useFirebaseAuth from '../../hooks/useFirebaseAuth';
 const UserFullname = () => {
   const cancel = useRef();
 
+  const { user } = useFirebaseAuth();
   const { t } = useTranslation('ui');
 
   const [username, setUsername] = useRecoilState(usernameState);
@@ -25,8 +26,6 @@ const UserFullname = () => {
   const apiHost = useRecoilValue(apiHostState);
   const visitorID = useRecoilValue(visitorIDState);
   const userID = useRecoilValue(userIDState);
-
-  const { user } = useFirebaseAuth();
 
   const [tmpUsername, setTempUsername] = useState(username);
   const [isEdit, setIsEdit] = useState(false);
@@ -146,7 +145,7 @@ const UserFullname = () => {
             marginTop: '5px',
             marginBottom: '2px',
           }}
-          value={user.email}
+          value={user?.email || ''}
           InputProps={{
             readOnly: true,
           }}

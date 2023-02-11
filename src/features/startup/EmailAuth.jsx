@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { useSetRecoilState } from 'recoil';
+import { getAuth } from '@firebase/auth';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -8,36 +9,50 @@ import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { isEmailAuthState, isUserSignInState } from '../../states/main';
+import { isEmailAuthState, isOAuthAccountUpgradeState, isUserSignInState, isUserSignUpState } from '../../states/main';
 import { isEmailValid } from '../../utils/emailValid';
 import { appMessageState, appSeverityState, appSnackOpenState } from '../../states/notification';
 import { apiRequestPasswordlesssLink } from '../../api/auth';
+import { dbUpdateAppSettings } from '../../indexedDb/dbAppSettings';
 
 const EmailAuth = () => {
   const { t } = useTranslation('ui');
 
   const cancel = useRef();
-  const emailRef = useRef();
 
   const setIsEmailAuth = useSetRecoilState(isEmailAuthState);
   const setUserSignIn = useSetRecoilState(isUserSignInState);
+  const setUserSignUp = useSetRecoilState(isUserSignUpState);
   const setAppSnackOpen = useSetRecoilState(appSnackOpenState);
   const setAppSeverity = useSetRecoilState(appSeverityState);
   const setAppMessage = useSetRecoilState(appMessageState);
 
+  const isOAuthAccountUpgrade = useRecoilValue(isOAuthAccountUpgradeState);
+
   const [isProcessing, setIsProcessing] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
 
   const handleProviderSignIn = () => {
+    setUserSignUp(false);
     setUserSignIn(true);
     setIsEmailAuth(false);
   };
 
   const handleSendLink = async () => {
-    const email = emailRef.current.value;
+    const email = userEmail;
     cancel.current = false;
 
     setIsProcessing(true);
-    await apiRequestPasswordlesssLink(email);
+
+    if (isOAuthAccountUpgrade) {
+      const auth = await getAuth();
+      const user = auth.currentUser;
+
+      await apiRequestPasswordlesssLink(email, user.uid);
+      await dbUpdateAppSettings({ account_version: 'v2' });
+    } else {
+      await apiRequestPasswordlesssLink(email);
+    }
 
     if (!isEmailValid(email)) {
       setAppMessage(t('emailNotSupported'));
@@ -49,18 +64,30 @@ const EmailAuth = () => {
   };
 
   useEffect(() => {
+    const fillDetailsUpgrade = async () => {
+      const auth = await getAuth();
+      const user = auth.currentUser;
+      setUserEmail(user.email);
+    };
+
+    if (isOAuthAccountUpgrade) fillDetailsUpgrade();
+
     return () => {
       cancel.current = true;
     };
-  }, []);
+  }, [isOAuthAccountUpgrade]);
 
   return (
     <Container sx={{ marginTop: '20px' }}>
-      <Typography variant="h4" sx={{ marginBottom: '15px' }}>
-        {t('emailAuth')}
-      </Typography>
+      {!isOAuthAccountUpgrade && (
+        <>
+          <Typography variant="h4" sx={{ marginBottom: '15px' }}>
+            {t('emailAuth')}
+          </Typography>
 
-      <Typography sx={{ marginBottom: '20px' }}>{t('emailAuthDesc')}</Typography>
+          <Typography sx={{ marginBottom: '20px' }}>{t('emailAuthDesc')}</Typography>
+        </>
+      )}
 
       <Box sx={{ maxWidth: '500px' }}>
         <TextField
@@ -69,7 +96,9 @@ const EmailAuth = () => {
           variant="outlined"
           sx={{ width: '100%' }}
           type="email"
-          inputRef={emailRef}
+          value={userEmail}
+          onChange={(e) => setUserEmail(e.target.value)}
+          inputProps={{ readOnly: isOAuthAccountUpgrade }}
         />
 
         <Box

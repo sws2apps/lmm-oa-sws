@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useSetRecoilState } from 'recoil';
+import { Markup } from 'interweave';
 import { useTranslation } from 'react-i18next';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
@@ -32,7 +33,9 @@ const SignIn = () => {
         {t('signIn')}
       </Typography>
 
-      <Typography sx={{ marginBottom: '20px' }}>{t('signInDesc')}</Typography>
+      <Typography sx={{ marginBottom: '20px' }}>
+        <Markup content={t('signInDesc')} />
+      </Typography>
 
       <OAuth />
 

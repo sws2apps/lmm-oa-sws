@@ -3,7 +3,6 @@ import { Outlet, useLocation, useSearchParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import usePwa2 from 'use-pwa2/dist/index.js';
 import Box from '@mui/material/Box';
-import CircularProgress from '@mui/material/CircularProgress';
 import About from '../features/about';
 import RootModal from './RootModal';
 import UserAutoLogin from '../features/userAutoLogin';
@@ -12,7 +11,6 @@ import { WhatsNew } from '../features/whatsNew';
 import {
   backupDbOpenState,
   isAboutOpenState,
-  isAppClosingState,
   isAppLoadState,
   isCongPersonAddState,
   isOnlineState,
@@ -27,28 +25,10 @@ import { AutofillSchedule, DeleteSchedule, SchedulePublish } from '../features/s
 import { isImportEPUBState, isImportJWOrgState } from '../states/sourceMaterial';
 import { ImportEPUB, ImportJWOrg } from '../features/sourceMaterial';
 import { AppUpdater } from '../features/updater';
-import { UserSignOut } from '../features/userSignOut';
 import { MyAssignments } from '../features/myAssignments';
 import { CongregationPersonAdd } from '../features/congregationPersons';
 import { fetchNotifications } from '../api/notification';
-
-const WaitingPage = () => {
-  return (
-    <CircularProgress
-      color="primary"
-      size={80}
-      disableShrink={true}
-      sx={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        margin: 'auto',
-      }}
-    />
-  );
-};
+import WaitingPage from './WaitingPage';
 
 const Layout = ({ updatePwa }) => {
   let location = useLocation();
@@ -69,7 +49,6 @@ const Layout = ({ updatePwa }) => {
   const isPublishPocket = useRecoilValue(isPublishOpenState);
   const isImportEPUB = useRecoilValue(isImportEPUBState);
   const isImportJWOrg = useRecoilValue(isImportJWOrgState);
-  const isAppClosing = useRecoilValue(isAppClosingState);
   const isCongPersonAdd = useRecoilValue(isCongPersonAddState);
   const isOnline = useRecoilValue(isOnlineState);
 
@@ -117,7 +96,6 @@ const Layout = ({ updatePwa }) => {
         {isPublishPocket && <SchedulePublish />}
         {isImportEPUB && <ImportEPUB />}
         {isImportJWOrg && <ImportJWOrg />}
-        {isAppClosing && <UserSignOut />}
         {isCongPersonAdd && <CongregationPersonAdd />}
 
         {isEmailAuth && <EmailLinkAuthentication />}

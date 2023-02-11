@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { dbUpdateAppSettings } from '../../indexedDb/dbAppSettings';
 import { deleteDb } from '../../indexedDb/dbUtility';
@@ -22,6 +21,8 @@ import useFirebaseAuth from '../../hooks/useFirebaseAuth';
 const UserAutoLogin = () => {
   let abortCont = useMemo(() => new AbortController(), []);
 
+  const { isAuthenticated } = useFirebaseAuth();
+
   const setCongAccountConnected = useSetRecoilState(congAccountConnectedState);
   const setIsAdminCong = useSetRecoilState(isAdminCongState);
   const setCongID = useSetRecoilState(congIDState);
@@ -35,8 +36,6 @@ const UserAutoLogin = () => {
   const isAppLoad = useRecoilValue(isAppLoadState);
 
   const { user } = useFirebaseAuth();
-
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handleDisapproved = useCallback(async () => {
     setModalOpen(true);
@@ -117,17 +116,6 @@ const UserAutoLogin = () => {
       setIsAdminCong(false);
     }
   }, [isAppLoad, isAuthenticated, checkLogin, isOnline, setCongAccountConnected, setIsAdminCong]);
-
-  useEffect(() => {
-    const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setIsAuthenticated(true);
-      } else {
-        setIsAuthenticated(false);
-      }
-    });
-  }, []);
 
   return <></>;
 };

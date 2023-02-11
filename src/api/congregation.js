@@ -39,7 +39,7 @@ export const apiFetchCongregations = async (country, name) => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          user: user.uid,
+          uid: user.uid,
           visitorid: visitorID,
           language: appLang.toUpperCase(),
           country,
@@ -55,7 +55,7 @@ export const apiFetchCongregations = async (country, name) => {
   }
 };
 
-export const apiCreateCongregation = async (country_code, cong_name, cong_number) => {
+export const apiCreateCongregation = async (country_code, cong_name, cong_number, fullname) => {
   const { apiHost, visitorID } = await getProfile();
 
   try {
@@ -68,8 +68,9 @@ export const apiCreateCongregation = async (country_code, cong_name, cong_number
         headers: {
           'Content-Type': 'application/json',
           visitorid: visitorID,
+          uid: user.uid,
         },
-        body: JSON.stringify({ country_code, cong_name, cong_number, app_requestor: 'lmmo', user: user.uid }),
+        body: JSON.stringify({ country_code, cong_name, cong_number, app_requestor: 'lmmo', fullname }),
       });
       const data = await res.json();
 

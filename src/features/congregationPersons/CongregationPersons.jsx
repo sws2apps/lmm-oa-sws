@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { getAuth } from '@firebase/auth';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
@@ -10,7 +11,6 @@ import { apiHostState, isCongPersonAddState, visitorIDState } from '../../states
 import { appMessageState, appSeverityState, appSnackOpenState } from '../../states/notification';
 import { congIDState } from '../../states/congregation';
 import CongregationPersonsGroup from './CongregationPersonsGroup';
-import useFirebaseAuth from '../../hooks/useFirebaseAuth';
 
 const CongregationPersons = () => {
   const { t } = useTranslation('ui');
@@ -26,8 +26,6 @@ const CongregationPersons = () => {
   const visitorID = useRecoilValue(visitorIDState);
   const congID = useRecoilValue(congIDState);
 
-  const { user } = useFirebaseAuth();
-
   const [isProcessing, setIsProcessing] = useState(true);
   const [members, setMembers] = useState([]);
 
@@ -38,6 +36,9 @@ const CongregationPersons = () => {
   const handleFetchUsers = useCallback(async () => {
     if (apiHost !== '') {
       cancel.current = false;
+
+      const auth = await getAuth();
+      const user = auth.currentUser;
 
       const res = await fetch(`${apiHost}api/congregations/${congID}/members`, {
         method: 'GET',
@@ -50,7 +51,7 @@ const CongregationPersons = () => {
 
       return await res.json();
     }
-  }, [apiHost, congID, user, visitorID]);
+  }, [apiHost, congID, visitorID]);
 
   const { isLoading, error, data } = useQuery({ queryKey: ['congPersons'], queryFn: handleFetchUsers });
 

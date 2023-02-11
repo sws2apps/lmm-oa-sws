@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 import { apiHostState, shortDateFormatState, visitorIDState } from '../../states/main';
 import { appMessageState, appSeverityState, appSnackOpenState } from '../../states/notification';
 import { congIDState, isProcessingBackupState } from '../../states/congregation';
-import useFirebaseAuth from '../../hooks/useFirebaseAuth';
+import { getAuth } from '@firebase/auth';
 
 const BackupMain = ({ handleCreateBackup, handleClose, handleRestoreBackup, open, title, action }) => {
   const cancel = useRef();
@@ -31,8 +31,6 @@ const BackupMain = ({ handleCreateBackup, handleClose, handleRestoreBackup, open
   const congID = useRecoilValue(congIDState);
   const shortDateFormat = useRecoilValue(shortDateFormatState);
 
-  const { user } = useFirebaseAuth();
-
   const [hasBackup, setHasBackup] = useState(false);
   const [backup, setBackup] = useState({});
 
@@ -41,6 +39,10 @@ const BackupMain = ({ handleCreateBackup, handleClose, handleRestoreBackup, open
       if (apiHost !== '') {
         cancel.current = false;
         setIsProcessing(true);
+
+        const auth = await getAuth();
+        const user = auth.currentUser;
+
         const res = await fetch(`${apiHost}api/congregations/${congID}/backup/last`, {
           method: 'GET',
           headers: {
@@ -76,7 +78,7 @@ const BackupMain = ({ handleCreateBackup, handleClose, handleRestoreBackup, open
         setAppSnackOpen(true);
       }
     }
-  }, [apiHost, cancel, congID, setAppMessage, setAppSeverity, setAppSnackOpen, setIsProcessing, user, visitorID]);
+  }, [apiHost, cancel, congID, setAppMessage, setAppSeverity, setAppSnackOpen, setIsProcessing, visitorID]);
 
   const handleAction = () => {
     if (action === 'backup') handleCreateBackup();

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { getAuth } from '@firebase/auth';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
@@ -7,7 +8,6 @@ import Typography from '@mui/material/Typography';
 import { UserSessionItem } from './';
 import { apiHostState, rootModalOpenState, userIDState, visitorIDState } from '../../states/main';
 import { appMessageState, appSeverityState, appSnackOpenState } from '../../states/notification';
-import useFirebaseAuth from '../../hooks/useFirebaseAuth';
 
 const UserSessions = () => {
   const cancel = useRef();
@@ -23,13 +23,14 @@ const UserSessions = () => {
   const visitorID = useRecoilValue(visitorIDState);
   const userID = useRecoilValue(userIDState);
 
-  const { user } = useFirebaseAuth();
-
   const [sessions, setSessions] = useState([]);
 
   const handleSessions = async () => {
     if (apiHost !== '') {
       cancel.current = false;
+
+      const auth = getAuth();
+      const user = auth.currentUser;
 
       const res = await fetch(`${apiHost}api/users/${userID}/sessions`, {
         method: 'GET',

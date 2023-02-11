@@ -12,6 +12,7 @@ const BackupDbDialog = () => {
   const cancel = useRef();
 
   const { t } = useTranslation('ui');
+  const { user } = useFirebaseAuth();
 
   const [open, setOpen] = useRecoilState(backupDbOpenState);
 
@@ -23,8 +24,6 @@ const BackupDbDialog = () => {
   const apiHost = useRecoilValue(apiHostState);
   const visitorID = useRecoilValue(visitorIDState);
   const congID = useRecoilValue(congIDState);
-
-  const { user } = useFirebaseAuth();
 
   const handleClose = useCallback(
     (event, reason) => {

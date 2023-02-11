@@ -97,6 +97,7 @@ const VerifyMFA = () => {
         }
 
         setIsProcessing(false);
+        setOfflineOverride(false);
       }
     } catch (err) {
       if (!cancel.current) {

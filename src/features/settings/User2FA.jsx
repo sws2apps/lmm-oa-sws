@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { getAuth } from '@firebase/auth';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import { Markup } from 'interweave';
@@ -15,7 +16,6 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { apiHostState, rootModalOpenState, userIDState, visitorIDState } from '../../states/main';
 import { appMessageState, appSeverityState, appSnackOpenState } from '../../states/notification';
-import useFirebaseAuth from '../../hooks/useFirebaseAuth';
 
 const User2FA = () => {
   const cancel = useRef();
@@ -31,8 +31,6 @@ const User2FA = () => {
   const visitorID = useRecoilValue(visitorIDState);
   const userID = useRecoilValue(userIDState);
 
-  const { user } = useFirebaseAuth();
-
   const [qrCode, setQrCode] = useState('');
   const [token, setToken] = useState('');
   const [viewerOpen, setViewerOpen] = useState(false);
@@ -40,6 +38,9 @@ const User2FA = () => {
   const handleFecth = async () => {
     if (apiHost !== '') {
       cancel.current = false;
+
+      const auth = getAuth();
+      const user = auth.currentUser;
 
       const res = await fetch(`${apiHost}api/users/${userID}/2fa`, {
         method: 'GET',
@@ -75,7 +76,7 @@ const User2FA = () => {
       setToken(data.secret);
     };
 
-    if (data) {
+    if (data && data.qrCode) {
       getImg();
     }
   }, [data]);

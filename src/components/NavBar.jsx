@@ -8,6 +8,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import AppBar from '@mui/material/AppBar';
+import Avatar from '@mui/material/Avatar';
 import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -20,7 +21,6 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import AppLanguage from '../features/languageSwitcher';
@@ -28,11 +28,12 @@ import ThemeSwitcher from '../features/themeSwitcher';
 import { WhatsNewContent } from '../features/whatsNew';
 import { themeOptionsState } from '../states/theme';
 import {
+  avatarUrlState,
   countNotificationsState,
   isAboutOpenState,
-  isAppClosingState,
   isAppLoadState,
   isOnlineState,
+  isSetupState,
   isShowTermsUseState,
   isUserSignInState,
   isUserSignUpState,
@@ -70,12 +71,12 @@ const NavBar = (props) => {
   const theme = useTheme();
 
   const setIsAboutOpen = useSetRecoilState(isAboutOpenState);
-  const setIsAppClosing = useSetRecoilState(isAppClosingState);
   const setOfflineOverride = useSetRecoilState(offlineOverrideState);
   const setIsAppLoad = useSetRecoilState(isAppLoadState);
   const setShowTermsUse = useSetRecoilState(isShowTermsUseState);
   const setUserSignIn = useSetRecoilState(isUserSignInState);
   const setUserSignUp = useSetRecoilState(isUserSignUpState);
+  const setIsSetup = useSetRecoilState(isSetupState);
 
   const themeOptions = useRecoilValue(themeOptionsState);
   const cnNews = useRecoilValue(countNotificationsState);
@@ -84,6 +85,7 @@ const NavBar = (props) => {
   const congAccountConnected = useRecoilValue(congAccountConnectedState);
   const isAppLoad = useRecoilValue(isAppLoadState);
   const isOnline = useRecoilValue(isOnlineState);
+  const userAvatar = useRecoilValue(avatarUrlState);
 
   const mdUp = useMediaQuery(theme.breakpoints.up('md'), {
     noSsr: true,
@@ -120,11 +122,6 @@ const NavBar = (props) => {
     setIsAboutOpen(true);
   };
 
-  const handleLogout = async () => {
-    handleClose();
-    setIsAppClosing(true);
-  };
-
   const handleUseOnlineAccount = () => {
     handleClose();
     setShowTermsUse(false);
@@ -132,6 +129,7 @@ const NavBar = (props) => {
     setUserSignIn(true);
     setOfflineOverride(true);
     setIsAppLoad(true);
+    setIsSetup(true);
   };
 
   const handleGoDashboard = () => {
@@ -257,7 +255,10 @@ const NavBar = (props) => {
                         </Typography>
                       </Box>
                     )}
-                    <AccountCircle sx={{ fontSize: '40px' }} />
+                    {userAvatar && (
+                      <Avatar alt="Avatar" src={userAvatar} sx={{ width: 32, height: 32, border: '1px solid white' }} />
+                    )}
+                    {!userAvatar && <AccountCircle sx={{ fontSize: '40px' }} />}
                   </IconButton>
                   <Menu
                     sx={{ marginTop: '40px', '.MuiMenu-list': { minWidth: '200px !important' } }}
@@ -301,12 +302,6 @@ const NavBar = (props) => {
                         <InfoIcon fontSize="medium" sx={{ color: '#3498DB' }} />
                       </ListItemIcon>
                       <ListItemText>{t('about')}</ListItemText>
-                    </MenuItem>
-                    <MenuItem onClick={handleLogout}>
-                      <ListItemIcon>
-                        <PowerSettingsNewIcon fontSize="medium" sx={{ color: '#E74C3C' }} />
-                      </ListItemIcon>
-                      <ListItemText>{t('quit')}</ListItemText>
                     </MenuItem>
                     {!mdUp && (
                       <MenuItem disabled={true} sx={{ opacity: '1 !important' }}>

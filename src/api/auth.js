@@ -1,10 +1,10 @@
 import { getAuth } from 'firebase/auth';
 import { getI18n } from 'react-i18next';
-import { promiseSetRecoil } from 'recoil-outside';
+import { promiseGetRecoil, promiseSetRecoil } from 'recoil-outside';
 import { dbGetAppSettings, dbUpdateAppSettings } from '../indexedDb/dbAppSettings';
 import { initAppDb, isDbExist } from '../indexedDb/dbUtility';
 import { congIDState, isAdminCongState, pocketMembersState } from '../states/congregation';
-import { qrCodePathState, secretTokenPathState, userIDState } from '../states/main';
+import { isOAuthAccountUpgradeState, qrCodePathState, secretTokenPathState, userIDState } from '../states/main';
 import { appMessageState, appSeverityState, appSnackOpenState } from '../states/notification';
 import { loadApp } from '../utils/app';
 import { getProfile } from './common';
@@ -53,6 +53,8 @@ export const apiSendAuthorization = async () => {
 
 export const apiHandleVerifyOTP = async (userOTP, isSetup) => {
   try {
+    const { t } = getI18n();
+
     const { apiHost, visitorID } = await getProfile();
 
     const auth = getAuth();
@@ -119,6 +121,7 @@ export const apiHandleVerifyOTP = async (userOTP, isSetup) => {
           return { createCongregation: true };
         } else {
           if (data.message) {
+            if (data.message === 'TOKEN_INVALID') data.message = t('mfaTokenInvalidExpired', { ns: 'ui' });
             await promiseSetRecoil(appMessageState, data.message);
             await promiseSetRecoil(appSeverityState, 'warning');
             await promiseSetRecoil(appSnackOpenState, true);
@@ -141,11 +144,13 @@ export const apiHandleVerifyOTP = async (userOTP, isSetup) => {
   }
 };
 
-export const apiRequestPasswordlesssLink = async (email) => {
+export const apiRequestPasswordlesssLink = async (email, uid) => {
   const { t } = getI18n();
 
   try {
     const { apiHost, appLang } = await getProfile();
+
+    const isOAuthAccountUpgrade = await promiseGetRecoil(isOAuthAccountUpgradeState);
 
     if (apiHost !== '') {
       const res = await fetch(`${apiHost}user-passwordless-login`, {
@@ -154,13 +159,18 @@ export const apiRequestPasswordlesssLink = async (email) => {
           'Content-Type': 'application/json',
           applanguage: appLang,
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, uid }),
       });
 
       const data = await res.json();
       if (res.status === 200) {
         localStorage.setItem('emailForSignIn', email);
-        await promiseSetRecoil(appMessageState, t('emailAuthSent', { ns: 'ui' }));
+        if (isOAuthAccountUpgrade) {
+          await promiseSetRecoil(appMessageState, t('oauthAccountUpgradeEmailComplete', { ns: 'ui' }));
+        } else {
+          await promiseSetRecoil(appMessageState, t('emailAuthSent', { ns: 'ui' }));
+        }
+
         await promiseSetRecoil(appSeverityState, 'success');
         await promiseSetRecoil(appSnackOpenState, true);
         return { isSuccess: true };
@@ -181,7 +191,7 @@ export const apiRequestPasswordlesssLink = async (email) => {
   }
 };
 
-export const apiUpdatePasswordlessInfo = async (uid, fullname) => {
+export const apiUpdatePasswordlessInfo = async (uid) => {
   const { t } = getI18n();
 
   try {
@@ -190,29 +200,29 @@ export const apiUpdatePasswordlessInfo = async (uid, fullname) => {
     if (apiHost !== '') {
       const tmpEmail = localStorage.getItem('emailForSignIn');
 
-      const res = await fetch(`${apiHost}user-passwordless-info`, {
+      const res = await fetch(`${apiHost}user-passwordless-verify`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           uid,
         },
-        body: JSON.stringify({ email: tmpEmail, fullname, visitorid: visitorID }),
+        body: JSON.stringify({ email: tmpEmail, visitorid: visitorID }),
       });
 
       const data = await res.json();
 
-      localStorage.removeItem('emailForSignIn');
-
       if (res.status === 200) {
+        localStorage.removeItem('emailForSignIn');
         return { isVerifyMFA: true, tmpEmail };
       } else {
         if (data.secret && data.qrCode) {
+          localStorage.removeItem('emailForSignIn');
           await promiseSetRecoil(secretTokenPathState, data.secret);
           await promiseSetRecoil(qrCodePathState, data.qrCode);
           return { isSetupMFA: true, tmpEmail };
         }
         if (data.message) {
-          await promiseSetRecoil(appMessageState, data.message);
+          await promiseSetRecoil(appMessageState, t('verifyEmailError', { ns: 'ui' }));
           await promiseSetRecoil(appSeverityState, 'warning');
           await promiseSetRecoil(appSnackOpenState, true);
           return {};
