@@ -390,13 +390,6 @@
   "noBackupFound": "No backup has not been found yet for your congregation.",
   "myAccount": "MY ACCOUNT",
   "emailLocked": "This email address can no longer be changed. Please contact us if you want to change it.",
-  "changePassword": "Change password",
-  "oldPassword": "Old password",
-  "newPassword": "New password",
-  "passwordRequirements": "The password should be 10 or more characters longer",
-  "passwordIncorrect": "The password is incorrect",
-  "passwordNotEqual": "The new passwords do not match",
-  "passwordChanged": "Your password has been changed successfully!",
   "twoFactor": "Two-factor authentication",
   "twoFactorDesc": "Two-factor authentication adds an additional layer of security to your account by requiring more than just a password to sign in.",
   "twoFactorAddDevice": "Add device",
@@ -490,5 +483,9 @@
   "oauthAccountUpgradeComplete": "Your account has been upgraded. This page will now reload.",
   "oauthAccountUpgradeEmailComplete": "Your account has been upgraded. A message has been sent to your email address to complete your authentication.",
   "logoutOnlineAccount": "Logout from online account",
-  "logoutSuccess": "You are now disconnected from your online account"
+  "logoutSuccess": "You are now disconnected from your online account",
+  "userAccountUpgrade": "User Account Upgrade",
+  "userAccountUpgradeDesc": "CPE has been updated to use a new authentication method. Email and password login is no longer supported.  Instead, you will use a service provider, like Google, Yahoo, Microsoft, to login into your account. If   you do not have account in any of these providers, you can use the passwordless authentication. Please   note that entering verification code from an authenticator app is always required.",
+  "userAccountUpgradeStart": "To begin, login into your account using your usual email address and password.",
+  "userAccountUpgradeChooseService": "Choose below which service you would like to use to upgrade your account."
 }

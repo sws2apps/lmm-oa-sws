@@ -95,19 +95,14 @@ const UserAccountUpgrade = () => {
     <Box sx={{ maxWidth: '500px', margin: '20px auto' }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
         <GppMaybeIcon color="warning" sx={{ fontSize: '40px' }} />
-        <Typography sx={{ fontSize: '20px' }}>User Account Upgrade</Typography>
+        <Typography sx={{ fontSize: '20px' }}>{t('userAccountUpgrade')}</Typography>
       </Box>
 
       {isLogin && (
         <Box>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-            <Typography>
-              CPE has been updated to use a new authentication method. Email and password login is no longer supported.
-              Instead, you will use a service provider, like Google, Yahoo, Microsoft, to login into your account. If
-              you do not have account in any of these providers, you can use the passwordless authentication. Please
-              note that entering verification code from an authenticator app is always required.
-            </Typography>
-            <Typography>To begin, login into your account using your usual email address and password.</Typography>
+            <Typography>{t('userAccountUpgradeDesc')}</Typography>
+            <Typography>{t('userAccountUpgradeStart')}</Typography>
           </Box>
 
           <Box sx={{ maxWidth: '380px' }}>
@@ -140,9 +135,7 @@ const UserAccountUpgrade = () => {
 
       {!isLogin && !isEmailAuth && (
         <Box>
-          <Typography sx={{ marginBottom: '15px' }}>
-            Choose below which service you would like to use to upgrade your account.
-          </Typography>
+          <Typography sx={{ marginBottom: '15px' }}>{t('userAccountUpgradeChooseService')}</Typography>
           <OAuth />
         </Box>
       )}
