@@ -1,6 +1,7 @@
 import { cloneElement, useState } from 'react';
+import { getAuth, signOut } from '@firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '@mui/material';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
@@ -18,6 +19,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import KeyIcon from '@mui/icons-material/Key';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
+import LogoutIcon from '@mui/icons-material/Logout';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -28,6 +30,7 @@ import ThemeSwitcher from '../features/themeSwitcher';
 import { WhatsNewContent } from '../features/whatsNew';
 import { themeOptionsState } from '../states/theme';
 import {
+  apiHostState,
   avatarUrlState,
   countNotificationsState,
   isAboutOpenState,
@@ -38,8 +41,10 @@ import {
   isUserSignInState,
   isUserSignUpState,
   offlineOverrideState,
+  visitorIDState,
 } from '../states/main';
 import { congAccountConnectedState, congInfoFormattedState, usernameState } from '../states/congregation';
+import { appMessageState, appSeverityState, appSnackOpenState } from '../states/notification';
 
 const sharedStyles = {
   menuIcon: {
@@ -70,6 +75,8 @@ const NavBar = (props) => {
   const navigate = useNavigate();
   const theme = useTheme();
 
+  const [congAccountConnected, setCongAccountConnected] = useRecoilState(congAccountConnectedState);
+
   const setIsAboutOpen = useSetRecoilState(isAboutOpenState);
   const setOfflineOverride = useSetRecoilState(offlineOverrideState);
   const setIsAppLoad = useSetRecoilState(isAppLoadState);
@@ -77,15 +84,19 @@ const NavBar = (props) => {
   const setUserSignIn = useSetRecoilState(isUserSignInState);
   const setUserSignUp = useSetRecoilState(isUserSignUpState);
   const setIsSetup = useSetRecoilState(isSetupState);
+  const setAppSnackOpen = useSetRecoilState(appSnackOpenState);
+  const setAppSeverity = useSetRecoilState(appSeverityState);
+  const setAppMessage = useSetRecoilState(appMessageState);
 
   const themeOptions = useRecoilValue(themeOptionsState);
   const cnNews = useRecoilValue(countNotificationsState);
   const congInfo = useRecoilValue(congInfoFormattedState);
   const username = useRecoilValue(usernameState);
-  const congAccountConnected = useRecoilValue(congAccountConnectedState);
   const isAppLoad = useRecoilValue(isAppLoadState);
   const isOnline = useRecoilValue(isOnlineState);
   const userAvatar = useRecoilValue(avatarUrlState);
+  const apiHost = useRecoilValue(apiHostState);
+  const visitorID = useRecoilValue(visitorIDState);
 
   const mdUp = useMediaQuery(theme.breakpoints.up('md'), {
     noSsr: true,
@@ -130,6 +141,31 @@ const NavBar = (props) => {
     setOfflineOverride(true);
     setIsAppLoad(true);
     setIsSetup(true);
+  };
+
+  const handleLogout = async () => {
+    handleClose();
+    if (apiHost !== '') {
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      await fetch(`${apiHost}api/users/logout`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          visitorid: visitorID,
+          uid: user.uid,
+        },
+      });
+
+      await signOut(auth);
+
+      setCongAccountConnected(false);
+
+      setAppMessage(t('logoutSuccess'));
+      setAppSeverity('success');
+      setAppSnackOpen(true);
+    }
   };
 
   const handleGoDashboard = () => {
@@ -303,6 +339,15 @@ const NavBar = (props) => {
                       </ListItemIcon>
                       <ListItemText>{t('about')}</ListItemText>
                     </MenuItem>
+                    {isOnline && congAccountConnected && (
+                      <MenuItem onClick={handleLogout}>
+                        <ListItemIcon>
+                          <LogoutIcon fontSize="medium" sx={{ color: '#E74C3C' }} />
+                        </ListItemIcon>
+                        <ListItemText>{t('logoutOnlineAccount')}</ListItemText>
+                      </MenuItem>
+                    )}
+
                     {!mdUp && (
                       <MenuItem disabled={true} sx={{ opacity: '1 !important' }}>
                         <Box

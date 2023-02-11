@@ -21,7 +21,7 @@ import useFirebaseAuth from '../../hooks/useFirebaseAuth';
 const UserAutoLogin = () => {
   let abortCont = useMemo(() => new AbortController(), []);
 
-  const { isAuthenticated } = useFirebaseAuth();
+  const { isAuthenticated, user } = useFirebaseAuth();
 
   const setCongAccountConnected = useSetRecoilState(congAccountConnectedState);
   const setIsAdminCong = useSetRecoilState(isAdminCongState);
@@ -34,8 +34,6 @@ const UserAutoLogin = () => {
   const apiHost = useRecoilValue(apiHostState);
   const visitorID = useRecoilValue(visitorIDState);
   const isAppLoad = useRecoilValue(isAppLoadState);
-
-  const { user } = useFirebaseAuth();
 
   const handleDisapproved = useCallback(async () => {
     setModalOpen(true);

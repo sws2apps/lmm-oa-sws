@@ -142,26 +142,45 @@ export const getCurrentWeekDate = () => {
 };
 
 export const saveProfilePic = async (url, provider) => {
-  if (url && url !== '' && url !== null) {
-    if (provider === 'yahoo.com') {
-      await dbUpdateAppSettings({ user_avatar: url });
-      await promiseSetRecoil(avatarUrlState, url);
+  try {
+    if (url && url !== '' && url !== null) {
+      if (provider === 'yahoo.com') {
+        await dbUpdateAppSettings({ user_avatar: url });
+        await promiseSetRecoil(avatarUrlState, url);
 
-      return;
+        return;
+      }
+
+      if (provider !== 'microsoft.com') {
+        const imageReceived = () => {
+          const canvas = document.createElement('canvas');
+          const context = canvas.getContext('2d');
+
+          canvas.width = downloadedImg.width;
+          canvas.height = downloadedImg.height;
+          canvas.innerText = downloadedImg.alt;
+
+          context.drawImage(downloadedImg, 0, 0);
+
+          canvas.toBlob((done) => savePic(done));
+        };
+
+        const downloadedImg = new Image();
+        downloadedImg.crossOrigin = 'Anonymous';
+        downloadedImg.src = url;
+        downloadedImg.addEventListener('load', imageReceived, false);
+
+        const savePic = async (profileBlob) => {
+          const profileBuffer = await profileBlob.arrayBuffer();
+          await dbUpdateAppSettings({ user_avatar: profileBuffer });
+          const imgSrc = URL.createObjectURL(profileBlob);
+          await promiseSetRecoil(avatarUrlState, imgSrc);
+        };
+
+        return;
+      }
     }
 
-    if (provider !== 'microsoft.com') {
-      const res = await fetch(url);
-      const profileBlob = await res.blob();
-
-      const profileBuffer = await profileBlob.arrayBuffer();
-      await dbUpdateAppSettings({ user_avatar: profileBuffer });
-      const imgSrc = URL.createObjectURL(profileBlob);
-      await promiseSetRecoil(avatarUrlState, imgSrc);
-
-      return;
-    }
-  }
-
-  await promiseSetRecoil(avatarUrlState, undefined);
+    await promiseSetRecoil(avatarUrlState, undefined);
+  } catch (err) {}
 };

@@ -9,6 +9,7 @@ const useFirebaseAuth = () => {
   useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
+      console.log(auth, user);
       setUser(user);
       if (user) {
         const provider = user.providerData[0]?.providerId || 'none';

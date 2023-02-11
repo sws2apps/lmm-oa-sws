@@ -209,7 +209,7 @@
   "newAccount": "NEW ACCOUNT",
   "createAccount": "Create",
   "accountNotFound": "The provided login does not exist yet.",
-  "accountExist": "That email address is already taken. Please use sign in instead.",
+  "accountExist": "That person is already in your congregation.",
   "accountDisabled": "The account that you are trying to access is currently disabled.",
   "createFailed": "An error occured and your account could not be created",
   "accountCreated": "Your account is created, but you have to check the verification email before using it.",
@@ -247,7 +247,8 @@
   "thisDevice": "This device",
   "otherDevice": "Other device",
   "setupThisDevice": "Setup",
-  "mfaVerifyTitle": "MFA verification",
+  "mfaVerifyTitle": "Let’s make sure that it is you",
+  "mfaVerifyDesc": "Enter below a code from the authenticator app",
   "mfaSetupUpdate": "<strong>Important:</strong> We have updated the MFA verification system. First, delete the previous sws2apps account created on <em>Microsoft Authenticator</em> or <em>Google Authenticator</em>. Then, choose on which device do you want to finalize the setup of the new verification code.",
   "currentSchedule": "MEETING SCHEDULE—{{currentWeek}}",
   "all": "All",
@@ -485,5 +486,7 @@
   "oauthAccountExistsWithDifferentCredential": "Your account is already linked to another service. Please login using that service instead.",
   "oauthAccountUpgradeError": "An error occured while upgrading your account. Please try again later.",
   "oauthAccountUpgradeComplete": "Your account has been upgraded. This page will now reload.",
-  "oauthAccountUpgradeEmailComplete": "Your account has been upgraded. A message has been sent to your email address to complete your authentication."
+  "oauthAccountUpgradeEmailComplete": "Your account has been upgraded. A message has been sent to your email address to complete your authentication.",
+  "logoutOnlineAccount": "Logout from online account",
+  "logoutSuccess": "You are now disconnected from your online account"
 }

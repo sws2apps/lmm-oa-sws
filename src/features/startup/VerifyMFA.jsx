@@ -155,6 +155,8 @@ const VerifyMFA = () => {
         {t('mfaVerifyTitle')}
       </Typography>
 
+      <Typography sx={{ marginBottom: '15px' }}>{t('mfaVerifyDesc')}</Typography>
+
       <Box sx={{ width: '100%', maxWidth: '450px', marginTop: '20px' }}>
         <MuiOtpInput
           value={userOTP}

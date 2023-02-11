@@ -70,7 +70,7 @@ const OAuthButtonBase = ({ buttonStyles, logo, text, provider, isEmail }) => {
       setAppSeverity('success');
       setAppSnackOpen(true);
       setTimeout(() => {
-        window.location.href('/');
+        window.location.href = './';
       }, 2000);
     } catch (err) {
       setAppMessage(t('oauthAccountUpgradeError'));

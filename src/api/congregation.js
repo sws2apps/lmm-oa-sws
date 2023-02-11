@@ -1,5 +1,5 @@
-import { getProfile } from './common';
 import { getAuth } from 'firebase/auth';
+import { getProfile } from './common';
 
 export const apiFetchCountries = async () => {
   const { apiHost, appLang, visitorID } = await getProfile();

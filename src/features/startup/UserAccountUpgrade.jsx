@@ -57,9 +57,7 @@ const UserAccountUpgrade = () => {
       if (isEmailValid(userTmpEmail) && userTmpPwd.length >= 10) {
         setIsProcessing(true);
         const auth = getAuth();
-        const userCredential = await signInWithEmailAndPassword(auth, userTmpEmail, userTmpPwd);
-        const user = userCredential.user;
-        console.log(user);
+        await signInWithEmailAndPassword(auth, userTmpEmail, userTmpPwd);
         setIsProcessing(false);
         setIsOAuthAccountUpgrade(true);
         setIsLogin(false);
