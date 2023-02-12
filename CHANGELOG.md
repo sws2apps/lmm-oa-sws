@@ -1,3 +1,24 @@
+## [2.32.7](https://github.com/sws2apps/lmm-oa-sws/compare/v2.32.6...v2.32.7) (2023-02-12)
+
+
+### Bug Fixes
+
+* **csp:** add blob to img-src ([355f95c](https://github.com/sws2apps/lmm-oa-sws/commit/355f95ca4a7eb13de4b522193bcf0ee2fc26dbbd))
+
+## [2.32.6](https://github.com/sws2apps/lmm-oa-sws/compare/v2.32.5...v2.32.6) (2023-02-12)
+
+
+### Bug Fixes
+
+* **csp:** update img-src to load profile picture from google ([ca41085](https://github.com/sws2apps/lmm-oa-sws/commit/ca41085717274755f54eafbeae59eaa89131c304))
+
+## [2.32.5](https://github.com/sws2apps/lmm-oa-sws/compare/v2.32.4...v2.32.5) (2023-02-12)
+
+
+### Bug Fixes
+
+* **hooks:** update path to obtain photo url from firebase auth ([f382622](https://github.com/sws2apps/lmm-oa-sws/commit/f38262252029d2ad4d5e4708b027b370496f4452))
+
 ## [2.32.4](https://github.com/sws2apps/lmm-oa-sws/compare/v2.32.3...v2.32.4) (2023-02-12)
 
 
