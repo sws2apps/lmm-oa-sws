@@ -1,3 +1,38 @@
+## [2.32.4](https://github.com/sws2apps/lmm-oa-sws/compare/v2.32.3...v2.32.4) (2023-02-12)
+
+
+### Bug Fixes
+
+* **csp:** update connect-src for new firebase auth ([04d9906](https://github.com/sws2apps/lmm-oa-sws/commit/04d9906ba04b282c4da209d7e46d2562e85eb817))
+
+## [2.32.3](https://github.com/sws2apps/lmm-oa-sws/compare/v2.32.2...v2.32.3) (2023-02-12)
+
+
+### Bug Fixes
+
+* **csp:** update connect-src for new firebase auth ([e4212b3](https://github.com/sws2apps/lmm-oa-sws/commit/e4212b336d5bebb4104f1d64b1ea2f812bdbe15b))
+
+## [2.32.2](https://github.com/sws2apps/lmm-oa-sws/compare/v2.32.1...v2.32.2) (2023-02-12)
+
+
+### Bug Fixes
+
+* **csp:** update connect-src for new firebase auth ([03f9cb7](https://github.com/sws2apps/lmm-oa-sws/commit/03f9cb7d14b14bb8eef24b71a197a133f5a548f5))
+
+## [2.32.1](https://github.com/sws2apps/lmm-oa-sws/compare/v2.32.0...v2.32.1) (2023-02-12)
+
+
+### Bug Fixes
+
+* **csp:** update connect-src for new firebase auth ([7ba43de](https://github.com/sws2apps/lmm-oa-sws/commit/7ba43de825ca43614629584419957f05ad5e7bd9))
+
+# [2.32.0](https://github.com/sws2apps/lmm-oa-sws/compare/v2.31.3...v2.32.0) (2023-02-12)
+
+
+### Features
+
+* **auth:** support for oauth for user authentication ([1051b2d](https://github.com/sws2apps/lmm-oa-sws/commit/1051b2d5c61561e05d69222df60bc3e52534b524))
+
 ## [2.31.3](https://github.com/sws2apps/lmm-oa-sws/compare/v2.31.2...v2.31.3) (2023-02-11)
 
 
