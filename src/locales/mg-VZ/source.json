@@ -51,5 +51,5 @@
   "circuitOverseerWeek": "Fitsidihan’ny Mpiandraikitra ny Faritra",
   "conventionWeek": "Herinandron’ny Fivoriamben’ny Vondrom-paritra",
   "assemblyWeek": "Herinandron’ny Fivoriamben’ny Faritra",
-  "shortTimeFormat": "H:MM"
+  "shortTimeFormat": "h:MM"
 }
