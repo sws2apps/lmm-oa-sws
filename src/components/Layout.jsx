@@ -36,7 +36,7 @@ const Layout = ({ updatePwa }) => {
   const { data: announcements } = useQuery({
     queryKey: ['annoucements'],
     queryFn: fetchNotifications,
-    refetchInterval: 10000,
+    refetchInterval: 60000,
   });
 
   const { enabledInstall, installPwa, isLoading } = usePwa2();
