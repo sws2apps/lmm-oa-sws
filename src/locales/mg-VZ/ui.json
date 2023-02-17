@@ -488,5 +488,7 @@
   "announcements": "Vaovao",
   "markAsRead": "Voavaky",
   "expand": "Aseho",
-  "collapse": "Afenina"
+  "collapse": "Afenina",
+  "weekDeleteConfirm": "Are you sure to remove this week from the source materials list?",
+  "weekDeletedSuccess": "Week removed from source materials"
 }
