@@ -183,6 +183,12 @@ const Persons = () => {
     setTabValue(newValue);
   };
 
+  const handleSearchEnter = (e) => {
+    if (e.key === 'Enter') {
+      handleSearchStudent(txtSearch, isMale, isFemale, assTypes);
+    }
+  };
+
   useEffect(() => {
     const getQuery = async () => {
       const search = searchParams.get('search') || '';
@@ -205,19 +211,9 @@ const Persons = () => {
     getQuery();
   }, [handleSearchStudent, searchParams]);
 
-  const handleSearchEnter = (e) => {
-    if (e.key === 'Enter') {
-      handleSearchStudent(txtSearch, isMale, isFemale, assTypes);
-    }
-  };
-
   useEffect(() => {
     if (!mdUp) setAnchorElMenuSmall(null);
   }, [mdUp]);
-
-  useEffect(() => {
-    btnSearch.current.click();
-  }, []);
 
   return (
     <>
