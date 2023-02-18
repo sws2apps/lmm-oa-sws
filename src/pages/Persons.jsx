@@ -155,7 +155,7 @@ const Persons = () => {
 
       setIsSearch(true);
       setTimeout(async () => {
-        let obj = { txtSearch, isMale, isFemale, assTypes };
+        const obj = { txtSearch, isMale, isFemale, assTypes };
         const data = await dbFilterStudents(obj);
         setAdvancedOpen(false);
         setStudents(data);
@@ -197,6 +197,8 @@ const Persons = () => {
 
       if (search?.length > 0 || isMale || isFemale || assTypes.length > 0) {
         await handleSearchStudent(search, isMale, isFemale, assTypes);
+      } else {
+        await handleSearchStudent('', false, false, []);
       }
     };
 
