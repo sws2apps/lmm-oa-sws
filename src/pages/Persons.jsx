@@ -211,6 +211,10 @@ const Persons = () => {
     if (!mdUp) setAnchorElMenuSmall(null);
   }, [mdUp]);
 
+  useEffect(() => {
+    handleSearchStudent('', false, false, []);
+  }, [handleSearchStudent]);
+
   return (
     <>
       {isStudentDelete && (
