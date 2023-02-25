@@ -112,6 +112,7 @@ const App = ({ updatePwa }) => {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={activeTheme}>
         <CssBaseline />
+
         {appSnackOpen && <NotificationWrapper />}
 
         <RouterProvider router={router} />

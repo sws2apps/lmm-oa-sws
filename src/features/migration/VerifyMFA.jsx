@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import { appMessageState, appSeverityState, appSnackOpenState } from '../../states/notification';
-import { apiHandleVerifyOTP } from '../../api';
+import { apiHandleVerifyOTP } from '../../api/auth';
 import { visitorIDState } from '../../states/main';
 import { initAppDb } from '../../indexedDb/dbUtility';
 

@@ -10,7 +10,7 @@ import TextField from '@mui/material/TextField';
 import { isEmailAuthState, isOAuthAccountUpgradeState } from '../../states/main';
 import { isEmailValid } from '../../utils/emailValid';
 import { appMessageState, appSeverityState, appSnackOpenState } from '../../states/notification';
-import { apiRequestPasswordlesssLink } from '../../api';
+import { apiRequestPasswordlesssLink } from '../../api/auth';
 
 const EmailAuth = ({ setAccountVersion }) => {
   const { t } = useTranslation('ui');

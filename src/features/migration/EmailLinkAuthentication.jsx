@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-import { apiUpdatePasswordlessInfo } from '../../api';
+import { apiUpdatePasswordlessInfo } from '../../api/auth';
 import { appMessageState, appSeverityState, appSnackOpenState } from '../../states/notification';
 
 const EmailLinkAuthentication = ({ setAccountVersion, setActiveStep }) => {
