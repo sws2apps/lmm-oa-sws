@@ -1,23 +1,19 @@
 import { getAuth } from 'firebase/auth';
 import { getI18n } from 'react-i18next';
 import { promiseGetRecoil, promiseSetRecoil } from 'recoil-outside';
-import { dbGetAppSettings, dbUpdateAppSettings } from '../indexedDb/dbAppSettings';
-import { initAppDb, isDbExist } from '../indexedDb/dbUtility';
-import { congIDState, isAdminCongState, pocketMembersState } from '../states/congregation';
-import { isOAuthAccountUpgradeState, qrCodePathState, secretTokenPathState, userIDState } from '../states/main';
+import { congIDState } from '../states/congregation';
+import { isOAuthAccountUpgradeState } from '../states/main';
 import { appMessageState, appSeverityState, appSnackOpenState } from '../states/notification';
-import { loadApp } from '../utils/app';
 import { getProfile } from './common';
-import backupWorkerInstance from '../workers/backupWorker';
 
 export const apiSendAuthorization = async () => {
   try {
     const { apiHost, isOnline, visitorID } = await getProfile();
 
-    const auth = await getAuth();
-    const user = auth.currentUser;
+    if (isOnline && apiHost !== '') {
+      const auth = await getAuth();
+      const user = auth.currentUser;
 
-    if (isOnline && apiHost !== '' && visitorID && user) {
       const res = await fetch(`${apiHost}user-login`, {
         method: 'POST',
         headers: {
@@ -31,11 +27,6 @@ export const apiSendAuthorization = async () => {
       if (res.status === 200) {
         return { isVerifyMFA: true };
       } else {
-        if (data.secret && data.qrCode) {
-          await promiseSetRecoil(secretTokenPathState, data.secret);
-          await promiseSetRecoil(qrCodePathState, data.qrCode);
-          return { isSetupMFA: true };
-        }
         if (data.message) {
           await promiseSetRecoil(appMessageState, data.message);
           await promiseSetRecoil(appSeverityState, 'warning');
@@ -81,17 +72,11 @@ export const apiHandleVerifyOTP = async (userOTP, isSetup, trustedDevice) => {
             await promiseSetRecoil(appMessageState, data.message);
             await promiseSetRecoil(appSeverityState, 'warning');
             await promiseSetRecoil(appSnackOpenState, true);
-            return {};
-          }
-
-          if (!isSetup && data.secret) {
-            await promiseSetRecoil(secretTokenPathState, data.secret);
-            await promiseSetRecoil(qrCodePathState, data.qrCode);
-            return { reenroll: true };
+            return { tokenInvalid: true };
           }
         }
 
-        const { id, cong_id, cong_name, cong_role, cong_number, pocket_members } = data;
+        const { cong_id, cong_name, cong_role } = data;
 
         if (cong_name.length === 0) return { createCongregation: true };
 
@@ -99,37 +84,7 @@ export const apiHandleVerifyOTP = async (userOTP, isSetup, trustedDevice) => {
 
         if (!cong_role.includes('lmmo') && !cong_role.includes('lmmo-backup')) return { unauthorized: true };
 
-        backupWorkerInstance.setCongID(cong_id);
         await promiseSetRecoil(congIDState, cong_id);
-
-        if (!isSetup) {
-          const settings = await dbGetAppSettings();
-          if (settings.isCongUpdated2 === undefined) {
-            return { updateCongregation: true };
-          }
-        }
-
-        if (cong_role.includes('admin')) {
-          await promiseSetRecoil(isAdminCongState, true);
-        }
-
-        const isMainDb = await isDbExist('lmm_oa');
-        if (!isMainDb) await initAppDb();
-
-        // save congregation update if any
-        let obj = {};
-        obj.username = data.username;
-        obj.cong_name = cong_name;
-        obj.cong_number = cong_number;
-        obj.isLoggedOut = false;
-        obj.pocket_members = pocket_members;
-        await dbUpdateAppSettings(obj);
-
-        await promiseSetRecoil(userIDState, id);
-        await promiseSetRecoil(pocketMembersState, pocket_members);
-
-        await loadApp();
-
         return { success: true };
       }
     }
@@ -212,12 +167,6 @@ export const apiUpdatePasswordlessInfo = async (uid) => {
         localStorage.removeItem('emailForSignIn');
         return { isVerifyMFA: true, tmpEmail };
       } else {
-        if (data.secret && data.qrCode) {
-          localStorage.removeItem('emailForSignIn');
-          await promiseSetRecoil(secretTokenPathState, data.secret);
-          await promiseSetRecoil(qrCodePathState, data.qrCode);
-          return { isSetupMFA: true, tmpEmail };
-        }
         if (data.message) {
           await promiseSetRecoil(appMessageState, t('verifyEmailError', { ns: 'ui' }));
           await promiseSetRecoil(appSeverityState, 'warning');
@@ -231,5 +180,92 @@ export const apiUpdatePasswordlessInfo = async (uid) => {
     await promiseSetRecoil(appSeverityState, 'error');
     await promiseSetRecoil(appSnackOpenState, true);
     return {};
+  }
+};
+
+export const apiPocketSignUp = async (code) => {
+  const { apiHost, visitorID } = await getProfile();
+
+  try {
+    if (apiHost !== '') {
+      const res = await fetch(`${apiHost}api/sws-pocket/signup`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ visitorid: visitorID, otp_code: code.toUpperCase() }),
+      });
+
+      const data = await res.json();
+
+      return { status: res.status, data };
+    }
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+export const apiPocketValidate = async () => {
+  const { apiHost, visitorID } = await getProfile();
+
+  try {
+    if (apiHost !== '') {
+      const res = await fetch(`${apiHost}api/sws-pocket/validate-me`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          visitorid: visitorID,
+        },
+      });
+
+      const data = await res.json();
+
+      return { status: res.status, data };
+    }
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+export const apiFetchPocketSessions = async () => {
+  const { apiHost, userID, visitorID } = await getProfile();
+
+  try {
+    if (apiHost !== '') {
+      const res = await fetch(`${apiHost}api/sws-pocket/${userID}/devices`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          visitorid: visitorID,
+        },
+      });
+
+      return res.json();
+    }
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+export const apiPocketDeviceDelete = async (pocket_visitorid) => {
+  const { apiHost, userID, visitorID } = await getProfile();
+
+  try {
+    if (apiHost !== '') {
+      const res = await fetch(`${apiHost}api/sws-pocket/${userID}/devices`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          visitorid: visitorID,
+        },
+        body: JSON.stringify({ pocket_visitorid }),
+      });
+
+      const data = await res.json();
+
+      return { status: res.status, data };
+    }
+  } catch (err) {
+    throw new Error(err);
   }
 };
