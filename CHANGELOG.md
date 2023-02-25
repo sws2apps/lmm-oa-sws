@@ -1,3 +1,10 @@
+## [2.41.2](https://github.com/sws2apps/lmm-oa-sws/compare/v2.41.1...v2.41.2) (2023-02-25)
+
+
+### Bug Fixes
+
+* **app:** fix blank screen when app load ([8763323](https://github.com/sws2apps/lmm-oa-sws/commit/8763323260889f5376db339804496b9d46a0473e))
+
 ## [2.41.1](https://github.com/sws2apps/lmm-oa-sws/compare/v2.41.0...v2.41.1) (2023-02-25)
 
 
