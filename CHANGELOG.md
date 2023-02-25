@@ -1,3 +1,10 @@
+## [2.41.1](https://github.com/sws2apps/lmm-oa-sws/compare/v2.41.0...v2.41.1) (2023-02-25)
+
+
+### Bug Fixes
+
+* **firebase:** update csp ([5eda850](https://github.com/sws2apps/lmm-oa-sws/commit/5eda850305dd90a5b0f8c3260a04397598ea9432))
+
 # [2.41.0](https://github.com/sws2apps/lmm-oa-sws/compare/v2.40.0...v2.41.0) (2023-02-25)
 
 
