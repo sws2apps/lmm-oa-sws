@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
@@ -14,11 +15,10 @@ import EmailLinkAuthentication from '../features/migration/EmailLinkAuthenticati
 import SignIn from '../features/migration/SignIn';
 import EmailAuth from '../features/migration/EmailAuth';
 import VerifyMFA from '../features/migration/VerifyMFA';
-import { isAuthProcessingState, isEmailAuthState } from '../states/main';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { apiSendAuthorization } from '../api';
 import CongregationBackup from '../features/migration/CongregationBackup';
 import MigrationCompleted from '../features/migration/MigrationCompleted';
+import { apiSendAuthorization } from '../api/auth';
+import { isAuthProcessingState, isEmailAuthState } from '../states/main';
 
 const Migration = () => {
   const { t } = useTranslation('ui');

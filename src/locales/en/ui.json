@@ -46,5 +46,7 @@
   "send": "Send",
   "backupSuccess": "Your backup is successfully saved",
   "cpeMigrationCompleted": "CPE Migration Completed",
-  "cpeMigrationCompletedDesc": "Congratulations! Your data has been migrated. If you have installed CPE on your device, or added it to the Home Screen, please uninstall it first. Here’s the new website address to access CPE app:"
+  "cpeMigrationCompletedDesc": "Congratulations! Your data has been migrated. If you have installed CPE on your device, or added it to the Home Screen, please uninstall it first. Here’s the new website address to access CPE app:",
+  "newVersion": "A new version of CPE is available",
+  "updateApp": "Update"
 }
