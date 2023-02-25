@@ -1,3 +1,17 @@
+# [2.41.0](https://github.com/sws2apps/lmm-oa-sws/compare/v2.40.0...v2.41.0) (2023-02-25)
+
+
+### Bug Fixes
+
+* **app:** update firebase config ([5002460](https://github.com/sws2apps/lmm-oa-sws/commit/500246062d9a06a386021238b6b47ff9d3da6dd7))
+
+
+### Features
+
+* **app:** update app to migrate to a new website address ([8493375](https://github.com/sws2apps/lmm-oa-sws/commit/849337520138fa1912c8b78abe4e71096690393f))
+* **deps:** bump @mui/x-date-pickers from 5.0.19 to 5.0.20 ([133cc72](https://github.com/sws2apps/lmm-oa-sws/commit/133cc72fbba1c25bd4df373a0e37d376da3e81fc))
+* **deps:** bump react-i18next from 12.1.5 to 12.2.0 ([39884e5](https://github.com/sws2apps/lmm-oa-sws/commit/39884e5cf383f38498c5790a1141fbc3cf3a3877))
+
 # [2.40.0](https://github.com/sws2apps/lmm-oa-sws/compare/v2.39.0...v2.40.0) (2023-02-22)
 
 
