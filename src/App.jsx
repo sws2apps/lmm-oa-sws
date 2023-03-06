@@ -89,7 +89,7 @@ const App = ({ updatePwa }) => {
         apiHost = 'http://localhost:8000/';
       }
     } else {
-      apiHost = 'https://sws2apps.onrender.com/';
+      apiHost = 'https://api.sws2apps.com/';
     }
 
     setApiHost(apiHost);
